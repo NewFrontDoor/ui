@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { RadioGroup, Radio } from "react-radio-group";
+import React, {Component} from 'react';
+import {RadioGroup, Radio} from 'react-radio-group';
 import {css} from 'react-emotion';
 
 const methodField = css`
@@ -29,9 +29,27 @@ const methodFieldInput = css`
     &:checked + label {
       color: white;
     }
+
+    &:nth-of-type(1):checked~label:last-of-type:before {
+        transform: translate3d(0, 0, 0);
+        transition: all .275s ease-out;
+        will-change: transform,transition
+    }
+
+    &:nth-of-type(2):checked~label:last-of-type:before {
+        transform: translate3d(100%, 0, 0);
+        transition: all .275s ease-out;
+        will-change: transform,transition
+    }
+
+    &:nth-of-type(3):checked~label:last-of-type:before {
+        transform: translate3d(200%, 0, 0);
+        transition: all .275s ease-out;
+        will-change: transform,transition
+    }
 `;
 
-const methodFieldLabel = css `
+const methodFieldLabel = css`
   display: inline-block;
   width: calc(33%);
   color: rgba(0, 0, 0, 0.6);
@@ -66,25 +84,6 @@ const methodFieldLabel = css `
   };
 `;
 
-#method-field input[type="radio"]:nth-of-type(1):checked~label:last-of-type:before {
-    transform: translate3d(0, 0, 0);
-    transition: all .275s ease-out;
-    will-change: transform,transition
-}
-
-#method-field input[type="radio"]:nth-of-type(2):checked~label:last-of-type:before {
-    transform: translate3d(100%, 0, 0);
-    transition: all .275s ease-out;
-    will-change: transform,transition
-}
-
-#method-field input[type="radio"]:nth-of-type(3):checked~label:last-of-type:before {
-    transform: translate3d(200%, 0, 0);
-    transition: all .275s ease-out;
-    will-change: transform,transition
-}
-
-
 class MethodToggle extends Component {
   render() {
     return (
@@ -97,25 +96,16 @@ class MethodToggle extends Component {
         }}
       >
         <Radio value="day" id="day" className={methodFieldInput} />
-        <label
-          htmlFor="day"
-          className={methodFieldLabel}
-        >
+        <label htmlFor="day" className={methodFieldLabel}>
           Day
         </label>
 
-        <Radio value="week" id="week" className={methodFieldInput}  />
-        <label
-          htmlFor="week"
-          className={methodFieldLabel}
-        >
+        <Radio value="week" id="week" className={methodFieldInput} />
+        <label htmlFor="week" className={methodFieldLabel}>
           Week
         </label>
         <Radio value="month" id="month" className={methodFieldInput} />
-        <label
-          htmlFor="month"
-          className={methodFieldLabel}
-        >
+        <label htmlFor="month" className={methodFieldLabel}>
           Month
         </label>
       </RadioGroup>

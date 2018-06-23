@@ -25,3 +25,5 @@ PersonModal.defaultProps = {
   email: '',
   phone: ''
 };
+
+export default PersonModal;

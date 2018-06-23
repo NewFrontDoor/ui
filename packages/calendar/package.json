@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "prop-types": "^15.6.0",
-    "react-portal": "^4.1.5"
+    "react-portal": "^4.1.5",
+    "react-radio-group": "^3.0.3"
   },
   "peerDependencies": {
     "emotion": "^9.0",
