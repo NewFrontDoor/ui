@@ -1,6 +1,15 @@
 import React from 'react';
+import {css} from 'react-emotion';
 
-export default const CloseSvg = (
+const closeIcon = css`
+  position: absolute;
+  height: 30px;
+  right: 0px;
+  bottom: 0px;
+  cursor: pointer;
+`;
+
+const CloseSvg = (
   <svg
     viewBox="0 0 52 52"
     xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +17,7 @@ export default const CloseSvg = (
     clipRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit="1.5"
-    className="closeIcon"
+    className={closeIcon}
   >
     <circle cx="26" cy="26" r="26" />
     <circle cx="26" cy="26" r="22.1" fill="#fff" />
@@ -20,3 +29,5 @@ export default const CloseSvg = (
     />
   </svg>
 );
+
+export default CloseSvg;

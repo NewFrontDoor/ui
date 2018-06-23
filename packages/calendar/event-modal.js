@@ -11,3 +11,5 @@ const EventModal = props => (
 EventModal.propTypes = {
   name: PropTypes.string.isRequired
 };
+
+export default EventModal;

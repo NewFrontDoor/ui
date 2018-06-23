@@ -2,5 +2,7 @@ import About from '..';
 
 export default {
   component: About,
-  props: {}
+  props: {
+    people: []
+  }
 };
