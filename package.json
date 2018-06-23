@@ -12,8 +12,8 @@
     "babel-loader": "^8.0.0-beta.2",
     "babel-plugin-emotion": "^9.1.2",
     "design-system-utils": "^0.12.1",
-    "emotion": "^9.1.2",
-    "emotion-theming": "^9.1.2",
+    "emotion": "^9.2.4",
+    "emotion-theming": "^9.2.4",
     "eslint-config-xo-react": "^0.16.0",
     "eslint-plugin-react": "^7.7.0",
     "html-webpack-plugin": "^3.2.0",
@@ -22,10 +22,10 @@
     "polished": "^1.9.2",
     "prettier": "^1.12.1",
     "prop-types": "^15.6.1",
-    "react": "^16.3.2",
+    "react": "^16.4.1",
     "react-cosmos": "^4.0.0",
-    "react-dom": "^16.3.2",
-    "react-emotion": "^9.1.2",
+    "react-dom": "^16.4.1",
+    "react-emotion": "^9.2.4",
     "webpack": "^4.7.0",
     "xo": "^0.21.0"
   },
@@ -36,5 +36,8 @@
     "parser": "babel-eslint",
     "prettier": true,
     "space": true
+  },
+  "dependencies": {
+    "mineral-ui": "^0.34.0"
   }
 }
