@@ -1,28 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PortalWithState} from 'react-portal';
-import {Button, Text} from 'mineral-ui';
 import EventSquare from './event-date-square';
 import Modal from './modal';
 import EventModal from './event-modal';
-import MethodToggle from './method-toggle';
+import CalendarControls from './calendar-controls';
 
 export default class Calendar extends React.Component {
   render() {
     return (
       <div>
-        <div id="date-scroller">
-          <Button>&lt;</Button>
-          <Button>&gt;</Button>
-          <Button variant="success">Today</Button>
-        </div>
-        <div>
-          <Text>{this.props.month}</Text>
-        </div>
-        <div>
-          <MethodToggle />
-        </div>
-
+        <CalendarControls month={this.props.month} />
         <div>
           {this.props.events.map(event => (
             <PortalWithState
@@ -45,6 +33,7 @@ export default class Calendar extends React.Component {
             </PortalWithState>
           ))}
         </div>
+        <CalendarControls month={this.props.month} />
       </div>
     );
   }
