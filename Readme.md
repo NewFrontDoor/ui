@@ -2,6 +2,5 @@
 
 ## Getting started
 
-1. `npm install`
-1. `npm run bootstrap`
-1. `npm run cosmos`
+1. `yarn install`
+1. `yarn cosmos`
