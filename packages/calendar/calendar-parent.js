@@ -21,7 +21,8 @@ export default class CalendarParent extends React.Component {
     ];
     this.state = {
       valueMethod: 'Month',
-      month: months[new Date().getUTCMonth()]
+      month: months[new Date().getUTCMonth()],
+      year: 2018
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -39,6 +40,7 @@ export default class CalendarParent extends React.Component {
         handleChange={this.handleChange}
         valueMethod={this.state.valueMethod}
         month={this.state.month}
+        year={this.state.year}
       />
     );
   }

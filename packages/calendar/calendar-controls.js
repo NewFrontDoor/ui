@@ -13,7 +13,9 @@ export default class CalendarControls extends React.Component {
           <Button variant="success">Today</Button>
         </div>
         <div>
-          <Text>{this.props.month}</Text>
+          <Text>
+            {this.props.month} - {this.props.year}
+          </Text>
         </div>
         <div>
           <MethodToggle

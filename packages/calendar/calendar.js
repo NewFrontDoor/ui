@@ -12,6 +12,7 @@ export default class Calendar extends React.Component {
       <div>
         <CalendarControls
           month={this.props.month}
+          year={this.props.year}
           location="top"
           handleChange={this.props.handleChange}
           valueMethod={this.props.valueMethod}
