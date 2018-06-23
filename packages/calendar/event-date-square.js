@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Text from 'mineral-ui/Text';
 
-const ImageView = props => (
+const EventSquare = props => (
   <div>
-    <img src={props.image} />
     <Text>{props.name}</Text>
   </div>
 );
 
-ImageView.propTypes = {
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired
+EventSquare.propTypes = {
+  name: PropTypes.string.isRequired
 };
 
 export default ImageView;

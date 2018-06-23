@@ -24,7 +24,7 @@ export default class About extends React.Component {
               />,
               portal(
                 <Modal closeClick={closePortal}>
-                  <PersonModal person={person} />
+                  <PersonModal {...person} />
                 </Modal>
               )
             ]}

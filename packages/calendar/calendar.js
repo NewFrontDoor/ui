@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PortalWithState} from 'react-portal';
-import ImageView from './image-view';
+import EventSquare from './event-date-square';
 import Modal from './modal';
-import PersonModal from './person-modal';
+import EventModal from './event-modal';
 
 export default class Calendar extends React.Component {
   render() {
@@ -11,20 +11,19 @@ export default class Calendar extends React.Component {
       <div>
         {this.props.events.map(event => (
           <PortalWithState
-            key={person.name + '-portal'}
+            key={event.name + '-portal'}
             closeOnOutsideClick
             closeOnEsc
           >
             {({openPortal, closePortal, portal}) => [
-              <ImageView
-                key={person.image}
-                image={person.image}
-                name={person.name}
+              <EventSquare
+                key={event.name}
+                name={event.name}
                 onClick={openPortal}
               />,
               portal(
                 <Modal closeClick={closePortal}>
-                  <PersonModal person={person} />
+                  <EventModal {...event} />
                 </Modal>
               )
             ]}
