@@ -16,7 +16,11 @@ export default class CalendarControls extends React.Component {
           <Text>{this.props.month}</Text>
         </div>
         <div>
-          <MethodToggle />
+          <MethodToggle
+            handleChange={this.props.handleChange}
+            valueMethod={this.props.valueMethod}
+            location={this.props.location}
+          />
         </div>
       </div>
     );
@@ -24,5 +28,8 @@ export default class CalendarControls extends React.Component {
 }
 
 CalendarControls.propTypes = {
-  month: PropTypes.string.isRequired
+  handleChange: PropTypes.func.isRequired,
+  valueMethod: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired
 };

@@ -1,3 +1,3 @@
-import Calendar from './calendar';
+import CalendarParent from './calendar-parent';
 
-export default Calendar;
+export default CalendarParent;

@@ -10,7 +10,12 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div>
-        <CalendarControls month={this.props.month} />
+        <CalendarControls
+          month={this.props.month}
+          location="top"
+          handleChange={this.props.handleChange}
+          valueMethod={this.props.valueMethod}
+        />
         <div>
           {this.props.events.map(event => (
             <PortalWithState
@@ -33,7 +38,6 @@ export default class Calendar extends React.Component {
             </PortalWithState>
           ))}
         </div>
-        <CalendarControls month={this.props.month} />
       </div>
     );
   }
@@ -63,5 +67,7 @@ Calendar.propTypes = {
       locations: PropTypes.object
     })
   ).isRequired,
-  month: PropTypes.string.isRequired
+  month: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  valueMethod: PropTypes.string.isRequired
 };
