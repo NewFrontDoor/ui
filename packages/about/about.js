@@ -6,8 +6,6 @@ import Modal from './modal';
 import PersonModal from './person-modal';
 
 class About extends React.Component {
-  openPerson() {}
-
   render() {
     return (
       <div>
@@ -38,5 +36,13 @@ class About extends React.Component {
 }
 
 About.propTypes = {
-  people: PropTypes.object.isRequired
+  people: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+      email: PropTypes.string,
+      phone: PropTypes.string
+    })
+  ).isRequired
 };
