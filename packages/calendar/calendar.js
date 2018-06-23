@@ -5,11 +5,11 @@ import ImageView from './image-view';
 import Modal from './modal';
 import PersonModal from './person-modal';
 
-export default class About extends React.Component {
+export default class Calendar extends React.Component {
   render() {
     return (
       <div>
-        {this.props.people.map(person => (
+        {this.props.events.map(event => (
           <PortalWithState
             key={person.name + '-portal'}
             closeOnOutsideClick
@@ -35,14 +35,28 @@ export default class About extends React.Component {
   }
 }
 
-About.propTypes = {
-  people: PropTypes.arrayOf(
+Calendar.propTypes = {
+  events: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      picture: PropTypes.string,
+      // eslint-disable-next-line camelcase
+      calendar_id: PropTypes.string.isRequired,
+      interval: PropTypes.string,
       name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired,
-      email: PropTypes.string,
-      phone: PropTypes.string
+      description: PropTypes.string.isRequired,
+      // eslint-disable-next-line camelcase
+      admin_notes: PropTypes.string,
+      where: PropTypes.string,
+      // eslint-disable-next-line camelcase
+      start_date: PropTypes.string.isRequired,
+      // eslint-disable-next-line camelcase
+      end_date: PropTypes.string.isRequired,
+      // eslint-disable-next-line camelcase
+      all_day: PropTypes.string.isRequired,
+      url: PropTypes.string,
+      color: PropTypes.string,
+      locations: PropTypes.object
     })
   ).isRequired
 };

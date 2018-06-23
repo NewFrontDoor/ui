@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default const CloseSvg = (
+const CloseSvg = (
   <svg
     viewBox="0 0 52 52"
     xmlns="http://www.w3.org/2000/svg"
@@ -20,3 +20,5 @@ export default const CloseSvg = (
     />
   </svg>
 );
+
+export default CloseSvg;

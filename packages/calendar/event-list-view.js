@@ -5,7 +5,7 @@ import ImageView from './image-view';
 import Modal from './modal';
 import PersonModal from './person-modal';
 
-export default class About extends React.Component {
+class About extends React.Component {
   render() {
     return (
       <div>
