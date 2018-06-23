@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DesignSystem from 'design-system-utils';
-import {ThemeProvider} from 'emotion-theming';
+import {ThemeProvider} from 'mineral-ui/themes';
 
 const fontFamily = {
   system:
