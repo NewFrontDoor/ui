@@ -5,6 +5,7 @@ import {Button, Text} from 'mineral-ui';
 import EventSquare from './event-date-square';
 import Modal from './modal';
 import EventModal from './event-modal';
+import MethodToggle from './method-toggle';
 
 export default class Calendar extends React.Component {
   render() {
@@ -17,6 +18,9 @@ export default class Calendar extends React.Component {
         </div>
         <div>
           <Text>{this.props.month}</Text>
+        </div>
+        <div>
+          <MethodToggle />
         </div>
 
         <div>
