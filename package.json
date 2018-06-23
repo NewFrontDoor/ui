@@ -8,16 +8,18 @@
     "start": "next start"
   },
   "devDependencies": {
+    "@babel/core": "7.0.0-beta.42",
     "babel-eslint": "^8.2.3",
-    "babel-loader": "^8.0.0-beta.2",
+    "babel-loader": "8.0.0-beta.4",
     "babel-plugin-emotion": "^9.1.2",
     "emotion": "^9.2.4",
     "emotion-theming": "^9.2.4",
+    "eslint": "^4.0.0",
     "eslint-config-xo-react": "^0.16.0",
     "eslint-plugin-react": "^7.7.0",
     "html-webpack-plugin": "^3.2.0",
     "mineral-ui": "^0.34.0",
-    "next": "^6.0.0",
+    "next": "^6.0.3",
     "polished": "^1.9.2",
     "prettier": "^1.12.1",
     "prop-types": "^15.6.1",
@@ -38,8 +40,5 @@
     "parser": "babel-eslint",
     "prettier": true,
     "space": true
-  },
-  "dependencies": {
-    "mineral-ui": "^0.34.0"
   }
 }

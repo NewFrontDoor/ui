@@ -2,17 +2,12 @@
   "name": "@nfd/about",
   "version": "0.0.0",
   "dependencies": {
-    "emotion": "^9.2.4",
-    "emotion-theming": "^9.2.4",
-    "mineral-ui": "^0.34.0",
     "prop-types": "^15.6.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-emotion": "^9.2.4",
     "react-portal": "^4.1.5"
   },
   "peerDependencies": {
     "emotion": "^9.0",
+    "mineral-ui": "^0.34.0",
     "react": "^16.0",
     "react-emotion": "^9.0"
   },
