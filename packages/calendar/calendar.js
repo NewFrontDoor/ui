@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PortalWithState} from 'react-portal';
+import {Button, Text} from 'mineral-ui';
 import EventSquare from './event-date-square';
 import Modal from './modal';
 import EventModal from './event-modal';
@@ -9,26 +10,37 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div>
-        {this.props.events.map(event => (
-          <PortalWithState
-            key={event.name + '-portal'}
-            closeOnOutsideClick
-            closeOnEsc
-          >
-            {({openPortal, closePortal, portal}) => [
-              <EventSquare
-                key={event.name}
-                name={event.name}
-                onClick={openPortal}
-              />,
-              portal(
-                <Modal closeClick={closePortal}>
-                  <EventModal {...event} />
-                </Modal>
-              )
-            ]}
-          </PortalWithState>
-        ))}
+        <div id="date-scroller">
+          <Button>&lt;</Button>
+          <Button>&gt;</Button>
+          <Button variant="success">Today</Button>
+        </div>
+        <div>
+          <Text>{this.props.month}</Text>
+        </div>
+
+        <div>
+          {this.props.events.map(event => (
+            <PortalWithState
+              key={event.name + '-portal'}
+              closeOnOutsideClick
+              closeOnEsc
+            >
+              {({openPortal, closePortal, portal}) => [
+                <EventSquare
+                  key={event.name}
+                  name={event.name}
+                  onClick={openPortal}
+                />,
+                portal(
+                  <Modal closeClick={closePortal}>
+                    <EventModal {...event} />
+                  </Modal>
+                )
+              ]}
+            </PortalWithState>
+          ))}
+        </div>
       </div>
     );
   }
@@ -57,5 +69,6 @@ Calendar.propTypes = {
       color: PropTypes.string,
       locations: PropTypes.object
     })
-  ).isRequired
+  ).isRequired,
+  month: PropTypes.string.isRequired
 };
