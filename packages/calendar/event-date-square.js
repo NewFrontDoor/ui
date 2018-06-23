@@ -12,4 +12,4 @@ EventSquare.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-export default ImageView;
+export default EventSquare;

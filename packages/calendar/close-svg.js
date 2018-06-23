@@ -1,4 +1,13 @@
 import React from 'react';
+import {css} from 'react-emotion';
+
+const closeIcon = css`
+  position: absolute;
+  height: 30px;
+  right: 0px;
+  bottom: 0px;
+  cursor: pointer;
+`;
 
 const CloseSvg = (
   <svg
@@ -8,7 +17,7 @@ const CloseSvg = (
     clipRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit="1.5"
-    className="closeIcon"
+    className={closeIcon}
   >
     <circle cx="26" cy="26" r="26" />
     <circle cx="26" cy="26" r="22.1" fill="#fff" />

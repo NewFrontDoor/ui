@@ -1,5 +1,6 @@
 {
   "name": "@nfd/calendar",
+  "version": "0.0.0",
   "dependencies": {
     "emotion": "^9.2.4",
     "emotion-theming": "^9.2.4",

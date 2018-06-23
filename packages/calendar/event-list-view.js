@@ -5,7 +5,7 @@ import ImageView from './image-view';
 import Modal from './modal';
 import PersonModal from './person-modal';
 
-class About extends React.Component {
+export default class EventList extends React.Component {
   render() {
     return (
       <div>
