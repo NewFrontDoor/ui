@@ -42,8 +42,12 @@ export default class CalendarParent extends React.Component {
       newMonth = this.state.today;
     } else if (option === 'inc') {
       newMonth = addMonths(this.state.activeMonth, 1);
+    } else if (option === 'inc+') {
+      newMonth = addMonths(this.state.activeMonth, 12);
     } else if (option === 'dec') {
       newMonth = subMonths(this.state.activeMonth, 1);
+    } else if (option === 'dec+') {
+      newMonth = subMonths(this.state.activeMonth, 12);
     }
     this.setState({
       activeMonth: newMonth,

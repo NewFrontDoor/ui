@@ -28,24 +28,24 @@ export default class CalendarControls extends React.Component {
     return (
       <div className={calendarControlsStyle}>
         <div className={dateScroller}>
-          <Button
-            style={{height: '30px'}}
-            onClick={() => this.props.changeMonth('dec')}
-          >
+          <Button size="medium" onClick={() => this.props.changeMonth('dec+')}>
+            &lt;&lt;
+          </Button>
+          <Button size="medium" onClick={() => this.props.changeMonth('dec')}>
             &lt;
           </Button>
           <Button
-            style={{height: '30px'}}
-            onClick={() => this.props.changeMonth('inc')}
-          >
-            &gt;
-          </Button>
-          <Button
             variant="success"
-            style={{height: '30px', marginLeft: '10px'}}
+            size="medium"
             onClick={() => this.props.changeMonth('initial')}
           >
             Today
+          </Button>
+          <Button size="medium" onClick={() => this.props.changeMonth('inc')}>
+            &gt;
+          </Button>
+          <Button size="medium" onClick={() => this.props.changeMonth('inc+')}>
+            &gt;&gt;
           </Button>
         </div>
         <div className={monthTitle}>
@@ -70,5 +70,6 @@ CalendarControls.propTypes = {
   valueMethod: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   month: PropTypes.object.isRequired,
-  location: PropTypes.string.isRequired
+  location: PropTypes.string.isRequired,
+  changeMonth: PropTypes.func.isRequired
 };
