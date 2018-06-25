@@ -40,5 +40,6 @@
     "parser": "babel-eslint",
     "prettier": true,
     "space": true
-  }
+  },
+  "dependencies": {}
 }

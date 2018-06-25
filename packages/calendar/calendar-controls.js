@@ -1,23 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Text} from 'mineral-ui';
+import {css} from 'react-emotion';
 import MethodToggle from './method-toggle';
+
+const calendarControlsStyle = css`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const dateScroller = css`
+  flex: 1 1 20%;
+`;
+const monthTitle = css`
+  flex: 3 1 50%;
+  text-align: center;
+`;
+const rangeToggle = css`
+  flex: 1 1 20%;
+`;
 
 export default class CalendarControls extends React.Component {
   render() {
     return (
-      <div>
-        <div id="date-scroller">
-          <Button>&lt;</Button>
-          <Button>&gt;</Button>
-          <Button variant="success">Today</Button>
+      <div className={calendarControlsStyle}>
+        <div className={dateScroller}>
+          <Button
+            style={{height: '30px'}}
+            onClick={() => this.props.changeMonth('dec')}
+          >
+            &lt;
+          </Button>
+          <Button
+            style={{height: '30px'}}
+            onClick={() => this.props.changeMonth('inc')}
+          >
+            &gt;
+          </Button>
+          <Button
+            variant="success"
+            style={{height: '30px', marginLeft: '10px'}}
+            onClick={() => this.props.changeMonth('initial')}
+          >
+            Today
+          </Button>
         </div>
-        <div>
-          <Text>
-            {this.props.month} - {this.props.year}
+        <div className={monthTitle}>
+          <Text element="h2">
+            {this.props.month.name} - {this.props.year}
           </Text>
         </div>
-        <div>
+        <div className={rangeToggle}>
           <MethodToggle
             handleChange={this.props.handleChange}
             valueMethod={this.props.valueMethod}
@@ -32,6 +68,7 @@ export default class CalendarControls extends React.Component {
 CalendarControls.propTypes = {
   handleChange: PropTypes.func.isRequired,
   valueMethod: PropTypes.string.isRequired,
-  month: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  month: PropTypes.object.isRequired,
   location: PropTypes.string.isRequired
 };
