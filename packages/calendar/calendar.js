@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {cx, css} from 'react-emotion';
+import {format} from 'date-fns/esm';
 import CalendarControls from './calendar-controls';
-import EventWrapper from './event-wrapper';
 
 const tableStyle = css``;
 
@@ -217,7 +217,26 @@ export default class Calendar extends React.Component {
                                         item === null ? (
                                           <td />
                                         ) : (
-                                          <td key={item.id}>{item.name}</td>
+                                          <td key={item.id}>
+                                            <a
+                                              css={`
+                                                background-color: ${item.color};
+                                                border-radius: 5px;
+                                                padding: 5px;
+                                                margin: 0 2px;
+                                                white-space: nowrap;
+                                              `}
+                                            >
+                                              <span
+                                                style={{fontWeight: 'bold'}}
+                                              >
+                                                {format(item.start_date, 'p')
+                                                  .replace(/\s+/g, '')
+                                                  .toLowerCase()}
+                                              </span>{' '}
+                                              - {item.name}
+                                            </a>
+                                          </td>
                                         )
                                     )}
                                   </tr>
