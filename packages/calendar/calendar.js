@@ -218,24 +218,27 @@ export default class Calendar extends React.Component {
                                           <td />
                                         ) : (
                                           <td key={item.id}>
-                                            <a
+                                            <div
                                               css={`
                                                 background-color: ${item.color};
                                                 border-radius: 5px;
                                                 padding: 5px;
                                                 margin: 0 2px;
                                                 white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
+                                                font-size: 14px;
+                                                color: white;
+                                                font-family: 'arial';
                                               `}
                                             >
-                                              <span
-                                                style={{fontWeight: 'bold'}}
-                                              >
+                                              <span style={{fontWeight: '700'}}>
                                                 {format(item.start_date, 'p')
                                                   .replace(/\s+/g, '')
                                                   .toLowerCase()}
                                               </span>{' '}
                                               - {item.name}
-                                            </a>
+                                            </div>
                                           </td>
                                         )
                                     )}
