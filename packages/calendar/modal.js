@@ -8,7 +8,7 @@ const modalClass = css`
   left: 50%;
   right: 50%;
   transform: translate(-50%, 0%);
-  width: 351px;
+  width: 600px;
   max-width: calc(100% - 24px);
   top: 8%;
   border: 2px solid #444;
@@ -46,7 +46,7 @@ const Modal = props => {
         <CloseSvg />
       </div>
     </div>,
-    <div key="b" className={modalOverlay} />
+    <div key="b" className={modalOverlay} onClick={props.closeClick} />
   ];
 };
 

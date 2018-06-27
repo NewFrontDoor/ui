@@ -46,6 +46,7 @@ export function eventArrayBuilder(events) {
     const day = getDay(localDate);
     const eventCopy = Object.assign({}, event);
     eventCopy.start_date = localDate;
+    eventCopy.end_date = addHours(event.end_date, 10);
     if (!eventObj.hasOwnProperty(week)) {
       eventObj[week] = [];
       eventObj[week].push(new Array(7).fill(null));
