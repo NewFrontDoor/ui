@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {PortalWithState} from 'react-portal';
 import {cx, css} from 'react-emotion';
-import EventSquare from './event-date-square';
-import Modal from './modal';
-import EventModal from './event-modal';
 import CalendarControls from './calendar-controls';
+import EventWrapper from './event-wrapper';
 
 const tableStyle = css``;
 
@@ -178,10 +175,10 @@ export default class Calendar extends React.Component {
                                     <td
                                       key={item[0] + '-bg'}
                                       className={
-                                        this.props.today[0] == item[0] &&
-                                        this.props.today[1] ==
+                                        this.props.today[0] === item[0] &&
+                                        this.props.today[1] ===
                                           this.props.month.int &&
-                                        this.props.today[2] == this.props.year
+                                        this.props.today[2] === this.props.year
                                           ? 'today'
                                           : item[1]
                                       }
@@ -201,6 +198,31 @@ export default class Calendar extends React.Component {
                                   ))}
                                 </tr>
                               </thead>
+                              <tbody>
+                                {this.props.monthEvents[
+                                  this.props.weekNumber + index
+                                ].map((row, position) => (
+                                  <tr
+                                    key={
+                                      this.props.weekNumber +
+                                      index +
+                                      ' - eventRow ' +
+                                      position +
+                                      1
+                                    }
+                                  >
+                                    <th />
+                                    {row.map(
+                                      item =>
+                                        item === null ? (
+                                          <td />
+                                        ) : (
+                                          <td key={item.id}>{item.name}</td>
+                                        )
+                                    )}
+                                  </tr>
+                                ))}
+                              </tbody>
                             </table>
                           </div>
                         </div>
@@ -212,55 +234,12 @@ export default class Calendar extends React.Component {
             </tbody>
           </table>
         </div>
-        {this.props.events.map(event => (
-          <PortalWithState
-            key={event.name + '-portal'}
-            closeOnOutsideClick
-            closeOnEsc
-          >
-            {({openPortal, closePortal, portal}) => [
-              <EventSquare
-                key={event.name}
-                name={event.name}
-                onClick={openPortal}
-              />,
-              portal(
-                <Modal closeClick={closePortal}>
-                  <EventModal {...event} />
-                </Modal>
-              )
-            ]}
-          </PortalWithState>
-        ))}
       </div>
     );
   }
 }
 
 Calendar.propTypes = {
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      picture: PropTypes.string,
-      // eslint-disable-next-line camelcase
-      calendar_id: PropTypes.string.isRequired,
-      interval: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      // eslint-disable-next-line camelcase
-      admin_notes: PropTypes.string,
-      where: PropTypes.string,
-      // eslint-disable-next-line camelcase
-      start_date: PropTypes.string.isRequired,
-      // eslint-disable-next-line camelcase
-      end_date: PropTypes.string.isRequired,
-      // eslint-disable-next-line camelcase
-      all_day: PropTypes.string.isRequired,
-      url: PropTypes.string,
-      color: PropTypes.string,
-      locations: PropTypes.object
-    })
-  ).isRequired,
   year: PropTypes.number.isRequired,
   weekNumber: PropTypes.number.isRequired,
   month: PropTypes.object.isRequired,
@@ -268,5 +247,8 @@ Calendar.propTypes = {
   valueMethod: PropTypes.string.isRequired,
   monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array).isRequired)
     .isRequired,
-  changeMonth: PropTypes.func.isRequired
+  monthEvents: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array).isRequired)
+    .isRequired,
+  changeMonth: PropTypes.func.isRequired,
+  today: PropTypes.array.isRequired
 };
