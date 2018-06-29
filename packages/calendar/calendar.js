@@ -206,30 +206,6 @@ export default class Calendar extends React.Component {
                                         item === null ? (
                                           <td />
                                         ) : (
-<<<<<<< Updated upstream
-                                          <td key={item.id}>
-                                            <div
-                                              css={`
-                                                background-color: ${item.color};
-                                                border-radius: 5px;
-                                                padding: 5px;
-                                                margin: 0 2px;
-                                                white-space: nowrap;
-                                                overflow: hidden;
-                                                text-overflow: ellipsis;
-                                                font-size: 14px;
-                                                color: white;
-                                                font-family: 'arial';
-                                              `}
-                                            >
-                                              <span style={{fontWeight: '700'}}>
-                                                {format(item.start_date, 'p')
-                                                  .replace(/\s+/g, '')
-                                                  .toLowerCase()}
-                                              </span>{' '}
-                                              - {item.name}
-                                            </div>
-=======
                                           <td
                                             key={item.id}
                                             colSpan={item.all_day === 1 ? 1 : 1}
@@ -237,9 +213,10 @@ export default class Calendar extends React.Component {
                                             <EventWrapper
                                               event={item}
                                               name={item.name}
+                                              css="
+                                              padding: 0 2px;"
                                             >
                                               <Text
-                                                element="div"
                                                 truncate
                                                 noMargins
                                                 color="white"
@@ -247,8 +224,6 @@ export default class Calendar extends React.Component {
                                                   background-color: ${item.color};
                                                   border-radius: 5px;
                                                   padding: 5px;
-                                                  margin: 0 2px;
-                                                  white-space: nowrap;
                                                   font-size: 14px;
                                                 `}
                                               >
@@ -260,7 +235,6 @@ export default class Calendar extends React.Component {
                                                 - {item.name}
                                               </Text>
                                             </EventWrapper>
->>>>>>> Stashed changes
                                           </td>
                                         )
                                     )}
