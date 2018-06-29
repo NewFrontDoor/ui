@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {cx, css} from 'react-emotion';
+import {cx, css, styled} from 'react-emotion';
 import {format} from 'date-fns/esm';
+import {Text} from 'mineral-ui';
 import CalendarControls from './calendar-controls';
 
 const tableStyle = css``;
@@ -17,28 +18,21 @@ const tableReset = css`
 
 const headingRow = css`
   border-spacing: 4px 0px;
-  th {
-    height: 1rem;
-    padding: 4px 0;
-    vertical-align: middle;
-    background: lightblue;
-    text-align: center;
-    font-family: 'helvetica';
-  }
   th:first-of-type {
     width: 30px;
   }
 `;
 
+const headTh = styled('th')`
+  height: 1rem;
+  padding: 4px 0;
+  vertical-align: middle;
+  background: lightblue;
+  text-align: center;
+  font-family: 'helvetica';
+`;
+
 const weekRowHeader = css`
-  th {
-    height: 1rem;
-    font-size: 20px;
-    text-align: left;
-    font-family: 'helvetica';
-    font-weight: 300;
-    padding: 5px 0 0 10px;
-  }
   th:first-of-type {
     width: 30px;
     font-size: 15px;
@@ -47,20 +41,13 @@ const weekRowHeader = css`
     padding: 0;
   }
 `;
-
-const weekRow = css`
-  td {
-    height: 1rem;
-    font-size: 14px;
-    padding: 2px 2px;
-    border: 1px solid #ccc;
-    text-align: left;
-    border-radius: 2px;
-    margin: 4px;
-  }
-  td:first-of-type {
-    width: 30px;
-  }
+const weekTh = styled('th')`
+  height: 1rem;
+  font-size: 20px;
+  text-align: left;
+  font-family: 'helvetica';
+  font-weight: 300;
+  padding: 5px 0 0 10px;
 `;
 
 const infill = css`
@@ -142,14 +129,14 @@ export default class Calendar extends React.Component {
                     <table className={cx(tableReset, headingRow)}>
                       <thead>
                         <tr>
-                          <th>Wk</th>
-                          <th>Sun</th>
-                          <th>Mon</th>
-                          <th>Tues</th>
-                          <th>Wed</th>
-                          <th>Thur</th>
-                          <th>Fri</th>
-                          <th>Sat</th>
+                          <headTh>Wk</headTh>
+                          <headTh>Sun</headTh>
+                          <headTh>Mon</headTh>
+                          <headTh>Tues</headTh>
+                          <headTh>Wed</headTh>
+                          <headTh>Thur</headTh>
+                          <headTh>Fri</headTh>
+                          <headTh>Sat</headTh>
                         </tr>
                       </thead>
                     </table>
@@ -192,9 +179,11 @@ export default class Calendar extends React.Component {
                             <table className={cx(tableStyle, tableReset)}>
                               <thead>
                                 <tr className={weekRowHeader}>
-                                  <th>{this.props.weekNumber + index}</th>
+                                  <weekTh>
+                                    {this.props.weekNumber + index}
+                                  </weekTh>
                                   {row.map(date => (
-                                    <th key={date[0]}>{date[0]}</th>
+                                    <weekTh key={date[0]}>{date[0]}</weekTh>
                                   ))}
                                 </tr>
                               </thead>
@@ -217,6 +206,7 @@ export default class Calendar extends React.Component {
                                         item === null ? (
                                           <td />
                                         ) : (
+<<<<<<< Updated upstream
                                           <td key={item.id}>
                                             <div
                                               css={`
@@ -239,6 +229,38 @@ export default class Calendar extends React.Component {
                                               </span>{' '}
                                               - {item.name}
                                             </div>
+=======
+                                          <td
+                                            key={item.id}
+                                            colSpan={item.all_day === 1 ? 1 : 1}
+                                          >
+                                            <EventWrapper
+                                              event={item}
+                                              name={item.name}
+                                            >
+                                              <Text
+                                                element="div"
+                                                truncate
+                                                noMargins
+                                                color="white"
+                                                css={`
+                                                  background-color: ${item.color};
+                                                  border-radius: 5px;
+                                                  padding: 5px;
+                                                  margin: 0 2px;
+                                                  white-space: nowrap;
+                                                  font-size: 14px;
+                                                `}
+                                              >
+                                                <Text fontWeight="bold">
+                                                  {format(item.start_date, 'p')
+                                                    .replace(/\s+/g, '')
+                                                    .toLowerCase()}
+                                                </Text>{' '}
+                                                - {item.name}
+                                              </Text>
+                                            </EventWrapper>
+>>>>>>> Stashed changes
                                           </td>
                                         )
                                     )}
