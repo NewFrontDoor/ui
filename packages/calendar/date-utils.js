@@ -40,18 +40,23 @@ export function monthBuilder(passedDate, eventData) {
 export function eventArrayBuilder(events) {
   const eventObj = {};
   events.map(event => {
-    let iterator = 0;
+    let iterator = 1;
     const localDate = addHours(event.start_date, 10);
+    const localEndDate = addHours(event.end_date, 10);
     const week = getWeek(localDate, {weekStartsOn: 0});
     const day = getDay(localDate);
+    const endDay = getDay(localEndDate);
     const eventCopy = Object.assign({}, event);
     eventCopy.start_date = localDate;
-    eventCopy.end_date = addHours(event.end_date, 10);
+    eventCopy.end_date = localEndDate;
     if (!eventObj.hasOwnProperty(week)) {
       eventObj[week] = [];
       eventObj[week].push(new Array(7).fill(null));
+      eventObj[week].push(new Array(7).fill(null));
     }
-    if (eventObj[week][iterator][day] === null) {
+    if (eventCopy.all_day === 1) {
+      eventObj[week][0].splice(day, 1, eventCopy);
+    } else if (eventObj[week][iterator][day] === null) {
       eventObj[week][iterator].splice(day, 1, eventCopy);
     } else {
       iterator++;
