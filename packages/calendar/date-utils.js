@@ -48,10 +48,7 @@ export function eventArrayBuilder(events) {
     const endDay = getDay(localEndDate);
     const eventCopy = Object.assign({}, event);
     eventCopy.start_date = localDate;
-<<<<<<< Updated upstream
-=======
     eventCopy.end_date = localEndDate;
->>>>>>> Stashed changes
     if (!eventObj.hasOwnProperty(week)) {
       eventObj[week] = [];
       eventObj[week].push(new Array(7).fill(null));

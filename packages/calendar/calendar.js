@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {cx, css, styled} from 'react-emotion';
 import {format} from 'date-fns/esm';
+import styled, {cx, css} from 'react-emotion';
 import {Text} from 'mineral-ui';
 import CalendarControls from './calendar-controls';
+import EventWrapper from './event-wrapper';
 
 const tableStyle = css``;
 
@@ -23,7 +24,7 @@ const headingRow = css`
   }
 `;
 
-const headTh = styled('th')`
+const HeadTh = styled('th')`
   height: 1rem;
   padding: 4px 0;
   vertical-align: middle;
@@ -41,7 +42,8 @@ const weekRowHeader = css`
     padding: 0;
   }
 `;
-const weekTh = styled('th')`
+
+const WeekTh = styled('th')`
   height: 1rem;
   font-size: 20px;
   text-align: left;
@@ -129,14 +131,14 @@ export default class Calendar extends React.Component {
                     <table className={cx(tableReset, headingRow)}>
                       <thead>
                         <tr>
-                          <headTh>Wk</headTh>
-                          <headTh>Sun</headTh>
-                          <headTh>Mon</headTh>
-                          <headTh>Tues</headTh>
-                          <headTh>Wed</headTh>
-                          <headTh>Thur</headTh>
-                          <headTh>Fri</headTh>
-                          <headTh>Sat</headTh>
+                          <HeadTh>Wk</HeadTh>
+                          <HeadTh>Sun</HeadTh>
+                          <HeadTh>Mon</HeadTh>
+                          <HeadTh>Tues</HeadTh>
+                          <HeadTh>Wed</HeadTh>
+                          <HeadTh>Thur</HeadTh>
+                          <HeadTh>Fri</HeadTh>
+                          <HeadTh>Sat</HeadTh>
                         </tr>
                       </thead>
                     </table>
@@ -179,11 +181,11 @@ export default class Calendar extends React.Component {
                             <table className={cx(tableStyle, tableReset)}>
                               <thead>
                                 <tr className={weekRowHeader}>
-                                  <weekTh>
+                                  <WeekTh>
                                     {this.props.weekNumber + index}
-                                  </weekTh>
+                                  </WeekTh>
                                   {row.map(date => (
-                                    <weekTh key={date[0]}>{date[0]}</weekTh>
+                                    <WeekTh key={date[0]}>{date[0]}</WeekTh>
                                   ))}
                                 </tr>
                               </thead>
