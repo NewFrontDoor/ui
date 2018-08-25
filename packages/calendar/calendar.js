@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {cx, css} from 'react-emotion';
+import {format} from 'date-fns/esm';
+import styled, {cx, css} from 'react-emotion';
+import {Text} from 'mineral-ui';
 import CalendarControls from './calendar-controls';
 import EventWrapper from './event-wrapper';
 
@@ -17,28 +19,21 @@ const tableReset = css`
 
 const headingRow = css`
   border-spacing: 4px 0px;
-  th {
-    height: 1rem;
-    padding: 4px 0;
-    vertical-align: middle;
-    background: lightblue;
-    text-align: center;
-    font-family: 'helvetica';
-  }
   th:first-of-type {
     width: 30px;
   }
 `;
 
+const HeadTh = styled('th')`
+  height: 1rem;
+  padding: 4px 0;
+  vertical-align: middle;
+  background: lightblue;
+  text-align: center;
+  font-family: 'helvetica';
+`;
+
 const weekRowHeader = css`
-  th {
-    height: 1rem;
-    font-size: 20px;
-    text-align: left;
-    font-family: 'helvetica';
-    font-weight: 300;
-    padding: 5px 0 0 10px;
-  }
   th:first-of-type {
     width: 30px;
     font-size: 15px;
@@ -48,19 +43,13 @@ const weekRowHeader = css`
   }
 `;
 
-const weekRow = css`
-  td {
-    height: 1rem;
-    font-size: 14px;
-    padding: 2px 2px;
-    border: 1px solid #ccc;
-    text-align: left;
-    border-radius: 2px;
-    margin: 4px;
-  }
-  td:first-of-type {
-    width: 30px;
-  }
+const WeekTh = styled('th')`
+  height: 1rem;
+  font-size: 20px;
+  text-align: left;
+  font-family: 'helvetica';
+  font-weight: 300;
+  padding: 5px 0 0 10px;
 `;
 
 const infill = css`
@@ -142,14 +131,14 @@ export default class Calendar extends React.Component {
                     <table className={cx(tableReset, headingRow)}>
                       <thead>
                         <tr>
-                          <th>Wk</th>
-                          <th>Sun</th>
-                          <th>Mon</th>
-                          <th>Tues</th>
-                          <th>Wed</th>
-                          <th>Thur</th>
-                          <th>Fri</th>
-                          <th>Sat</th>
+                          <HeadTh>Wk</HeadTh>
+                          <HeadTh>Sun</HeadTh>
+                          <HeadTh>Mon</HeadTh>
+                          <HeadTh>Tues</HeadTh>
+                          <HeadTh>Wed</HeadTh>
+                          <HeadTh>Thur</HeadTh>
+                          <HeadTh>Fri</HeadTh>
+                          <HeadTh>Sat</HeadTh>
                         </tr>
                       </thead>
                     </table>
@@ -192,9 +181,11 @@ export default class Calendar extends React.Component {
                             <table className={cx(tableStyle, tableReset)}>
                               <thead>
                                 <tr className={weekRowHeader}>
-                                  <th>{this.props.weekNumber + index}</th>
+                                  <WeekTh>
+                                    {this.props.weekNumber + index}
+                                  </WeekTh>
                                   {row.map(date => (
-                                    <th key={date[0]}>{date[0]}</th>
+                                    <WeekTh key={date[0]}>{date[0]}</WeekTh>
                                   ))}
                                 </tr>
                               </thead>
@@ -218,7 +209,36 @@ export default class Calendar extends React.Component {
                                         item === null ? (
                                           <td />
                                         ) : (
-                                          <td key={item.id}>{item.name}</td>
+                                          <td
+                                            key={item.id}
+                                            colSpan={item.all_day === 1 ? 1 : 1}
+                                          >
+                                            <EventWrapper
+                                              event={item}
+                                              name={item.name}
+                                              css="
+                                              padding: 0 2px;"
+                                            >
+                                              <Text
+                                                truncate
+                                                noMargins
+                                                color="white"
+                                                css={`
+                                                  background-color: ${item.color};
+                                                  border-radius: 5px;
+                                                  padding: 5px;
+                                                  font-size: 14px;
+                                                `}
+                                              >
+                                                <Text fontWeight="bold">
+                                                  {format(item.start_date, 'p')
+                                                    .replace(/\s+/g, '')
+                                                    .toLowerCase()}
+                                                </Text>{' '}
+                                                - {item.name}
+                                              </Text>
+                                            </EventWrapper>
+                                          </td>
                                         )
                                     )}
                                   </tr>

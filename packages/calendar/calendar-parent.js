@@ -83,3 +83,29 @@ export default class CalendarParent extends React.Component {
     );
   }
 }
+
+CalendarParent.propTypes = {
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      picture: PropTypes.string,
+      // eslint-disable-next-line camelcase
+      calendar_id: PropTypes.string.isRequired,
+      interval: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      // eslint-disable-next-line camelcase
+      admin_notes: PropTypes.string,
+      where: PropTypes.string,
+      // eslint-disable-next-line camelcase
+      start_date: PropTypes.string.isRequired,
+      // eslint-disable-next-line camelcase
+      end_date: PropTypes.string.isRequired,
+      // eslint-disable-next-line camelcase
+      all_day: PropTypes.string.isRequired,
+      url: PropTypes.string,
+      color: PropTypes.string,
+      locations: PropTypes.object
+    })
+  ).isRequired
+};
