@@ -33,6 +33,8 @@ const HeadTh = styled('th')`
   font-family: 'helvetica';
 `;
 
+const weekRow = css``;
+
 const weekRowHeader = css`
   th:first-of-type {
     width: 30px;
@@ -190,9 +192,11 @@ export default class Calendar extends React.Component {
                                 </tr>
                               </thead>
                               <tbody>
-                                {this.props.monthEvents[
-                                  this.props.weekNumber + index
-                                ].map((row, position) => (
+                                {(
+                                  this.props.monthEvents[
+                                    this.props.weekNumber + index
+                                  ] || []
+                                ).map((eventRow, position) => (
                                   <tr
                                     key={
                                       this.props.weekNumber +
@@ -204,7 +208,7 @@ export default class Calendar extends React.Component {
                                     className={weekRow}
                                   >
                                     <th />
-                                    {row.map(
+                                    {eventRow.map(
                                       item =>
                                         item === null ? (
                                           <td />
