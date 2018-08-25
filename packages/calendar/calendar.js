@@ -210,6 +210,7 @@ export default class Calendar extends React.Component {
                                       position +
                                       1
                                     }
+                                    className={weekRow}
                                   >
                                     <th />
                                     {row.map(
