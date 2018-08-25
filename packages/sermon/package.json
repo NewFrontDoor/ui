@@ -2,7 +2,8 @@
   "name": "@nfd/sermon",
   "version": "0.0.0",
   "dependencies": {
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "react-audio-player": "^0.10.0"
   },
   "peerDependencies": {
     "emotion": "^9.0",
