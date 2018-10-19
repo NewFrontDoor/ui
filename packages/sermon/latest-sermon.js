@@ -1,24 +1,43 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import Text from 'mineral-ui/Text';
+import Link from 'mineral-ui/Link';
+import Box from 'mineral-ui/Box';
+import PropTypes from 'prop-types';
 
 class LatestSermon extends React.PureComponent {
   render() {
-    const {title, preacher, datePreached, sermonUrl, artUrl, ...props} = this.props;
+    const {title, preacher, sermonUrl, sermonImg} = this.props;
     return (
-      <section>
-        <h2>Latest Sermon</h2>
-        <div className="latest-sermon-content">
-          <div className='latest-sermon-art' style={{width: '360px', height: '270px'}}>
-            <img src={artUrl} alt="Sermon Art"/>
-          </div>
-          <a href={sermonUrl}>{title}</a>
-          <p>{preacher}</p>
-          <p><ReactAudioPlayer src={sermonUrl} controls /></p>
-          <a href={sermonUrl}>Download Sermon</a>
-        </div>
-      </section>
+      <Box element="section">
+        <Text element="h2" appearance="h4">
+          Latest Sermon
+        </Text>
+        <Box>
+          <Box className="latest-sermon-art">
+            <img src={sermonImg} alt="Sermon Art" />
+          </Box>
+          <Text>
+            <Link href={sermonUrl}>{title}</Link>
+          </Text>
+          <Text>{preacher}</Text>
+          <Text>
+            <ReactAudioPlayer src={sermonUrl} controls />
+          </Text>
+          <Text>
+            <Link href={sermonUrl}>Download Sermon</Link>
+          </Text>
+        </Box>
+      </Box>
     );
   }
 }
+
+LatestSermon.propTypes = {
+  title: PropTypes.string.isRequired,
+  preacher: PropTypes.string.isRequired,
+  sermonUrl: PropTypes.string.isRequired,
+  sermonImg: PropTypes.string.isRequired
+};
 
 export default LatestSermon;

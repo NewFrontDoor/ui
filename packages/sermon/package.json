@@ -11,5 +11,9 @@
     "react": "^16.0",
     "react-emotion": "^9.0"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {
+    "he": "^1.2.0",
+    "isomorphic-fetch": "^2.2.1"
+  }
 }
