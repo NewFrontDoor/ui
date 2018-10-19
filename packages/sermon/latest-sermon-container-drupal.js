@@ -1,6 +1,7 @@
 import React from 'react';
 import {decode} from 'he';
 import fetch from 'isomorphic-fetch';
+import Box from 'mineral-ui/Box';
 import LatestSermon from './latest-sermon';
 
 // Should end in trailing slash
@@ -11,7 +12,7 @@ class LatestSermonContainerDrupal extends React.PureComponent {
     super();
     this.state = {
       loading: true,
-      error: '',
+      error: null,
       latestSermon: {}
     };
 
@@ -26,12 +27,12 @@ class LatestSermonContainerDrupal extends React.PureComponent {
           sermonUrl: sermon.url,
           sermonImg: sermon.sermon_img,
           sermonSeries: sermon.sermonseries,
-          biblePassage: sermon.text,
-          loading: false
+          biblePassage: sermon.text
         };
 
         this.setState({
-          latestSermon: lsTransformed
+          latestSermon: lsTransformed,
+          loading: false
         });
       })
       .catch(err => {
@@ -49,9 +50,9 @@ class LatestSermonContainerDrupal extends React.PureComponent {
 
   render() {
     return (
-      <section>
-        <LatestSermon {...this.state.latestSermon} />
-      </section>
+      <Box element="section">
+        <LatestSermon {...this.state} />
+      </Box>
     );
   }
 }
