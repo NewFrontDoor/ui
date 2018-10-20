@@ -13,20 +13,17 @@ class RecentSeries extends React.PureComponent {
 
     return (
       <section>
-        <h2>{this.props.header}</h2>
+        <h2>{header}</h2>
         <div className="row">
           {/* Map the four most recent to below layout */}
 
           <div className="recent-series-content col-sm-3">
-            <div
-              className="sermon-art"
-              style={{width: '260px', height: '260px'}}
-            >
-              <a href={this.props.seriesUrl}>
-                <img src={this.props.artUrl} alt="Sermon Art" />
+            <div className='sermon-art' style={{width: '260px', height: '260px'}}>
+              <a href={seriesUrl}>
+                <img src={artUrl} alt="Sermon Art"/>
               </a>
             </div>
-            <a href={this.props.seriesUrl}>{this.props.seriesTitle}</a>
+            <a href={seriesUrl}>{seriesTitle}</a>
           </div>
         </div>
       </section>
