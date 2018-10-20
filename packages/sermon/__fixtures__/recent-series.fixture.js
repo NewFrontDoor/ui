@@ -1,4 +1,4 @@
-import RecentSeries from '../recent-series';
+import RecentSeries from '../src/recent-series';
 
 export default {
   component: RecentSeries,

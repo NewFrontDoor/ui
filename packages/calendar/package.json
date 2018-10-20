@@ -1,5 +1,5 @@
 {
-  "name": "@nfd/calendar",
+  "name": "@newfrontdoor/calendar",
   "version": "0.0.0",
   "dependencies": {
     "date-fns": "^2.0.0-alpha.10",

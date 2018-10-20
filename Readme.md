@@ -12,4 +12,4 @@ Install `yarn` (`>v1.7.0`)
 
 To install a specific package to a specific workspace
 
-`yarn workspace @nfd/${workspace} add ${package} --dev`
+`yarn workspace @newfrontdoor/${workspace} add ${package} --dev`

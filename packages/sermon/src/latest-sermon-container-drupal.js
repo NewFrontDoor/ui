@@ -13,7 +13,8 @@ class LatestSermonContainerDrupal extends React.PureComponent {
       error: null,
       latestSermon: {}
     };
-
+  }
+  componentDidMount() {
     this.getLatestSermon()
       .then(ls => {
         const sermon = ls[0];
