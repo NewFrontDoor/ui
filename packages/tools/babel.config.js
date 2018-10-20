@@ -1,8 +1,8 @@
 module.exports = {
   presets: [
-    "@babel/preset-react",
+    '@babel/preset-react',
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
         targets: {
           esmodules: true
@@ -10,9 +10,9 @@ module.exports = {
       }
     ]
   ],
-  "plugins": [
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-spread",
-    "@babel/plugin-proposal-object-rest-spread"
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-transform-spread',
+    '@babel/plugin-proposal-object-rest-spread'
   ]
 };

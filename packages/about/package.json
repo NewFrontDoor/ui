@@ -7,7 +7,7 @@
   },
   "peerDependencies": {
     "emotion": "^9.0",
-    "mineral-ui": "^0.34.0",
+    "mineral-ui": "^0.48.0",
     "react": "^16.0",
     "react-emotion": "^9.0"
   },

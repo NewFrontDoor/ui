@@ -14,6 +14,7 @@ class LatestSermonContainerDrupal extends React.PureComponent {
       latestSermon: {}
     };
   }
+
   componentDidMount() {
     this.getLatestSermon()
       .then(ls => {
@@ -34,9 +35,9 @@ class LatestSermonContainerDrupal extends React.PureComponent {
           loading: false
         });
       })
-      .catch(err => {
+      .catch(error => {
         this.setState({
-          error: err
+          error
         });
       });
   }

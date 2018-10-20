@@ -1,4 +1,4 @@
-# nfd/ui
+# newfrontdoor/ui
 
 ## Getting started
 
