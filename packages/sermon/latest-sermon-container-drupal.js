@@ -2,10 +2,8 @@ import React from 'react';
 import {decode} from 'he';
 import fetch from 'isomorphic-fetch';
 import Box from 'mineral-ui/Box';
+import config from 'react-global-configuration';
 import LatestSermon from './latest-sermon';
-
-// Should end in trailing slash
-const BASE_DRUPAL_URL = 'https://cornerstoneapi.newfrontdoor.org/api/views/';
 
 class LatestSermonContainerDrupal extends React.PureComponent {
   constructor() {
@@ -44,7 +42,9 @@ class LatestSermonContainerDrupal extends React.PureComponent {
 
   getLatestSermon = () => {
     return fetch(
-      `${BASE_DRUPAL_URL}all_sermons_api?limit=1&display_id=services_1`
+      `${config.get(
+        'DRUPAL_BASE_API_URL'
+      )}all_sermons_api?limit=1&display_id=services_1`
     ).then(resp => resp.json());
   };
 
