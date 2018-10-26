@@ -1,0 +1,15 @@
+{
+  "name": "@newfrontdoor/blog",
+  "version": "0.1.0",
+  "dependencies": {
+    "prop-types": "^15.6.0",
+    "date-fns": "^1.29.0"
+  },
+  "peerDependencies": {
+    "emotion": "^9.0",
+    "mineral-ui": "^0.48.0",
+    "react": "^16.0",
+    "react-emotion": "^9.0"
+  },
+  "xo": false
+}
