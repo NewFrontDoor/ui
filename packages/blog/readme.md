@@ -12,7 +12,7 @@ Contains:
  currently using react router, but can be amended for use case
 
  Example use with react-router-dom and Sanity block renderer:
-`
+```
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SanityBlock from './components/SanityBlock';
@@ -47,4 +47,4 @@ class App extends Component {
 }
 
 export default App;
-`
+```
