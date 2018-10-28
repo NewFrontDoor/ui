@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, {css} from 'react-emotion';
 import Text from 'mineral-ui/Text';
-import {Link} from 'react-router-dom';
 import format from 'date-fns/format';
-import SanityBlock from './SanityBlock'; // Or replace with some other block renderer
 
 const ContentWrapper = styled('div')`
   display: flex;
@@ -44,55 +42,52 @@ const Content = styled('div')`
   }
 `;
 
-const Post = props => (
-  <ContentWrapper display="flex">
-    <Meta>
-      <Text element="h2">{props.title}</Text>
-      <Text appearance="mouse">
-        {format(new Date(props.date), 'dddd, MMMM do YYYY')}
-      </Text>
-      <Text
-        className={css`
-          display: none;
-          @media (min-width: 420px) {
-            display: block;
-          }
-        `}
-        element="div"
-        appearance="mouse"
-      >
-        <ul>
-          {props.categories.map(category => (
-            <li key={category.title + props.date}>
-              <Link
-                to={{
-                  pathname: '/blog',
-                  search: `?category=${category.title}`
-                }}
-              >
-                {category.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Text>
-    </Meta>
-    <Content>
-      <SanityBlock blocks={props.body} />
-    </Content>
-  </ContentWrapper>
-);
+const Post = props => {
+  const {linkComponent: Link} = props;
+  return (
+    <ContentWrapper display="flex">
+      <Meta>
+        <Text element="h2">{props.title}</Text>
+        <Text appearance="mouse">
+          {format(new Date(props.date), props.dateFormat)}
+        </Text>
+        <Text
+          className={css`
+            display: none;
+            @media (min-width: 420px) {
+              display: block;
+            }
+          `}
+          element="div"
+          appearance="mouse"
+        >
+          <ul>
+            {props.categories.map(category => (
+              <li key={category.title + props.date}>
+                <Link {...category} />
+              </li>
+            ))}
+          </ul>
+        </Text>
+      </Meta>
+      <Content>{props.renderContent(props.body)}</Content>
+    </ContentWrapper>
+  );
+};
 
 export default Post;
 
 Post.propTypes = {
   title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  dateFormat: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  renderContent: PropTypes.func.isRequired,
+  linkComponent: PropTypes.func.isRequired
 };

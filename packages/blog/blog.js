@@ -30,8 +30,11 @@ class Blog extends Component {
               key={post.title}
               title={post.title}
               date={post._createdAt}
+              dateFormat={this.props.dateFormat}
               categories={post.categories}
               body={post.body}
+              renderContent={this.props.renderContent}
+              linkComponent={this.props.linkComponent}
             />
           ))}
       </>
@@ -50,5 +53,13 @@ Blog.propTypes = {
       categories: PropTypes.string.isRequired
     })
   ).isRequired,
-  category: PropTypes.objectOf(PropTypes.string).isRequired
+  category: PropTypes.objectOf(PropTypes.string).isRequired,
+  linkComponent: PropTypes.func.isRequired,
+  renderContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+    .isRequired,
+  dateFormat: PropTypes.string
+};
+
+Blog.defaultProps = {
+  dateFormat: 'dddd, MMMM do YYYY'
 };
