@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled, {css} from 'react-emotion';
 import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
+import { blocksToText } from './blog-fns';
+import { readingTime } from 'reading-time-estimator';
 
 const ContentWrapper = styled('div')`
   display: flex;
@@ -44,12 +46,16 @@ const Content = styled('div')`
 
 const Post = props => {
   const {linkComponent: Link} = props;
+  const readingLength = readingTime(blocksToText(props.body));
   return (
     <ContentWrapper display="flex">
       <Meta>
         <Text element="h2">{props.title}</Text>
         <Text appearance="mouse">
           {format(new Date(props.date), props.dateFormat)}
+        </Text>
+        <Text appearance="mouse">
+          {readingLength.text}
         </Text>
         <Text
           className={css`
