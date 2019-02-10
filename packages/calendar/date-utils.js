@@ -46,6 +46,7 @@ export function eventArrayBuilder(events) {
     const week = getWeek(localDate, {weekStartsOn: 0});
     const day = getDay(localDate);
     const endDay = getDay(localEndDate);
+    const eventLength = endDay - day;
     const eventCopy = Object.assign({}, event);
     eventCopy.start_date = localDate;
     eventCopy.end_date = localEndDate;

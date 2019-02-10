@@ -5,10 +5,11 @@ import {
   getWeek,
   startOfMonth,
   addMonths,
-  subMonths
+  subMonths,
+  lastDayOfMonth
 } from 'date-fns/esm';
-import {monthBuilder, eventArrayBuilder} from './date-utils';
-import Calendar from './calendar';
+import {monthBuilder, eventArrayBuilder} from './date-utils-grid';
+import Calendar from './calendar-grid-new';
 
 export default class CalendarParent extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class CalendarParent extends React.Component {
       activeMonth: today,
       year: today.getUTCFullYear(),
       monthData: monthBuilder(today, this.props.events),
-      monthEvents: eventArrayBuilder(this.props.events),
+      //monthEvents: eventArrayBuilder(this.props.events),
       weekNumber: getWeek(startOfMonth(today))
     };
     this.handleChange = this.handleChange.bind(this);
@@ -57,7 +58,7 @@ export default class CalendarParent extends React.Component {
         name: format(newMonth, 'MMMM')
       },
       year: newMonth.getUTCFullYear(),
-      monthData: monthBuilder(newMonth),
+      monthData: monthBuilder(newMonth, this.props.events),
       weekNumber: getWeek(startOfMonth(newMonth))
     });
   }
@@ -70,7 +71,9 @@ export default class CalendarParent extends React.Component {
           parseInt(format(this.state.today, 'L'), 10),
           parseInt(format(this.state.today, 'y'), 10)
         ]}
-        events={this.state.events}
+        events={this.props.events}
+        lastSunday={parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'd')) - parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'i'))}
+        firstDay={parseInt(format(startOfMonth(this.state.today), 'i')) + 1}
         handleChange={this.handleChange}
         valueMethod={this.state.valueMethod}
         changeMonth={this.changeMonth}
@@ -102,7 +105,7 @@ CalendarParent.propTypes = {
       // eslint-disable-next-line camelcase
       end_date: PropTypes.string.isRequired,
       // eslint-disable-next-line camelcase
-      all_day: PropTypes.string.isRequired,
+      all_day: PropTypes.number.isRequired,
       url: PropTypes.string,
       color: PropTypes.string,
       locations: PropTypes.object
