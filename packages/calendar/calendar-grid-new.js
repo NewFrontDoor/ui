@@ -19,23 +19,27 @@ background: #f5f7fa;
   font-family: Montserrat, "sans-serif";
   color: #51565d;
 `
-
+const CalendarHeader = styled('div')`
+  display:grid;
+  grid-template-columns: 50px repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  grid-gap: 0rem;
+  height: 50px;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+  line-height: 50px;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #99a1a7;
+`
 const CalendarBody = styled('div')`
   display:grid;
-  grid-template-columns: repeat(7, 4fr);
-  grid-template-rows: 50px;
-  grid-auto-rows: 120px;
-  grid-auto-flow: dense;
+  grid-template-columns: 50px repeat(7, 1fr);
+  grid-template-rows: repeat(6, repeat(4, 1fr));
+  grid-auto-rows: 25px;
   grid-gap: 0rem;
-  .week-day {
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #99a1a7;
-    text-align: center;
-    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
-    line-height: 50px;
-    font-weight: 500;
-  }
   .day {
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
     border-right: 1px solid rgba(166, 168, 179, 0.12);
@@ -49,65 +53,41 @@ const CalendarBody = styled('div')`
     pointer-events: none;
     z-index: 1;
   }
-
-.day:nth-of-type(7n + 7) {
-  border-right: 0;
-}
-.day:nth-of-type(n + 1):nth-of-type(-n + 7) {
-  grid-row: 1;
-}
-.day:nth-of-type(n + 8):nth-of-type(-n + 14) {
-  grid-row: 2;
-}
-.day:nth-of-type(n + 15):nth-of-type(-n + 21) {
-  grid-row: 3;
-}
-.day:nth-of-type(n + 22):nth-of-type(-n + 28) {
-  grid-row: 4;
-}
-.day:nth-of-type(n + 29):nth-of-type(-n + 35) {
-  grid-row: 5;
-}
-.day:nth-of-type(n + 36):nth-of-type(-n + 42) {
-  grid-row: 6;
-}
-.day:nth-of-type(7n + 1) {
-  grid-column: 1/1;
-}
-.day:nth-of-type(7n + 2) {
-  grid-column: 2/2;
-}
-.day:nth-of-type(7n + 3) {
-  grid-column: 3/3;
-}
-.day:nth-of-type(7n + 4) {
-  grid-column: 4/4;
-}
-.day:nth-of-type(7n + 5) {
-  grid-column: 5/5;
-}
-.day:nth-of-type(7n + 6) {
-  grid-column: 6/6;
-}
-.day:nth-of-type(7n + 7) {
-  grid-column: 7/7;
-}`
+`
 
 const Event = styled.section(
   {
     borderLeftWidth: "3px",
-    padding: "8px 12px",
-    margin: "10px",
+    padding: "4px 12px",
     borderLeftStyle: "solid",
     borderLeftColor: "#fdb44d",
     background: "#fef0db",
     color: "#fc9b10",
     alignSelf: "center",
-    marginTop: "-5px",
     fontSize: "14px",
     position: "relative"
   },
   props => ({gridColumnStart: props.col, gridRowStart: props.row, gridRowEnd: props.row, gridColumnEnd: `span ${props.span}` })
+)
+
+const Day = styled.div(
+  {
+    borderBottom: "1px solid rgba(166, 168, 179, 0.12)",
+    borderRight: "1px solid rgba(166, 168, 179, 0.12)",
+    padding: "5px 5px",
+    textAlign: "right",
+    letterSpacing: "1px",
+    fontSize: "14px",
+    boxSizing: "border-box",
+    color: "#98a0a6",
+    position: "relative",
+    pointerEvents: "none",
+    zIndex: "1",
+  },
+  props => ({
+    gridColumn: props.column,
+    gridRow: `${props.row}/${props.row + 5}`
+  }) 
 )
 
 export default class Calendar extends React.Component {
@@ -124,15 +104,21 @@ export default class Calendar extends React.Component {
           changeMonth={this.props.changeMonth}
           valueMethod={this.props.valueMethod}
         />
-        <CalendarBody>
+        <CalendarHeader>
+          <div className="week-day">Wk</div>
           <div className="week-day">Sunday</div>
           <div className="week-day">Monday</div>
           <div className="week-day">Tuesday</div>
           <div className="week-day">Wednesday</div>
           <div className="week-day">Thursday</div>
           <div className="week-day">Friday</div>
-          <div className="week-day">Saturday</div>  
-          {this.props.monthData.map((day, index) => <div className="day">{day[0]}</div>)}
+          <div className="week-day">Saturday</div>
+        </CalendarHeader>
+        <CalendarBody>
+          {this.props.monthData.map((week, index) => {
+            const row = (index*5) + 1;
+            return week.map((day, index) => <Day row={row} column={index + 2}>{day[0]}</Day>)
+          })}
           {this.props.events.map((event, index) =>
             {
               const startDate = parseInt(format(event.start_date, "d"));
@@ -144,7 +130,7 @@ export default class Calendar extends React.Component {
                     (actual % 7) + 1
                   }
                   row={
-                    Math.floor(actual/7) + 1
+                    ((Math.floor(actual/7)) * 5) - 3
                   }
                   span={parseInt((format(event.end_date, 'd'))) - startDate + 1}
                 >

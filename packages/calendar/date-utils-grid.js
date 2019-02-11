@@ -56,5 +56,5 @@ export function monthBuilder(passedDate, events) {
     fullbuilder[ind].push(event);
     return;
   })
-  return fullbuilder.slice(0, 42);
+  return chunkArray(fullbuilder.slice(0, 42));
 }
