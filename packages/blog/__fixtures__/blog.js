@@ -1,4 +1,4 @@
-import Blog from '..';
+import Blog from '../src';
 
 export default {
   component: Blog,

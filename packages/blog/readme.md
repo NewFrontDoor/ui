@@ -12,7 +12,8 @@ Contains:
  currently using react router, but can be amended for use case
 
  Example use with react-router-dom and Sanity block renderer:
-```
+
+```js
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SanityBlock from './components/SanityBlock';
