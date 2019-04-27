@@ -1,7 +1,7 @@
-import FeaturedSeries from './featured-series';
+import CurrentSeries from '../src/current-series';
 
 export default {
-  component: FeaturedSeries,
+  component: CurrentSeries,
   props: {
     header: 'Current Series',
     seriesTitle: 'Series Title',
