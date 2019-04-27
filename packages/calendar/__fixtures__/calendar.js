@@ -12,7 +12,7 @@ export default {
         admin_notes: '',
         where: 'One Way Christian Church, 9 Endeavour Ave, Margate',
         start_date: '2019-01-05 08:30:00',
-        end_date: '2019-01-05 09:45:00',
+        end_date: '2019-01-09 09:45:00',
         url:
           'https://summerleas.elvanto.com.au/event/795ff775-3ba3-4714-a8aa-7ad342a7a5e3',
         picture: 'https://cdn.elvanto.com.au/img/default-event-avatar.png',
@@ -191,7 +191,7 @@ export default {
         admin_notes: '',
         where: 'One Way Christian Church, 9 Endeavour Ave, Margate',
         start_date: '2019-03-06 08:30:00',
-        end_date: '2019-03-06 09:45:00',
+        end_date: '2019-03-09 09:45:00',
         url:
           'https://summerleas.elvanto.com.au/event/730408b5-175d-4379-b529-23183d232494',
         picture: 'https://cdn.elvanto.com.au/img/default-event-avatar.png',

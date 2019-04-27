@@ -9,7 +9,7 @@ import {
   lastDayOfMonth
 } from 'date-fns/esm';
 import {monthBuilder, eventArrayBuilder} from './date-utils-grid';
-import Calendar from './calendar-grid-new';
+import Calendar from './calendar-grid-by-week';
 
 export default class CalendarParent extends React.Component {
   constructor(props) {

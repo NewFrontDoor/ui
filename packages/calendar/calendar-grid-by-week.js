@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  format,
-  getWeek,
-  startOfMonth,
-  addMonths,
-  subMonths,
-  lastDayOfMonth
+  differenceInCalendarDays,
+  getDay
 } from 'date-fns/esm';
 import styled, {cx, css} from 'react-emotion';
 import CalendarControls from './calendar-controls';
@@ -35,11 +31,11 @@ const CalendarHeader = styled('div')`
   color: #99a1a7;
 `
 const CalendarBody = styled('div')`
-  display:grid;
+  /*display:grid;
   grid-template-columns: 50px repeat(7, 1fr);
   grid-template-rows: repeat(6, repeat(4, 1fr));
   grid-auto-rows: 25px;
-  grid-gap: 0rem;
+  grid-gap: 0rem;*/
   .day {
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
     border-right: 1px solid rgba(166, 168, 179, 0.12);
@@ -54,6 +50,11 @@ const CalendarBody = styled('div')`
     z-index: 1;
   }
 `
+const WeekBlock = styled('div')`
+  display:grid;
+  grid-template-columns: 50px repeat(7, 1fr);
+  grid-auto-flow: row dense;
+`
 
 const Event = styled.section(
   {
@@ -67,7 +68,7 @@ const Event = styled.section(
     fontSize: "14px",
     position: "relative"
   },
-  props => ({gridColumnStart: props.col, gridRowStart: props.row, gridRowEnd: props.row, gridColumnEnd: `span ${props.span}` })
+  props => ({gridColumnStart: props.col, gridColumnEnd: `span ${props.span}` })
 )
 
 const Day = styled.div(
@@ -85,8 +86,7 @@ const Day = styled.div(
     zIndex: "1",
   },
   props => ({
-    gridColumn: props.column,
-    gridRow: `${props.row}/${props.row + 5}`
+    gridColumn: props.column
   }) 
 )
 const Week = styled.div(
@@ -102,8 +102,7 @@ const Week = styled.div(
     zIndex: "1",
   },
   props => ({
-    gridColumn: props.column,
-    gridRow: `${props.row}/${props.row + 5}`
+    gridColumn: props.column
   }) 
 )
 
@@ -133,32 +132,23 @@ export default class Calendar extends React.Component {
         </CalendarHeader>
         <CalendarBody>
           {this.props.monthData.map((week, index) => {
-            const row = (index*5) + 1;
-            return week.map((day, index) => <Day row={row} column={index + 2}>{day[0]}</Day>)
+            return (
+            <WeekBlock>
+              <Week column={1}>{index + 1}</Week>
+              {week.map((day, index) => {
+                var events = [];
+                if (day[3] !== undefined) {
+                  console.log("hooray!");
+                  events.push(<Event col={index + 2} span={differenceInCalendarDays(day[3].end_date, day[3].start_date) + 1}>{day[3].name}</Event>)
+                }
+                return [
+                  <Day column={index + 2}>{day[0]}</Day>,
+                  events
+                ]
+              } )}
+            </WeekBlock>
+            )
           })}
-          {
-            new Array(6).fill().map((week, index) => <Week row={(index*5) + 1} column={1}>{index + 1}</Week>)
-          }
-          {this.props.events.map((event, index) =>
-            {
-              const startDate = parseInt(format(event.start_date, "d"));
-              const offset = this.props.firstDay;
-              const actual = startDate + offset;
-              return (
-                <Event
-                  col={
-                    (actual % 7) + 2
-                  }
-                  row={
-                    ((Math.floor(actual/7)) * 5) - 3
-                  }
-                  span={parseInt((format(event.end_date, 'd'))) - startDate + 1}
-                >
-                  {event.name}
-                </Event>
-              )
-            }
-          )}
         </CalendarBody>
       </div> 
     );
