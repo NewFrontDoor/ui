@@ -21,6 +21,9 @@ const myTheme = createTheme({
     danger: 'bronze',
     warning: 'dusk',
     success: 'teal'
+  },
+  overrides: {
+    h2_fontFamily: "Comic Sans MS",
   }
 });
 

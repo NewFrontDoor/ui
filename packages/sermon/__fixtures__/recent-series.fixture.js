@@ -1,11 +1,5 @@
-import RecentSeries from '../src/recent-series';
+import RecentSeries from '../src/recent-series-container-drupal';
 
 export default {
-  component: RecentSeries,
-  props: {
-    header: 'Recent Series',
-    seriesTitle: 'Series Title 2',
-    seriesUrl: 'http://localhost/series_url',
-    artUrl: 'http://localhost/art_url'
-  }
+  component: RecentSeries
 };
