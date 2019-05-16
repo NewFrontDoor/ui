@@ -25,7 +25,7 @@ export default class CalendarParent extends React.Component {
       activeMonth: today,
       year: today.getUTCFullYear(),
       monthData: monthBuilder(today, this.props.events),
-      //monthEvents: eventArrayBuilder(this.props.events),
+      // A monthEvents: eventArrayBuilder(this.props.events),
       weekNumber: getWeek(startOfMonth(today))
     };
     this.handleChange = this.handleChange.bind(this);
@@ -51,6 +51,7 @@ export default class CalendarParent extends React.Component {
     } else if (option === 'dec+') {
       newMonth = subMonths(this.state.activeMonth, 12);
     }
+
     this.setState({
       activeMonth: newMonth,
       month: {

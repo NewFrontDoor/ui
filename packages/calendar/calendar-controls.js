@@ -58,6 +58,10 @@ export default class CalendarControls extends React.Component {
             handleChange={this.props.handleChange}
             valueMethod={this.props.valueMethod}
             location={this.props.location}
+            inputs={['day','week','month']}
+            styles={{
+              borderRadius: 0
+            }}
           />
         </div>
       </div>

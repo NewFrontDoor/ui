@@ -2,21 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   differenceInCalendarDays,
+  parseISO,
   getDay
 } from 'date-fns/esm';
 import styled, {cx, css} from 'react-emotion';
 import CalendarControls from './calendar-controls';
 import EventWrapper from './event-wrapper';
+import {localiseEvents} from './data-gmt';
 
 const body = css`
-background: #f5f7fa;
+  background: #f5f7fa;
   padding: 40px 0;
   box-sizing: border-box;
-  font-family: Montserrat, "sans-serif";
+  font-family: Montserrat, 'sans-serif';
   color: #51565d;
-`
+`;
+
 const CalendarHeader = styled('div')`
-  display:grid;
+  display: grid;
   grid-template-columns: 50px repeat(7, 1fr);
   grid-template-rows: 1fr;
   grid-gap: 0rem;
@@ -29,7 +32,8 @@ const CalendarHeader = styled('div')`
   font-size: 12px;
   text-transform: uppercase;
   color: #99a1a7;
-`
+`;
+
 const CalendarBody = styled('div')`
   /*display:grid;
   grid-template-columns: 50px repeat(7, 1fr);
@@ -49,67 +53,105 @@ const CalendarBody = styled('div')`
     pointer-events: none;
     z-index: 1;
   }
-`
+`;
+
 const WeekBlock = styled('div')`
-  display:grid;
+  display: grid;
   grid-template-columns: 50px repeat(7, 1fr);
+  grid-template-rows: 26px repeat(3, 1fr);
   grid-auto-flow: row dense;
-`
+  border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+  height: 90px;
+`;
 
 const Event = styled.section(
   {
     borderLeftWidth: "3px",
-    padding: "4px 12px",
+    padding: "4px 6px",
     borderLeftStyle: "solid",
     borderLeftColor: "#fdb44d",
     background: "#fef0db",
     color: "#fc9b10",
     alignSelf: "center",
     fontSize: "14px",
-    position: "relative"
+    position: "relative",
+    textOverflow: "ellipsis",
+    maxWidth: "100%",
+    textWrap: "no-wrap",
+    height: '18px'
   },
-  props => ({gridColumnStart: props.col, gridColumnEnd: `span ${props.span}` })
-)
+  props => ({
+    gridColumnStart: props.col,
+    gridColumnEnd: `span ${props.span}`
+  })
+);
+
+const DayLabel = styled('div')`
+  width: 100%;
+  padding: 5px 5px 0 0;
+  text-align: right;
+  letter-spacing: 1px;
+  font-size: 14px;
+  box-sizing: border-box;
+  color: #98a0a6;
+  position: absolute;
+  height: 90px;
+  pointer-events: none;
+  z-index: 1;
+  border-right: 1px solid rgba(166, 168, 179, 0.12);
+`;
+
+const BlankEvent = styled.div(
+  {
+    position: 'relative',
+    gridRow: '1'
+  },
+  props => ({
+    gridColumn: props.col
+  })
+);
 
 const Day = styled.div(
   {
     borderBottom: "1px solid rgba(166, 168, 179, 0.12)",
     borderRight: "1px solid rgba(166, 168, 179, 0.12)",
-    padding: "5px 5px",
-    textAlign: "right",
-    letterSpacing: "1px",
-    fontSize: "14px",
-    boxSizing: "border-box",
-    color: "#98a0a6",
-    position: "relative",
-    pointerEvents: "none",
-    zIndex: "1",
   },
   props => ({
     gridColumn: props.column
-  }) 
-)
+  })
+);
+
 const Week = styled.div(
   {
     borderRight: "1px solid rgba(166, 168, 179, 0.12)",
-    height: "100%",
-    textAlign: "center",
-    alignSelf: "center",
-    fontSize: "14px",
-    color: "#98a0a6",
-    position: "relative",
+    borderBottom: "1px solid rgba(166, 168, 179, 0.12)",
     pointerEvents: "none",
     zIndex: "1",
+    gridRowStart: "1",
+    gridRowEnd: "5",
+    display: "flex",
+    alignItems: "center"
   },
   props => ({
     gridColumn: props.column
-  }) 
-)
+  })
+);
+
+const WeekLabel = styled.div(
+  {
+    textAlign: "center",
+    fontSize: "14px",
+    color: "#98a0a6",
+    width: "100%"
+  }
+);
 
 export default class Calendar extends React.Component {
   render() {
     console.log(this.props.monthData)
     console.log(this.props.events)
+    const newEvents = localiseEvents(this.props.events);
+    console.log(newEvents);
     return (
       <div css={body}>
         <CalendarControls
@@ -133,20 +175,21 @@ export default class Calendar extends React.Component {
         <CalendarBody>
           {this.props.monthData.map((week, index) => {
             return (
-            <WeekBlock>
-              <Week column={1}>{index + 1}</Week>
-              {week.map((day, index) => {
-                var events = [];
-                if (day[3] !== undefined) {
-                  console.log("hooray!");
-                  events.push(<Event col={index + 2} span={differenceInCalendarDays(day[3].end_date, day[3].start_date) + 1}>{day[3].name}</Event>)
-                }
-                return [
-                  <Day column={index + 2}>{day[0]}</Day>,
-                  events
-                ]
-              } )}
-            </WeekBlock>
+              <WeekBlock>
+                <Week column={1}><WeekLabel>{this.props.weekNumber + index}</WeekLabel></Week>
+                {week.map((day, index) => {
+                    const events = [<BlankEvent col={index + 2}><DayLabel>{day[0]}</DayLabel></BlankEvent>];
+                    if (day[3] !== undefined) {
+                      events.push(
+                        <Event col={index + 2} span={differenceInCalendarDays(parseISO(day[3].end_date), parseISO(day[3].start_date)) + 1}>
+                          {day[3].name}
+                        </Event>
+                      );
+                    }
+
+                    return events
+                })}
+              </WeekBlock>
             )
           })}
         </CalendarBody>

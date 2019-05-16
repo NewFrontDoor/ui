@@ -2,7 +2,7 @@
   "name": "@newfrontdoor/calendar",
   "version": "0.0.0",
   "dependencies": {
-    "date-fns": "^2.0.0-alpha.10",
+    "date-fns": "^2.0.0-alpha.27",
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
     "react-radio-group": "^3.0.3"
