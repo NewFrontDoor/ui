@@ -1,0 +1,15 @@
+{
+  "name": "@newfrontdoor/toggleselector",
+  "version": "0.0.1",
+  "dependencies": {
+    "prop-types": "^15.6.0",
+    "react-radio-group": "^3.0.3"
+  },
+  "peerDependencies": {
+    "emotion": "^9.0",
+    "mineral-ui": "^0.48.0",
+    "react": "^16.0",
+    "react-emotion": "^9.0"
+  },
+  "xo": false
+}
