@@ -75,11 +75,6 @@ export function monthBuilder(passedDate, events) {
   const lastDatePrevMonth = lastDayOfMonth(subMonths(passedDate, 1));
   const lastSundayPrevMonthDate = format(lastDatePrevMonth, 'd') - getDay(lastDatePrevMonth);
 
-  console.log("-----");
-  console.log(format(lastDatePrevMonth, 'd'));
-  console.log(getDay(lastDatePrevMonth));
-  console.log("-----");
-
   const fullMonthCalendar = buildFullCalendarArray(passedDate, lastDatePrevMonth, lastSundayPrevMonthDate, pm, nm);
 
   //place events into the fullMonthCalendar array
