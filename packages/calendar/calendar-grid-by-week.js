@@ -1,84 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  differenceInCalendarDays,
+  differenceInDays,
   parseISO,
-  getDay
+  addHours
 } from 'date-fns/esm';
-import styled, {cx, css} from 'react-emotion';
-import CalendarControls from './calendar-controls';
+import styled from 'react-emotion';
 import EventWrapper from './event-wrapper';
-import {localiseEvents} from './data-gmt';
 
-const body = css`
-  background: #f5f7fa;
-  padding: 40px 0;
-  box-sizing: border-box;
-  font-family: Montserrat, 'sans-serif';
-  color: #51565d;
-`;
+const bgStyles = {
+  prev: 'rgba(166, 168, 179, 0.08)',
+  current: 'none',
+  next: 'rgba(166, 168, 179, 0.08)'
+};
 
-const CalendarHeader = styled('div')`
-  display: grid;
-  grid-template-columns: 50px repeat(7, 1fr);
-  grid-template-rows: 1fr;
-  grid-gap: 0rem;
-  height: 50px;
-  align-items: center;
-  text-align: center;
-  border-bottom: 1px solid rgba(166, 168, 179, 0.12);
-  line-height: 50px;
-  font-weight: 500;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #99a1a7;
-`;
+const WeekBlock = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '50px repeat(7, 1fr)',
+  gridTemplateRows: '26px repeat(3, 1fr)',
+  gridAutoFlow: 'row dense',
+  borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
+  height: '104px'
+});
 
-const CalendarBody = styled('div')`
-  /*display:grid;
-  grid-template-columns: 50px repeat(7, 1fr);
-  grid-template-rows: repeat(6, repeat(4, 1fr));
-  grid-auto-rows: 25px;
-  grid-gap: 0rem;*/
-  .day {
-    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
-    border-right: 1px solid rgba(166, 168, 179, 0.12);
-    padding: 14px 20px;
-    text-align: right;
-    letter-spacing: 1px;
-    font-size: 12px;
-    box-sizing: border-box;
-    color: #98a0a6;
-    position: relative;
-    pointer-events: none;
-    z-index: 1;
-  }
-`;
-
-const WeekBlock = styled('div')`
-  display: grid;
-  grid-template-columns: 50px repeat(7, 1fr);
-  grid-template-rows: 26px repeat(3, 1fr);
-  grid-auto-flow: row dense;
-  border-bottom: 1px solid rgba(166, 168, 179, 0.12);
-  height: 90px;
-`;
-
-const Event = styled.section(
+const Event = styled.div(
   {
-    borderLeftWidth: "3px",
-    padding: "4px 6px",
-    borderLeftStyle: "solid",
-    borderLeftColor: "#fdb44d",
+    borderLeft: "2px solid #fdb44d",
+    padding: "2px 3px",
     background: "#fef0db",
     color: "#fc9b10",
     alignSelf: "center",
-    fontSize: "14px",
+    fontSize: "12px",
     position: "relative",
-    textOverflow: "ellipsis",
+    overflow: "hidden",
     maxWidth: "100%",
-    textWrap: "no-wrap",
-    height: '18px'
+    whiteSpace: "nowrap",
+    height: '18px',
+    zIndex: '1'
   },
   props => ({
     gridColumnStart: props.col,
@@ -86,117 +44,66 @@ const Event = styled.section(
   })
 );
 
-const DayLabel = styled('div')`
-  width: 100%;
-  padding: 5px 5px 0 0;
-  text-align: right;
-  letter-spacing: 1px;
-  font-size: 14px;
-  box-sizing: border-box;
-  color: #98a0a6;
-  position: absolute;
-  height: 90px;
-  pointer-events: none;
-  z-index: 1;
-  border-right: 1px solid rgba(166, 168, 179, 0.12);
-`;
-
-const BlankEvent = styled.div(
+const DayNumber = styled.div(
   {
     position: 'relative',
-    gridRow: '1'
+    gridRow: '1',
+    width: '100%',
+    padding: '5px 5px 0 0',
+    textAlign: 'right',
+    letterSpacing: '1px',
+    fontSize: '14px',
+    boxSizing: 'border-box',
+    color: '#98a0a6',
+    height: '104px',
+    pointerEvents: 'none',
+    borderRight: '1px solid rgba(166, 168, 179, 0.12)'
   },
   props => ({
-    gridColumn: props.col
+    gridColumn: props.col,
+    backgroundColor: bgStyles[props.bgStyle]
   })
 );
 
-const Day = styled.div(
-  {
-    borderBottom: "1px solid rgba(166, 168, 179, 0.12)",
-    borderRight: "1px solid rgba(166, 168, 179, 0.12)",
-  },
-  props => ({
-    gridColumn: props.column
-  })
-);
-
-const Week = styled.div(
+const WeekNumber = styled.div(
   {
     borderRight: "1px solid rgba(166, 168, 179, 0.12)",
-    borderBottom: "1px solid rgba(166, 168, 179, 0.12)",
     pointerEvents: "none",
-    zIndex: "1",
     gridRowStart: "1",
     gridRowEnd: "5",
     display: "flex",
-    alignItems: "center"
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: "14px",
+    color: "#98a0a6",
   },
   props => ({
     gridColumn: props.column
   })
 );
 
-const WeekLabel = styled.div(
-  {
-    textAlign: "center",
-    fontSize: "14px",
-    color: "#98a0a6",
-    width: "100%"
-  }
-);
+const Calendar = props => [
+    props.monthData.map((week, index) => (
+        <WeekBlock>
+          <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
+          {week.map((day, index) => {
+              const events = [<DayNumber col={index + 2} bgStyle={day[2]}>{day[0]}</DayNumber>];
+              if (day[3] !== undefined) {
+                day[3].map((event) => {
+                  events.push(
+                  <Event col={index + 2} span={event.event_length}>
+                    <EventWrapper name={event.name}>{event.name}</EventWrapper>
+                  </Event>
+                );
+                })
+              }
 
-export default class Calendar extends React.Component {
-  render() {
-    console.log(this.props.monthData)
-    console.log(this.props.events)
-    const newEvents = localiseEvents(this.props.events);
-    console.log(newEvents);
-    return (
-      <div css={body}>
-        <CalendarControls
-          month={this.props.month}
-          year={this.props.year}
-          location="top"
-          handleChange={this.props.handleChange}
-          changeMonth={this.props.changeMonth}
-          valueMethod={this.props.valueMethod}
-        />
-        <CalendarHeader>
-          <div className="week-day">Wk</div>
-          <div className="week-day">Sunday</div>
-          <div className="week-day">Monday</div>
-          <div className="week-day">Tuesday</div>
-          <div className="week-day">Wednesday</div>
-          <div className="week-day">Thursday</div>
-          <div className="week-day">Friday</div>
-          <div className="week-day">Saturday</div>
-        </CalendarHeader>
-        <CalendarBody>
-          {this.props.monthData.map((week, index) => {
-            return (
-              <WeekBlock>
-                <Week column={1}><WeekLabel>{this.props.weekNumber + index}</WeekLabel></Week>
-                {week.map((day, index) => {
-                    const events = [<BlankEvent col={index + 2}><DayLabel>{day[0]}</DayLabel></BlankEvent>];
-                    if (day[3] !== undefined) {
-                      events.push(
-                        <Event col={index + 2} span={differenceInCalendarDays(parseISO(day[3].end_date), parseISO(day[3].start_date)) + 1}>
-                          {day[3].name}
-                        </Event>
-                      );
-                    }
-
-                    return events
-                })}
-              </WeekBlock>
-            )
+              return events
           })}
-        </CalendarBody>
-      </div> 
-    );
-  }
-}
+        </WeekBlock>
+      )
+    )
+];
 
 Calendar.propTypes = {
   year: PropTypes.number.isRequired,
@@ -211,3 +118,5 @@ Calendar.propTypes = {
   changeMonth: PropTypes.func.isRequired,
   today: PropTypes.array.isRequired
 };
+
+export default Calendar;

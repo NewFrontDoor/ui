@@ -1,8 +1,7 @@
 import React from 'react';
 import {PortalWithState} from 'react-portal';
-import {cx, css} from 'react-emotion';
-import Modal from './modal';
-import EventModal from './event-modal';
+import Modal from './components/modal';
+import EventModal from './components/event-modal';
 
 class EventWrapper extends React.Component {
   render() {
@@ -13,7 +12,15 @@ class EventWrapper extends React.Component {
         closeOnEsc
       >
         {({openPortal, closePortal, portal}) => [
-          <div key={this.props.name + '-portal-button'} onClick={openPortal}>
+          <div
+            key={this.props.name + '-portal-button'}
+            style={{
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis"
+            }}
+            onClick={openPortal}
+          >
             {this.props.children}
           </div>,
           portal(

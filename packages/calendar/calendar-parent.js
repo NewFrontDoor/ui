@@ -8,8 +8,33 @@ import {
   subMonths,
   lastDayOfMonth
 } from 'date-fns/esm';
-import {monthBuilder, eventArrayBuilder} from './date-utils-grid';
+import {monthBuilder, eventArrayBuilder} from './utilities/date-utils-grid';
 import Calendar from './calendar-grid-by-week';
+import CalendarControls from './components/calendar-controls';
+import styled, { css } from 'react-emotion';
+
+const CalendarContainer = styled.div({
+  background: "#f5f7fa",
+  boxSizing: "border-box",
+  fontFamily: "Montserrat, 'sans-serif'",
+  color: "#51565d",
+});
+
+const CalendarHeader = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '50px repeat(7, 1fr)',
+  gridTemplateRows: '1fr',
+  gridGap: '0rem',
+  height: '50px',
+  alignItems: 'center',
+  textAlign: 'center',
+  borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
+  lineHeight: '50px',
+  fontWeight: '500',
+  fontSize: '12px',
+  textTransform: 'uppercase',
+  color: '#99a1a7'
+});
 
 export default class CalendarParent extends React.Component {
   constructor(props) {
@@ -66,24 +91,44 @@ export default class CalendarParent extends React.Component {
 
   render() {
     return (
-      <Calendar
-        today={[
-          parseInt(format(this.state.today, 'd'), 10),
-          parseInt(format(this.state.today, 'L'), 10),
-          parseInt(format(this.state.today, 'y'), 10)
-        ]}
-        events={this.props.events}
-        lastSunday={parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'd')) - parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'i'))}
-        firstDay={parseInt(format(startOfMonth(this.state.today), 'i')) + 1}
-        handleChange={this.handleChange}
-        valueMethod={this.state.valueMethod}
-        changeMonth={this.changeMonth}
-        month={this.state.month}
-        year={this.state.year}
-        monthData={this.state.monthData}
-        monthEvents={this.state.monthEvents}
-        weekNumber={this.state.weekNumber}
-      />
+      <CalendarContainer>
+        <CalendarControls
+            month={this.state.month}
+            year={this.state.year}
+            location="top"
+            handleChange={this.handleChange}
+            changeMonth={this.changeMonth}
+            valueMethod={this.valueMethod}
+          />
+        <CalendarHeader>
+          <div>Wk</div>
+          <div>Sunday</div>
+          <div>Monday</div>
+          <div>Tuesday</div>
+          <div>Wednesday</div>
+          <div>Thursday</div>
+          <div>Friday</div>
+          <div>Saturday</div>
+        </CalendarHeader>
+        <Calendar
+          today={[
+            parseInt(format(this.state.today, 'd'), 10),
+            parseInt(format(this.state.today, 'L'), 10),
+            parseInt(format(this.state.today, 'y'), 10)
+          ]}
+          events={this.props.events}
+          lastSunday={parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'd')) - parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'i'))}
+          firstDay={parseInt(format(startOfMonth(this.state.today), 'i')) + 1}
+          handleChange={this.handleChange}
+          valueMethod={this.state.valueMethod}
+          changeMonth={this.changeMonth}
+          month={this.state.month}
+          year={this.state.year}
+          monthData={this.state.monthData}
+          monthEvents={this.state.monthEvents}
+          weekNumber={this.state.weekNumber}
+        />
+      </CalendarContainer>
     );
   }
 }
@@ -95,7 +140,7 @@ CalendarParent.propTypes = {
       picture: PropTypes.string,
       // eslint-disable-next-line camelcase
       calendar_id: PropTypes.string.isRequired,
-      interval: PropTypes.string,
+      interval: PropTypes.oneOf([PropTypes.string],[PropTypes.number]),
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       // eslint-disable-next-line camelcase
