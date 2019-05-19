@@ -8,18 +8,19 @@ import {
   subMonths,
   lastDayOfMonth
 } from 'date-fns/esm';
-import { monthBuilder } from './utilities/date-utils-grid';
+import {css} from '@emotion/core';
+import styled from '@emotion/styled';
+import {monthBuilder} from './utilities/date-utils-grid';
 import Month from './calendar-month-view';
 import Week from './calendar-week-view';
 import Day from './calendar-day-view';
 import CalendarControls from './components/calendar-controls';
-import styled, { css } from 'react-emotion';
 
 const CalendarContainer = styled.div({
-  background: "#f5f7fa",
-  boxSizing: "border-box",
+  background: '#f5f7fa',
+  boxSizing: 'border-box',
   fontFamily: "Montserrat, 'sans-serif'",
-  color: "#51565d",
+  color: '#51565d'
 });
 
 const CalendarHeader = styled.div({
@@ -95,13 +96,13 @@ export default class CalendarParent extends React.Component {
     return (
       <CalendarContainer>
         <CalendarControls
-            month={this.state.month}
-            year={this.state.year}
-            location="top"
-            handleChange={this.handleChange}
-            changeMonth={this.changeMonth}
-            valueMethod={this.valueMethod}
-          />
+          month={this.state.month}
+          year={this.state.year}
+          location="top"
+          handleChange={this.handleChange}
+          changeMonth={this.changeMonth}
+          valueMethod={this.valueMethod}
+        />
         <CalendarHeader>
           <div>Wk</div>
           <div>Sunday</div>
@@ -114,66 +115,117 @@ export default class CalendarParent extends React.Component {
         </CalendarHeader>
 
         {(() => {
-          switch(this.state.valueMethod) {
-          case 'day':
-            return <Day
-                today={[
-                  parseInt(format(this.state.today, 'd'), 10),
-                  parseInt(format(this.state.today, 'L'), 10),
-                  parseInt(format(this.state.today, 'y'), 10)
-                ]}
-                events={this.props.events}
-                lastSunday={parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'd')) - parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'i'))}
-                firstDay={parseInt(format(startOfMonth(this.state.today), 'i')) + 1}
-                handleChange={this.handleChange}
-                valueMethod={this.state.valueMethod}
-                changeMonth={this.changeMonth}
-                month={this.state.month}
-                year={this.state.year}
-                monthData={this.state.monthData}
-                monthEvents={this.state.monthEvents}
-                weekNumber={this.state.weekNumber}
-            />;
-          case 'week':
-            return <Week
-                today={[
-                  parseInt(format(this.state.today, 'd'), 10),
-                  parseInt(format(this.state.today, 'L'), 10),
-                  parseInt(format(this.state.today, 'y'), 10)
-                ]}
-                events={this.props.events}
-                lastSunday={parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'd')) - parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'i'))}
-                firstDay={parseInt(format(startOfMonth(this.state.today), 'i')) + 1}
-                handleChange={this.handleChange}
-                valueMethod={this.state.valueMethod}
-                changeMonth={this.changeMonth}
-                month={this.state.month}
-                year={this.state.year}
-                monthData={this.state.monthData}
-                monthEvents={this.state.monthEvents}
-                weekNumber={this.state.weekNumber}
-            />;
-          case 'month':
-            return <Month
-                today={[
-                  parseInt(format(this.state.today, 'd'), 10),
-                  parseInt(format(this.state.today, 'L'), 10),
-                  parseInt(format(this.state.today, 'y'), 10)
-                ]}
-                events={this.props.events}
-                lastSunday={parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'd')) - parseInt(format(lastDayOfMonth(subMonths(this.state.today, 1)), 'i'))}
-                firstDay={parseInt(format(startOfMonth(this.state.today), 'i')) + 1}
-                handleChange={this.handleChange}
-                valueMethod={this.state.valueMethod}
-                changeMonth={this.changeMonth}
-                month={this.state.month}
-                year={this.state.year}
-                monthData={this.state.monthData}
-                monthEvents={this.state.monthEvents}
-                weekNumber={this.state.weekNumber}
-              />;
-          default:
-            return null;
+          switch (this.state.valueMethod) {
+            case 'day':
+              return (
+                <Day
+                  today={[
+                    parseInt(format(this.state.today, 'd'), 10),
+                    parseInt(format(this.state.today, 'L'), 10),
+                    parseInt(format(this.state.today, 'y'), 10)
+                  ]}
+                  events={this.props.events}
+                  lastSunday={
+                    parseInt(
+                      format(
+                        lastDayOfMonth(subMonths(this.state.today, 1)),
+                        'd'
+                      )
+                    ) -
+                    parseInt(
+                      format(
+                        lastDayOfMonth(subMonths(this.state.today, 1)),
+                        'i'
+                      )
+                    )
+                  }
+                  firstDay={
+                    parseInt(format(startOfMonth(this.state.today), 'i')) + 1
+                  }
+                  handleChange={this.handleChange}
+                  valueMethod={this.state.valueMethod}
+                  changeMonth={this.changeMonth}
+                  month={this.state.month}
+                  year={this.state.year}
+                  monthData={this.state.monthData}
+                  monthEvents={this.state.monthEvents}
+                  weekNumber={this.state.weekNumber}
+                />
+              );
+            case 'week':
+              return (
+                <Week
+                  today={[
+                    parseInt(format(this.state.today, 'd'), 10),
+                    parseInt(format(this.state.today, 'L'), 10),
+                    parseInt(format(this.state.today, 'y'), 10)
+                  ]}
+                  events={this.props.events}
+                  lastSunday={
+                    parseInt(
+                      format(
+                        lastDayOfMonth(subMonths(this.state.today, 1)),
+                        'd'
+                      )
+                    ) -
+                    parseInt(
+                      format(
+                        lastDayOfMonth(subMonths(this.state.today, 1)),
+                        'i'
+                      )
+                    )
+                  }
+                  firstDay={
+                    parseInt(format(startOfMonth(this.state.today), 'i')) + 1
+                  }
+                  handleChange={this.handleChange}
+                  valueMethod={this.state.valueMethod}
+                  changeMonth={this.changeMonth}
+                  month={this.state.month}
+                  year={this.state.year}
+                  monthData={this.state.monthData}
+                  monthEvents={this.state.monthEvents}
+                  weekNumber={this.state.weekNumber}
+                />
+              );
+            case 'month':
+              return (
+                <Month
+                  today={[
+                    parseInt(format(this.state.today, 'd'), 10),
+                    parseInt(format(this.state.today, 'L'), 10),
+                    parseInt(format(this.state.today, 'y'), 10)
+                  ]}
+                  events={this.props.events}
+                  lastSunday={
+                    parseInt(
+                      format(
+                        lastDayOfMonth(subMonths(this.state.today, 1)),
+                        'd'
+                      )
+                    ) -
+                    parseInt(
+                      format(
+                        lastDayOfMonth(subMonths(this.state.today, 1)),
+                        'i'
+                      )
+                    )
+                  }
+                  firstDay={
+                    parseInt(format(startOfMonth(this.state.today), 'i')) + 1
+                  }
+                  handleChange={this.handleChange}
+                  valueMethod={this.state.valueMethod}
+                  changeMonth={this.changeMonth}
+                  month={this.state.month}
+                  year={this.state.year}
+                  monthData={this.state.monthData}
+                  monthEvents={this.state.monthEvents}
+                  weekNumber={this.state.weekNumber}
+                />
+              );
+            default:
+              return null;
           }
         })()}
       </CalendarContainer>
@@ -188,7 +240,7 @@ CalendarParent.propTypes = {
       picture: PropTypes.string,
       // eslint-disable-next-line camelcase
       calendar_id: PropTypes.string.isRequired,
-      interval: PropTypes.oneOf([PropTypes.string],[PropTypes.number]),
+      interval: PropTypes.oneOf([PropTypes.string], [PropTypes.number]),
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       // eslint-disable-next-line camelcase

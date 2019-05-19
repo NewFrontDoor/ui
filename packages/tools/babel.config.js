@@ -8,7 +8,8 @@ module.exports = {
           esmodules: true
         }
       }
-    ]
+    ],
+    '@emotion/babel-preset-css-prop'
   ],
   plugins: [
     '@babel/plugin-proposal-class-properties',

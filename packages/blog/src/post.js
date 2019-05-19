@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, {css} from 'react-emotion';
+import {css} from '@emotion/core';
+import styled from '@emotion/styled';
 import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
-import { blocksToText } from './blog-fns';
-import { readingTime } from 'reading-time-estimator';
+import {readingTime} from 'reading-time-estimator';
+import {blocksToText} from './blog-fns';
 
 const ContentWrapper = styled('div')`
   display: flex;
@@ -54,9 +55,7 @@ const Post = props => {
         <Text appearance="mouse">
           {format(new Date(props.date), props.dateFormat)}
         </Text>
-        <Text appearance="mouse">
-          {readingLength.text}
-        </Text>
+        <Text appearance="mouse">{readingLength.text}</Text>
         <Text
           className={css`
             display: none;

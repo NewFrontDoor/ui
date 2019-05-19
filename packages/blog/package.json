@@ -7,10 +7,10 @@
     "reading-time-estimator": "^1.0.3"
   },
   "peerDependencies": {
-    "emotion": "^9.0",
-    "mineral-ui": "^0.48.0",
-    "react": "^16.0",
-    "react-emotion": "^9.0"
+    "@emotion/core": "^10.0",
+    "@emotion/styled": "^10.0",
+    "mineral-ui": "^0.58.0",
+    "react": "^16.0"
   },
   "xo": false,
   "scripts": {

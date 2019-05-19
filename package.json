@@ -11,25 +11,25 @@
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
+    "@emotion/core": "^10.0.10",
+    "@emotion/is-prop-valid": "^0.7.3",
+    "@emotion/styled": "^10.0.10",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
-    "babel-plugin-emotion": "^9.1.2",
-    "emotion": "^9.2.4",
-    "emotion-theming": "^9.2.4",
+    "emotion-theming": "^10.0.10",
     "eslint": "^5.7.0",
     "eslint-config-xo-react": "^0.19.0",
+    "eslint-plugin-emotion": "^10.0.7",
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "html-webpack-plugin": "^3.2.0",
-    "mineral-ui": "^0.48.0",
+    "mineral-ui": "^0.58.0",
     "next": "^7.0.2",
-    "polished": "^2.2.0",
     "prettier": "^1.12.1",
     "prop-types": "^15.6.1",
-    "react": "^16.4.1",
+    "react": "^16.8.6",
     "react-cosmos": "^4.0.0",
-    "react-dom": "^16.4.1",
-    "react-emotion": "^9.2.4",
+    "react-dom": "^16.8.6",
     "webpack": "^4.7.0",
     "xo": "^0.24.0"
   },
@@ -42,7 +42,16 @@
     ],
     "parser": "babel-eslint",
     "prettier": true,
-    "space": true
+    "space": true,
+    "plugins": [
+      "emotion"
+    ],
+    "rules": {
+      "emotion/jsx-import": "error",
+      "emotion/no-vanilla": "error",
+      "emotion/import-from-emotion": "error",
+      "emotion/styled-import": "error"
+    }
   },
   "eslint": {
     "settings": {

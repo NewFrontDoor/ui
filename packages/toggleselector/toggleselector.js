@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {RadioGroup, Radio} from 'react-radio-group';
-import styled from 'react-emotion';
+import styled from '@emotion/styled'
 
 const StyledRadioGroup = styled(RadioGroup)`
   height: ${props => props.styles.fontSize ? props.styles.fontSize * 2 + (props.styles.fontSize / 2) : `30`}px;

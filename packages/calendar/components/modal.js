@@ -1,5 +1,5 @@
 import React from 'react';
-import {css} from 'react-emotion';
+import {css} from '@emotion/core'
 import CloseSvg from './close-svg';
 
 const modalClass = css`

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Text} from 'mineral-ui';
-import {css} from 'react-emotion';
+import {css} from '@emotion/core'
 import MethodToggle from './method-toggle';
 
 const calendarControlsStyle = css`
