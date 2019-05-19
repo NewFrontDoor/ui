@@ -1,5 +1,5 @@
 /* This is an example link component which will need to
-be amended for the specific use case/dependencies required*/
+be amended for the specific use case/dependencies required */
 import React from 'react';
 import PropTypes from 'prop-types';
 import RouterLink from 'react-router-dom/Link';
