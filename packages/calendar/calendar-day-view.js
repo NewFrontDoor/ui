@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  differenceInDays,
-  parseISO,
-  addHours
-} from 'date-fns/esm';
 import styled from 'react-emotion';
 import EventWrapper from './event-wrapper';
+import { shade, readableColor } from 'polished';
+
 
 const bgStyles = {
   prev: 'rgba(166, 168, 179, 0.08)',
@@ -25,9 +22,7 @@ const WeekBlock = styled.div({
 
 const Event = styled.div(
   {
-    borderLeft: "2px solid #fdb44d",
     padding: "2px 3px",
-    background: "#fef0db",
     color: "#fc9b10",
     alignSelf: "center",
     fontSize: "12px",
@@ -40,7 +35,10 @@ const Event = styled.div(
   },
   props => ({
     gridColumnStart: props.col,
-    gridColumnEnd: `span ${props.span}`
+    gridColumnEnd: `span ${props.span}`,
+    background: props.color || "#fef0db",
+    color: `${props.color ? readableColor(shade(0.2, props.color)) : readableColor("#fc9b10")}`,
+    borderLeft: `2px solid ${props.color ? shade(0.2, props.color) : "#fdb44d"}`
   })
 );
 
@@ -82,7 +80,7 @@ const WeekNumber = styled.div(
   })
 );
 
-const Calendar = props => [
+const Day = props => [
     props.monthData.map((week, index) => (
         <WeekBlock>
           <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
@@ -91,8 +89,8 @@ const Calendar = props => [
               if (day[3] !== undefined) {
                 day[3].map((event) => {
                   events.push(
-                  <Event col={index + 2} span={event.event_length}>
-                    <EventWrapper name={event.name}>{event.name}</EventWrapper>
+                  <Event col={index + 2} span={event.event_length} color={event.color}>
+                    <EventWrapper event={event}>{event.start_time} {event.name}</EventWrapper>
                   </Event>
                 );
                 })
@@ -105,7 +103,7 @@ const Calendar = props => [
     )
 ];
 
-Calendar.propTypes = {
+Day.propTypes = {
   year: PropTypes.number.isRequired,
   weekNumber: PropTypes.number.isRequired,
   month: PropTypes.object.isRequired,
@@ -119,4 +117,4 @@ Calendar.propTypes = {
   today: PropTypes.array.isRequired
 };
 
-export default Calendar;
+export default Day;

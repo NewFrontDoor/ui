@@ -7,13 +7,13 @@ class EventWrapper extends React.Component {
   render() {
     return (
       <PortalWithState
-        key={this.props.name + '-portal'}
+        key={this.props.event.name + '-portal'}
         closeOnOutsideClick
         closeOnEsc
       >
         {({openPortal, closePortal, portal}) => [
           <div
-            key={this.props.name + '-portal-button'}
+            key={this.props.event.name + '-portal-button'}
             style={{
               overflow: "hidden",
               whiteSpace: "nowrap",

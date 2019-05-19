@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
+    "polished": "^3.3.0",
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
     "react-radio-group": "^3.0.3"
@@ -13,5 +14,6 @@
     "react": "^16.0",
     "react-emotion": "^9.0"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {}
 }
