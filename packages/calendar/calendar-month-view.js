@@ -88,28 +88,27 @@ const Month = props => [
     <WeekBlock>
       <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
       {week.map((day, index) => {
-        const events = [
+        const weekEvents = [
           <DayNumber col={index + 2} bgStyle={day[2]}>
             {day[0]}
           </DayNumber>
         ];
-        if (day[3] !== undefined) {
-          day[3].map(event => {
-            events.push(
-              <Event
-                col={index + 2}
-                span={event.event_length}
-                color={event.color}
-              >
-                <EventWrapper event={event}>
-                  {event.start_time} {event.name}
-                </EventWrapper>
-              </Event>
-            );
-          });
+        if (day[3]) {
+          const dayEvents = day[3].map(event => (
+            <Event
+              col={index + 2}
+              span={event.event_length}
+              color={event.color}
+            >
+              <EventWrapper event={event}>
+                {event.start_time} {event.name}
+              </EventWrapper>
+            </Event>
+          ));
+          weekEvents.push(dayEvents);
         }
 
-        return events;
+        return weekEvents;
       })}
     </WeekBlock>
   ))

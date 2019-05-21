@@ -1,5 +1,8 @@
+/** @jsx jsx */
+import {jsx} from '@emotion/core';
+import PropTypes from 'prop-types';
 import React from 'react';
-import {Dialog, Text, Button} from 'mineral-ui';
+import {Dialog, Text} from 'mineral-ui';
 
 class EventWrapper extends React.Component {
   constructor(props) {
@@ -14,31 +17,44 @@ class EventWrapper extends React.Component {
   }
 
   toggleDialog() {
-    console.log('trying to open');
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
   }
 
   handleClose() {
-    this.setState(prevState => ({
+    this.setState({
       isOpen: false
-    }));
+    });
   }
-  
+
   render() {
-    const { isOpen } = this.state;
+    const {isOpen} = this.state;
     const {...event} = this.props.event;
 
     return [
-      <Text onClick={this.toggleDialog}>{this.props.children}</Text>,
+      <div
+        css={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis'
+        }}
+        onClick={this.toggleDialog}
+      >
+        {this.props.children}
+      </div>,
       <Dialog
         title={event.name}
-        actions={[{onClick: this.toggleDialog, text: 'Close'}, {onClick: this.toggleDialog, text: 'View'}]}
+        actions={[
+          {onClick: this.toggleDialog, text: 'Close'},
+          {onClick: this.toggleDialog, text: 'View'}
+        ]}
         isOpen={isOpen}
         onClose={this.handleClose}
       >
-        <Text as="h4">{event.start_time} - {event.end_time}</Text>
+        <Text as="h4">
+          {event.start_time} - {event.end_time}
+        </Text>
         <dl>
           <Text as="dt">Location</Text>
           <Text as="dd">{event.location}</Text>
@@ -48,5 +64,9 @@ class EventWrapper extends React.Component {
     ];
   }
 }
+
+EventWrapper.propTypes = {
+  event: PropTypes.PropTypes.objectOf(PropTypes.string.isRequired).isRequired
+};
 
 export default EventWrapper;

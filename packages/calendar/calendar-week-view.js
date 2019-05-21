@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
+import {shade, readableColor} from 'polished';
 import EventWrapper from './components/event-wrapper';
-import { shade, readableColor } from 'polished';
-
 
 const bgStyles = {
   prev: 'rgba(166, 168, 179, 0.08)',
@@ -22,23 +21,27 @@ const WeekBlock = styled.div({
 
 const Event = styled.div(
   {
-    padding: "2px 3px",
-    color: "#fc9b10",
-    alignSelf: "center",
-    fontSize: "12px",
-    position: "relative",
-    overflow: "hidden",
-    maxWidth: "100%",
-    whiteSpace: "nowrap",
+    padding: '2px 3px',
+    color: '#fc9b10',
+    alignSelf: 'center',
+    fontSize: '12px',
+    position: 'relative',
+    overflow: 'hidden',
+    maxWidth: '100%',
+    whiteSpace: 'nowrap',
     height: '18px',
     zIndex: '1'
   },
   props => ({
     gridColumnStart: props.col,
     gridColumnEnd: `span ${props.span}`,
-    background: props.color || "#fef0db",
-    color: `${props.color ? readableColor(shade(0.2, props.color)) : readableColor("#fc9b10")}`,
-    borderLeft: `2px solid ${props.color ? shade(0.2, props.color) : "#fdb44d"}`
+    background: props.color || '#fef0db',
+    color: `${
+      props.color
+        ? readableColor(shade(0.2, props.color))
+        : readableColor('#fc9b10')
+    }`,
+    borderLeft: `2px solid ${props.color ? shade(0.2, props.color) : '#fdb44d'}`
   })
 );
 
@@ -65,15 +68,15 @@ const DayNumber = styled.div(
 
 const WeekNumber = styled.div(
   {
-    borderRight: "1px solid rgba(166, 168, 179, 0.12)",
-    pointerEvents: "none",
-    gridRowStart: "1",
-    gridRowEnd: "5",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: "14px",
-    color: "#98a0a6",
+    borderRight: '1px solid rgba(166, 168, 179, 0.12)',
+    pointerEvents: 'none',
+    gridRowStart: '1',
+    gridRowEnd: '5',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '14px',
+    color: '#98a0a6'
   },
   props => ({
     gridColumn: props.column
@@ -81,26 +84,35 @@ const WeekNumber = styled.div(
 );
 
 const Week = props => [
-    props.monthData.map((week, index) => (
-        <WeekBlock>
-          <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
-          {week.map((day, index) => {
-              const events = [<DayNumber col={index + 2} bgStyle={day[2]}>{day[0]}</DayNumber>];
-              if (day[3] !== undefined) {
-                day[3].map((event) => {
-                  events.push(
-                  <Event col={index + 2} span={event.event_length} color={event.color}>
-                    <EventWrapper event={event}>{event.start_time} {event.name}</EventWrapper>
-                  </Event>
-                );
-                })
-              }
+  props.monthData.map((week, index) => (
+    <WeekBlock>
+      <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
+      {week.map((day, index) => {
+        const events = [
+          <DayNumber col={index + 2} bgStyle={day[2]}>
+            {day[0]}
+          </DayNumber>
+        ];
+        if (day[3] !== undefined) {
+          day[3].map(event => {
+            events.push(
+              <Event
+                col={index + 2}
+                span={event.event_length}
+                color={event.color}
+              >
+                <EventWrapper event={event}>
+                  {event.start_time} {event.name}
+                </EventWrapper>
+              </Event>
+            );
+          });
+        }
 
-              return events
-          })}
-        </WeekBlock>
-      )
-    )
+        return events;
+      })}
+    </WeekBlock>
+  ))
 ];
 
 Week.propTypes = {

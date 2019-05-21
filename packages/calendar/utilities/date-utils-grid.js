@@ -71,7 +71,6 @@ function buildCalendarArray(passedDate) {
 
 export function monthBuilder(passedDate, events) {
   const fullMonthCalendar = buildCalendarArray(passedDate);
-  console.log(fullMonthCalendar[0]);
   //place events into the fullMonthCalendar array
   events.map((event) => {
     const normalisedEvent = {
@@ -89,7 +88,7 @@ export function monthBuilder(passedDate, events) {
     const year = getYear(new Date(normalisedEvent.start_date));
     const month = getMonth(new Date(normalisedEvent.start_date)) + 1;
     const day = getDate(new Date(normalisedEvent.start_date));
-    var calIndex = fullMonthCalendar.findIndex(element => element[0] == day && element[1][0] == month && element[1][1] == year);
+    const calIndex = fullMonthCalendar.findIndex(element => element[0] == day && element[1][0] == month && element[1][1] == year);
     if (calIndex < 0) {
       return;
     }
