@@ -41,61 +41,31 @@ function Bible({url, passage}) {
 
   if (data.length > 0) {
     return (
-      <blockquote
-        css={css`
-          margin: 1.5em 10px;
-          padding: 0.5em 10px;
-          quotes: '“' '”' '‘' '’';
-
-          &::before {
-            content: open-quote;
-            font-size: 4em;
-            line-height: 0.1em;
-            margin-right: 0.25em;
-            vertical-align: -0.4em;
-          }
-
-          & p {
-            display: inline;
-          }
-        `}
-      >
-        <Text>
-          {data.map(({bookname, chapter, text, title, verse}) => (
-            <React.Fragment key={`${bookname}-${chapter}-${verse}`}>
-              {/* title && (
-                <Text
-                  appearance="h5"
-                  inherit={false}
-                  css={css`
-                    display: block;
-                  `}
-                >
-                  {title.replace(/<.*>/, '').trim()}
-                </Text>
-              ) */}
-              <Text inherit={false} appearance="prose">
-                <Text inherit={false} appearance="mouse">
-                  {verse}{' '}
-                </Text>
-                {text}
+      <Text>
+        {data.map(({bookname, chapter, text, title, verse}) => (
+          <React.Fragment key={`${bookname}-${chapter}-${verse}`}>
+            {title && (
+              <Text
+                appearance="h5"
+                inherit={false}
+                css={css`
+                  display: block;
+                `}
+              >
+                {/* eslint-disable-next-line react/no-danger */}
+                <span dangerouslySetInnerHTML={{__html: title}} />
               </Text>
-            </React.Fragment>
-          ))}
-        </Text>
-        <Text
-          appearance="prose"
-          align="end"
-          as="i"
-          css={css`
-            margin-top: 1rem;
-            display: block;
-          `}
-        >
-          {' '}
-          – {passage}
-        </Text>
-      </blockquote>
+            )}
+            <Text inherit={false} appearance="prose">
+              <Text inherit={false} appearance="mouse">
+                {verse}{' '}
+              </Text>
+              {/* eslint-disable-next-line react/no-danger */}
+              <span dangerouslySetInnerHTML={{__html: text}} />
+            </Text>
+          </React.Fragment>
+        ))}
+      </Text>
     );
   }
 
