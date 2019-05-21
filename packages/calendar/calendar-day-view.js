@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled'
-import EventWrapper from './event-wrapper';
+import EventWrapper from './components/event-wrapper';
 import { shade, readableColor } from 'polished';
 
 

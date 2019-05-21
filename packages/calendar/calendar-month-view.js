@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
-import EventWrapper from './event-wrapper';
+import EventWrapper from './components/event-wrapper';
 
 const bgStyles = {
   prev: 'rgba(166, 168, 179, 0.08)',

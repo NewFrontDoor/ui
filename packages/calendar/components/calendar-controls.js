@@ -26,8 +26,8 @@ const rangeToggle = css`
 export default class CalendarControls extends React.Component {
   render() {
     return (
-      <div className={calendarControlsStyle}>
-        <div className={dateScroller}>
+      <div css={calendarControlsStyle}>
+        <div css={dateScroller}>
           <Button size="medium" onClick={() => this.props.changeMonth('dec+')}>
             &lt;&lt;
           </Button>
@@ -48,12 +48,12 @@ export default class CalendarControls extends React.Component {
             &gt;&gt;
           </Button>
         </div>
-        <div className={monthTitle}>
-          <Text element="h2">
+        <div css={monthTitle}>
+          <Text as="h2">
             {this.props.month.name} - {this.props.year}
           </Text>
         </div>
-        <div className={rangeToggle}>
+        <div css={rangeToggle}>
           <MethodToggle
             handleChange={this.props.handleChange}
             valueMethod={this.props.valueMethod}
