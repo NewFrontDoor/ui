@@ -5,11 +5,6 @@ import {shade, readableColor} from 'polished';
 import {format} from 'date-fns/esm';
 import EventWrapper from './components/event-wrapper';
 
-const bgStyles = {
-  true: 'none',
-  false: 'rgba(166, 168, 179, 0.08)'
-};
-
 const WeekBlock = styled.div({
   display: 'grid',
   gridTemplateColumns: '50px repeat(7, 1fr)',
@@ -62,7 +57,7 @@ const DayNumber = styled.div(
   },
   props => ({
     gridColumn: props.col,
-    backgroundColor: bgStyles[props.bgStyle]
+    backgroundColor: props.isDummy ? 'rgba(166, 168, 179, 0.08)' : 'none'
   })
 );
 
@@ -89,12 +84,12 @@ const Month = ({monthData}) => {
       {monthData.map(({week, weekNumber}) => (
         <WeekBlock key={weekNumber}>
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
-          {week.map(({events, date, currentMonth}, index) => {
+          {week.map(({events, date, isDummy}, index) => {
             const day = format(date, 'dd');
 
             return (
               <>
-                <DayNumber key={day} col={index + 2} bgStyle={day.currentMonth}>
+                <DayNumber key={day} col={index + 2} isDummy={isDummy}>
                   {day}
                 </DayNumber>
                 {events.map(event => (
