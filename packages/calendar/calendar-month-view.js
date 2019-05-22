@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
+import {format} from 'date-fns/esm';
 import EventWrapper from './components/event-wrapper';
 
 const bgStyles = {
@@ -82,48 +83,47 @@ const WeekNumber = styled.div(
   })
 );
 
-const Month = props => [
-  props.monthData.map((week, index) => (
-    <WeekBlock>
-      <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
-      {week.map((day, index) => {
-        const weekEvents = [
-          <DayNumber col={index + 2} bgStyle={day.currentMonth}>
-            {day.day}
-          </DayNumber>
-        ];
+const Month = ({monthData}) => {
+  return (
+    <>
+      {monthData.map(({week, weekNumber}) => (
+        <WeekBlock key={weekNumber}>
+          <WeekNumber column={1}>{weekNumber}</WeekNumber>
+          {week.map(({events, date, currentMonth}, index) => {
+            const day = format(date, 'dd');
 
-        const dayEvents = day.events.map(event => (
-          <Event
-            col={index + 2}
-            span={event.event_length}
-            color={event.color}
-          >
-            <EventWrapper event={event}>
-              {event.start_time} {event.name}
-            </EventWrapper>
-          </Event>
-        ));
-        weekEvents.push(dayEvents);
-
-        return weekEvents;
-      })}
-    </WeekBlock>
-  ))
-];
+            return (
+              <>
+                <DayNumber key={day} col={index + 2} bgStyle={day.currentMonth}>
+                  {day}
+                </DayNumber>
+                {events.map(event => (
+                  <Event
+                    col={index + 2}
+                    span={event.event_length}
+                    color={event.color}
+                  >
+                    <EventWrapper event={event}>
+                      {event.start_time} {event.name}
+                    </EventWrapper>
+                  </Event>
+                ))}
+              </>
+            );
+          })}
+        </WeekBlock>
+      ))}
+    </>
+  );
+};
 
 Month.propTypes = {
-  year: PropTypes.number.isRequired,
-  weekNumber: PropTypes.number.isRequired,
-  month: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  valueMethod: PropTypes.string.isRequired,
-  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  monthEvents: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  changeMonth: PropTypes.func.isRequired,
-  today: PropTypes.array.isRequired
+  monthData: PropTypes.arrayOf(
+    PropTypes.shape({
+      week: PropTypes.arrayOf(PropTypes.object),
+      weekNumber: PropTypes.number
+    })
+  ).isRequired
 };
 
 export default Month;

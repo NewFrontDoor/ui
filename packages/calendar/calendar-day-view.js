@@ -83,50 +83,47 @@ const WeekNumber = styled.div(
   })
 );
 
-const Day = props => [
-  props.monthData.map((week, index) => (
-    <WeekBlock>
-      <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
-      {week.map((day, index) => {
-        const events = [
-          <DayNumber col={index + 2} bgStyle={day[2]}>
-            {day[0]}
-          </DayNumber>
-        ];
-        if (day[3] !== undefined) {
-          day[3].map(event => {
-            events.push(
-              <Event
-                col={index + 2}
-                span={event.event_length}
-                color={event.color}
-              >
-                <EventWrapper event={event}>
-                  {event.start_time} {event.name}
-                </EventWrapper>
-              </Event>
-            );
-          });
-        }
+const Day = props => (
+  <>
+    {props.monthData.map(week => (
+      <WeekBlock key={week.number}>
+        <WeekNumber column={1}>{week.number}</WeekNumber>
+        {week.map((day, index) => {
+          const events = [
+            <DayNumber key={day.number} col={index + 2} bgStyle={day[2]}>
+              {day[0]}
+            </DayNumber>
+          ];
+          if (day[3] !== undefined) {
+            day[3].map(event => {
+              events.push(
+                <Event
+                  col={index + 2}
+                  span={event.event_length}
+                  color={event.color}
+                >
+                  <EventWrapper event={event}>
+                    {event.start_time} {event.name}
+                  </EventWrapper>
+                </Event>
+              );
+            });
+          }
 
-        return events;
-      })}
-    </WeekBlock>
-  ))
-];
+          return events;
+        })}
+      </WeekBlock>
+    ))}
+  </>
+);
 
 Day.propTypes = {
   year: PropTypes.number.isRequired,
   weekNumber: PropTypes.number.isRequired,
   month: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  valueMethod: PropTypes.string.isRequired,
-  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  monthEvents: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  changeMonth: PropTypes.func.isRequired,
-  today: PropTypes.array.isRequired
+  calendarView: PropTypes.string.isRequired,
+  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object).isRequired)
+    .isRequired
 };
 
 export default Day;

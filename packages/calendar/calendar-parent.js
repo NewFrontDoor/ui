@@ -1,20 +1,13 @@
-import React from 'react';
+import React, {useReducer, useState} from 'react';
 import PropTypes from 'prop-types';
-import {
-  format,
-  getWeek,
-  startOfMonth,
-  addMonths,
-  subMonths,
-  lastDayOfMonth
-} from 'date-fns/esm';
-import {css} from '@emotion/core';
+import {addMonths, subMonths} from 'date-fns/esm';
 import styled from '@emotion/styled';
 import {monthBuilder} from './utilities/date-utils-grid';
 import Month from './calendar-month-view';
 import Week from './calendar-week-view';
 import Day from './calendar-day-view';
 import CalendarControls from './components/calendar-controls';
+import CalendarDispatch from './utilities/calendar-dispatch-provider';
 
 const CalendarContainer = styled.div({
   background: '#f5f7fa',
@@ -39,69 +32,67 @@ const CalendarHeader = styled.div({
   color: '#99a1a7'
 });
 
-export default class CalendarParent extends React.Component {
-  constructor(props) {
-    super(props);
-    const today = new Date();
-    this.state = {
-      today,
-      valueMethod: 'Month',
-      month: {
-        int: parseInt(format(today, 'L'), 10),
-        name: format(today, 'MMMM')
-      },
-      activeMonth: today,
-      year: today.getUTCFullYear(),
-      monthData: monthBuilder(today, this.props.events),
-      // A monthEvents: eventArrayBuilder(this.props.events),
-      weekNumber: getWeek(startOfMonth(today))
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.changeMonth = this.changeMonth.bind(this);
+function reducer(state, action) {
+  let currentDate;
+  switch (action.type) {
+    case 'today':
+      currentDate = new Date();
+      break;
+    case 'decrement-year':
+      currentDate = subMonths(state.currentDate, 12);
+      break;
+    case 'decrement-month':
+      currentDate = subMonths(state.currentDate, 1);
+      break;
+    case 'increment-month':
+      currentDate = addMonths(state.currentDate, 1);
+      break;
+    case 'increment-year':
+      currentDate = addMonths(state.currentDate, 12);
+      break;
+    default:
+      throw new Error(`Action type ${action.type} does not exist`);
   }
 
-  handleChange(option) {
-    this.setState({
-      valueMethod: option
-    });
-  }
+  return {
+    ...state,
+    currentDate,
+    monthData: monthBuilder(currentDate, state.events)
+  };
+}
 
-  changeMonth(option) {
-    let newMonth;
-    if (option === 'initial') {
-      newMonth = this.state.today;
-    } else if (option === 'inc') {
-      newMonth = addMonths(this.state.activeMonth, 1);
-    } else if (option === 'inc+') {
-      newMonth = addMonths(this.state.activeMonth, 12);
-    } else if (option === 'dec') {
-      newMonth = subMonths(this.state.activeMonth, 1);
-    } else if (option === 'dec+') {
-      newMonth = subMonths(this.state.activeMonth, 12);
-    }
+function init(events) {
+  const currentDate = new Date();
 
-    this.setState({
-      activeMonth: newMonth,
-      month: {
-        int: parseInt(format(newMonth, 'L'), 10),
-        name: format(newMonth, 'MMMM')
-      },
-      year: newMonth.getUTCFullYear(),
-      monthData: monthBuilder(newMonth, this.props.events),
-      weekNumber: getWeek(startOfMonth(newMonth))
-    });
-  }
+  return {
+    currentDate,
+    events,
+    calendarView: 'month',
+    monthData: monthBuilder(currentDate, events)
+    // A monthEvents: eventArrayBuilder(events)
+  };
+}
 
-  render() {
-    return (
+const views = {
+  day: Day,
+  week: Week,
+  month: Month
+};
+
+export default function CalendarParent({events}) {
+  const [calendarView, setCalendarView] = useState('month');
+  const [state, dispatch] = useReducer(reducer, events, init);
+
+  const CalendarView = views[calendarView];
+
+  return (
+    <CalendarDispatch.Provider value={dispatch}>
       <CalendarContainer>
         <CalendarControls
-          month={this.state.month}
-          year={this.state.year}
           location="top"
-          handleChange={this.handleChange}
-          changeMonth={this.changeMonth}
-          valueMethod={this.valueMethod}
+          currentDate={state.currentDate}
+          calendarView={calendarView}
+          setCalendarView={setCalendarView}
         />
         <CalendarHeader>
           <div>Wk</div>
@@ -113,124 +104,15 @@ export default class CalendarParent extends React.Component {
           <div>Friday</div>
           <div>Saturday</div>
         </CalendarHeader>
-
-        {(() => {
-          switch (this.state.valueMethod) {
-            case 'day':
-              return (
-                <Day
-                  today={[
-                    parseInt(format(this.state.today, 'd'), 10),
-                    parseInt(format(this.state.today, 'L'), 10),
-                    parseInt(format(this.state.today, 'y'), 10)
-                  ]}
-                  events={this.props.events}
-                  lastSunday={
-                    parseInt(
-                      format(
-                        lastDayOfMonth(subMonths(this.state.today, 1)),
-                        'd'
-                      )
-                    ) -
-                    parseInt(
-                      format(
-                        lastDayOfMonth(subMonths(this.state.today, 1)),
-                        'i'
-                      )
-                    )
-                  }
-                  firstDay={
-                    parseInt(format(startOfMonth(this.state.today), 'i')) + 1
-                  }
-                  handleChange={this.handleChange}
-                  valueMethod={this.state.valueMethod}
-                  changeMonth={this.changeMonth}
-                  month={this.state.month}
-                  year={this.state.year}
-                  monthData={this.state.monthData}
-                  monthEvents={this.state.monthEvents}
-                  weekNumber={this.state.weekNumber}
-                />
-              );
-            case 'week':
-              return (
-                <Week
-                  today={[
-                    parseInt(format(this.state.today, 'd'), 10),
-                    parseInt(format(this.state.today, 'L'), 10),
-                    parseInt(format(this.state.today, 'y'), 10)
-                  ]}
-                  events={this.props.events}
-                  lastSunday={
-                    parseInt(
-                      format(
-                        lastDayOfMonth(subMonths(this.state.today, 1)),
-                        'd'
-                      )
-                    ) -
-                    parseInt(
-                      format(
-                        lastDayOfMonth(subMonths(this.state.today, 1)),
-                        'i'
-                      )
-                    )
-                  }
-                  firstDay={
-                    parseInt(format(startOfMonth(this.state.today), 'i')) + 1
-                  }
-                  handleChange={this.handleChange}
-                  valueMethod={this.state.valueMethod}
-                  changeMonth={this.changeMonth}
-                  month={this.state.month}
-                  year={this.state.year}
-                  monthData={this.state.monthData}
-                  monthEvents={this.state.monthEvents}
-                  weekNumber={this.state.weekNumber}
-                />
-              );
-            case 'month':
-              return (
-                <Month
-                  today={[
-                    parseInt(format(this.state.today, 'd'), 10),
-                    parseInt(format(this.state.today, 'L'), 10),
-                    parseInt(format(this.state.today, 'y'), 10)
-                  ]}
-                  events={this.props.events}
-                  lastSunday={
-                    parseInt(
-                      format(
-                        lastDayOfMonth(subMonths(this.state.today, 1)),
-                        'd'
-                      )
-                    ) -
-                    parseInt(
-                      format(
-                        lastDayOfMonth(subMonths(this.state.today, 1)),
-                        'i'
-                      )
-                    )
-                  }
-                  firstDay={
-                    parseInt(format(startOfMonth(this.state.today), 'i')) + 1
-                  }
-                  handleChange={this.handleChange}
-                  valueMethod={this.state.valueMethod}
-                  changeMonth={this.changeMonth}
-                  month={this.state.month}
-                  year={this.state.year}
-                  monthData={this.state.monthData}
-                  monthEvents={this.state.monthEvents}
-                  weekNumber={this.state.weekNumber}
-                />
-              );
-            default:
-              return null;
-          }
-        })()}
+        <CalendarView
+          calendarView={calendarView}
+          monthData={state.monthData}
+          monthEvents={state.monthEvents}
+          weekNumber={state.weekNumber}
+        />
       </CalendarContainer>
-    );
-  }
+    </CalendarDispatch.Provider>
+  );
 }
 
 CalendarParent.propTypes = {
@@ -240,7 +122,7 @@ CalendarParent.propTypes = {
       picture: PropTypes.string,
       // eslint-disable-next-line camelcase
       calendar_id: PropTypes.string.isRequired,
-      interval: PropTypes.oneOf([PropTypes.string], [PropTypes.number]),
+      interval: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       // eslint-disable-next-line camelcase

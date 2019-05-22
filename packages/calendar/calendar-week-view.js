@@ -119,14 +119,9 @@ Week.propTypes = {
   year: PropTypes.number.isRequired,
   weekNumber: PropTypes.number.isRequired,
   month: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  valueMethod: PropTypes.string.isRequired,
-  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  monthEvents: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  changeMonth: PropTypes.func.isRequired,
-  today: PropTypes.array.isRequired
+  calendarView: PropTypes.string.isRequired,
+  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object).isRequired)
+    .isRequired
 };
 
 export default Week;
