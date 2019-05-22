@@ -79,7 +79,8 @@ export function monthBuilder(passedDate, events) {
         const normalisedEvent = {
           name: event.name,
           color: event.color,
-          start_date: new Date(event.start_date),
+          start_date: addHours(new Date(event.start_date), 10),
+          end_date: addHours(new Date(event.end_date), 10),
           start_date_format: format(
             addHours(new Date(event.start_date), 10),
             'yyyy-MM-dd'
