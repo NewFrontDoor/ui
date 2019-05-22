@@ -71,7 +71,7 @@ export function monthBuilder(passedDate, events) {
 
     if (!day.isDummy) {
       const todaysEvents = events.filter(event => {
-        const startDate = new Date(event.start_date);
+        const startDate = addHours(new Date(event.start_date), 10);
         return isSameDay(startDate, day.date);
       });
 
@@ -99,8 +99,8 @@ export function monthBuilder(passedDate, events) {
           ),
           event_length:
             differenceInDays(
-              new Date(event.end_date_format),
-              new Date(event.start_date_format)
+              addHours(new Date(event.end_date), 10),
+              addHours(new Date(event.end_date), 10)
             ) + 1,
           description: event.description,
           location: event.where,
