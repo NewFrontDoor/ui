@@ -2,22 +2,21 @@ import {
   addDays,
   addHours,
   differenceInDays,
+  eachDayOfInterval,
+  endOfWeek,
   format,
   getWeek,
-  isSameDay,
-  startOfMonth,
-  isWeekend,
+  getWeeksInMonth,
+  isAfter,
   isFirstDayOfMonth,
   isLastDayOfMonth,
-  isAfter,
+  isSameDay,
+  isSameMonth,
+  isWeekend,
   startOfDay,
-  eachDayOfInterval,
-  startOfWeek,
-  endOfWeek,
-  isSameMonth
+  startOfMonth,
+  startOfWeek
 } from 'date-fns/esm';
-
-const NUMBER_OF_WEEKS = 6;
 
 function buildDay(inputDate) {
   const today = new Date();
@@ -42,13 +41,14 @@ function buildWeek(date, weekStartsAt = 0) {
 function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
   const date = new Date(inputDate);
   const startDate = startOfWeek(startOfMonth(date), weekStartsAt);
+  const numberOfWeeks = getWeeksInMonth(date);
   const month = [];
   let weekIndex;
   let week;
   let weekNumber;
   let startOfWeekDate;
 
-  for (weekIndex = 0; weekIndex < NUMBER_OF_WEEKS; weekIndex++) {
+  for (weekIndex = 0; weekIndex < numberOfWeeks; weekIndex++) {
     startOfWeekDate = addDays(startDate, weekIndex * 7);
     weekNumber = getWeek(startOfWeekDate);
     week = buildWeek(startOfWeekDate, weekStartsAt).map(dayData => {
