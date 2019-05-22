@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
+import {format} from 'date-fns/esm';
 import EventWrapper from './components/event-wrapper';
 
 const bgStyles = {
@@ -83,21 +84,22 @@ const WeekNumber = styled.div(
   })
 );
 
-const Day = props => (
+const Day = ({monthData}) => (
   <>
-    {props.monthData.map(week => (
-      <WeekBlock key={week.number}>
-        <WeekNumber column={1}>{week.number}</WeekNumber>
-        {week.map((day, index) => {
-          const events = [
-            <DayNumber key={day.number} col={index + 2} bgStyle={day[2]}>
-              {day[0]}
-            </DayNumber>
-          ];
-          if (day[3] !== undefined) {
-            day[3].map(event => {
-              events.push(
+    {monthData.map(({week, weekNumber}) => (
+      <WeekBlock key={weekNumber}>
+        <WeekNumber column={1}>{weekNumber}</WeekNumber>
+        {week.map(({events, date, isDummy}, index) => {
+          const day = format(date, 'dd');
+
+          return (
+            <React.Fragment key={day}>
+              <DayNumber col={index + 2} isDummy={isDummy}>
+                {day}
+              </DayNumber>
+              {events.map(event => (
                 <Event
+                  key={event.id}
                   col={index + 2}
                   span={event.event_length}
                   color={event.color}
@@ -106,11 +108,9 @@ const Day = props => (
                     {event.start_time} {event.name}
                   </EventWrapper>
                 </Event>
-              );
-            });
-          }
-
-          return events;
+              ))}
+            </React.Fragment>
+          );
         })}
       </WeekBlock>
     ))}
@@ -118,12 +118,12 @@ const Day = props => (
 );
 
 Day.propTypes = {
-  year: PropTypes.number.isRequired,
-  weekNumber: PropTypes.number.isRequired,
-  month: PropTypes.object.isRequired,
-  calendarView: PropTypes.string.isRequired,
-  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object).isRequired)
-    .isRequired
+  monthData: PropTypes.arrayOf(
+    PropTypes.shape({
+      week: PropTypes.arrayOf(PropTypes.object),
+      weekNumber: PropTypes.number
+    })
+  ).isRequired
 };
 
 export default Day;

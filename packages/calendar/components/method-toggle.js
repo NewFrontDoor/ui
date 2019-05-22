@@ -125,12 +125,10 @@ function MethodToggle(props) {
       selectedValue={props.calendarView}
       onChange={option => props.setCalendarView(option)}
     >
-      {props.inputs.map(input => (
-        <React.Fragment key={props.location + input}>
-          <Radio value={input} id={props.location + input} />,
-          <label htmlFor={props.location + input}>{input}</label>
-        </React.Fragment>
-      ))}
+      {props.inputs.map(input => [
+        <Radio value={input} id={props.location + input} />,
+        <label htmlFor={props.location + input}>{input}</label>
+      ])}
     </StyledRadioGroup>
   );
 }
