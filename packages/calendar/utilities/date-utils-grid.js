@@ -77,6 +77,7 @@ export function monthBuilder(passedDate, events) {
 
       normalisedEvents = todaysEvents.map(event => {
         const normalisedEvent = {
+          id: event.id,
           name: event.name,
           color: event.color,
           start_date: addHours(new Date(event.start_date), 10),

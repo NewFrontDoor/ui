@@ -88,12 +88,13 @@ const Month = ({monthData}) => {
             const day = format(date, 'dd');
 
             return (
-              <>
-                <DayNumber key={day} col={index + 2} isDummy={isDummy}>
+              <React.Fragment key={day}>
+                <DayNumber col={index + 2} isDummy={isDummy}>
                   {day}
                 </DayNumber>
                 {events.map(event => (
                   <Event
+                    key={event.id}
                     col={index + 2}
                     span={event.event_length}
                     color={event.color}
@@ -103,7 +104,7 @@ const Month = ({monthData}) => {
                     </EventWrapper>
                   </Event>
                 ))}
-              </>
+              </React.Fragment>
             );
           })}
         </WeekBlock>
