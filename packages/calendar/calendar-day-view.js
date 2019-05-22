@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
+import {format} from 'date-fns/esm';
 import EventWrapper from './components/event-wrapper';
 
 const bgStyles = {
@@ -83,50 +84,46 @@ const WeekNumber = styled.div(
   })
 );
 
-const Day = props => [
-  props.monthData.map((week, index) => (
-    <WeekBlock>
-      <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
-      {week.map((day, index) => {
-        const events = [
-          <DayNumber col={index + 2} bgStyle={day[2]}>
-            {day[0]}
-          </DayNumber>
-        ];
-        if (day[3] !== undefined) {
-          day[3].map(event => {
-            events.push(
-              <Event
-                col={index + 2}
-                span={event.event_length}
-                color={event.color}
-              >
-                <EventWrapper event={event}>
-                  {event.start_time} {event.name}
-                </EventWrapper>
-              </Event>
-            );
-          });
-        }
+const Day = ({monthData}) => (
+  <>
+    {monthData.map(({week, weekNumber}) => (
+      <WeekBlock key={weekNumber}>
+        <WeekNumber column={1}>{weekNumber}</WeekNumber>
+        {week.map(({events, date, isDummy}, index) => {
+          const day = format(date, 'dd');
 
-        return events;
-      })}
-    </WeekBlock>
-  ))
-];
+          return (
+            <React.Fragment key={day}>
+              <DayNumber col={index + 2} isDummy={isDummy}>
+                {day}
+              </DayNumber>
+              {events.map(event => (
+                <Event
+                  key={event.id}
+                  col={index + 2}
+                  span={event.event_length}
+                  color={event.color}
+                >
+                  <EventWrapper event={event}>
+                    {event.start_time} {event.name}
+                  </EventWrapper>
+                </Event>
+              ))}
+            </React.Fragment>
+          );
+        })}
+      </WeekBlock>
+    ))}
+  </>
+);
 
 Day.propTypes = {
-  year: PropTypes.number.isRequired,
-  weekNumber: PropTypes.number.isRequired,
-  month: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  valueMethod: PropTypes.string.isRequired,
-  monthData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  monthEvents: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array).isRequired)
-    .isRequired,
-  changeMonth: PropTypes.func.isRequired,
-  today: PropTypes.array.isRequired
+  monthData: PropTypes.arrayOf(
+    PropTypes.shape({
+      week: PropTypes.arrayOf(PropTypes.object),
+      weekNumber: PropTypes.number
+    })
+  ).isRequired
 };
 
 export default Day;
