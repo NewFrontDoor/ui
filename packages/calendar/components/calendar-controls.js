@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Button from 'mineral-ui/Button';
 import Text from 'mineral-ui/Text';
 import Flex, {FlexItem} from 'mineral-ui/Flex';
-import {format} from 'date-fns/esm';
+import {format} from 'date-fns';
 import CalendarDispatch from '../utilities/calendar-dispatch-provider';
 import MethodToggle from './method-toggle';
 
@@ -22,12 +22,14 @@ export default function CalendarControls({
       <FlexItem grow={1} shrink={1} width="20%">
         <Button
           size="medium"
+          aria-label="previous year"
           onClick={() => dispatch({type: 'decrement-year'})}
         >
           &lt;&lt;
         </Button>
         <Button
           size="medium"
+          aria-label="previous month"
           onClick={() => dispatch({type: 'decrement-month'})}
         >
           &lt;
@@ -41,19 +43,21 @@ export default function CalendarControls({
         </Button>
         <Button
           size="medium"
+          aria-label="next month"
           onClick={() => dispatch({type: 'increment-month'})}
         >
           &gt;
         </Button>
         <Button
           size="medium"
+          aria-label="next year"
           onClick={() => dispatch({type: 'increment-year'})}
         >
           &gt;&gt;
         </Button>
       </FlexItem>
       <FlexItem grow={3} shrink={1} width="50%">
-        <Text as="h2" align="center">
+        <Text as="h2" align="center" data-testid="calendar-title">
           {format(currentDate, 'MMMM - yyyy')}
         </Text>
       </FlexItem>
