@@ -5,9 +5,8 @@ import {shade, readableColor} from 'polished';
 import EventWrapper from './components/event-wrapper';
 
 const bgStyles = {
-  prev: 'rgba(166, 168, 179, 0.08)',
-  current: 'none',
-  next: 'rgba(166, 168, 179, 0.08)'
+  true: 'none',
+  false: 'rgba(166, 168, 179, 0.08)'
 };
 
 const WeekBlock = styled.div({
@@ -89,7 +88,7 @@ const Month = props => [
       <WeekNumber column={1}>{props.weekNumber + index}</WeekNumber>
       {week.map((day, index) => {
         const weekEvents = [
-          <DayNumber col={index + 2} bgStyle={day.currentMonth ? 'none' : 'rgba(166, 168, 179, 0.08)' }>
+          <DayNumber col={index + 2} bgStyle={day.currentMonth}>
             {day.day}
           </DayNumber>
         ];

@@ -35,7 +35,10 @@ function buildCalendarArray(passedDate) {
   const lastDatePrevMonth = lastDayOfMonth(subMonths(passedDate, 1));
   const lastSundayPrevMonthDate =
     format(lastDatePrevMonth, 'd') - getDay(lastDatePrevMonth);
-  const lastSundayPrevMonth = subDays(lastDatePrevMonth, getDay(lastDatePrevMonth));
+  const lastSundayPrevMonth = subDays(
+    lastDatePrevMonth,
+    getDay(lastDatePrevMonth)
+  );
   // Build up the array of days in this month
   const mainMonthArray = [...new Array(getDaysInMonth(passedDate))].map(
     (val, index) => ({
@@ -55,7 +58,7 @@ function buildCalendarArray(passedDate) {
           day: (index + 1).toString().padStart(2, '0'),
           monthYear: [nextMonth, year],
           currentMonth: false,
-          actualDate: addDays(firstDateNextMonth, 1),
+          actualDate: addDays(firstDateNextMonth, index),
           events: []
         })
       )
@@ -93,7 +96,8 @@ export function monthBuilder(passedDate, events) {
     const normalisedEvent = {
       name: event.name,
       color: event.color,
-      start_date: new Date(event.start_date),
+      start_date: addHours(new Date(event.start_date), 10),
+      end_date: addHours(new Date(event.end_date), 10),
       start_date_format: format(
         addHours(new Date(event.start_date), 10),
         'yyyy-MM-dd'
@@ -102,22 +106,28 @@ export function monthBuilder(passedDate, events) {
         addHours(new Date(event.start_date), 10),
         "h:mmaaaaa'm'"
       ),
-      end_date_format: format(addHours(new Date(event.end_date), 10), 'yyyy-MM-dd'),
+      end_date_format: format(
+        addHours(new Date(event.end_date), 10),
+        'yyyy-MM-dd'
+      ),
       end_time: format(addHours(new Date(event.end_date), 10), "h:mmaaaaa'm'"),
       event_length:
-        differenceInDays(new Date(event.end_date_format), new Date(event.start_date_format)) +
-        1,
+        differenceInDays(
+          addHours(new Date(event.end_date), 10),
+          addHours(new Date(event.end_date), 10)
+        ) + 1,
       description: event.description,
       location: event.where,
       url: event.url
     };
     const date = new Date(normalisedEvent.start_date);
-    const calIndex = fullMonthCalendar.findIndex(
-      element => isSameDay(element.actualDate, date)
+    const calIndex = fullMonthCalendar.findIndex(element =>
+      isSameDay(element.actualDate, date)
     );
     if (calIndex < 0) {
       return;
     }
+
     fullMonthCalendar[calIndex].events.push(normalisedEvent);
   });
 
