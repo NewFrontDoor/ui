@@ -16,7 +16,7 @@ import {
   startOfDay,
   startOfMonth,
   startOfWeek
-} from 'date-fns/esm';
+} from 'date-fns';
 
 function buildDay(inputDate) {
   const today = new Date();
