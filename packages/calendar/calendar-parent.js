@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import PropTypes from 'prop-types';
-import {addMonths, subMonths} from 'date-fns/esm';
+import {addMonths, subMonths} from 'date-fns';
 import styled from '@emotion/styled';
 import {monthBuilder} from './utilities/date-utils-grid';
 import Month from './calendar-month-view';

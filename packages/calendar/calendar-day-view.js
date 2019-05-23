@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
-import {format} from 'date-fns/esm';
+import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
 const bgStyles = {

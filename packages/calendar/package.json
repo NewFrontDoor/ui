@@ -1,6 +1,9 @@
 {
   "name": "@newfrontdoor/calendar",
   "version": "0.0.0",
+  "scripts": {
+    "babel": "babel src -d dist"
+  },
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
     "polished": "^3.3.0",
@@ -8,12 +11,15 @@
     "react-portal": "^4.1.5",
     "react-radio-group": "^3.0.3"
   },
+  "devDependencies": {
+    "jest-dom": "^3.2.2",
+    "react-testing-library": "^7.0.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10.0",
     "@emotion/styled": "^10.0",
     "mineral-ui": "^0.58.0",
     "react": "^16.0"
   },
-  "xo": false,
-  "devDependencies": {}
+  "xo": false
 }
