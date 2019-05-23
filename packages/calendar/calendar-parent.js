@@ -93,6 +93,7 @@ export default function CalendarParent({events}) {
           currentDate={state.currentDate}
           calendarView={calendarView}
           setCalendarView={setCalendarView}
+          input={Object.keys(views)}
         />
         <CalendarHeader>
           <div>Wk</div>

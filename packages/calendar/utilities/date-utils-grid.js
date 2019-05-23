@@ -54,7 +54,7 @@ function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
     week = buildWeek(startOfWeekDate, weekStartsAt).map(dayData => {
       return mapDay(
         Object.assign(dayData, {
-          isDummy: !isSameMonth(date, dayData.date)
+          isPeripheral: !isSameMonth(date, dayData.date)
         })
       );
     });

@@ -13,10 +13,10 @@ export default function CalendarControls({
   location,
   currentDate,
   calendarView,
-  setCalendarView
+  setCalendarView,
+  input
 }) {
   const dispatch = useContext(CalendarDispatch);
-
   return (
     <Flex alignItems="start" justifyContent="between">
       <FlexItem grow={1} shrink={1} width="20%">
@@ -62,7 +62,7 @@ export default function CalendarControls({
           setCalendarView={setCalendarView}
           calendarView={calendarView}
           location={location}
-          inputs={['day', 'week', 'month']}
+          inputs={input}
           styles={{
             borderRadius: 0
           }}
@@ -76,5 +76,6 @@ CalendarControls.propTypes = {
   setCalendarView: PropTypes.func.isRequired,
   calendarView: PropTypes.string.isRequired,
   currentDate: PropTypes.instanceOf(Date).isRequired,
-  location: PropTypes.string.isRequired
+  location: PropTypes.string.isRequired,
+  input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 };

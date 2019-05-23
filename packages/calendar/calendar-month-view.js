@@ -57,7 +57,7 @@ const DayNumber = styled.div(
   },
   props => ({
     gridColumn: props.col,
-    backgroundColor: props.isDummy ? 'rgba(166, 168, 179, 0.08)' : 'none'
+    backgroundColor: props.isPeripheral ? 'rgba(166, 168, 179, 0.08)' : 'none'
   })
 );
 
@@ -84,12 +84,12 @@ const Month = ({monthData}) => {
       {monthData.map(({week, weekNumber}) => (
         <WeekBlock key={weekNumber}>
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
-          {week.map(({events, date, isDummy}, index) => {
+          {week.map(({events, date, isPeripheral}, index) => {
             const day = format(date, 'dd');
 
             return (
               <React.Fragment key={day}>
-                <DayNumber col={index + 2} isDummy={isDummy}>
+                <DayNumber col={index + 2} isPeripheral={isPeripheral}>
                   {day}
                 </DayNumber>
                 {events.map(event => (
