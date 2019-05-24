@@ -2,34 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
-import {format} from 'date-fns';
+import {format, differenceInDays, differenceInHours} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
 const WeekBlock = styled.div({
   display: 'grid',
-  gridTemplateColumns: '50px repeat(7, 1fr)',
-  gridTemplateRows: '26px repeat(8, 1fr)',
-  gridAutoFlow: 'row dense',
+  gridTemplateColumns: '40px 10px repeat(21, 1fr)',
+  gridTemplateRows: 'repeat(38, 15px)',
+  gridAutoFlow: 'row',
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
-  height: '104px'
+  height: '570px'
 });
 
 const Event = styled.div(
   {
-    padding: '2px 3px',
+    padding: '2px 3px 0px 2px',
     color: '#fc9b10',
-    alignSelf: 'center',
     fontSize: '12px',
     position: 'relative',
     overflow: 'hidden',
     maxWidth: '100%',
     whiteSpace: 'nowrap',
-    height: '18px',
-    zIndex: '1'
+    zIndex: '1',
+    ':hover': {
+      zIndex: '10'
+    }
   },
   props => ({
-    gridColumnStart: props.col,
-    gridColumnEnd: `span ${props.span}`,
+    gridRow: `${props.row} / span ${props.rowspan}`,
+    gridColumn: ` ${props.col} / span ${props.colspan}`,
     background: props.color || '#fef0db',
     color: `${
       props.color
@@ -40,73 +41,127 @@ const Event = styled.div(
   })
 );
 
+const HourDisplay = styled.div(
+  {
+    position: 'relative',
+    gridColumn: '1',
+    width: '100%',
+    textAlign: 'right',
+    lineHeight: '58px',
+    letterSpacing: '1px',
+    fontSize: '14px',
+    boxSizing: 'border-box',
+    color: '#98a0a6',
+    height: '30px',
+    pointerEvents: 'none',
+    fontVariant: 'small-caps'
+  },
+  props => ({
+    gridRowStart: props.row,
+    gridRowEnd: `span ${props.row + 1}`
+  })
+);
+const HourGridline = styled.div(
+  {
+    position: 'relative',
+    gridColumn: '2',
+    width: '100vw',
+    pointerEvents: 'none',
+    borderRight: '1px solid rgba(166, 168, 179, 0.12)',
+    borderBottom: '1px solid rgba(166, 168, 179, 0.12)'
+  },
+  props => ({
+    gridRow: props.row
+  })
+);
+
 const DayNumber = styled.div(
   {
     position: 'relative',
     gridRow: '1',
     width: '100%',
-    padding: '5px 5px 0 0',
-    textAlign: 'right',
+    textAlign: 'center',
     letterSpacing: '1px',
-    fontSize: '14px',
+    fontSize: '20px',
     boxSizing: 'border-box',
     color: '#98a0a6',
-    height: '104px',
+    height: '570px',
     pointerEvents: 'none',
-    borderRight: '1px solid rgba(166, 168, 179, 0.12)'
+    borderLeft: '1px solid rgba(166, 168, 179, 0.12)'
   },
   props => ({
-    gridColumn: props.col,
-    backgroundColor: props.isPeripheral ? 'rgba(166, 168, 179, 0.08)' : 'none'
-  })
-);
-
-const WeekNumber = styled.div(
-  {
-    borderRight: '1px solid rgba(166, 168, 179, 0.12)',
-    pointerEvents: 'none',
-    gridRowStart: '1',
-    gridRowEnd: '5',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '14px',
-    color: '#98a0a6'
-  },
-  props => ({
-    gridColumn: props.column
+    gridColumn: `${props.col} / span 3`
   })
 );
 
 const Week = ({monthData}) => {
-  const [week, weekNumber] = monthData[0];
+  const {week, lameFace} = monthData[0];
+  const firstDay = week[0].date;
+  console.log(week);
+  const hours = [
+    '6am',
+    '7am',
+    '8am',
+    '9am',
+    '10am',
+    '11am',
+    '12pm',
+    '1pm',
+    '2pm',
+    '3pm',
+    '4pm',
+    '5pm',
+    '6pm',
+    '7pm',
+    '8pm',
+    '9pm',
+    '10pm',
+    '11pm'
+  ];
   return (
-        <WeekBlock>
-          <WeekNumber column={1}>{weekNumber}</WeekNumber>
-          {week.map(({events, date, isPeripheral}, index) => {
-            const day = format(date, 'dd');
+    <WeekBlock>
+      {hours.map((hour, index) => (
+        <>
+          <HourDisplay row={index * 2 + 1}>{hour}</HourDisplay>
+          <HourGridline row={index * 2 + 2} />
+        </>
+      ))}
+      {week.map(({events, date, isPeripheral}, index) => {
+        const day = format(date, 'dd');
+        return (
+          <React.Fragment key={day}>
+            <DayNumber col={index * 3 + 3} isPeripheral={isPeripheral}>
+              {day}
+            </DayNumber>
+            {events.map(event => {
+              const startRow =
+                parseInt(format(event.start_date, 'H'), 10) * 2 +
+                (parseInt(format(event.start_date, 'm'), 10) >= 30 ? 1 : 0);
+              if (event.event_length > 1) {
+                return;
+              }
 
-            return (
-              <React.Fragment key={day}>
-                <DayNumber col={index + 2} isPeripheral={isPeripheral}>
-                  {day}
-                </DayNumber>
-                {events.map(event => (
-                  <Event
-                    key={event.id}
-                    col={index + 2}
-                    span={event.event_length}
-                    color={event.color}
-                  >
-                    <EventWrapper event={event}>
-                      {event.start_time} {event.name}
-                    </EventWrapper>
-                  </Event>
-                ))}
-              </React.Fragment>
-            );
-          })}
-        </WeekBlock>
+              return (
+                <Event
+                  key={event.id}
+                  col={differenceInDays(event.start_date, firstDay) * 3 + 3}
+                  colspan={3}
+                  row={startRow - 9}
+                  rowspan={
+                    differenceInHours(event.end_date, event.start_date) + 2
+                  }
+                  color={event.color}
+                >
+                  <EventWrapper event={event}>
+                    {event.start_time} {event.name}
+                  </EventWrapper>
+                </Event>
+              );
+            })}
+          </React.Fragment>
+        );
+      })}
+    </WeekBlock>
   );
 };
 

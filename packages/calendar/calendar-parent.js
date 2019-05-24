@@ -16,21 +16,28 @@ const CalendarContainer = styled.div({
   color: '#51565d'
 });
 
-const CalendarHeader = styled.div({
-  display: 'grid',
-  gridTemplateColumns: '50px repeat(7, 1fr)',
-  gridTemplateRows: '1fr',
-  gridGap: '0rem',
-  height: '50px',
-  alignItems: 'center',
-  textAlign: 'center',
-  borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
-  lineHeight: '50px',
-  fontWeight: '500',
-  fontSize: '12px',
-  textTransform: 'uppercase',
-  color: '#99a1a7'
-});
+const CalendarHeader = styled.div(
+  {
+    display: 'grid',
+    gridTemplateColumns: '50px repeat(7, 1fr)',
+    gridTemplateRows: '1fr',
+    gridGap: '0rem',
+    alignItems: 'center',
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: '12px',
+    textTransform: 'uppercase',
+    color: '#99a1a7'
+  },
+  props =>
+    props.calendarView === 'month'
+      ? {
+          lineHeight: '50px',
+          height: '50px',
+          borderBottom: '1px solid rgba(166, 168, 179, 0.12)'
+        }
+      : ''
+);
 
 function reducer(state, action) {
   let currentDate;
@@ -67,7 +74,7 @@ function init(events) {
   return {
     currentDate,
     events,
-    calendarView: 'month',
+    calendarView: 'week',
     monthData: monthBuilder(currentDate, events)
     // A monthEvents: eventArrayBuilder(events)
   };
@@ -80,7 +87,7 @@ const views = {
 };
 
 export default function CalendarParent({events}) {
-  const [calendarView, setCalendarView] = useState('month');
+  const [calendarView, setCalendarView] = useState('week');
   const [state, dispatch] = useReducer(reducer, events, init);
 
   const CalendarView = views[calendarView];
@@ -95,8 +102,8 @@ export default function CalendarParent({events}) {
           setCalendarView={setCalendarView}
           input={Object.keys(views)}
         />
-        <CalendarHeader>
-          <div>Wk</div>
+        <CalendarHeader calendarView={calendarView}>
+          <div>{calendarView === 'month' ? 'Wk' : ''}</div>
           <div>Sunday</div>
           <div>Monday</div>
           <div>Tuesday</div>
