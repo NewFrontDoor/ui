@@ -7,9 +7,9 @@ import EventWrapper from './components/event-wrapper';
 
 const WeekBlock = styled.div({
   display: 'grid',
-  gridTemplateColumns: '40px 10px repeat(21, 1fr)',
+  gridTemplateColumns: '40px 10px repeat(7, 1fr)',
   gridTemplateRows: 'repeat(38, 15px)',
-  gridAutoFlow: 'row',
+  gridAutoFlow: 'column dense',
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
   height: '570px'
 });
@@ -24,13 +24,12 @@ const Event = styled.div(
     maxWidth: '100%',
     whiteSpace: 'nowrap',
     zIndex: '1',
-    ':hover': {
-      zIndex: '10'
+    ':hover, :focus': {
+      gridColumn: 'span 10'
     }
   },
   props => ({
     gridRow: `${props.row} / span ${props.rowspan}`,
-    gridColumn: ` ${props.col} / span ${props.colspan}`,
     background: props.color || '#fef0db',
     color: `${
       props.color
@@ -75,22 +74,36 @@ const HourGridline = styled.div(
   })
 );
 
-const DayNumber = styled.div(
+const Day = styled.div(
   {
+    display: 'grid',
     position: 'relative',
-    gridRow: '1',
-    width: '100%',
-    textAlign: 'center',
+    gridRow: '2 / 38',
+    gridTemplateColumns: 'auto',
+    gridTemplateRows: 'repeat(38, 15px)',
     letterSpacing: '1px',
     fontSize: '20px',
     boxSizing: 'border-box',
     color: '#98a0a6',
     height: '570px',
-    pointerEvents: 'none',
     borderLeft: '1px solid rgba(166, 168, 179, 0.12)'
   },
   props => ({
-    gridColumn: `${props.col} / span 3`
+    gridColumn: `${props.col} / span 1`
+  })
+);
+
+const DayNumber = styled.div(
+  {
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: '1px',
+    fontSize: '20px',
+    color: '#98a0a6',
+    gridRow: '1 / 2'
+  },
+  props => ({
+    gridColumn: `${props.col} / span 1`
   })
 );
 
@@ -120,47 +133,43 @@ const Week = ({monthData}) => {
   ];
   return (
     <WeekBlock>
+      {week.map(({events, date, isPeripheral}, index) => {
+        const day = format(date, 'dd');
+        return (
+          <React.Fragment key={day}>
+            <DayNumber col={index + 3}>{day}</DayNumber>
+            <Day col={index + 3} isPeripheral={isPeripheral}>
+              {events.map(event => {
+                const startRow =
+                  parseInt(format(event.start_date, 'H'), 10) * 2 +
+                  (parseInt(format(event.start_date, 'm'), 10) >= 30 ? 1 : 0);
+                if (event.event_length > 1) {
+                  return;
+                }
+
+                return (
+                  <Event
+                    key={event.id}
+                    row={startRow - 9}
+                    rowspan={
+                      differenceInHours(event.end_date, event.start_date) + 2
+                    }
+                    color={event.color}
+                  >
+                    <EventWrapper event={event}>{event.name}</EventWrapper>
+                  </Event>
+                );
+              })}
+            </Day>
+          </React.Fragment>
+        );
+      })}
       {hours.map((hour, index) => (
         <>
           <HourDisplay row={index * 2 + 1}>{hour}</HourDisplay>
           <HourGridline row={index * 2 + 2} />
         </>
       ))}
-      {week.map(({events, date, isPeripheral}, index) => {
-        const day = format(date, 'dd');
-        return (
-          <React.Fragment key={day}>
-            <DayNumber col={index * 3 + 3} isPeripheral={isPeripheral}>
-              {day}
-            </DayNumber>
-            {events.map(event => {
-              const startRow =
-                parseInt(format(event.start_date, 'H'), 10) * 2 +
-                (parseInt(format(event.start_date, 'm'), 10) >= 30 ? 1 : 0);
-              if (event.event_length > 1) {
-                return;
-              }
-
-              return (
-                <Event
-                  key={event.id}
-                  col={differenceInDays(event.start_date, firstDay) * 3 + 3}
-                  colspan={3}
-                  row={startRow - 9}
-                  rowspan={
-                    differenceInHours(event.end_date, event.start_date) + 2
-                  }
-                  color={event.color}
-                >
-                  <EventWrapper event={event}>
-                    {event.start_time} {event.name}
-                  </EventWrapper>
-                </Event>
-              );
-            })}
-          </React.Fragment>
-        );
-      })}
     </WeekBlock>
   );
 };
