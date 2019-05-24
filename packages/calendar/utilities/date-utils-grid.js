@@ -69,7 +69,6 @@ export function monthBuilder(passedDate, events) {
   function getEvents(day) {
     let normalisedEvents = [];
 
-    if (!day.isDummy) {
       const todaysEvents = events.filter(event => {
         const startDate = addHours(new Date(event.start_date), 10);
         return isSameDay(startDate, day.date);
@@ -110,7 +109,6 @@ export function monthBuilder(passedDate, events) {
 
         return normalisedEvent;
       });
-    }
 
     day.events = normalisedEvents;
 

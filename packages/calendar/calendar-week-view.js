@@ -5,16 +5,10 @@ import {shade, readableColor} from 'polished';
 import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
-const bgStyles = {
-  prev: 'rgba(166, 168, 179, 0.08)',
-  current: 'none',
-  next: 'rgba(166, 168, 179, 0.08)'
-};
-
 const WeekBlock = styled.div({
   display: 'grid',
   gridTemplateColumns: '50px repeat(7, 1fr)',
-  gridTemplateRows: '26px repeat(3, 1fr)',
+  gridTemplateRows: '26px repeat(8, 1fr)',
   gridAutoFlow: 'row dense',
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
   height: '104px'
@@ -63,7 +57,7 @@ const DayNumber = styled.div(
   },
   props => ({
     gridColumn: props.col,
-    backgroundColor: bgStyles[props.bgStyle]
+    backgroundColor: props.isPeripheral ? 'rgba(166, 168, 179, 0.08)' : 'none'
   })
 );
 
@@ -85,17 +79,16 @@ const WeekNumber = styled.div(
 );
 
 const Week = ({monthData}) => {
+  const [week, weekNumber] = monthData[0];
   return (
-    <>
-      {monthData.map(({week, weekNumber}) => (
-        <WeekBlock key={weekNumber}>
+        <WeekBlock>
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
-          {week.map(({events, date, isDummy}, index) => {
+          {week.map(({events, date, isPeripheral}, index) => {
             const day = format(date, 'dd');
 
             return (
               <React.Fragment key={day}>
-                <DayNumber key={day} col={index + 2} bgStyle={isDummy}>
+                <DayNumber col={index + 2} isPeripheral={isPeripheral}>
                   {day}
                 </DayNumber>
                 {events.map(event => (
@@ -114,8 +107,6 @@ const Week = ({monthData}) => {
             );
           })}
         </WeekBlock>
-      ))}
-    </>
   );
 };
 

@@ -79,7 +79,7 @@
   "eslint": {
     "settings": {
       "react": {
-        "version": "16.5"
+        "version": "detect"
       }
     }
   }
