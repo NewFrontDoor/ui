@@ -80,13 +80,7 @@ const Day = styled.div(
     position: 'relative',
     gridRow: '2 / 38',
     gridTemplateColumns: 'auto',
-    gridTemplateRows: 'repeat(38, 15px)',
-    letterSpacing: '1px',
-    fontSize: '20px',
-    boxSizing: 'border-box',
-    color: '#98a0a6',
-    height: '570px',
-    borderLeft: '1px solid rgba(166, 168, 179, 0.12)'
+    gridTemplateRows: 'repeat(38, 15px)'
   },
   props => ({
     gridColumn: `${props.col} / span 1`
@@ -100,7 +94,9 @@ const DayNumber = styled.div(
     letterSpacing: '1px',
     fontSize: '20px',
     color: '#98a0a6',
-    gridRow: '1 / 2'
+    gridRow: '1 / 2',
+    height: '570px',
+    borderLeft: '1px solid rgba(166, 168, 179, 0.12)'
   },
   props => ({
     gridColumn: `${props.col} / span 1`
@@ -155,6 +151,7 @@ const Week = ({monthData}) => {
                       differenceInHours(event.end_date, event.start_date) + 2
                     }
                     color={event.color}
+                    role="button"
                   >
                     <EventWrapper event={event}>{event.name}</EventWrapper>
                   </Event>
