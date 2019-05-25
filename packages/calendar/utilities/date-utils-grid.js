@@ -96,7 +96,7 @@ function getEvents(events) {
         event_length:
           differenceInDays(
             addHours(new Date(event.end_date), 10),
-            addHours(new Date(event.end_date), 10)
+            addHours(new Date(event.start_date), 10)
           ) + 1,
         description: event.description,
         location: event.where,

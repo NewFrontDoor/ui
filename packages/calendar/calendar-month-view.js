@@ -92,7 +92,9 @@ const Month = ({calendarData}) => {
                 <DayNumber col={index + 2} isPeripheral={isPeripheral}>
                   {day}
                 </DayNumber>
-                {events.map(event => (
+                {events.map(event => {
+                  console.log(event.name + " - " + event.event_length)
+                  return (
                   <Event
                     key={event.id}
                     col={index + 2}
@@ -103,7 +105,8 @@ const Month = ({calendarData}) => {
                       {event.start_time} {event.name}
                     </EventWrapper>
                   </Event>
-                ))}
+                  )
+                })}
               </React.Fragment>
             );
           })}
