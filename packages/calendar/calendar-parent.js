@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import PropTypes from 'prop-types';
-import {addMonths, subMonths, addWeeks, subWeeks, startOfWeek} from 'date-fns';
+import {addMonths, subMonths, addWeeks, addDays, subDays, subWeeks, startOfWeek} from 'date-fns';
 import styled from '@emotion/styled';
 import {buildCalendarData} from './utilities/date-utils-grid';
 import Month from './calendar-month-view';
@@ -54,6 +54,12 @@ function reducer(state, action) {
       break;
     case 'decrement-week':
       currentDate = subWeeks(state.currentDate, 1);
+      break;
+    case 'decrement-day':
+      currentDate = subDays(state.currentDate, 1);
+      break;
+    case 'increment-day':
+      currentDate = addDays(state.currentDate, 1);
       break;
     case 'increment-week':
       currentDate = addWeeks(state.currentDate, 1);
