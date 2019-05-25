@@ -32,10 +32,10 @@ function buildDay(inputDate) {
   };
 }
 
-function buildWeek(date, weekStartsAt = 0) {
+function buildWeek(date, mapDay, weekStartsAt = 0) {
   const start = startOfWeek(date, weekStartsAt);
   const end = endOfWeek(date, weekStartsAt);
-  return eachDayOfInterval({start, end}).map(buildDay);
+  return eachDayOfInterval({start, end}).map(day => mapDay(buildDay(day)));
 }
 
 function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
@@ -51,12 +51,10 @@ function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
   for (weekIndex = 0; weekIndex < numberOfWeeks; weekIndex++) {
     startOfWeekDate = addDays(startDate, weekIndex * 7);
     weekNumber = getWeek(startOfWeekDate);
-    week = buildWeek(startOfWeekDate, weekStartsAt).map(dayData => {
-      return mapDay(
-        Object.assign(dayData, {
-          isPeripheral: !isSameMonth(date, dayData.date)
-        })
-      );
+    week = buildWeek(startOfWeekDate, mapDay, weekStartsAt).map(dayData => {
+      return Object.assign(dayData, {
+        isPeripheral: !isSameMonth(date, dayData.date)
+      });
     });
 
     month.push({week, weekNumber});
@@ -65,55 +63,67 @@ function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
   return month;
 }
 
-export function monthBuilder(passedDate, events) {
-  function getEvents(day) {
-    let normalisedEvents = [];
+function getEvents(events) {
+  return function(day) {
+    const todaysEvents = events.filter(event => {
+      const startDate = addHours(new Date(event.start_date), 10);
+      return isSameDay(startDate, day.date);
+    });
 
-      const todaysEvents = events.filter(event => {
-        const startDate = addHours(new Date(event.start_date), 10);
-        return isSameDay(startDate, day.date);
-      });
-
-      normalisedEvents = todaysEvents.map(event => {
-        const normalisedEvent = {
-          id: event.id,
-          name: event.name,
-          color: event.color,
-          start_date: addHours(new Date(event.start_date), 10),
-          end_date: addHours(new Date(event.end_date), 10),
-          start_date_format: format(
-            addHours(new Date(event.start_date), 10),
-            'yyyy-MM-dd'
-          ),
-          start_time: format(
-            addHours(new Date(event.start_date), 10),
-            "h:mmaaaaa'm'"
-          ),
-          end_date_format: format(
+    const normalisedEvents = todaysEvents.map(event => {
+      const normalisedEvent = {
+        id: event.id,
+        name: event.name,
+        color: event.color,
+        start_date: addHours(new Date(event.start_date), 10),
+        end_date: addHours(new Date(event.end_date), 10),
+        start_date_format: format(
+          addHours(new Date(event.start_date), 10),
+          'yyyy-MM-dd'
+        ),
+        start_time: format(
+          addHours(new Date(event.start_date), 10),
+          "h:mmaaaaa'm'"
+        ),
+        end_date_format: format(
+          addHours(new Date(event.end_date), 10),
+          'yyyy-MM-dd'
+        ),
+        end_time: format(
+          addHours(new Date(event.end_date), 10),
+          "h:mmaaaaa'm'"
+        ),
+        event_length:
+          differenceInDays(
             addHours(new Date(event.end_date), 10),
-            'yyyy-MM-dd'
-          ),
-          end_time: format(
-            addHours(new Date(event.end_date), 10),
-            "h:mmaaaaa'm'"
-          ),
-          event_length:
-            differenceInDays(
-              addHours(new Date(event.end_date), 10),
-              addHours(new Date(event.end_date), 10)
-            ) + 1,
-          description: event.description,
-          location: event.where,
-          url: event.url
-        };
+            addHours(new Date(event.end_date), 10)
+          ) + 1,
+        description: event.description,
+        location: event.where,
+        url: event.url
+      };
 
-        return normalisedEvent;
-      });
-
-    day.events = normalisedEvents;
+      return normalisedEvent;
+    });
 
     return Object.assign(day, {events: normalisedEvents});
+  };
+}
+
+export function calendarWeek(passedDate, events) {
+  const withEvents = getEvents(events);
+  return buildWeek(passedDate, withEvents);
+}
+
+export function calendarMonth(passedDate, events) {
+  const withEvents = getEvents(events);
+  return buildMonth(passedDate, withEvents);
+}
+
+export function buildCalendarData(calendarView, passedDate, events) {
+  if (calendarView === 'week') {
+    return calendarWeek(passedDate, events);
   }
 
-  return buildMonth(passedDate, getEvents);
+  return calendarMonth(passedDate, events);
 }

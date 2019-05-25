@@ -11,26 +11,28 @@ import MethodToggle from './method-toggle';
 
 export default function CalendarControls({
   location,
-  currentDate,
+  startOfWeek,
   calendarView,
   setCalendarView,
   input
 }) {
   const dispatch = useContext(CalendarDispatch);
+  const jump = calendarView === 'month' ? 'year' : 'month';
+
   return (
     <Flex alignItems="start" justifyContent="between">
       <FlexItem grow={1} shrink={1} width="20%">
         <Button
           size="medium"
-          aria-label="previous year"
-          onClick={() => dispatch({type: 'decrement-year'})}
+          aria-label={`previous ${jump}`}
+          onClick={() => dispatch({type: `decrement-${jump}`})}
         >
           &lt;&lt;
         </Button>
         <Button
           size="medium"
-          aria-label="previous month"
-          onClick={() => dispatch({type: 'decrement-month'})}
+          aria-label={`previous ${calendarView}`}
+          onClick={() => dispatch({type: `decrement-${calendarView}`})}
         >
           &lt;
         </Button>
@@ -43,22 +45,22 @@ export default function CalendarControls({
         </Button>
         <Button
           size="medium"
-          aria-label="next month"
-          onClick={() => dispatch({type: 'increment-month'})}
+          aria-label={`next ${calendarView}`}
+          onClick={() => dispatch({type: `increment-${calendarView}`})}
         >
           &gt;
         </Button>
         <Button
           size="medium"
-          aria-label="next year"
-          onClick={() => dispatch({type: 'increment-year'})}
+          aria-label={`next ${jump}`}
+          onClick={() => dispatch({type: `increment-${jump}`})}
         >
           &gt;&gt;
         </Button>
       </FlexItem>
       <FlexItem grow={3} shrink={1} width="50%">
         <Text as="h2" align="center" data-testid="calendar-title">
-          {format(currentDate, 'MMMM - yyyy')}
+          {format(startOfWeek, 'MMMM - yyyy')}
         </Text>
       </FlexItem>
       <FlexItem grow={1} shrink={1} width="20%">
@@ -79,7 +81,7 @@ export default function CalendarControls({
 CalendarControls.propTypes = {
   setCalendarView: PropTypes.func.isRequired,
   calendarView: PropTypes.string.isRequired,
-  currentDate: PropTypes.instanceOf(Date).isRequired,
+  startOfWeek: PropTypes.instanceOf(Date).isRequired,
   location: PropTypes.string.isRequired,
   input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 };

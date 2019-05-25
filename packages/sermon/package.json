@@ -1,6 +1,7 @@
 {
   "name": "@newfrontdoor/sermon",
   "version": "0.1.0",
+  "license": "MIT",
   "dependencies": {
     "he": "^1.2.0",
     "isomorphic-fetch": "^2.2.1",
