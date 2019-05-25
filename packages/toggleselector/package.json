@@ -1,6 +1,7 @@
 {
   "name": "@newfrontdoor/toggleselector",
   "version": "0.0.1",
+  "license": "MIT",
   "dependencies": {
     "prop-types": "^15.6.0",
     "react-radio-group": "^3.0.3"

@@ -1,6 +1,7 @@
 {
   "name": "@newfrontdoor/bible",
   "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
   },

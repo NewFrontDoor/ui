@@ -78,10 +78,10 @@ const WeekNumber = styled.div(
   })
 );
 
-const Month = ({monthData}) => {
+const Month = ({calendarData}) => {
   return (
     <>
-      {monthData.map(({week, weekNumber}) => (
+      {calendarData.map(({week, weekNumber}) => (
         <WeekBlock key={weekNumber}>
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
           {week.map(({events, date, isPeripheral}, index) => {
@@ -114,7 +114,7 @@ const Month = ({monthData}) => {
 };
 
 Month.propTypes = {
-  monthData: PropTypes.arrayOf(
+  calendarData: PropTypes.arrayOf(
     PropTypes.shape({
       week: PropTypes.arrayOf(PropTypes.object),
       weekNumber: PropTypes.number

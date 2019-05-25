@@ -8,7 +8,7 @@ import Calendar from '..';
 afterEach(cleanup);
 
 test('Loads and displays todays date', () => {
-  const {getByTestId} = render(<Calendar events={[]} />);
+  const {getByTestId} = render(<Calendar initialView="month" events={[]} />);
 
   const actual = format(new Date(), 'MMMM - yyyy');
 
@@ -16,7 +16,9 @@ test('Loads and displays todays date', () => {
 });
 
 test('Can navigate to the previous month and year', () => {
-  const {getByTestId, getByLabelText} = render(<Calendar events={[]} />);
+  const {getByTestId, getByLabelText} = render(
+    <Calendar initialView="month" events={[]} />
+  );
 
   fireEvent.click(getByLabelText('previous month'));
   const previousMonth = subMonths(new Date(), 1);
@@ -32,7 +34,9 @@ test('Can navigate to the previous month and year', () => {
 });
 
 test('Can navigate to the next month and year', () => {
-  const {getByTestId, getByLabelText} = render(<Calendar events={[]} />);
+  const {getByTestId, getByLabelText} = render(
+    <Calendar initialView="month" events={[]} />
+  );
 
   fireEvent.click(getByLabelText('next month'));
   const nextMonth = addMonths(new Date(), 1);

@@ -1,6 +1,7 @@
 {
   "name": "@newfrontdoor/tools",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "@babel/cli": "^7.1.2",

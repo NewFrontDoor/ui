@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
-import {format, differenceInDays, differenceInHours} from 'date-fns';
+import {format, differenceInHours} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
 const WeekBlock = styled.div({
@@ -103,30 +103,30 @@ const DayNumber = styled.div(
   })
 );
 
-const Week = ({monthData}) => {
-  const {week, lameFace} = monthData[0];
-  const firstDay = week[0].date;
-  console.log(week);
-  const hours = [
-    '6am',
-    '7am',
-    '8am',
-    '9am',
-    '10am',
-    '11am',
-    '12pm',
-    '1pm',
-    '2pm',
-    '3pm',
-    '4pm',
-    '5pm',
-    '6pm',
-    '7pm',
-    '8pm',
-    '9pm',
-    '10pm',
-    '11pm'
-  ];
+const hours = [
+  '6am',
+  '7am',
+  '8am',
+  '9am',
+  '10am',
+  '11am',
+  '12pm',
+  '1pm',
+  '2pm',
+  '3pm',
+  '4pm',
+  '5pm',
+  '6pm',
+  '7pm',
+  '8pm',
+  '9pm',
+  '10pm',
+  '11pm'
+];
+
+const Week = ({calendarData}) => {
+  const week = calendarData;
+
   return (
     <WeekBlock>
       {week.map(({events, date, isPeripheral}, index) => {
@@ -172,7 +172,7 @@ const Week = ({monthData}) => {
 };
 
 Week.propTypes = {
-  monthData: PropTypes.arrayOf(
+  calendarData: PropTypes.arrayOf(
     PropTypes.shape({
       week: PropTypes.arrayOf(PropTypes.object),
       weekNumber: PropTypes.number
