@@ -26,7 +26,7 @@ export function buildEvent() {
   };
 }
 
-const events = Array.from({length: 70}).map((k, i) => buildEvent(i));
+const events = Array.from({length: 70}).map((k, i) => buildEvent(i)).sort((a, b) => a.start_date - b.start_date);
 
 export default {
   component: Calendar,

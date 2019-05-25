@@ -9,7 +9,7 @@ const WeekBlock = styled.div({
   display: 'grid',
   gridTemplateColumns: '50px repeat(7, 1fr)',
   gridTemplateRows: '26px repeat(3, 1fr)',
-  gridAutoFlow: 'row dense',
+  gridAutoFlow: 'column',
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
   height: '104px'
 });
