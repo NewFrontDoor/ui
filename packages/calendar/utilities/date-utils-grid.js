@@ -110,6 +110,11 @@ function getEvents(events) {
   };
 }
 
+export function calendarDay(passedDate, events) {
+  const withEvents = getEvents(events);
+  return buildDay(passedDate, withEvents);
+}
+
 export function calendarWeek(passedDate, events) {
   const withEvents = getEvents(events);
   return buildWeek(passedDate, withEvents);
@@ -121,6 +126,10 @@ export function calendarMonth(passedDate, events) {
 }
 
 export function buildCalendarData(calendarView, passedDate, events) {
+  if (calendarView === 'day') {
+    return calendarDay(passedDate, events);
+  }
+
   if (calendarView === 'week') {
     return calendarWeek(passedDate, events);
   }

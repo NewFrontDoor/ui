@@ -106,7 +106,7 @@ const hours = [
 ];
 
 const Day = ({calendarData}) => {
-  const day = calendarData[0].week[0];
+  const day = calendarData;
   const date = format(day.date, 'do LLLL');
   return (
     <DayBlock>
