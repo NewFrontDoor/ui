@@ -108,16 +108,20 @@ export default function CalendarParent({events, initialView}) {
           setCalendarView={setCalendarView}
           input={Object.keys(views)}
         />
-        <CalendarHeader calendarView={calendarView}>
-          <div>{calendarView === 'month' ? 'Wk' : ''}</div>
-          <div>Sunday</div>
-          <div>Monday</div>
-          <div>Tuesday</div>
-          <div>Wednesday</div>
-          <div>Thursday</div>
-          <div>Friday</div>
-          <div>Saturday</div>
-        </CalendarHeader>
+        {calendarView === 'day' ? (
+          ''
+        ) : (
+          <CalendarHeader calendarView={calendarView}>
+            <div>{calendarView === 'month' ? 'Wk' : ''}</div>
+            <div>Sunday</div>
+            <div>Monday</div>
+            <div>Tuesday</div>
+            <div>Wednesday</div>
+            <div>Thursday</div>
+            <div>Friday</div>
+            <div>Saturday</div>
+          </CalendarHeader>
+        )}
         <CalendarView
           calendarView={calendarView}
           calendarData={calendarData}
