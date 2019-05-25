@@ -142,12 +142,7 @@ const Day = ({calendarData}) => {
 };
 
 Day.propTypes = {
-  calendarData: PropTypes.arrayOf(
-    PropTypes.shape({
-      week: PropTypes.arrayOf(PropTypes.object),
-      weekNumber: PropTypes.number
-    })
-  ).isRequired
+  calendarData: PropTypes.object.isRequired
 };
 
 export default Day;
