@@ -106,7 +106,7 @@ const hours = [
 ];
 
 const Day = ({calendarData}) => {
-  const day = calendarData[0].week[0];
+  const day = calendarData;
   const date = format(day.date, 'do LLLL');
   return (
     <DayBlock>
@@ -142,12 +142,7 @@ const Day = ({calendarData}) => {
 };
 
 Day.propTypes = {
-  calendarData: PropTypes.arrayOf(
-    PropTypes.shape({
-      week: PropTypes.arrayOf(PropTypes.object),
-      weekNumber: PropTypes.number
-    })
-  ).isRequired
+  calendarData: PropTypes.object.isRequired
 };
 
 export default Day;

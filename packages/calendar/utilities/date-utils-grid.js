@@ -18,24 +18,24 @@ import {
   startOfWeek
 } from 'date-fns';
 
-function buildDay(inputDate) {
+function buildDay(inputDate, mapDay) {
   const today = new Date();
   const date = startOfDay(inputDate);
 
-  return {
+  return mapDay({
     date,
     isToday: isSameDay(today, date),
     isWeekend: isWeekend(date),
     isFirstDayOfMonth: isFirstDayOfMonth(date),
     isLastDayOfMonth: isLastDayOfMonth(date),
     isFuture: isAfter(date, today)
-  };
+  });
 }
 
 function buildWeek(date, mapDay, weekStartsAt = 0) {
   const start = startOfWeek(date, weekStartsAt);
   const end = endOfWeek(date, weekStartsAt);
-  return eachDayOfInterval({start, end}).map(day => mapDay(buildDay(day)));
+  return eachDayOfInterval({start, end}).map(day => buildDay(day, mapDay));
 }
 
 function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
@@ -110,6 +110,11 @@ function getEvents(events) {
   };
 }
 
+export function calendarDay(passedDate, events) {
+  const withEvents = getEvents(events);
+  return buildDay(passedDate, withEvents);
+}
+
 export function calendarWeek(passedDate, events) {
   const withEvents = getEvents(events);
   return buildWeek(passedDate, withEvents);
@@ -121,6 +126,10 @@ export function calendarMonth(passedDate, events) {
 }
 
 export function buildCalendarData(calendarView, passedDate, events) {
+  if (calendarView === 'day') {
+    return calendarDay(passedDate, events);
+  }
+
   if (calendarView === 'week') {
     return calendarWeek(passedDate, events);
   }
