@@ -86,8 +86,8 @@ const views = {
   month: Month
 };
 
-export default function CalendarParent({events}) {
-  const [calendarView, setCalendarView] = useState('week');
+export default function CalendarParent({events, initialView}) {
+  const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
 
   const calendarData = buildCalendarData(
@@ -129,6 +129,7 @@ export default function CalendarParent({events}) {
 }
 
 CalendarParent.propTypes = {
+  initialView: PropTypes.oneOf(['day', 'week', 'month']),
   events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -152,4 +153,8 @@ CalendarParent.propTypes = {
       locations: PropTypes.object
     })
   ).isRequired
+};
+
+CalendarParent.defaultProps = {
+  initialView: 'week'
 };
