@@ -1,6 +1,5 @@
 import {
   addDays,
-  addHours,
   differenceInDays,
   eachDayOfInterval,
   endOfDay,
@@ -68,13 +67,12 @@ function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
 function getEvents(events) {
   return function(day) {
     const todaysEvents = events.filter(event => {
-      const startDate = addHours(new Date(event.start_date), 10);
-      return isSameDay(startDate, day.date);
+      return isSameDay(new Date(event.start_date), day.date);
     });
 
     const eventsOnToday = events.filter(event => {
-      const start = startOfDay(addHours(new Date(event.start_date), 10));
-      const end = endOfDay(addHours(new Date(event.end_date), 10));
+      const start = startOfDay(new Date(event.start_date));
+      const end = endOfDay(new Date(event.end_date));
       return isWithinInterval(day.date, {start, end});
     });
 
@@ -83,28 +81,16 @@ function getEvents(events) {
         id: event.id,
         name: event.name,
         color: event.color,
-        start_date: addHours(new Date(event.start_date), 10),
-        end_date: addHours(new Date(event.end_date), 10),
-        start_date_format: format(
-          addHours(new Date(event.start_date), 10),
-          'yyyy-MM-dd'
-        ),
-        start_time: format(
-          addHours(new Date(event.start_date), 10),
-          "h:mmaaaaa'm'"
-        ),
-        end_date_format: format(
-          addHours(new Date(event.end_date), 10),
-          'yyyy-MM-dd'
-        ),
-        end_time: format(
-          addHours(new Date(event.end_date), 10),
-          "h:mmaaaaa'm'"
-        ),
+        start_date: new Date(event.start_date),
+        end_date: new Date(event.end_date),
+        start_date_format: format(new Date(event.start_date), 'yyyy-MM-dd'),
+        start_time: format(new Date(event.start_date), "h:mmaaaaa'm'"),
+        end_date_format: format(new Date(event.end_date), 'yyyy-MM-dd'),
+        end_time: format(new Date(event.end_date), "h:mmaaaaa'm'"),
         event_length:
           differenceInDays(
-            addHours(new Date(event.end_date), 10),
-            addHours(new Date(event.start_date), 10)
+            new Date(event.end_date),
+            new Date(event.start_date)
           ) + 1,
         description: event.description,
         location: event.where,
