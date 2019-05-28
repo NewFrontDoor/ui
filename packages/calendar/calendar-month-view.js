@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import {shade, readableColor} from 'polished';
+import {shade, lighten, readableColor} from 'polished';
 import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
@@ -28,7 +28,8 @@ const Event = styled.div(
     whiteSpace: 'nowrap',
     height: '18px',
     zIndex: '1',
-    display: 'block'
+    display: 'block',
+    marginRight: '5px'
   },
   props => ({
     gridColumnStart: props.col,
@@ -39,7 +40,7 @@ const Event = styled.div(
         ? readableColor(shade(0.2, props.color))
         : readableColor('#fc9b10')
     }`,
-    borderLeft: `2px solid ${props.color ? shade(0.2, props.color) : '#fdb44d'}`
+    borderLeft: `2px solid ${props.color ? lighten(0.2, props.color) : '#fdb44d'}`
   })
 );
 
