@@ -8,10 +8,12 @@ import EventWrapper from './components/event-wrapper';
 const WeekBlock = styled.div({
   display: 'grid',
   gridTemplateColumns: '50px repeat(7, 1fr)',
-  gridTemplateRows: '26px repeat(3, 1fr)',
-  gridAutoFlow: 'column',
+  gridTemplateRows: '26px repeat(3, 22px)',
+  gridAutoFlow: 'column dense',
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
-  height: '104px'
+  height: '114px',
+  overflow: 'hidden',
+  position: 'relative'
 });
 
 const Event = styled.div(
@@ -25,7 +27,8 @@ const Event = styled.div(
     maxWidth: '100%',
     whiteSpace: 'nowrap',
     height: '18px',
-    zIndex: '1'
+    zIndex: '1',
+    display: 'block'
   },
   props => ({
     gridColumnStart: props.col,
@@ -51,7 +54,7 @@ const DayNumber = styled.div(
     fontSize: '14px',
     boxSizing: 'border-box',
     color: '#98a0a6',
-    height: '104px',
+    height: '114px',
     pointerEvents: 'none',
     borderRight: '1px solid rgba(166, 168, 179, 0.12)'
   },
@@ -78,38 +81,60 @@ const WeekNumber = styled.div(
   })
 );
 
-const Month = ({calendarData}) => {
+const SeeMore = styled.div(
+  {
+    fontSize: '12px',
+    textAlign: 'right',
+    height: '18px',
+    padding: '2px 3px',
+    alignSelf: 'center',
+    gridRow: '5'
+  },
+  props => ({
+    display: props.isVisible,
+    gridColumn: props.column
+  })
+);
+
+const Month = ({calendarData, seeMore}) => {
   return (
     <>
       {calendarData.map(({week, weekNumber}) => (
-        <WeekBlock key={weekNumber}>
+        <WeekBlock key={weekNumber} className="weekblock">
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
-          {week.map(({events, date, isPeripheral}, index) => {
-            const day = format(date, 'dd');
+          {week.map(
+            ({events, date, isPeripheral, numberOfEventsToday}, index) => {
+              const day = format(date, 'dd');
+              const showMore = numberOfEventsToday >= 5;
 
-            return (
-              <React.Fragment key={day}>
-                <DayNumber col={index + 2} isPeripheral={isPeripheral}>
-                  {day}
-                </DayNumber>
-                {events.map(event => {
-                  console.log(event.name + " - " + event.event_length)
-                  return (
-                  <Event
-                    key={event.id}
-                    col={index + 2}
-                    span={event.event_length}
-                    color={event.color}
-                  >
-                    <EventWrapper event={event}>
-                      {event.start_time} {event.name}
-                    </EventWrapper>
-                  </Event>
-                  )
-                })}
-              </React.Fragment>
-            );
-          })}
+              return (
+                <React.Fragment key={day}>
+                  <DayNumber col={index + 2} isPeripheral={isPeripheral}>
+                    {day}
+                  </DayNumber>
+                  {showMore && (
+                    <SeeMore column={index + 2} onClick={() => seeMore(date)}>
+                      see more
+                    </SeeMore>
+                  )}
+                  {events.map(event => {
+                    return (
+                      <Event
+                        key={event.id}
+                        col={index + 2}
+                        span={event.event_length}
+                        color={event.color}
+                      >
+                        <EventWrapper event={event}>
+                          {event.start_time} {event.name}
+                        </EventWrapper>
+                      </Event>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            }
+          )}
         </WeekBlock>
       ))}
     </>
@@ -117,6 +142,7 @@ const Month = ({calendarData}) => {
 };
 
 Month.propTypes = {
+  seeMore: PropTypes.func.isRequired,
   calendarData: PropTypes.arrayOf(
     PropTypes.shape({
       week: PropTypes.arrayOf(PropTypes.object),

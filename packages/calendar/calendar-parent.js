@@ -1,6 +1,14 @@
-import React, {useReducer, useState} from 'react';
+import React, {useCallback, useReducer, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
-import {addMonths, subMonths, addWeeks, subWeeks, startOfWeek} from 'date-fns';
+import {
+  addMonths,
+  subMonths,
+  addWeeks,
+  addDays,
+  subDays,
+  subWeeks,
+  startOfWeek
+} from 'date-fns';
 import styled from '@emotion/styled';
 import {buildCalendarData} from './utilities/date-utils-grid';
 import Month from './calendar-month-view';
@@ -46,6 +54,9 @@ function reducer(state, action) {
     case 'today':
       currentDate = new Date();
       break;
+    case 'set-date':
+      currentDate = action.date;
+      break;
     case 'decrement-year':
       currentDate = subMonths(state.currentDate, 12);
       break;
@@ -54,6 +65,12 @@ function reducer(state, action) {
       break;
     case 'decrement-week':
       currentDate = subWeeks(state.currentDate, 1);
+      break;
+    case 'decrement-day':
+      currentDate = subDays(state.currentDate, 1);
+      break;
+    case 'increment-day':
+      currentDate = addDays(state.currentDate, 1);
       break;
     case 'increment-week':
       currentDate = addWeeks(state.currentDate, 1);
@@ -89,6 +106,13 @@ const views = {
 export default function CalendarParent({events, initialView}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
+  const seeMore = useCallback(
+    date => {
+      setCalendarView('week');
+      dispatch({type: 'set-date', date});
+    },
+    [setCalendarView, dispatch]
+  );
 
   const calendarData = buildCalendarData(
     calendarView,
@@ -98,9 +122,11 @@ export default function CalendarParent({events, initialView}) {
 
   const CalendarView = views[calendarView];
 
+  const inputEl = useRef(null);
+
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      <CalendarContainer>
+      <CalendarContainer ref={inputEl}>
         <CalendarControls
           location="top"
           startOfWeek={startOfWeek(state.currentDate)}
@@ -108,20 +134,26 @@ export default function CalendarParent({events, initialView}) {
           setCalendarView={setCalendarView}
           input={Object.keys(views)}
         />
-        <CalendarHeader calendarView={calendarView}>
-          <div>{calendarView === 'month' ? 'Wk' : ''}</div>
-          <div>Sunday</div>
-          <div>Monday</div>
-          <div>Tuesday</div>
-          <div>Wednesday</div>
-          <div>Thursday</div>
-          <div>Friday</div>
-          <div>Saturday</div>
-        </CalendarHeader>
+        {calendarView === 'day' ? (
+          ''
+        ) : (
+          <CalendarHeader calendarView={calendarView}>
+            <div>{calendarView === 'month' ? 'Wk' : ''}</div>
+            <div>Sunday</div>
+            <div>Monday</div>
+            <div>Tuesday</div>
+            <div>Wednesday</div>
+            <div>Thursday</div>
+            <div>Friday</div>
+            <div>Saturday</div>
+          </CalendarHeader>
+        )}
         <CalendarView
           calendarView={calendarView}
           calendarData={calendarData}
           weekNumber={state.weekNumber}
+          parentElement={inputEl}
+          seeMore={seeMore}
         />
       </CalendarContainer>
     </CalendarDispatch.Provider>
@@ -156,5 +188,5 @@ CalendarParent.propTypes = {
 };
 
 CalendarParent.defaultProps = {
-  initialView: 'week'
+  initialView: 'month'
 };

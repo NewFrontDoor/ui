@@ -3,6 +3,7 @@ import {
   addHours,
   differenceInDays,
   eachDayOfInterval,
+  endOfDay,
   endOfWeek,
   format,
   getWeek,
@@ -13,29 +14,30 @@ import {
   isSameDay,
   isSameMonth,
   isWeekend,
+  isWithinInterval,
   startOfDay,
   startOfMonth,
   startOfWeek
 } from 'date-fns';
 
-function buildDay(inputDate) {
+function buildDay(inputDate, mapDay) {
   const today = new Date();
   const date = startOfDay(inputDate);
 
-  return {
+  return mapDay({
     date,
     isToday: isSameDay(today, date),
     isWeekend: isWeekend(date),
     isFirstDayOfMonth: isFirstDayOfMonth(date),
     isLastDayOfMonth: isLastDayOfMonth(date),
     isFuture: isAfter(date, today)
-  };
+  });
 }
 
 function buildWeek(date, mapDay, weekStartsAt = 0) {
   const start = startOfWeek(date, weekStartsAt);
   const end = endOfWeek(date, weekStartsAt);
-  return eachDayOfInterval({start, end}).map(day => mapDay(buildDay(day)));
+  return eachDayOfInterval({start, end}).map(day => buildDay(day, mapDay));
 }
 
 function buildMonth(inputDate, mapDay, weekStartsAt = 0) {
@@ -68,6 +70,12 @@ function getEvents(events) {
     const todaysEvents = events.filter(event => {
       const startDate = addHours(new Date(event.start_date), 10);
       return isSameDay(startDate, day.date);
+    });
+
+    const eventsOnToday = events.filter(event => {
+      const start = startOfDay(addHours(new Date(event.start_date), 10));
+      const end = endOfDay(addHours(new Date(event.end_date), 10));
+      return isWithinInterval(day.date, {start, end});
     });
 
     const normalisedEvents = todaysEvents.map(event => {
@@ -106,8 +114,16 @@ function getEvents(events) {
       return normalisedEvent;
     });
 
-    return Object.assign(day, {events: normalisedEvents});
+    return Object.assign(day, {
+      events: normalisedEvents,
+      numberOfEventsToday: eventsOnToday.length
+    });
   };
+}
+
+export function calendarDay(passedDate, events) {
+  const withEvents = getEvents(events);
+  return buildDay(passedDate, withEvents);
 }
 
 export function calendarWeek(passedDate, events) {
@@ -121,6 +137,10 @@ export function calendarMonth(passedDate, events) {
 }
 
 export function buildCalendarData(calendarView, passedDate, events) {
+  if (calendarView === 'day') {
+    return calendarDay(passedDate, events);
+  }
+
   if (calendarView === 'week') {
     return calendarWeek(passedDate, events);
   }

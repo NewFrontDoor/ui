@@ -17,7 +17,20 @@ export default function CalendarControls({
   input
 }) {
   const dispatch = useContext(CalendarDispatch);
-  const jump = calendarView === 'month' ? 'year' : 'month';
+  let jump;
+  switch (calendarView) {
+    case 'day':
+      jump = 'week';
+      break;
+    case 'week':
+      jump = 'month';
+      break;
+    case 'month':
+      jump = 'year';
+      break;
+    default:
+      jump = 'year';
+  }
 
   return (
     <Flex alignItems="start" justifyContent="between">
@@ -60,7 +73,9 @@ export default function CalendarControls({
       </FlexItem>
       <FlexItem grow={3} shrink={1} width="50%">
         <Text as="h2" align="center" data-testid="calendar-title">
-          {format(startOfWeek, 'MMMM - yyyy')}
+          {calendarView === 'day'
+            ? format(startOfWeek, 'yyyy')
+            : format(startOfWeek, 'MMMM - yyyy')}
         </Text>
       </FlexItem>
       <FlexItem grow={1} shrink={1} width="20%">
