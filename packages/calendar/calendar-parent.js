@@ -1,6 +1,14 @@
-import React, {useReducer, useState, useRef} from 'react';
+import React, {useCallback, useReducer, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
-import {addMonths, subMonths, addWeeks, addDays, subDays, subWeeks, startOfWeek} from 'date-fns';
+import {
+  addMonths,
+  subMonths,
+  addWeeks,
+  addDays,
+  subDays,
+  subWeeks,
+  startOfWeek
+} from 'date-fns';
 import styled from '@emotion/styled';
 import {buildCalendarData} from './utilities/date-utils-grid';
 import Month from './calendar-month-view';
@@ -45,6 +53,9 @@ function reducer(state, action) {
   switch (action.type) {
     case 'today':
       currentDate = new Date();
+      break;
+    case 'set-date':
+      currentDate = action.date;
       break;
     case 'decrement-year':
       currentDate = subMonths(state.currentDate, 12);
@@ -95,6 +106,13 @@ const views = {
 export default function CalendarParent({events, initialView}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
+  const seeMore = useCallback(
+    date => {
+      setCalendarView('week');
+      dispatch({type: 'set-date', date});
+    },
+    [setCalendarView, dispatch]
+  );
 
   const calendarData = buildCalendarData(
     calendarView,
@@ -135,7 +153,7 @@ export default function CalendarParent({events, initialView}) {
           calendarData={calendarData}
           weekNumber={state.weekNumber}
           parentElement={inputEl}
-          setCalendarView={setCalendarView}
+          seeMore={seeMore}
         />
       </CalendarContainer>
     </CalendarDispatch.Provider>
