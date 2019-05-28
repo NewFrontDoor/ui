@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import faker from 'faker';
-import {subDays, addDays, addHours} from 'date-fns';
+import {subMonths, addMonths, addHours} from 'date-fns';
 
 import Calendar from '..';
 
 const now = new Date();
-const twoMonthsAgo = subDays(now, 60);
-const inTwoMongth = addDays(now, 60);
+const twoMonthsAgo = subMonths(now, 2);
+const inTwoMongth = addMonths(now, 2);
 
 export function buildEvent() {
   const start_date = faker.date.between(twoMonthsAgo, inTwoMongth);
@@ -26,7 +26,9 @@ export function buildEvent() {
   };
 }
 
-const events = Array.from({length: 70}).map((k, i) => buildEvent(i)).sort((a, b) => a.start_date - b.start_date);
+const events = Array.from({length: 100})
+  .map((k, i) => buildEvent(i))
+  .sort((a, b) => a.start_date - b.start_date);
 
 export default {
   component: Calendar,

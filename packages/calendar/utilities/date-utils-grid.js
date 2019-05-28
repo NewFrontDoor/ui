@@ -3,6 +3,7 @@ import {
   addHours,
   differenceInDays,
   eachDayOfInterval,
+  endOfDay,
   endOfWeek,
   format,
   getWeek,
@@ -13,6 +14,7 @@ import {
   isSameDay,
   isSameMonth,
   isWeekend,
+  isWithinInterval,
   startOfDay,
   startOfMonth,
   startOfWeek
@@ -70,6 +72,12 @@ function getEvents(events) {
       return isSameDay(startDate, day.date);
     });
 
+    const eventsOnToday = events.filter(event => {
+      const start = startOfDay(addHours(new Date(event.start_date), 10));
+      const end = endOfDay(addHours(new Date(event.end_date), 10));
+      return isWithinInterval(day.date, {start, end});
+    });
+
     const normalisedEvents = todaysEvents.map(event => {
       const normalisedEvent = {
         id: event.id,
@@ -106,7 +114,10 @@ function getEvents(events) {
       return normalisedEvent;
     });
 
-    return Object.assign(day, {events: normalisedEvents});
+    return Object.assign(day, {
+      events: normalisedEvents,
+      numberOfEventsToday: eventsOnToday.length
+    });
   };
 }
 

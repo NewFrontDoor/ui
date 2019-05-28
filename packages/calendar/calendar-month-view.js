@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
@@ -96,76 +96,45 @@ const SeeMore = styled.div(
   })
 );
 
-const Month = ({calendarData, parentElement, setCalendarView}) => {
-  useEffect(() => {
-    const parents = parentElement.current.querySelectorAll('.weekblock');
-    const height = 114;
-
-    parents.forEach(parent => {
-      const weekNumber = parent.children[0].textContent;
-      let location = null;
-      let del = null;
-      for (let i = 0; i < parent.children.length; i++) {
-        const top = parent.children[i].offsetTop;
-        if (top > height) {
-          if (parent.children[i - 1].className.includes(DayNumber)) {
-            del = parent.children[i - 2];
-          }
-          const elemStyles = getComputedStyle(parent.children[i - 1]);
-          location = elemStyles.gridColumnStart - 1;
-          const childSeeMore = parent.querySelector(
-            `#seeMore-${weekNumber}-${location}`
-          );
-          childSeeMore.style.display = 'block';
-        }
-
-        if (del !== null) {
-          del.style.display = 'none';
-          console.log('hide this item - ' + del);
-          del = null;
-        }
-      }
-    });
-  });
-
+const Month = ({calendarData, seeMore}) => {
   return (
     <>
       {calendarData.map(({week, weekNumber}) => (
         <WeekBlock key={weekNumber} className="weekblock">
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
-          {week.map(({events, date, isPeripheral}, index) => {
-            const day = format(date, 'dd');
+          {week.map(
+            ({events, date, isPeripheral, numberOfEventsToday}, index) => {
+              const day = format(date, 'dd');
+              const showMore = numberOfEventsToday >= 5;
 
-            return (
-              <React.Fragment key={day}>
-                <DayNumber col={index + 2} isPeripheral={isPeripheral}>
-                  {day}
-                </DayNumber>
-                <SeeMore
-                  column={index + 2}
-                  isVisible="none"
-                  id={`seeMore-${weekNumber}-${index + 1}`}
-                  onClick={() => setCalendarView('week')}
-                >
-                  see more
-                </SeeMore>
-                {events.map(event => {
-                  return (
-                    <Event
-                      key={event.id}
-                      col={index + 2}
-                      span={event.event_length}
-                      color={event.color}
-                    >
-                      <EventWrapper event={event}>
-                        {event.start_time} {event.name}
-                      </EventWrapper>
-                    </Event>
-                  );
-                })}
-              </React.Fragment>
-            );
-          })}
+              return (
+                <React.Fragment key={day}>
+                  <DayNumber col={index + 2} isPeripheral={isPeripheral}>
+                    {day}
+                  </DayNumber>
+                  {showMore && (
+                    <SeeMore column={index + 2} onClick={() => seeMore(date)}>
+                      see more
+                    </SeeMore>
+                  )}
+                  {events.map(event => {
+                    return (
+                      <Event
+                        key={event.id}
+                        col={index + 2}
+                        span={event.event_length}
+                        color={event.color}
+                      >
+                        <EventWrapper event={event}>
+                          {event.start_time} {event.name}
+                        </EventWrapper>
+                      </Event>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            }
+          )}
         </WeekBlock>
       ))}
     </>
@@ -173,6 +142,7 @@ const Month = ({calendarData, parentElement, setCalendarView}) => {
 };
 
 Month.propTypes = {
+  seeMore: PropTypes.func.isRequired,
   calendarData: PropTypes.arrayOf(
     PropTypes.shape({
       week: PropTypes.arrayOf(PropTypes.object),
