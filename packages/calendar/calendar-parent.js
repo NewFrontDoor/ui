@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {addMonths, subMonths, addWeeks, addDays, subDays, subWeeks, startOfWeek} from 'date-fns';
 import styled from '@emotion/styled';
@@ -104,9 +104,11 @@ export default function CalendarParent({events, initialView}) {
 
   const CalendarView = views[calendarView];
 
+  const inputEl = useRef(null);
+
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      <CalendarContainer>
+      <CalendarContainer ref={inputEl}>
         <CalendarControls
           location="top"
           startOfWeek={startOfWeek(state.currentDate)}
@@ -132,6 +134,8 @@ export default function CalendarParent({events, initialView}) {
           calendarView={calendarView}
           calendarData={calendarData}
           weekNumber={state.weekNumber}
+          parentElement={inputEl}
+          setCalendarView={setCalendarView}
         />
       </CalendarContainer>
     </CalendarDispatch.Provider>
@@ -166,5 +170,5 @@ CalendarParent.propTypes = {
 };
 
 CalendarParent.defaultProps = {
-  initialView: 'week'
+  initialView: 'month'
 };

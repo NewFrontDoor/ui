@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, readableColor} from 'polished';
@@ -8,10 +8,12 @@ import EventWrapper from './components/event-wrapper';
 const WeekBlock = styled.div({
   display: 'grid',
   gridTemplateColumns: '50px repeat(7, 1fr)',
-  gridTemplateRows: '26px repeat(3, 1fr)',
+  gridTemplateRows: '26px repeat(3, 22px)',
   gridAutoFlow: 'column dense',
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
-  height: '104px'
+  height: '114px',
+  overflow: 'hidden',
+  position: 'relative'
 });
 
 const Event = styled.div(
@@ -25,7 +27,8 @@ const Event = styled.div(
     maxWidth: '100%',
     whiteSpace: 'nowrap',
     height: '18px',
-    zIndex: '1'
+    zIndex: '1',
+    display: 'block'
   },
   props => ({
     gridColumnStart: props.col,
@@ -51,7 +54,7 @@ const DayNumber = styled.div(
     fontSize: '14px',
     boxSizing: 'border-box',
     color: '#98a0a6',
-    height: '104px',
+    height: '114px',
     pointerEvents: 'none',
     borderRight: '1px solid rgba(166, 168, 179, 0.12)'
   },
@@ -78,11 +81,57 @@ const WeekNumber = styled.div(
   })
 );
 
-const Month = ({calendarData}) => {
+const SeeMore = styled.div(
+  {
+    fontSize: '12px',
+    textAlign: 'right',
+    height: '18px',
+    padding: '2px 3px',
+    alignSelf: 'center',
+    gridRow: '5'
+  },
+  props => ({
+    display: props.isVisible,
+    gridColumn: props.column
+  })
+);
+
+const Month = ({calendarData, parentElement, setCalendarView}) => {
+  useEffect(() => {
+    const parents = parentElement.current.querySelectorAll('.weekblock');
+    const height = 114;
+
+    parents.forEach(parent => {
+      const weekNumber = parent.children[0].textContent;
+      let location = null;
+      let del = null;
+      for (let i = 0; i < parent.children.length; i++) {
+        const top = parent.children[i].offsetTop;
+        if (top > height) {
+          if (parent.children[i - 1].className.includes(DayNumber)) {
+            del = parent.children[i - 2];
+          }
+          const elemStyles = getComputedStyle(parent.children[i - 1]);
+          location = elemStyles.gridColumnStart - 1;
+          const childSeeMore = parent.querySelector(
+            `#seeMore-${weekNumber}-${location}`
+          );
+          childSeeMore.style.display = 'block';
+        }
+
+        if (del !== null) {
+          del.style.display = 'none';
+          console.log('hide this item - ' + del);
+          del = null;
+        }
+      }
+    });
+  });
+
   return (
     <>
       {calendarData.map(({week, weekNumber}) => (
-        <WeekBlock key={weekNumber}>
+        <WeekBlock key={weekNumber} className="weekblock">
           <WeekNumber column={1}>{weekNumber}</WeekNumber>
           {week.map(({events, date, isPeripheral}, index) => {
             const day = format(date, 'dd');
@@ -92,20 +141,27 @@ const Month = ({calendarData}) => {
                 <DayNumber col={index + 2} isPeripheral={isPeripheral}>
                   {day}
                 </DayNumber>
+                <SeeMore
+                  column={index + 2}
+                  isVisible="none"
+                  id={`seeMore-${weekNumber}-${index + 1}`}
+                  onClick={() => setCalendarView('week')}
+                >
+                  see more
+                </SeeMore>
                 {events.map(event => {
-                  console.log(event.name + " - " + event.event_length)
                   return (
-                  <Event
-                    key={event.id}
-                    col={index + 2}
-                    span={event.event_length}
-                    color={event.color}
-                  >
-                    <EventWrapper event={event}>
-                      {event.start_time} {event.name}
-                    </EventWrapper>
-                  </Event>
-                  )
+                    <Event
+                      key={event.id}
+                      col={index + 2}
+                      span={event.event_length}
+                      color={event.color}
+                    >
+                      <EventWrapper event={event}>
+                        {event.start_time} {event.name}
+                      </EventWrapper>
+                    </Event>
+                  );
                 })}
               </React.Fragment>
             );
