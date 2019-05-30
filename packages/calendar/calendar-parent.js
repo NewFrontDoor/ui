@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState, useRef} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 import PropTypes from 'prop-types';
 import {
   addMonths,
@@ -122,11 +122,9 @@ export default function CalendarParent({events, initialView}) {
 
   const CalendarView = views[calendarView];
 
-  const inputEl = useRef(null);
-
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      <CalendarContainer ref={inputEl}>
+      <CalendarContainer>
         <CalendarControls
           location="top"
           startOfWeek={startOfWeek(state.currentDate)}
@@ -152,7 +150,6 @@ export default function CalendarParent({events, initialView}) {
           calendarView={calendarView}
           calendarData={calendarData}
           weekNumber={state.weekNumber}
-          parentElement={inputEl}
           seeMore={seeMore}
         />
       </CalendarContainer>
@@ -161,7 +158,7 @@ export default function CalendarParent({events, initialView}) {
 }
 
 CalendarParent.propTypes = {
-  initialView: PropTypes.oneOf(['day', 'week', 'month']),
+  initialView: PropTypes.oneOf(['day', 'week', 'month']).isRequired,
   events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

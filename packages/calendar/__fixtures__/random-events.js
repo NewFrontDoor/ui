@@ -33,6 +33,7 @@ const events = Array.from({length: 100})
 export default {
   component: Calendar,
   props: {
-    events
+    events,
+    initialView: 'month'
   }
 };

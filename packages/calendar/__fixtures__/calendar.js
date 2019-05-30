@@ -5,6 +5,7 @@ import events from './events.json';
 export default {
   component: Calendar,
   props: {
-    events
+    events,
+    initialView: 'month'
   }
 };
