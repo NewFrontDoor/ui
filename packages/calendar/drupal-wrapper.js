@@ -5,15 +5,15 @@ import {useFetch} from './utilities/hooks.js';
 
 export function DrupalEvents({url, initialView}) {
   const [data, loading, error] = useFetch(url);
-  return (
-    <>
-      {loading ? (
-        'Loading...'
-      ) : (
-        <CalendarParent events={data} initialView={initialView} />
-      )}
-    </>
-  );
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return <CalendarParent events={data} initialView={initialView} />;
 }
 
 DrupalEvents.propTypes = {
