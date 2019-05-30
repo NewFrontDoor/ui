@@ -18,5 +18,9 @@ export function DrupalEvents({url, initialView}) {
 
 DrupalEvents.propTypes = {
   url: PropTypes.string.isRequired,
-  initialView: PropTypes.oneOf(['day', 'week', 'month']).isRequired
+  initialView: PropTypes.oneOf(['day', 'week', 'month'])
+};
+
+DrupalEvents.defaultProps = {
+  initialView: 'month'
 };

@@ -186,7 +186,3 @@ CalendarParent.propTypes = {
     })
   ).isRequired
 };
-
-CalendarParent.defaultProps = {
-  initialView: 'month'
-};
