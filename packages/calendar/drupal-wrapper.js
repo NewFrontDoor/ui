@@ -4,7 +4,7 @@ import CalendarParent from './calendar-parent';
 import {useFetch} from './utilities/hooks.js';
 
 export function DrupalEvents({url, initialView}) {
-  const [data, loading] = useFetch(url);
+  const [data, loading, error] = useFetch(url);
   return (
     <>
       {loading ? (
