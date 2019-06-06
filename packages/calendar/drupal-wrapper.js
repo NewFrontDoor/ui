@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CalendarParent from './calendar-parent';
 import {useFetch} from './utilities/hooks';
 
-export function DrupalEvents({url, initialView}) {
+export default function DrupalEvents({url, initialView}) {
   const [data, loading, error] = useFetch(url);
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -13,7 +13,15 @@ export function DrupalEvents({url, initialView}) {
     return <div>Loading...</div>;
   }
 
-  return <CalendarParent events={data} initialView={initialView} />;
+  const normalisedEvents = data.map(event => {
+    const normalisedEvent = {
+      calendar_id: event.nid,
+      ...event
+    };
+    return normalisedEvent;
+  });
+
+  return <CalendarParent events={normalisedEvents} initialView={initialView} />;
 }
 
 DrupalEvents.propTypes = {

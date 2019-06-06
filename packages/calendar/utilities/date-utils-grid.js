@@ -72,7 +72,9 @@ function getEvents(events) {
 
     const eventsOnToday = events.filter(event => {
       const start = startOfDay(new Date(event.start_date));
+      console.log(event.start_date);
       const end = endOfDay(new Date(event.end_date));
+      console.log(event.end_date);
       return isWithinInterval(day.date, {start, end});
     });
 
