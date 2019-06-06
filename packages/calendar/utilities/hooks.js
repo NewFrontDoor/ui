@@ -1,11 +1,15 @@
 import {useState, useEffect} from 'react';
 
-function useFetch(url) {
+function useFetch(apiUrl, apiParams) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
   const fetchData = async () => {
+    const params = Object.keys(apiParams)
+      .map(key => key + '=' + apiParams[key])
+      .join('&');
+    const url = apiUrl + "?" + params;
     const response = await fetch(url);
     const status = await response.status;
     setData(await response.json());

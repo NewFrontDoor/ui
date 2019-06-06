@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import CalendarParent from './calendar-parent';
 import {useFetch} from './utilities/hooks';
 
-export default function DrupalEvents({url, initialView}) {
-  const [data, loading, error] = useFetch(url);
+export default function DrupalEvents({apiUrl, apiParams, initialView}) {
+  const [data, loading, error] = useFetch(apiUrl, apiParams);
   if (error) {
     return <div>Error: {error.message}</div>;
   }
