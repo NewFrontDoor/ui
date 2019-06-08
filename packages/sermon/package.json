@@ -2,6 +2,13 @@
   "name": "@newfrontdoor/sermon",
   "version": "0.1.0",
   "license": "MIT",
+  "scripts": {
+    "babel": "babel src -d dist"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "he": "^1.2.0",
     "isomorphic-fetch": "^2.2.1",
@@ -16,12 +23,5 @@
     "mineral-ui": "^0.58.0",
     "react": "^16.0"
   },
-  "xo": false,
-  "scripts": {
-    "babel": "babel src -d dist"
-  },
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ]
+  "xo": false
 }

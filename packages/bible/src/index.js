@@ -3,7 +3,7 @@ import {jsx, css} from '@emotion/core';
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Text from 'mineral-ui/Text';
-import ky from 'ky';
+import ky from 'ky/umd';
 
 function useBible(url, passage) {
   const [data, setData] = useState([]);

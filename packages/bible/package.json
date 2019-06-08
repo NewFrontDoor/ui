@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/bible",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
@@ -11,7 +11,8 @@
   ],
   "dependencies": {
     "ky": "^0.11.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "sanitize-html": "^1.20.1"
   },
   "devDependencies": {
     "jest-dom": "^3.2.2",
