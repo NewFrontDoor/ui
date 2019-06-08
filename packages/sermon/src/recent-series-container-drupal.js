@@ -10,7 +10,7 @@ class RecentSeriesContainerDrupal extends React.PureComponent {
     this.state = {
       loading: true,
       error: null,
-      latestSermon: {}
+      seriesData: {}
     };
   }
 
@@ -24,8 +24,6 @@ class RecentSeriesContainerDrupal extends React.PureComponent {
           link: x.url,
           id: x.series_id
         }));
-        console.log("Set state ", transformedSeriesData);
-
         this.setState({
           seriesData: transformedSeriesData,
           loading: false
