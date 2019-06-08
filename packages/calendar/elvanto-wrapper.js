@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import {addHours} from 'date-fns';
 
 export default function elvantoEvents(events) {
-  console.log(events);
   const normalisedEvents = events.map(event => {
     const normalisedEvent = {
       ...event,
@@ -11,7 +10,6 @@ export default function elvantoEvents(events) {
     };
     return normalisedEvent;
   });
-  console.log(normalisedEvents);
   return normalisedEvents;
 }
 
