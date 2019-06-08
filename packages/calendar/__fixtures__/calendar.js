@@ -6,6 +6,6 @@ export default {
   component: Calendar,
   props: {
     events,
-    initialView: 'month'
+    initialView: 'week'
   }
 };
