@@ -1,6 +1,6 @@
+import 'isomorphic-fetch';
 import React from 'react';
 import {decode} from 'he';
-import fetch from 'isomorphic-fetch';
 import Box from 'mineral-ui/Box';
 import LatestSermon from './latest-sermon';
 import { ApiContext } from "@newfrontdoor/api-config";

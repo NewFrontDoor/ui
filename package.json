@@ -82,5 +82,8 @@
         "version": "detect"
       }
     }
+  },
+  "dependencies": {
+    "react-cosmos-fetch-proxy": "^4.8.2"
   }
 }

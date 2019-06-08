@@ -1,6 +1,6 @@
 import React from 'react';
 import {decode} from 'he';
-import fetch from 'isomorphic-fetch';
+import 'isomorphic-fetch';
 import RecentSeries from './recent-series';
 import { ApiContext } from '@newfrontdoor/api-config';
 
