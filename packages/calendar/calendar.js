@@ -16,6 +16,8 @@ import Week from './calendar-week-view';
 import Day from './calendar-day-view';
 import CalendarControls from './components/calendar-controls';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
+import DrupalEvents from './drupal-wrapper';
+import ElvantoEvents from './elvanto-wrapper';
 
 const CalendarContainer = styled.div({
   background: '#f5f7fa',
