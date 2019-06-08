@@ -1,4 +1,4 @@
-import CurrentSeries from '../src/current-series';
+import CurrentSeries from '../src/current-series-container-drupal';
 
 export default {
   component: CurrentSeries,

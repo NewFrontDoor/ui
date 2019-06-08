@@ -1,19 +1,19 @@
 import React from 'react';
-import Card, { CardActions, CardBlock, CardDivider, CardFooter, CardImage, CardTitle } from 'mineral-ui/Card';
+import { Box, Text, Link } from "mineral-ui";
+import {PulseLoader} from "react-spinners";
+import renderSeriesComponent from './render-series-content'; 
 
-class CurrentSeries extends React.PureComponent {
-    render() {
-    const {header, seriesTitle, seriesUrl, artUrl, ...props} = this.props;
+export default function({ loading, seriesData }) {
+  return (
+    <Box element="section">
+      <Text element="h2">Current Series</Text>
+      <PulseLoader loading={loading} size={20} />
+      {loading || (
+        <Box element="section">
+          {seriesData.map(renderSeriesComponent)}
+        </Box>
+      )}
+    </Box>
+  );
+};
 
-
-    return (
-        <Card>
-            <CardTitle>Current Series</CardTitle>
-            <CardImage src={this.props.artUrl} alt="Sermon Art" />
-            <CardBlock>{this.props.seriesTitle}</CardBlock>
-        </Card>
-    );
-  }
-}
-
-export default CurrentSeries;
