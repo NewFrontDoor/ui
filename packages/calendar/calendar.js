@@ -103,7 +103,7 @@ const views = {
   month: Month
 };
 
-export default function CalendarParent({events, initialView}) {
+export default function Calendar({events, initialView}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
   const seeMore = useCallback(
@@ -157,7 +157,7 @@ export default function CalendarParent({events, initialView}) {
   );
 }
 
-CalendarParent.propTypes = {
+Calendar.propTypes = {
   initialView: PropTypes.oneOf(['day', 'week', 'month']).isRequired,
   events: PropTypes.arrayOf(
     PropTypes.shape({
