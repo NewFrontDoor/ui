@@ -1,10 +1,10 @@
-import Calendar from '..';
+import CalendarWrapper from '..';
 // eslint-disable-next-line import/extensions
 import events from './events.json';
 import elvantoEvents from '../elvanto-wrapper';
 
 export default {
-  component: Calendar,
+  component: CalendarWrapper,
   props: {
     events: elvantoEvents(events),
     initialView: 'month'

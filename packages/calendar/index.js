@@ -1,3 +1,3 @@
-import Calendar from './calendar';
+import CalendarWrapper from './calendar-wrapper';
 
-export default Calendar;
+export default CalendarWrapper;
