@@ -48,7 +48,8 @@ export default function Calendar({
   state,
   seeMore,
   calendarData,
-  startOfWeek
+  startOfWeek,
+  viewFixed
 }) {
   const CalendarView = views[calendarView];
 
@@ -59,6 +60,7 @@ export default function Calendar({
         startOfWeek={startOfWeek}
         calendarView={calendarView}
         setCalendarView={setCalendarView}
+        viewFixed={viewFixed}
         input={Object.keys(views)}
       />
       {calendarView === 'day' ? (
@@ -75,12 +77,14 @@ export default function Calendar({
           <div>Saturday</div>
         </CalendarHeader>
       )}
-      <CalendarView
+
+        <CalendarView
         calendarView={calendarView}
         calendarData={calendarData}
         weekNumber={state.weekNumber}
         seeMore={seeMore}
       />
+
     </CalendarContainer>
   );
 }

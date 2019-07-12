@@ -63,7 +63,7 @@ function init() {
   };
 }
 
-export default function CalendarWrapper({events, initialView}) {
+export default function CalendarWrapper({events, initialView, viewFixed}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
   const seeMore = useCallback(
@@ -85,6 +85,7 @@ export default function CalendarWrapper({events, initialView}) {
       <Calendar
         reducer={reducer}
         calendarView={calendarView}
+        viewFixed={viewFixed}
         state={state}
         seeMore={seeMore}
         calendarData={calendarData}

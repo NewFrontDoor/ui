@@ -7,6 +7,7 @@ export default {
   component: CalendarWrapper,
   props: {
     events: elvantoEvents(events),
-    initialView: 'month'
+    initialView: 'month',
+    viewFixed: 'true'
   }
 };

@@ -14,7 +14,8 @@ export default function CalendarControls({
   startOfWeek,
   calendarView,
   setCalendarView,
-  input
+  input,
+  viewFixed
 }) {
   const dispatch = useContext(CalendarDispatch);
   let jump;
@@ -79,6 +80,7 @@ export default function CalendarControls({
         </Text>
       </FlexItem>
       <FlexItem grow={1} shrink={1} width="20%">
+      {viewFixed ? ( '' ) : (
         <MethodToggle
           setCalendarView={setCalendarView}
           calendarView={calendarView}
@@ -88,6 +90,7 @@ export default function CalendarControls({
             borderRadius: 0
           }}
         />
+        )}
       </FlexItem>
     </Flex>
   );
