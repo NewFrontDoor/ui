@@ -1,7 +1,7 @@
-import CalendarWrapper from '..';
+import CalendarWrapper from '../src';
 // eslint-disable-next-line import/extensions
 import events from './events.json';
-import elvantoEvents from '../elvanto-wrapper';
+import elvantoEvents from '../src/elvanto-wrapper';
 
 export default {
   component: CalendarWrapper,

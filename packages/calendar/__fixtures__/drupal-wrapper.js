@@ -1,5 +1,5 @@
 import React from 'react';
-import DrupalEvents from '../drupal-wrapper';
+import DrupalEvents from '../src/drupal-wrapper';
 
 export default {
   component: props => (
