@@ -5,6 +5,8 @@ function useFetch(apiUrl, apiParams) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
+  console.log("fetching data");
+
   const fetchData = async () => {
     const params = Object.keys(apiParams)
       .map(key => key + '=' + apiParams[key])

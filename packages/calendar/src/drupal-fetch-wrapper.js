@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import CalendarWrapper from './calendar-wrapper';
 import {useFetch} from './utilities/hooks';
 
-export default function DrupalEvents({apiUrl, apiParams, initialView}) {
+export default function DrupalEvents({apiUrl, apiParams, initialView, viewFixed}) {
+  console.log("Loading drupal events");
   const [data, loading, error] = useFetch(apiUrl, apiParams);
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -21,7 +22,7 @@ export default function DrupalEvents({apiUrl, apiParams, initialView}) {
     return normalisedEvent;
   });
 
-  return <CalendarWrapper events={normalisedEvents} initialView={initialView} />;
+  return <CalendarWrapper events={normalisedEvents} initialView={initialView} viewFixed={viewFixed} />;
 }
 
 DrupalEvents.propTypes = {
