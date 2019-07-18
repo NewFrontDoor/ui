@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CalendarWrapper from './calendar-wrapper';
+import Calendar from './calendar';
 import {useFetch} from './utilities/hooks';
+import {buildCalendarData} from './utilities/date-utils-grid';
+import { startOfMonth, endOfMonth } from 'date-fns'
 
-export default function DrupalEvents({apiUrl, apiParams, initialView, viewFixed}) {
-  console.log("Loading drupal events");
+export default function DrupalEvents({state, calendarView, seeMore, apiUrl, viewFixed}) {
+  const apiParams = apiParams={
+    'display_id': 'services_1',
+    'date_range_start[value][date]': startOfMonth(state.currentDate),
+    'date_range_end[value][date]': endOfMonth(state.currentDate)
+  }
   const [data, loading, error] = useFetch(apiUrl, apiParams);
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -22,7 +28,14 @@ export default function DrupalEvents({apiUrl, apiParams, initialView, viewFixed}
     return normalisedEvent;
   });
 
-  return <CalendarWrapper events={normalisedEvents} initialView={initialView} viewFixed={viewFixed} />;
+  return <Calendar
+        calendarView={calendarView}
+        viewFixed={viewFixed}
+        state={state}
+        seeMore={seeMore}
+        calendarData={buildCalendarData(calendarView, state.currentDate, normalisedEvents)}
+        startOfWeek={startOfWeek(state.currentDate)}
+      />
 }
 
 DrupalEvents.propTypes = {

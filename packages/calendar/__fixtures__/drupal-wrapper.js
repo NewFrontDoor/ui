@@ -1,15 +1,13 @@
 import React from 'react';
-import { DrupalEvents } from '../src';
+import CalendarWrapper, { DrupalEvents } from '../src';
 
 export default {
   component: props => (
-    <DrupalEvents
+    <CalendarWrapper
       apiUrl={'https://cornerstoneapi.newfrontdoor.org/api/views/all_events_api'}
-      apiParams={{
-      'display_id': 'services_1',
-      'date_range_start[value][date]': '2019/07/01',
-      'date_range_end[value][date]': '2019/07/30'
-    }} initialView={'month'} />
+      initialView={'month'}
+      fetchWrapper={<DrupalEvents {...props} />}
+    />
   ),
   props: {
     'apiUrl':
