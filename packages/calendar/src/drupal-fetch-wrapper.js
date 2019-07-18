@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Calendar from './calendar';
+import CalendarWrapper from './calendar-wrapper';
 import {useFetch} from './utilities/hooks';
 
 export default function DrupalEvents({apiUrl, apiParams, initialView}) {
@@ -21,7 +21,7 @@ export default function DrupalEvents({apiUrl, apiParams, initialView}) {
     return normalisedEvent;
   });
 
-  return <Calendar events={normalisedEvents} initialView={initialView} />;
+  return <CalendarWrapper events={normalisedEvents} initialView={initialView} />;
 }
 
 DrupalEvents.propTypes = {
