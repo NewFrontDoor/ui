@@ -7,10 +7,10 @@ import Day from './calendar-day-view';
 import CalendarControls from './components/calendar-controls';
 
 const CalendarContainer = styled.div({
-  background: '#f5f7fa',
   boxSizing: 'border-box',
   fontFamily: "Montserrat, 'sans-serif'",
-  color: '#51565d'
+  color: '#51565d',
+  lineHeight: '1em'
 });
 
 const CalendarHeader = styled.div(
@@ -24,7 +24,8 @@ const CalendarHeader = styled.div(
     fontWeight: '500',
     fontSize: '12px',
     textTransform: 'uppercase',
-    color: '#99a1a7'
+    color: '#99a1a7',
+    background: '#f5f7fa'
   },
   props =>
     props.calendarView === 'month'

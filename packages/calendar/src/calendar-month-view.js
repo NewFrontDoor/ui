@@ -13,7 +13,8 @@ const WeekBlock = styled.div({
   borderBottom: '1px solid rgba(166, 168, 179, 0.12)',
   height: '114px',
   overflow: 'hidden',
-  position: 'relative'
+  position: 'relative',
+  background: '#f5f7fa'
 });
 
 const Event = styled.div(
