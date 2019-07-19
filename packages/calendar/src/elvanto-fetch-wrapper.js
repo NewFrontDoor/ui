@@ -2,12 +2,11 @@ import PropTypes from 'prop-types';
 import {useFetch} from './utilities/hooks';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 
-export default function drupalEvents({apiUrl, state}) {
+export default function elvantoEvents({apiUrl, state}) {
 
   const apiParams = {
-    'display_id': 'services_1',
-    'date_range_start[value][date]': format(startOfMonth(state.currentDate), 'yyyy/MM/dd'),
-    'date_range_end[value][date]': format(endOfMonth(state.currentDate), 'yyyy/MM/dd')
+    'start': format(startOfMonth(state.currentDate), 'yyyy-MM-dd'),
+    'end': format(endOfMonth(state.currentDate), 'yyyy-MM-dd')
   }
 
   const [data, loading, error] = useFetch(apiUrl, apiParams);
@@ -19,10 +18,11 @@ export default function drupalEvents({apiUrl, state}) {
     return 'loading'
   }
 
-  const normalisedEvents = data.map(event => {
+  const normalisedEvents = events.map(event => {
     const normalisedEvent = {
-      calendar_id: event.nid,
-      ...event
+      ...event,
+      start_date: addHours(new Date(event.start_date), 10),
+      end_date: addHours(new Date(event.end_date), 10)
     };
     return normalisedEvent;
   });
@@ -30,7 +30,7 @@ export default function drupalEvents({apiUrl, state}) {
   return normalisedEvents;
 }
 
-drupalEvents.propTypes = {
+elvantoEvents.propTypes = {
   url: PropTypes.string.isRequired,
   state: PropTypes.object.isRequired
 };
