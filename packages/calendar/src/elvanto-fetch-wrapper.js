@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import {useFetch} from './utilities/hooks';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 
-export default function elvantoEvents({apiUrl, state}) {
+export default function elvantoEvents({apiUrl, state, calendarView}) {
 
   const apiParams = {
     'start': format(startOfMonth(state.currentDate), 'yyyy-MM-dd'),
@@ -10,6 +10,7 @@ export default function elvantoEvents({apiUrl, state}) {
   }
 
   const [data, loading, error] = useFetch(apiUrl, apiParams);
+  
   if (error) {
     return error.message
   }
@@ -18,7 +19,7 @@ export default function elvantoEvents({apiUrl, state}) {
     return 'loading'
   }
 
-  const normalisedEvents = events.map(event => {
+  const normalisedEvents = data.map(event => {
     const normalisedEvent = {
       ...event,
       start_date: addHours(new Date(event.start_date), 10),
@@ -27,7 +28,7 @@ export default function elvantoEvents({apiUrl, state}) {
     return normalisedEvent;
   });
 
-  return normalisedEvents;
+  return buildCalendarData(calendarView, state.currentDate, normalisedEvents);
 }
 
 elvantoEvents.propTypes = {

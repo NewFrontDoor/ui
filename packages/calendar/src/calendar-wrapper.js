@@ -74,11 +74,7 @@ export default function CalendarWrapper({apiUrl, initialView, viewFixed, eventFu
     [setCalendarView, dispatch]
   );
 
-  const calendarData = buildCalendarData(
-    calendarView,
-    state.currentDate,
-    eventFunction({apiUrl, state})
-  );
+  const calendarData = eventFunction({apiUrl, state, calendarView});
 
   return (
     <CalendarDispatch.Provider value={dispatch}>

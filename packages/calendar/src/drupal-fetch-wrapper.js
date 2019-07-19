@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import {useFetch} from './utilities/hooks';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
+import { buildCalendarData } from './utilities/date-utils-grid';
 
-export default function drupalEvents({apiUrl, state}) {
+export default function drupalEvents({apiUrl, state, calendarView}) {
 
   const apiParams = {
     'display_id': 'services_1',
@@ -27,7 +28,7 @@ export default function drupalEvents({apiUrl, state}) {
     return normalisedEvent;
   });
 
-  return normalisedEvents;
+  return buildCalendarData(calendarView, state.currentDate, normalisedEvents);
 }
 
 drupalEvents.propTypes = {
