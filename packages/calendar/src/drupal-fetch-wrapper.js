@@ -1,18 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CalendarWrapper from './calendar-wrapper';
 import {useFetch} from './utilities/hooks';
+import { startOfMonth, endOfMonth, format } from 'date-fns';
 
-export default function DrupalEvents({apiUrl, apiParams, initialView, viewFixed}) {
-  console.log("Loading drupal events");
+export default function drupalEvents({apiUrl, state}) {
+
+  const apiParams = {
+    'display_id': 'services_1',
+    'date_range_start[value][date]': format(startOfMonth(state.currentDate), 'yyyy/MM/dd'),
+    'date_range_end[value][date]': format(endOfMonth(state.currentDate), 'yyyy/MM/dd')
+  }
+
+  console.log(apiParams);
+
   const [data, loading, error] = useFetch(apiUrl, apiParams);
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return error.message
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return 'loading'
   }
+
+  console.log(data);
 
   const normalisedEvents = data.map(event => {
     const normalisedEvent = {
@@ -22,14 +32,14 @@ export default function DrupalEvents({apiUrl, apiParams, initialView, viewFixed}
     return normalisedEvent;
   });
 
-  return <CalendarWrapper events={normalisedEvents} initialView={initialView} viewFixed={viewFixed} />;
+  return normalisedEvents;
 }
 
-DrupalEvents.propTypes = {
+drupalEvents.propTypes = {
   url: PropTypes.string.isRequired,
   initialView: PropTypes.oneOf(['day', 'week', 'month'])
 };
 
-DrupalEvents.defaultProps = {
+drupalEvents.defaultProps = {
   initialView: 'month'
 };

@@ -63,7 +63,7 @@ function init() {
   };
 }
 
-export default function CalendarWrapper({events, initialView, viewFixed}) {
+export default function CalendarWrapper({apiUrl, initialView, viewFixed, eventFunction}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
   const seeMore = useCallback(
@@ -77,12 +77,14 @@ export default function CalendarWrapper({events, initialView, viewFixed}) {
   const calendarData = buildCalendarData(
     calendarView,
     state.currentDate,
-    events
+    eventFunction({apiUrl, state})
   );
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      <Calendar
+      {calendarData === 'loading'
+      ? <div>loading...</div>
+      : <Calendar
         reducer={reducer}
         calendarView={calendarView}
         viewFixed={viewFixed}
@@ -91,6 +93,7 @@ export default function CalendarWrapper({events, initialView, viewFixed}) {
         calendarData={calendarData}
         startOfWeek={startOfWeek(state.currentDate)}
       />
+      }
     </CalendarDispatch.Provider>
   );
 }
