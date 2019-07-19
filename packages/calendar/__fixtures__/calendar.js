@@ -6,8 +6,7 @@ import elvantoEvents from '../src/elvanto-wrapper';
 export default {
   component: CalendarWrapper,
   props: {
-    events: elvantoEvents(events),
-    initialView: 'month',
-    viewFixed: 'true'
+    events,
+    initialView: 'week'
   }
 };
