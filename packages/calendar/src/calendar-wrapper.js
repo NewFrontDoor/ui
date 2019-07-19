@@ -9,6 +9,8 @@ import {
   subWeeks,
   startOfWeek
 } from 'date-fns';
+import Calendar from './calendar';
+import {buildCalendarData} from './utilities/date-utils-grid';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
 
 function reducer(state, action) {
@@ -61,7 +63,7 @@ function init() {
   };
 }
 
-export default function CalendarWrapper({apiUrl, initialView, fetchWrapper, viewFixed}) {
+export default function CalendarWrapper({events, initialView, viewFixed}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
   const seeMore = useCallback(
@@ -80,7 +82,15 @@ export default function CalendarWrapper({apiUrl, initialView, fetchWrapper, view
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      {fetchWrapper(state, calendarView, seeMore, apiUrl, viewFixed)}
+      <Calendar
+        reducer={reducer}
+        calendarView={calendarView}
+        viewFixed={viewFixed}
+        state={state}
+        seeMore={seeMore}
+        calendarData={calendarData}
+        startOfWeek={startOfWeek(state.currentDate)}
+      />
     </CalendarDispatch.Provider>
   );
 }
