@@ -9,43 +9,9 @@ import {
   subWeeks,
   startOfWeek
 } from 'date-fns';
-import styled from '@emotion/styled';
+import Calendar from './calendar';
 import {buildCalendarData} from './utilities/date-utils-grid';
-import Month from './calendar-month-view';
-import Week from './calendar-week-view';
-import Day from './calendar-day-view';
-import CalendarControls from './components/calendar-controls';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
-
-const CalendarContainer = styled.div({
-  background: '#f5f7fa',
-  boxSizing: 'border-box',
-  fontFamily: "Montserrat, 'sans-serif'",
-  color: '#51565d'
-});
-
-const CalendarHeader = styled.div(
-  {
-    display: 'grid',
-    gridTemplateColumns: '50px repeat(7, 1fr)',
-    gridTemplateRows: '1fr',
-    gridGap: '0rem',
-    alignItems: 'center',
-    textAlign: 'center',
-    fontWeight: '500',
-    fontSize: '12px',
-    textTransform: 'uppercase',
-    color: '#99a1a7'
-  },
-  props =>
-    props.calendarView === 'month'
-      ? {
-          lineHeight: '50px',
-          height: '50px',
-          borderBottom: '1px solid rgba(166, 168, 179, 0.12)'
-        }
-      : ''
-);
 
 function reducer(state, action) {
   let currentDate;
@@ -97,13 +63,7 @@ function init() {
   };
 }
 
-const views = {
-  day: Day,
-  week: Week,
-  month: Month
-};
-
-export default function Calendar({events, initialView}) {
+export default function CalendarWrapper({apiUrl, initialView, viewFixed, eventFunction}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
   const seeMore = useCallback(
@@ -117,47 +77,28 @@ export default function Calendar({events, initialView}) {
   const calendarData = buildCalendarData(
     calendarView,
     state.currentDate,
-    events
+    eventFunction({apiUrl, state})
   );
-
-  const CalendarView = views[calendarView];
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      <CalendarContainer>
-        <CalendarControls
-          location="top"
-          startOfWeek={startOfWeek(state.currentDate)}
-          calendarView={calendarView}
-          setCalendarView={setCalendarView}
-          input={Object.keys(views)}
-        />
-        {calendarView === 'day' ? (
-          ''
-        ) : (
-          <CalendarHeader calendarView={calendarView}>
-            <div>{calendarView === 'month' ? 'Wk' : ''}</div>
-            <div>Sunday</div>
-            <div>Monday</div>
-            <div>Tuesday</div>
-            <div>Wednesday</div>
-            <div>Thursday</div>
-            <div>Friday</div>
-            <div>Saturday</div>
-          </CalendarHeader>
-        )}
-        <CalendarView
-          calendarView={calendarView}
-          calendarData={calendarData}
-          weekNumber={state.weekNumber}
-          seeMore={seeMore}
-        />
-      </CalendarContainer>
+      {calendarData === 'loading'
+      ? <div>loading...</div>
+      : <Calendar
+        reducer={reducer}
+        calendarView={calendarView}
+        viewFixed={viewFixed}
+        state={state}
+        seeMore={seeMore}
+        calendarData={calendarData}
+        startOfWeek={startOfWeek(state.currentDate)}
+      />
+      }
     </CalendarDispatch.Provider>
   );
 }
 
-Calendar.propTypes = {
+CalendarWrapper.propTypes = {
   initialView: PropTypes.oneOf(['day', 'week', 'month']).isRequired,
   events: PropTypes.arrayOf(
     PropTypes.shape({

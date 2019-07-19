@@ -1,48 +1,43 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './post';
+import DateFilter from './date-filter';
 
-class Blog extends Component {
-  render() {
-    return (
-      <>
-        {this.props.posts
-          .filter(post => {
-            if (
-              this.props.category &&
-              Object.keys(this.props.category).length !== 0
-            ) {
-              return post.categories
-                .map(a => a.title)
-                .includes(this.props.category);
-            }
-            return post;
-          })
-          .sort((a, b) => {
-            return (
-              new Date(a._createdAt).getTime() -
-              new Date(b._createdAt).getTime()
-            );
-          })
-          .reverse()
-          .map(post => (
-            <Post
-              key={post.title}
-              title={post.title}
-              date={post._createdAt}
-              dateFormat={this.props.dateFormat}
-              categories={post.categories}
-              body={post.body}
-              renderContent={this.props.renderContent}
-              linkComponent={this.props.linkComponent}
-            />
-          ))}
-      </>
-    );
-  }
+export default function Blog({posts, category, dateFormat}) {
+  return (
+    <div>
+    <DateFilter />
+      {posts
+        .filter(post => {
+          if (
+            category &&
+            Object.keys(category).length !== 0
+          ) {
+            return post.categories
+              .map(a => a.title)
+              .includes(category);
+          }
+          return post;
+        })
+        .sort((a, b) => {
+          return (
+            new Date(b._createdAt).getTime() -
+            new Date(a._createdAt).getTime()
+          );
+        })
+        .map(post => (
+          <Post
+            key={post.title}
+            title={post.title}
+            date={post._createdAt}
+            dateFormat={dateFormat}
+            categories={post.categories}
+            body={post.body}
+          />
+        ))}
+    </div>
+  );
 }
-
-export default Blog;
 
 Blog.propTypes = {
   posts: PropTypes.arrayOf(
@@ -54,9 +49,6 @@ Blog.propTypes = {
     })
   ).isRequired,
   category: PropTypes.objectOf(PropTypes.string).isRequired,
-  linkComponent: PropTypes.func.isRequired,
-  renderContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
-    .isRequired,
   dateFormat: PropTypes.string
 };
 

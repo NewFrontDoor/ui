@@ -2,7 +2,7 @@
 import faker from 'faker';
 import {subMonths, addMonths, addHours} from 'date-fns';
 
-import Calendar from '..';
+import CalendarWrapper from '../src';
 
 const now = new Date();
 const twoMonthsAgo = subMonths(now, 2);
@@ -31,7 +31,7 @@ const events = Array.from({length: 100})
   .sort((a, b) => a.start_date - b.start_date);
 
 export default {
-  component: Calendar,
+  component: CalendarWrapper,
   props: {
     events,
     initialView: 'month'
