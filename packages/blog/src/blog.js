@@ -6,23 +6,18 @@ import DateFilter from './date-filter';
 export default function Blog({posts, category, dateFormat}) {
   return (
     <div>
-    <DateFilter />
+      <DateFilter />
       {posts
         .filter(post => {
-          if (
-            category &&
-            Object.keys(category).length !== 0
-          ) {
-            return post.categories
-              .map(a => a.title)
-              .includes(category);
+          if (category && Object.keys(category).length !== 0) {
+            return post.categories.map(a => a.title).includes(category);
           }
+
           return post;
         })
         .sort((a, b) => {
           return (
-            new Date(b._createdAt).getTime() -
-            new Date(a._createdAt).getTime()
+            new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()
           );
         })
         .map(post => (

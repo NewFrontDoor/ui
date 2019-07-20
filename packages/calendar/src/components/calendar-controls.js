@@ -80,16 +80,18 @@ export default function CalendarControls({
         </Text>
       </FlexItem>
       <FlexItem grow={1} shrink={1} width="20%">
-      {viewFixed ? ( '' ) : (
-        <MethodToggle
-          setCalendarView={setCalendarView}
-          calendarView={calendarView}
-          location={location}
-          inputs={input}
-          styles={{
-            borderRadius: 0
-          }}
-        />
+        {viewFixed ? (
+          ''
+        ) : (
+          <MethodToggle
+            setCalendarView={setCalendarView}
+            calendarView={calendarView}
+            location={location}
+            inputs={input}
+            styles={{
+              borderRadius: 0
+            }}
+          />
         )}
       </FlexItem>
     </Flex>

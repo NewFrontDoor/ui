@@ -9,7 +9,7 @@ function useFetch(apiUrl, apiParams) {
     const params = Object.keys(apiParams)
       .map(key => key + '=' + apiParams[key])
       .join('&');
-    const url = apiUrl + "?" + params;
+    const url = apiUrl + '?' + params;
     const response = await fetch(url);
     const status = await response.status;
     setData(await response.json());
@@ -21,7 +21,7 @@ function useFetch(apiUrl, apiParams) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return [data, loading, error];
 }

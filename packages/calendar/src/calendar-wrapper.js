@@ -63,7 +63,12 @@ function init() {
   };
 }
 
-export default function CalendarWrapper({apiUrl, initialView, viewFixed, eventFunction}) {
+export default function CalendarWrapper({
+  apiUrl,
+  initialView,
+  viewFixed,
+  eventFunction
+}) {
   const [calendarView, setCalendarView] = useState(initialView);
   const [state, dispatch] = useReducer(reducer, {}, init);
   const seeMore = useCallback(
@@ -74,28 +79,29 @@ export default function CalendarWrapper({apiUrl, initialView, viewFixed, eventFu
     [setCalendarView, dispatch]
   );
 
-  const [calendarData, updateCalendarData] = useState(eventFunction({apiUrl, state, calendarView}));
+  const [calendarData, updateCalendarData] = useState(
+    eventFunction({apiUrl, state, calendarView})
+  );
 
   useEffect(() => {
-    updateCalendarData(
-      eventFunction({apiUrl, state, calendarView})
-    );
-  }, [state]);
+    updateCalendarData(eventFunction({apiUrl, state, calendarView}));
+  }, [apiUrl, calendarView, eventFunction, state]);
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      {calendarData === 'loading'
-      ? <div>loading...</div>
-      : <Calendar
-        reducer={reducer}
-        calendarView={calendarView}
-        viewFixed={viewFixed}
-        state={state}
-        seeMore={seeMore}
-        calendarData={calendarData}
-        startOfWeek={startOfWeek(state.currentDate)}
-      />
-      }
+      {calendarData === 'loading' ? (
+        <div>loading...</div>
+      ) : (
+        <Calendar
+          reducer={reducer}
+          calendarView={calendarView}
+          viewFixed={viewFixed}
+          state={state}
+          seeMore={seeMore}
+          calendarData={calendarData}
+          startOfWeek={startOfWeek(state.currentDate)}
+        />
+      )}
     </CalendarDispatch.Provider>
   );
 }

@@ -77,10 +77,12 @@ const Post = props => {
           </ul>
         </Text>
       </Meta>
-      <Content>{props.body.map(para => {
-        console.log(para)
-        return(<p>{para}</p>)
-      })}</Content>
+      <Content>
+        {props.body.map(para => {
+          console.log(para);
+          return <p>{para}</p>;
+        })}
+      </Content>
     </ContentWrapper>
   );
 };

@@ -41,7 +41,9 @@ const Event = styled.div(
         ? readableColor(shade(0.2, props.color))
         : readableColor('#fc9b10')
     }`,
-    borderLeft: `2px solid ${props.color ? lighten(0.2, props.color) : '#fdb44d'}`
+    borderLeft: `2px solid ${
+      props.color ? lighten(0.2, props.color) : '#fdb44d'
+    }`
   })
 );
 

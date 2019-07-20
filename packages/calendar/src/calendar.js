@@ -79,13 +79,12 @@ export default function Calendar({
         </CalendarHeader>
       )}
 
-        <CalendarView
+      <CalendarView
         calendarView={calendarView}
         calendarData={calendarData}
         weekNumber={state.weekNumber}
         seeMore={seeMore}
       />
-
     </CalendarContainer>
   );
 }

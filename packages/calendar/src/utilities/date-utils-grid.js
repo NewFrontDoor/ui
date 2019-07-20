@@ -124,8 +124,9 @@ export function calendarMonth(passedDate, events) {
 
 export function buildCalendarData(calendarView, passedDate, events) {
   if (events === 'loading') {
-    return 'loading'
+    return 'loading';
   }
+
   if (calendarView === 'day') {
     return calendarDay(passedDate, events);
   }

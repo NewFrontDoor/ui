@@ -12,9 +12,10 @@ export default function Elderswrapper({apiUrl, apiParams}) {
   if (loading) {
     return <div>Loading...</div>;
   }
+
   return <People people={data} />;
 }
 
 Elderswrapper.propTypes = {
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
 };

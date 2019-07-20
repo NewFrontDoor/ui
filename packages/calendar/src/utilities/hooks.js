@@ -21,7 +21,7 @@ function useFetch(apiUrl, apiParams) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return [data, loading, error];
 }
