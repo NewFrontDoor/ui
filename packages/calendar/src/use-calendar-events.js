@@ -92,7 +92,7 @@ function useCalendarEvents(initialView, client) {
     init
   );
 
-  const [events, setEvents] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
@@ -100,16 +100,18 @@ function useCalendarEvents(initialView, client) {
     client
       .fetchEvents(currentDate)
       .then(result => {
-        setEvents(buildCalendarData(calendarView, currentDate, result));
+        setData(result);
       })
       .catch(error => {
         console.error(error);
         setError(`Failed to load calendar events`);
       })
       .finally(() => setLoading(false));
-  }, [calendarView, client, currentDate]);
+  }, [client, currentDate]);
 
-  return [{events, currentDate, calendarView}, loading, error, dispatch];
+  const calendarData = buildCalendarData(calendarView, currentDate, data);
+
+  return [{calendarData, currentDate, calendarView}, loading, error, dispatch];
 }
 
 export default useCalendarEvents;
