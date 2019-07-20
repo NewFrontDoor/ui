@@ -5,7 +5,11 @@ import events from './events.json';
 export default {
   component: Calendar,
   props: {
-    events,
+    client: {
+      fetchEvents() {
+        return Promise.resolve(events);
+      }
+    },
     initialView: 'week'
   }
 };
