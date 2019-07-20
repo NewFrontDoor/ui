@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useFetch} from './utilities/hooks';
 import { startOfMonth, endOfMonth, format } from 'date-fns';

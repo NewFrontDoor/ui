@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState} from 'react';
+import React, {useCallback, useReducer, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {
   addMonths,
@@ -74,7 +74,13 @@ export default function CalendarWrapper({apiUrl, initialView, viewFixed, eventFu
     [setCalendarView, dispatch]
   );
 
-  const calendarData = eventFunction({apiUrl, state, calendarView});
+  const [calendarData, updateCalendarData] = useState(eventFunction({apiUrl, state, calendarView}));
+
+  useEffect(() => {
+    updateCalendarData(
+      eventFunction({apiUrl, state, calendarView})
+    );
+  }, [state]);
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
