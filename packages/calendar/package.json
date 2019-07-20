@@ -11,7 +11,8 @@
   ],
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
-    "ky": "^0.11.0",
+    "ky": "^0.11.1",
+    "ky-universal": "^0.2.2",
     "polished": "^3.3.0",
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
