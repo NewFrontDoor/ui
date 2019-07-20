@@ -1,15 +1,14 @@
 /* eslint-disable camelcase */
 import faker from 'faker';
-import {subMonths, addMonths, addHours} from 'date-fns';
+import {startOfMonth, endOfMonth, addHours} from 'date-fns';
 
-import CalendarWrapper from '../src';
+import Calendar from '../src';
 
-const now = new Date();
-const twoMonthsAgo = subMonths(now, 2);
-const inTwoMongth = addMonths(now, 2);
+export function buildEvent(currentDate) {
+  const twoMonthsAgo = startOfMonth(currentDate);
+  const inTwoMonths = endOfMonth(currentDate);
 
-export function buildEvent() {
-  const start_date = faker.date.between(twoMonthsAgo, inTwoMongth);
+  const start_date = faker.date.between(twoMonthsAgo, inTwoMonths);
   const end_date = addHours(start_date, faker.random.number({min: 1, max: 48}));
 
   return {
@@ -26,14 +25,20 @@ export function buildEvent() {
   };
 }
 
-const events = Array.from({length: 100})
-  .map((k, i) => buildEvent(i))
-  .sort((a, b) => a.start_date - b.start_date);
+const client = {
+  fetchEvents(currentDate) {
+    const events = Array.from({length: 50})
+      .map(() => buildEvent(currentDate))
+      .sort((a, b) => a.start_date - b.start_date);
+
+    return Promise.resolve(events);
+  }
+};
 
 export default {
-  component: CalendarWrapper,
+  component: Calendar,
   props: {
-    events,
+    client,
     initialView: 'month'
   }
 };
