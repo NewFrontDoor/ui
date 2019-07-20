@@ -1,11 +1,11 @@
 import ky from 'ky-universal';
-import {startOfMonth, endOfMonth, format} from 'date-fns';
+import {addMonths, subMonths, startOfMonth, endOfMonth, format} from 'date-fns';
 
 function createDrupalClient(apiUrl) {
   return {
     async fetchEvents(currentDate) {
-      const startDate = format(startOfMonth(currentDate), 'yyyy/MM/dd');
-      const endDate = format(endOfMonth(currentDate), 'yyyy/MM/dd');
+      const startDate = format(subMonths(startOfMonth(currentDate), 1), 'yyyy/MM/dd');
+      const endDate = format(addMonths(endOfMonth(currentDate), 1), 'yyyy/MM/dd');
 
       const result = await ky(apiUrl, {
         searchParams: {

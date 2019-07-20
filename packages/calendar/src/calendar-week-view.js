@@ -146,7 +146,7 @@ const Week = ({calendarData}) => {
                 return (
                   <Event
                     key={event.id}
-                    row={startRow - 9}
+                    row={startRow - 10}
                     rowspan={
                       differenceInHours(event.end_date, event.start_date) + 2
                     }
