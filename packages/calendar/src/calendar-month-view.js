@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, lighten, readableColor} from 'polished';
 import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
+import CalendarDispatch from './utilities/calendar-dispatch-provider';
 
 const WeekBlock = styled.div({
   display: 'grid',
@@ -100,7 +101,9 @@ const SeeMore = styled.div(
   })
 );
 
-const Month = ({calendarData, seeMore}) => {
+const Month = ({calendarData}) => {
+  const dispatch = useContext(CalendarDispatch);
+
   return (
     <>
       {calendarData.map(({week, weekNumber}) => (
@@ -117,7 +120,12 @@ const Month = ({calendarData, seeMore}) => {
                     {day}
                   </DayNumber>
                   {showMore && (
-                    <SeeMore column={index + 2} onClick={() => seeMore(date)}>
+                    <SeeMore
+                      column={index + 2}
+                      onClick={() => {
+                        dispatch({type: 'see-more', date});
+                      }}
+                    >
                       see more
                     </SeeMore>
                   )}
@@ -146,7 +154,6 @@ const Month = ({calendarData, seeMore}) => {
 };
 
 Month.propTypes = {
-  seeMore: PropTypes.func.isRequired,
   calendarData: PropTypes.arrayOf(
     PropTypes.shape({
       week: PropTypes.arrayOf(PropTypes.object),

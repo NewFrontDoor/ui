@@ -45,12 +45,10 @@ const views = {
 
 export default function Calendar({
   calendarView,
-  setCalendarView,
-  state,
-  seeMore,
   calendarData,
+  weekNumber,
   startOfWeek,
-  viewFixed
+  isViewFixed
 }) {
   const CalendarView = views[calendarView];
 
@@ -60,8 +58,7 @@ export default function Calendar({
         location="top"
         startOfWeek={startOfWeek}
         calendarView={calendarView}
-        setCalendarView={setCalendarView}
-        viewFixed={viewFixed}
+        isViewFixed={isViewFixed}
         input={Object.keys(views)}
       />
       {calendarView === 'day' ? (
@@ -82,8 +79,7 @@ export default function Calendar({
       <CalendarView
         calendarView={calendarView}
         calendarData={calendarData}
-        weekNumber={state.weekNumber}
-        seeMore={seeMore}
+        weekNumber={weekNumber}
       />
     </CalendarContainer>
   );
@@ -91,9 +87,12 @@ export default function Calendar({
 
 Calendar.propTypes = {
   calendarView: PropTypes.string.isRequired,
-  setCalendarView: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
-  seeMore: PropTypes.func.isRequired,
   calendarData: PropTypes.array.isRequired,
-  startOfWeek: PropTypes.instanceOf(Date).isRequired
+  weekNumber: PropTypes.number.isRequired,
+  startOfWeek: PropTypes.instanceOf(Date).isRequired,
+  isViewFixed: PropTypes.bool
+};
+
+Calendar.defaultProps = {
+  isViewFixed: false
 };
