@@ -1,6 +1,6 @@
-import CalendarWrapper from './calendar-wrapper';
-import drupalEvents from './drupal-fetch-wrapper';
-import elvantoEvents from './elvanto-fetch-wrapper';
+import Calendar from './calendar-wrapper';
 
-export default CalendarWrapper;
-export {drupalEvents, elvantoEvents};
+export default Calendar;
+
+export {default as drupalClient} from './drupal-client';
+export {default as elvantoClient} from './elvanto-client';

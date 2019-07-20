@@ -13,9 +13,8 @@ export default function CalendarControls({
   location,
   startOfWeek,
   calendarView,
-  setCalendarView,
   input,
-  viewFixed
+  isViewFixed
 }) {
   const dispatch = useContext(CalendarDispatch);
   let jump;
@@ -80,11 +79,10 @@ export default function CalendarControls({
         </Text>
       </FlexItem>
       <FlexItem grow={1} shrink={1} width="20%">
-        {viewFixed ? (
+        {isViewFixed ? (
           ''
         ) : (
           <MethodToggle
-            setCalendarView={setCalendarView}
             calendarView={calendarView}
             location={location}
             inputs={input}
@@ -99,9 +97,13 @@ export default function CalendarControls({
 }
 
 CalendarControls.propTypes = {
-  setCalendarView: PropTypes.func.isRequired,
   calendarView: PropTypes.string.isRequired,
   startOfWeek: PropTypes.instanceOf(Date).isRequired,
   location: PropTypes.string.isRequired,
-  input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  isViewFixed: PropTypes.bool
+};
+
+CalendarControls.defaultProps = {
+  isViewFixed: false
 };
