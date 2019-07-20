@@ -1,13 +1,13 @@
 import React from 'react';
-import {render, cleanup, wait} from 'react-testing-library';
-import 'jest-dom/extend-expect';
+import {render, cleanup, wait} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import Bible from '../src';
 
 afterEach(cleanup);
 
 test('Loads and displays todays date', async () => {
   const {baseElement} = render(
-    <Bible url="https://api.bible.io" passage="Genesis 1:1" />
+    <Bible url="https://labs.bible.org/api/" passage="Genesis 1:1" />
   );
 
   const actual =
