@@ -24,6 +24,7 @@ const Event = styled.div(
     maxWidth: '100%',
     whiteSpace: 'nowrap',
     zIndex: '1',
+    cursor: 'pointer',
     ':hover, :focus': {
       gridColumn: 'span 10'
     }
@@ -153,7 +154,7 @@ const Week = ({calendarData}) => {
                     color={event.color}
                     role="button"
                   >
-                    <EventWrapper event={event}>{event.name}</EventWrapper>
+                    <EventWrapper event={event} />
                   </Event>
                 );
               })}

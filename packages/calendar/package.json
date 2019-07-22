@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/calendar",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
@@ -11,7 +11,6 @@
   ],
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
-    "he": "^1.2.0",
     "ky": "^0.11.1",
     "ky-universal": "^0.2.2",
     "polished": "^3.3.0",

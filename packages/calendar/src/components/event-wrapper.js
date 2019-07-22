@@ -41,10 +41,9 @@ class EventWrapper extends React.Component {
             textOverflow: 'ellipsis'
           }}
           onClick={this.toggleDialog}
-        >
-          {this.props.children}
-        </div>
-        ,
+          /* eslint-disable-next-line react/no-danger */
+          dangerouslySetInnerHTML={{__html: event.name}}
+        />
         <Dialog
           title={event.name}
           actions={[

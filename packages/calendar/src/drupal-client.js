@@ -1,5 +1,4 @@
 import ky from 'ky-universal';
-import { decode } from 'he';
 import {addMonths, subMonths, startOfMonth, endOfMonth, format} from 'date-fns';
 
 function createDrupalClient(apiUrl) {
@@ -21,7 +20,6 @@ function createDrupalClient(apiUrl) {
       const normalisedData = result.map(event => {
         const normalisedEvent = {
           ...event,
-          name: decode(event.name),
           calendar_id: event.nid
         };
         console.log(normalisedEvent);

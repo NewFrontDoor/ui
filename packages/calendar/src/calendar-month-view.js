@@ -30,6 +30,7 @@ const Event = styled.div(
     whiteSpace: 'nowrap',
     height: '18px',
     zIndex: '1',
+    cursor: 'pointer',
     display: 'block',
     marginRight: '5px'
   },
