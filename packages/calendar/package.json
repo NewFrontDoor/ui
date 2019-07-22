@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/calendar",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
