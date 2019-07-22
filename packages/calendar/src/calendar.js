@@ -8,7 +8,7 @@ import CalendarControls from './components/calendar-controls';
 
 const CalendarContainer = styled.div({
   boxSizing: 'border-box',
-  fontFamily: "Montserrat, 'sans-serif'",
+  fontFamily: "Montserrat, Arial, 'sans-serif'",
   color: '#51565d',
   lineHeight: '1em'
 });

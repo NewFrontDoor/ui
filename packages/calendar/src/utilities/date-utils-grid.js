@@ -78,6 +78,7 @@ function getEvents(events) {
 
     const normalisedEvents = todaysEvents.map(event => {
       const normalisedEvent = {
+        ...event,
         id: event.id,
         name: event.name,
         color: event.color,

@@ -20,12 +20,15 @@ function createDrupalClient(apiUrl) {
 
       const normalisedData = result.map(event => {
         const normalisedEvent = {
-          calendar_id: event.nid,
+          ...event,
           name: decode(event.name),
-          ...event
+          calendar_id: event.nid
         };
+        console.log(normalisedEvent);
         return normalisedEvent;
       });
+
+      console.log(normalisedData);
 
       return normalisedData;
     }

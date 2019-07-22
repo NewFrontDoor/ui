@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/calendar",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
@@ -17,7 +17,8 @@
     "polished": "^3.3.0",
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
-    "react-radio-group": "^3.0.3"
+    "react-radio-group": "^3.0.3",
+    "typeface-montserrat": "0.0.75"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.0.0",
