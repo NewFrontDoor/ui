@@ -1,38 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import FormGrid from './form-grid';
 
-const Grid = styled('section')`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-
-  input:focus,
-  textarea:focus {
-    outline: 3px solid gold;
-  }
-
-  label {
-    display: block;
-    grid-column: 1 / 2;
-    padding-bottom: 5px;
-  }
-  input,
-  textarea,
-  select,
-  button {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .fullwidth {
-    grid-column: 1 / 3;
-  }
-  .inline {
-    display: inline;
-  }
-`;
-
-const RadioGrid = styled('fieldset')`
+const RadioGroup = styled('fieldset')`
   input {
     width: initial;
   }
@@ -40,9 +11,6 @@ const RadioGrid = styled('fieldset')`
     display: inline;
     margin-left: 10px;
     padding-bottom: 0px;
-  }
-  legend {
-    grid-column: 1 / 3;
   }
 `;
 
@@ -68,7 +36,7 @@ function getFormField(field) {
       );
     case 'radio':
       return (
-        <RadioGrid>
+        <RadioGroup>
           <legend>{field.label}</legend>
           {field.values.map(value => (
             <div key={field.id}>
@@ -76,7 +44,7 @@ function getFormField(field) {
               <label htmlFor={value}>{value}</label>
             </div>
           ))}
-        </RadioGrid>
+        </RadioGroup>
       );
     case 'checkbox':
       return (
@@ -109,11 +77,11 @@ export default function Form({title, id, description, fields}) {
       <fieldset>
         <h2>{title}</h2>
         <p>{description}</p>
-        <Grid>
+        <FormGrid>
           {fields.map(field => {
             return getFormField(field);
           })}
-        </Grid>
+        </FormGrid>
       </fieldset>
     </form>
   );

@@ -1,7 +1,14 @@
+import FormGrid from '../form-grid';
 import Form from '../form';
 
+const WrappedForm = props => (
+  <FormGrid>
+    <Form {...props} />
+  </FormGrid>
+)
+
 export default {
-  component: Form,
+  component: WrappedForm,
   props: {
     title: "Test Form",
     id: "test",
