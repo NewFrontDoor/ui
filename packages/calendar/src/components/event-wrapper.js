@@ -46,6 +46,7 @@ class EventWrapper extends React.Component {
           dangerouslySetInnerHTML={{__html: event.name}}
         />
         <Dialog
+          showCloseButton
           title={<DialogTitle><span dangerouslySetInnerHTML={{__html: event.name}} /></DialogTitle>}
           actions={[
             {onClick: this.toggleDialog, text: 'Close'},
