@@ -1,4 +1,5 @@
-#Form component - for dynamically building out forms from JSON
+# Form component
+### for dynamically building out forms from JSON
 
 See fixtures for API shape.
 
