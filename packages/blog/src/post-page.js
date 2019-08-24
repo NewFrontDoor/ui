@@ -20,14 +20,14 @@ const ContentWrapper = styled('div')`
 const Content = styled('div')`
   flex: 1 0 auto;
   width: auto;
-  max-width: 24em;
   @media (min-width: 420px) {
-    max-width: 32em;
     padding-top: 23.5px;
   }
 `;
 
 function postPage({post, dateFormat}) {
+    function createMarkup() { return {__html: post.body}; };
+
     return (
         <ContentWrapper>
             <Text as="h2">{post.title}</Text>
@@ -54,9 +54,7 @@ function postPage({post, dateFormat}) {
                 </ul>
             </Text>
             <Content>
-                {post.body.map(para => {
-                    return <p>{para}</p>;
-                })}
+                <div dangerouslySetInnerHTML={createMarkup()} /> 
             </Content>
         </ContentWrapper>
     );

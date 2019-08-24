@@ -6,7 +6,7 @@ export default {
     post: {
       title: 'Returning to campus',
       _createdAt: '2018-09-25T08:11:14Z',
-      body: ['Line one', 'line two', 'line three'],
+      body: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id mollis erat. Vestibulum suscipit tincidunt commodo.</p>',
       author: 'Alan Reader',
       slug: 'returning-to-campus',
       categories: [

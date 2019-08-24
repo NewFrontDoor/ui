@@ -4,6 +4,7 @@ import Post from './post';
 import DateFilter from './date-filter';
 
 export default function Blog({posts, category, dateFormat}) {
+  function createMarkup() { return {__html: post.body}; };
   return (
     <div>
       <DateFilter />
@@ -27,7 +28,7 @@ export default function Blog({posts, category, dateFormat}) {
             date={post._createdAt}
             dateFormat={dateFormat}
             categories={post.categories}
-            body={post.body}
+            body={createMarkup}
           />
         ))}
     </div>
