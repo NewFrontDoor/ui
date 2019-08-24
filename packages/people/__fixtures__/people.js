@@ -1,10 +1,8 @@
-import Elderswrapper from '../elders-wrapper';
+import React from 'react'
+import PeopleGroup from '../peoplegroup';
 export default {
-  component: Elderswrapper,
+  component: PeopleGroup,
   props: {
-    apiUrl: 'https://cornerstoneapi.newfrontdoor.org/api/people',
-    apiParams: {
-      role: 'elders'
+    apiUrl: 'https://cornerstoneapi.newfrontdoor.org/api/people'
     }
-  }
 };

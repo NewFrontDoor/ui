@@ -6,9 +6,9 @@ function useFetch(apiUrl, apiParams) {
   const [error, setError] = useState();
 
   const fetchData = async () => {
-    const params = Object.keys(apiParams)
+    const params = apiParams ? Object.keys(apiParams)
       .map(key => key + '=' + apiParams[key])
-      .join('&');
+      .join('&'): null;
     const url = apiUrl + "?" + params;
     const response = await fetch(url);
     const status = await response.status;
