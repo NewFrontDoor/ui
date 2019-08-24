@@ -12,6 +12,7 @@ export default function Elderswrapper({apiUrl, email, title}) {
   if (loading) {
     return <div>Loading...</div>;
   }
+
   return <People people={elders} email={email} title={title} />;
 }
 

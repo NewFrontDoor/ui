@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {RadioGroup, Radio} from 'react-radio-group';
 import styled from '@emotion/styled';
+import CalendarDispatch from '../utilities/calendar-dispatch-provider';
 
 const StyledRadioGroup = styled(RadioGroup)`
   height: ${props =>
@@ -116,6 +117,8 @@ const StyledRadioGroup = styled(RadioGroup)`
 `;
 
 function MethodToggle(props) {
+  const dispatch = useContext(CalendarDispatch);
+
   return (
     <StyledRadioGroup
       id="methodField"
@@ -123,7 +126,9 @@ function MethodToggle(props) {
       inputs={props.inputs}
       styles={props.styles}
       selectedValue={props.calendarView}
-      onChange={option => props.setCalendarView(option)}
+      onChange={option => {
+        dispatch({type: 'set-view', view: option});
+      }}
     >
       {props.inputs.map(input => [
         <Radio value={input} id={props.location + input} />,
@@ -137,7 +142,6 @@ export default MethodToggle;
 
 MethodToggle.propTypes = {
   location: PropTypes.string.isRequired,
-  setCalendarView: PropTypes.func.isRequired,
   calendarView: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(PropTypes.string).isRequired,
   styles: PropTypes.shape({

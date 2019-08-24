@@ -6,7 +6,7 @@ export default {
     posts: [
       {
         title: 'Returning to campus',
-        _createdAt: '2018-09-28T08:11:14Z',
+        _createdAt: '2018-09-25T08:11:14Z',
         body: ['Line one', 'line two', 'line three'],
         author: 'Alan Reader',
         slug: 'returning-to-campus',
@@ -19,6 +19,21 @@ export default {
           },
           {
             title: 'Uni Fellowship'
+          }
+        ]
+      },
+      {
+        title: 'Test blog two',
+        _createdAt: '2018-09-28T09:11:14Z',
+        body: ['Line one', 'line two', 'line three'],
+        author: 'Alan Reader',
+        slug: 'test-blog-two',
+        categories: [
+          {
+            title: 'New Front Door'
+          },
+          {
+            title: 'Category two'
           }
         ]
       }

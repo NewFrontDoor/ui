@@ -23,7 +23,7 @@ class LatestSermon extends React.PureComponent {
           </Text>
           <Text>{this.props.loading ? '...' : preacher}</Text>
           <Box>
-            <ReactAudioPlayer src={sermonUrl} controls />
+            <ReactAudioPlayer controls src={sermonUrl} />
           </Box>
           <Text>
             <Link href={sermonUrl}>Download Sermon</Link>
@@ -31,6 +31,7 @@ class LatestSermon extends React.PureComponent {
         </Box>
       );
     }
+
     return (
       <Box element="section">
         <Text element="h2">Latest Sermon</Text>

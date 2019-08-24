@@ -8,8 +8,13 @@ function useFetch(apiUrl, apiParams) {
   const fetchData = async () => {
     const params = apiParams ? Object.keys(apiParams)
       .map(key => key + '=' + apiParams[key])
+<<<<<<< HEAD
       .join('&'): null;
     const url = apiUrl + "?" + params;
+=======
+      .join('&');
+    const url = apiUrl + '?' + params;
+>>>>>>> 74eec880f50f8f886c4c3cfc9e6ffb63ff61c3a5
     const response = await fetch(url);
     const status = await response.status;
     setData(await response.json());
@@ -21,7 +26,7 @@ function useFetch(apiUrl, apiParams) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return [data, loading, error];
 }

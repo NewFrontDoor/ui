@@ -1,5 +1,6 @@
 import React from 'react'
 import PeopleGroup from '../peoplegroup';
+
 export default {
   component: PeopleGroup,
   props: {

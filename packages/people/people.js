@@ -1,6 +1,6 @@
 import React from 'react';
 import Person from './person';
-import PeopleGroup from './peoplegroup';
+
 export default function People({ people, title, email}) {
   return (
     <React.Fragment>

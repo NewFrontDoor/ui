@@ -24,6 +24,7 @@ const Event = styled.div(
     maxWidth: '100%',
     whiteSpace: 'nowrap',
     zIndex: '1',
+    cursor: 'pointer',
     ':hover, :focus': {
       gridColumn: 'span 10'
     }
@@ -146,14 +147,14 @@ const Week = ({calendarData}) => {
                 return (
                   <Event
                     key={event.id}
-                    row={startRow - 9}
+                    row={startRow - 10}
                     rowspan={
                       differenceInHours(event.end_date, event.start_date) + 2
                     }
                     color={event.color}
                     role="button"
                   >
-                    <EventWrapper event={event}>{event.name}</EventWrapper>
+                    <EventWrapper event={event} />
                   </Event>
                 );
               })}

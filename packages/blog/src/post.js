@@ -1,11 +1,13 @@
+/** @jsx jsx */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {css} from '@emotion/core';
+import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
 import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
 import {readingTime} from 'reading-time-estimator';
 import {blocksToText} from './blog-fns';
+import Link from './link';
 
 const ContentWrapper = styled('div')`
   display: flex;
@@ -46,24 +48,24 @@ const Content = styled('div')`
 `;
 
 const Post = props => {
-  const {linkComponent: Link} = props;
+  console.log(props.body);
   const readingLength = readingTime(blocksToText(props.body));
   return (
     <ContentWrapper display="flex">
       <Meta>
-        <Text element="h2">{props.title}</Text>
+        <Text as="h2">{props.title}</Text>
         <Text appearance="mouse">
           {format(new Date(props.date), props.dateFormat)}
         </Text>
         <Text appearance="mouse">{readingLength.text}</Text>
         <Text
-          className={css`
+          css={css`
             display: none;
             @media (min-width: 420px) {
               display: block;
             }
           `}
-          element="div"
+          as="div"
           appearance="mouse"
         >
           <ul>
@@ -75,7 +77,12 @@ const Post = props => {
           </ul>
         </Text>
       </Meta>
-      <Content>{props.renderContent(props.body)}</Content>
+      <Content>
+        {props.body.map(para => {
+          console.log(para);
+          return <p>{para}</p>;
+        })}
+      </Content>
     </ContentWrapper>
   );
 };

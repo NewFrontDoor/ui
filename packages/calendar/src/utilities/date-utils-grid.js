@@ -78,6 +78,7 @@ function getEvents(events) {
 
     const normalisedEvents = todaysEvents.map(event => {
       const normalisedEvent = {
+        ...event,
         id: event.id,
         name: event.name,
         color: event.color,
@@ -123,6 +124,10 @@ export function calendarMonth(passedDate, events) {
 }
 
 export function buildCalendarData(calendarView, passedDate, events) {
+  if (events === 'loading') {
+    return 'loading';
+  }
+
   if (calendarView === 'day') {
     return calendarDay(passedDate, events);
   }
