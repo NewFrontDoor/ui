@@ -39,7 +39,9 @@ const Months = styled('div')`
 
 const Year = styled('div')``;
 
-const Month = styled('div')``;
+const Month = styled('div')`
+  margin: 6px;
+`;
 
 const Arrow = styled('div')``;
 const Archive = styled('div')`
