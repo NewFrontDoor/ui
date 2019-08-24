@@ -1,0 +1,26 @@
+{
+  "name": "@newfrontdoor/grid-wrapper",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "babel": "babel src -d dist"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "prop-types": "^15.6.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^8.0.5"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10.0",
+    "@emotion/styled": "^10.0",
+    "mineral-ui": "^0.58.0",
+    "react": "^16.0"
+  },
+  "xo": false
+}
