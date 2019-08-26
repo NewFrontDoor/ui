@@ -32,7 +32,6 @@ class EventWrapper extends React.Component {
   render() {
     const {isOpen} = this.state;
     const {...event} = this.props.event;
-
     return (
       <>
         <div
