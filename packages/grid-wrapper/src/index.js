@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 const Grid = styled('div')`
   display: grid;
-  grid-template-columns: repeat(${props => props.columns}, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: ${props => (props.gap ? props.gap : `5%`)};
 `;
 
