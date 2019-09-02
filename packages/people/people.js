@@ -17,7 +17,7 @@ export default function People({ people, title, email}) {
           <br />
           {people.map(person => {
             return (
-              <Person name={person.name} title={person.title} url={person.avatar_url} />
+              <Person name={person.name} title={person.title} avatar={person.avatar_url} />
             )
           })}
         </div>
