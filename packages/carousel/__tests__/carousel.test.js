@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, cleanup, wait} from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import styled from '@emotion/styled';
 import '@testing-library/jest-dom/extend-expect';
 import Carousel from '../src';
@@ -50,9 +51,6 @@ test('Loads carousel', async () => {
       </Slide>
     </Carousel>
   );
-
-  const actual =
-    'The Creation of the World1 In the beginning God created the heavens and the earth.';
 
   await wait(() => {
     expect(baseElement).toHaveTextContent(actual);
