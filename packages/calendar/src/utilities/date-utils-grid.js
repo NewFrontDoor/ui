@@ -94,7 +94,7 @@ function getEvents(events) {
             new Date(event.start_date)
           ) + 1,
         description: event.description,
-        location: event.where,
+        location: event.location || event.where,
         url: event.url
       };
 

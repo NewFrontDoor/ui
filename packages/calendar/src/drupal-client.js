@@ -18,6 +18,7 @@ export default function createDrupalClient(apiUrl) {
       }).json();
 
       const normalisedData = result.map(event => {
+        console.log(event.location);
         const normalisedEvent = {
           ...event,
           calendar_id: event.nid

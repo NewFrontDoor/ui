@@ -104,7 +104,6 @@ const SeeMore = styled.div(
 
 const Month = ({calendarData}) => {
   const dispatch = useContext(CalendarDispatch);
-
   return (
     <>
       {calendarData.map(({week, weekNumber}) => (
@@ -114,7 +113,6 @@ const Month = ({calendarData}) => {
             ({events, date, isPeripheral, numberOfEventsToday}, index) => {
               const day = format(date, 'dd');
               const showMore = numberOfEventsToday >= 5;
-
               return (
                 <React.Fragment key={day}>
                   <DayNumber col={index + 2} isPeripheral={isPeripheral}>

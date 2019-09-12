@@ -47,8 +47,8 @@ export default function Calendar({
   calendarView,
   calendarData,
   weekNumber,
-  startOfWeek,
-  isViewFixed
+  isViewFixed,
+  startOfMonth
 }) {
   const CalendarView = views[calendarView];
 
@@ -56,7 +56,7 @@ export default function Calendar({
     <CalendarContainer>
       <CalendarControls
         location="top"
-        startOfWeek={startOfWeek}
+        startOfMonth={startOfMonth}
         calendarView={calendarView}
         isViewFixed={isViewFixed}
         input={Object.keys(views)}
@@ -89,7 +89,8 @@ Calendar.propTypes = {
   calendarView: PropTypes.string.isRequired,
   calendarData: PropTypes.array.isRequired,
   weekNumber: PropTypes.number.isRequired,
-  startOfWeek: PropTypes.instanceOf(Date).isRequired,
+  startOfMonth: PropTypes.instanceOf(Date).isRequired,
+  startOfMonth: PropTypes.instanceOf(Date).isRequired,
   isViewFixed: PropTypes.bool
 };
 
