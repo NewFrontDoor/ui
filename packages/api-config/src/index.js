@@ -1,1 +1,1 @@
-export { ApiConfigContext as ApiContext } from "./drupal-api-config-provider";
+export {ApiConfigContext as ApiContext} from './drupal-api-config-provider';

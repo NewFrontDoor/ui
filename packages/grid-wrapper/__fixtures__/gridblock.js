@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import GridBlock from '../src';
 import styled from '@emotion/styled';
+import GridBlock from '../src';
 
 const Header = styled('h3')`
   grid-column: 1/1;
@@ -37,19 +36,10 @@ const Action = styled('a')`
   }
 `;
 
-function GridItem({
-  title,
-  imgSrc,
-  action,
-  slug
-}) {
+function GridItem({title, imgSrc, action, slug}) {
   return (
     <>
-      <img
-        src={imgSrc}
-        alt={title}
-        style={{width: '100%'}}
-      />
+      <img src={imgSrc} alt={title} style={{width: '100%'}} />
       <Header>{title}</Header>
       <Actions>
         <Action href={slug}>{action ? action : 'VIEW PAGE'}</Action>
@@ -59,17 +49,41 @@ function GridItem({
 }
 
 const WrapperGridBlock = props => (
-<GridBlock items={props.items} columns={props.columns} gap='10%' marginBottom='50px;' renderProp={data => (<GridItem {...data} />)} />
-)
+  <GridBlock
+    items={props.items}
+    columns={props.columns}
+    gap="10%"
+    marginBottom="50px;"
+    renderProp={data => <GridItem {...data} />}
+  />
+);
 
 export default [
   {
     component: WrapperGridBlock,
     props: {
       items: [
-        {_id: '1', title: 'first', imgSrc: 'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg', slug: 'first-slug'},
-        {_id: '2', title: 'second', imgSrc: 'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg', slug: 'second-slug'},
-        {_id: '3', title: 'third', imgSrc: 'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg', slug: 'third-slug'}
+        {
+          _id: '1',
+          title: 'first',
+          imgSrc:
+            'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
+          slug: 'first-slug'
+        },
+        {
+          _id: '2',
+          title: 'second',
+          imgSrc:
+            'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
+          slug: 'second-slug'
+        },
+        {
+          _id: '3',
+          title: 'third',
+          imgSrc:
+            'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
+          slug: 'third-slug'
+        }
       ],
       columns: '3'
     }

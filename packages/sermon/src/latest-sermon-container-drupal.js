@@ -2,8 +2,8 @@ import 'isomorphic-fetch';
 import React from 'react';
 import {decode} from 'he';
 import Box from 'mineral-ui/Box';
-import LatestSermon from './latest-sermon';
 import { ApiContext } from "@newfrontdoor/api-config";
+import LatestSermon from './latest-sermon';
 
 class LatestSermonContainerDrupal extends React.PureComponent {
   constructor() {
@@ -60,10 +60,9 @@ class LatestSermonContainerDrupal extends React.PureComponent {
 export default function() {
   return (
     <ApiContext.Consumer>
-      {({ baseUrl }) => (
-        <LatestSermonContainerDrupal baseUrl={baseUrl} />
-      )}
+      {({baseUrl}) => <LatestSermonContainerDrupal baseUrl={baseUrl} />}
     </ApiContext.Consumer>
   )
-};
 
+;
+}
