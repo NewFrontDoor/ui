@@ -1,8 +1,7 @@
 import React from 'react';
-import {decode} from 'he';
 import fetch from 'isomorphic-fetch';
-import CurrentSeries from './current-series';
 import { ApiContext } from '@newfrontdoor/api-config';
+import CurrentSeries from './current-series';
 
 class CurrentSeriesContainerDrupal extends React.PureComponent {
   constructor() {
@@ -18,8 +17,8 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
     this.getCurrentSeries()
       .then(response => {
         // This transform could moved out into generic (Drupal => NFD) component structure for sermon series
-        const transformedSeriesData = response.map((x) => ({
-          title: decode(x.node_title),
+        const transformedSeriesData = response.map(x => ({
+          title: x.node_title,
           image: x['series thumbnail'],
           link: x.url,
           id: x.series_id
@@ -43,18 +42,16 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
   };
 
   render() {
-    return (
-      <CurrentSeries {...this.state} />
-    );
+    return <CurrentSeries {...this.state} />;
   }
 }
 
 export default function() {
   return (
     <ApiContext.Consumer>
-      {({ baseUrl }) => (
-        <CurrentSeriesContainerDrupal baseUrl={baseUrl} />
-      )}
+      {({baseUrl}) => <CurrentSeriesContainerDrupal baseUrl={baseUrl} />}
     </ApiContext.Consumer>
-  )
-};
+  );
+}
+
+

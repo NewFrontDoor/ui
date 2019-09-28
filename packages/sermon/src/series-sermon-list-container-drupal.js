@@ -1,9 +1,8 @@
 import 'isomorphic-fetch';
 import React from 'react';
-import {decode} from 'he';
 import Box from 'mineral-ui/Box';
-import SermonSeriesList from './series-sermon-list';
 import { ApiContext } from "@newfrontdoor/api-config";
+import SermonSeriesList from './series-sermon-list';
 
 class SeriesSermonListContainerDrupal extends React.PureComponent {
   constructor() {
@@ -18,27 +17,28 @@ class SeriesSermonListContainerDrupal extends React.PureComponent {
 
   componentDidMount() {
     this.getSeries()
-    .then(resp => {
-      const series = resp[0]; 
-      let transSeries = {
-        title: series.node_title,
-        image: series.image
-      }
+      .then(resp => {
+        const series = resp[0];
+        const transSeries = {
+          title: series.node_title,
+          image: series.image
+        };
 
-      this.setState({
-        series: transSeries
+        this.setState({
+          series: transSeries
+        });
       })
-    }).catch(error => {
-      this.setState({
-        error
+      .catch(error => {
+        this.setState({
+          error
+        });
       });
-    });
-    
+
     this.getSermonsForSeries()
       .then(resp => {
-        let transSermonList = resp.map( s => {
+        const transSermonList = resp.map(s => {
           const sTransformed = {
-            title: decode(s.node_title),
+            title: s.node_title,
             preacher: s.preacher,
             datePreached: s.datepreached,
             sermonUrl: s.url,
@@ -53,7 +53,6 @@ class SeriesSermonListContainerDrupal extends React.PureComponent {
           seriesSermonList: transSermonList,
           loading: false
         });
-       
       })
       .catch(error => {
         this.setState({
@@ -86,10 +85,14 @@ class SeriesSermonListContainerDrupal extends React.PureComponent {
 export default function(props) {
   return (
     <ApiContext.Consumer>
-      {({ baseUrl }) => (
-        <SeriesSermonListContainerDrupal baseUrl={baseUrl} seriesId={props.seriesId} />
+      {({baseUrl}) => (
+        <SeriesSermonListContainerDrupal
+          baseUrl={baseUrl}
+          seriesId={props.seriesId}
+        />
       )}
     </ApiContext.Consumer>
   )
-};
 
+;
+}

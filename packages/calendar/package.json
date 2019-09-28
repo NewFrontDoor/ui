@@ -11,8 +11,8 @@
   ],
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
-    "ky": "^0.11.1",
-    "ky-universal": "^0.2.2",
+    "ky": "^0.14.0",
+    "ky-universal": "^0.3.0",
     "polished": "^3.3.0",
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^8.0.5",
+    "@testing-library/react": "^9.2.0",
     "faker": "^4.1.0"
   },
   "peerDependencies": {

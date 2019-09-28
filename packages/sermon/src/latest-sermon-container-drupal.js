@@ -1,8 +1,7 @@
 import 'isomorphic-fetch';
 import React from 'react';
-import {decode} from 'he';
 import Box from 'mineral-ui/Box';
-import { ApiContext } from "@newfrontdoor/api-config";
+import {ApiContext} from '@newfrontdoor/api-config';
 import LatestSermon from './latest-sermon';
 
 class LatestSermonContainerDrupal extends React.PureComponent {
@@ -21,7 +20,7 @@ class LatestSermonContainerDrupal extends React.PureComponent {
         const sermon = ls[0];
         // This transform could moved out into generic (Drupal => NFD) component structure for sermons
         const lsTransformed = {
-          title: decode(sermon.node_title),
+          title: sermon.node_title,
           preacher: sermon.preacher,
           datePreached: sermon.datepreached,
           sermonUrl: sermon.url,
@@ -62,7 +61,5 @@ export default function() {
     <ApiContext.Consumer>
       {({baseUrl}) => <LatestSermonContainerDrupal baseUrl={baseUrl} />}
     </ApiContext.Consumer>
-  )
-
-;
+  );
 }

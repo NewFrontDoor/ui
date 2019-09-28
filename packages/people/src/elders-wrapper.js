@@ -4,7 +4,7 @@ import People from './people';
 import {useFetch} from './utilities/hooks';
 
 export default function Elderswrapper({apiUrl, email, title}) {
-  const [elders, loading, error] = useFetch(apiUrl, {person_type:"elder"});
+  const [elders, loading, error] = useFetch(apiUrl, {person_type: 'elder'});
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -17,5 +17,5 @@ export default function Elderswrapper({apiUrl, email, title}) {
 }
 
 Elderswrapper.propTypes = {
-  apiUrl: PropTypes.string.isRequired,
+  apiUrl: PropTypes.string.isRequired
 };

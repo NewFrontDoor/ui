@@ -32,5 +32,5 @@ const Grid = styled('section')`
 `;
 
 export default function FormGrid({children}) {
-    return <Grid>{children}</Grid>
+  return <Grid>{children}</Grid>;
 }

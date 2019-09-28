@@ -1,8 +1,7 @@
 import React from 'react';
-import {decode} from 'he';
 import 'isomorphic-fetch';
-import RecentSeries from './recent-series';
 import { ApiContext } from '@newfrontdoor/api-config';
+import RecentSeries from './recent-series';
 
 class RecentSeriesContainerDrupal extends React.PureComponent {
   constructor() {
@@ -18,8 +17,8 @@ class RecentSeriesContainerDrupal extends React.PureComponent {
     this.getMostRecentSeries()
       .then(response => {
         // This transform could moved out into generic (Drupal => NFD) component structure for sermon series
-        const transformedSeriesData = response.map((x) => ({
-          title: decode(x.node_title),
+        const transformedSeriesData = response.map(x => ({
+          title: x.node_title,
           image: x.series_img,
           link: x.url,
           id: x.series_id
@@ -43,18 +42,16 @@ class RecentSeriesContainerDrupal extends React.PureComponent {
   };
 
   render() {
-    return (
-      <RecentSeries {...this.state} />
-    );
+    return <RecentSeries {...this.state} />;
   }
 }
 
 export default function() {
   return (
     <ApiContext.Consumer>
-      {({ baseUrl }) => (
-        <RecentSeriesContainerDrupal baseUrl={baseUrl} />
-      )}
+      {({baseUrl}) => <RecentSeriesContainerDrupal baseUrl={baseUrl} />}
     </ApiContext.Consumer>
-  )
-};
+  );
+}
+
+

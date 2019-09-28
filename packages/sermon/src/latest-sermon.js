@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Text from 'mineral-ui/Text';
-import { Heading } from '@newfrontdoor/base';
+import {Heading} from '@newfrontdoor/base';
 import Link from 'mineral-ui/Link';
 import Box from 'mineral-ui/Box';
 import PropTypes from 'prop-types';
@@ -20,7 +20,7 @@ class LatestSermon extends React.PureComponent {
             <img src={sermonImg} alt="Sermon Art" />
           </Box>
           <Text>
-            <Link href={sermonUrl}>{title}</Link>
+            <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </Text>
           <Text>{this.props.loading ? '...' : preacher}</Text>
           <Box>
