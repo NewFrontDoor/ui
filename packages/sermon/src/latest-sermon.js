@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Text from 'mineral-ui/Text';
+import {Heading} from '@newfrontdoor/base';
 import Link from 'mineral-ui/Link';
 import Box from 'mineral-ui/Box';
 import PropTypes from 'prop-types';
@@ -19,7 +20,7 @@ class LatestSermon extends React.PureComponent {
             <img src={sermonImg} alt="Sermon Art" />
           </Box>
           <Text>
-            <Link href={sermonUrl}>{title}</Link>
+            <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </Text>
           <Text>{this.props.loading ? '...' : preacher}</Text>
           <Box>
@@ -34,7 +35,7 @@ class LatestSermon extends React.PureComponent {
 
     return (
       <Box element="section">
-        <Text element="h2">Latest Sermon</Text>
+        <Heading element="h2">Latest Sermon</Heading>
         <PulseLoader loading={this.props.loading} size={10} />
         {this.props.loading || content}
       </Box>

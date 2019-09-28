@@ -1,37 +1,18 @@
 import React from 'react';
+import {Box, Text, Link} from 'mineral-ui';
+import {PulseLoader} from 'react-spinners';
+import renderSeriesComponent from './render-series-content';
 
-class RecentSeries extends React.PureComponent {
-  static defaultProps = {
-    header: 'Recent Series',
-    seriesTitle: 'Series Title',
-    seriesUrl: 'http://localhost/node_url',
-    artUrl: 'http://localhost/art_url'
-  };
-
-  render() {
-    const {header, seriesTitle, seriesUrl, artUrl, ...props} = this.props;
-
-    return (
-      <section>
-        <h2>{this.props.header}</h2>
-        <div className="row">
-          {/* Map the four most recent to below layout */}
-
-          <div className="recent-series-content col-sm-3">
-            <div
-              className="sermon-art"
-              style={{width: '260px', height: '260px'}}
-            >
-              <a href={this.props.seriesUrl}>
-                <img src={this.props.artUrl} alt="Sermon Art" />
-              </a>
-            </div>
-            <a href={this.props.seriesUrl}>{this.props.seriesTitle}</a>
-          </div>
-        </div>
-      </section>
-    );
-  }
+export default function({loading, seriesData}) {
+  return (
+    <Box element="section">
+      <Text element="h2">Recent Series</Text>
+      <PulseLoader loading={loading} size={20} />
+      {loading || (
+        <Box element="section">{seriesData.map(renderSeriesComponent)}</Box>
+      )}
+    </Box>
+  );
 }
 
-export default RecentSeries;
+

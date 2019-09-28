@@ -3,6 +3,7 @@
   "scripts": {
     "build": "next build",
     "cosmos:export": "cosmos-export --config cosmos/cosmos.config.js",
+    "babel": "yarn workspaces run babel",
     "cosmos": "cosmos --config cosmos/cosmos.config.js",
     "dev": "next",
     "start": "next start",
@@ -13,10 +14,10 @@
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@emotion/core": "^10.0.10",
-    "@emotion/is-prop-valid": "^0.8.2",
+    "@emotion/is-prop-valid": "^0.8.3",
     "@emotion/styled": "^10.0.10",
     "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^8.0.5",
+    "@testing-library/react": "^9.2.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "codecov": "^3.5.0",
@@ -26,7 +27,7 @@
     "eslint-plugin-emotion": "^10.0.7",
     "eslint-plugin-jest": "^22.5.1",
     "eslint-plugin-react": "^7.7.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
+    "eslint-plugin-react-hooks": "^2.1.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "mineral-ui": "^0.58.0",
@@ -37,7 +38,7 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.12.8",
     "webpack": "^4.7.0",
-    "xo": "^0.24.0"
+    "xo": "^0.25.3"
   },
   "workspaces": [
     "packages/*"
@@ -82,5 +83,8 @@
         "version": "detect"
       }
     }
+  },
+  "dependencies": {
+    "react-cosmos-fetch-proxy": "^4.8.2"
   }
 }
