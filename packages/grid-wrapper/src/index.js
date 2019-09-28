@@ -37,7 +37,7 @@ export default function GridBlock({
 GridBlock.propTypes = {
   items: PropTypes.array.isRequired,
   columns: PropTypes.string.isRequired,
-  renderProp: PropTypes.element.isRequired,
+  renderProp: PropTypes.func.isRequired,
   gap: PropTypes.string,
   marginBottom: PropTypes.string
 };

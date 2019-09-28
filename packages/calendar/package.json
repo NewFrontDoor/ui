@@ -10,7 +10,7 @@
     "dist"
   ],
   "dependencies": {
-    "date-fns": "^2.0.0-alpha.27",
+    "date-fns": "^2.4.0",
     "ky": "^0.14.0",
     "ky-universal": "^0.3.0",
     "polished": "^3.3.0",
