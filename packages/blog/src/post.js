@@ -46,15 +46,16 @@ const Content = styled('div')`
   }
 `;
 
-const Post = props => {
-  console.log(props.body);
-  const readingLength = readingTime(props.body);
+function Post({body, title, date, dateFormat, categories}) {
+  function createMarkup() { return {__html: body}; };
+  const readingLength = readingTime(body.toString());
+
   return (
     <ContentWrapper display="flex">
       <Meta>
-        <Text as="h2">{props.title}</Text>
+        <Text as="h2">{title}</Text>
         <Text appearance="mouse">
-          {format(new Date(props.date), props.dateFormat)}
+          {format(new Date(date), dateFormat)}
         </Text>
         <Text appearance="mouse">{readingLength.text}</Text>
         <Text
@@ -68,8 +69,8 @@ const Post = props => {
           appearance="mouse"
         >
           <ul>
-            {props.categories.map(category => (
-              <li key={category.title + props.date}>
+            {categories.map(category => (
+              <li key={category.title + date}>
                 <Link {...category} />
               </li>
             ))}
@@ -77,7 +78,7 @@ const Post = props => {
         </Text>
       </Meta>
       <Content>
-        <div dangerouslySetInnerHTML={props.body} /> 
+        <div dangerouslySetInnerHTML={createMarkup()} /> 
       </Content>
     </ContentWrapper>
   );
