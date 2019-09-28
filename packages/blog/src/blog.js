@@ -48,5 +48,5 @@ Blog.propTypes = {
 };
 
 Blog.defaultProps = {
-  dateFormat: 'dddd, MMMM do YYYY'
+  dateFormat: 'dddd, MMMM do yyyy'
 };
