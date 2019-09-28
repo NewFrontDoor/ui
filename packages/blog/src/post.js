@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
 import {readingTime} from 'reading-time-estimator';
-import {blocksToText} from './blog-fns';
 import Link from './link';
 
 const ContentWrapper = styled('div')`
@@ -49,7 +48,7 @@ const Content = styled('div')`
 
 const Post = props => {
   console.log(props.body);
-  const readingLength = readingTime(blocksToText(props.body));
+  const readingLength = readingTime(props.body);
   return (
     <ContentWrapper display="flex">
       <Meta>
@@ -78,10 +77,7 @@ const Post = props => {
         </Text>
       </Meta>
       <Content>
-        {props.body.map(para => {
-          console.log(para);
-          return <p>{para}</p>;
-        })}
+        <div dangerouslySetInnerHTML={props.body} /> 
       </Content>
     </ContentWrapper>
   );
