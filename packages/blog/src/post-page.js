@@ -61,7 +61,7 @@ function postPage({post, dateFormat}) {
 }
 
 postPage.defaultProps = {
-    dateFormat: 'dddd, MMMM do YYYY'
+    dateFormat: 'dddd, MMMM do yyyy'
 };
 
 export default postPage;
