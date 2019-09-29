@@ -1,7 +1,7 @@
-import People from '../src/allpeople';
+import AllPeople from '../src/allpeople';
 
 export default {
-  component: People,
+  component: AllPeople,
   props: {
     apiUrl: 'https://cornerstoneapi.newfrontdoor.org/api/all-people',
     groups: [

@@ -16,6 +16,7 @@ export default function People({people, title, email}) {
           {people.map(person => {
             return (
               <Person
+                key={person.name + title}
                 name={person.name}
                 title={person.title}
                 avatar={person.avatar_url}
