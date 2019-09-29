@@ -1,3 +1,4 @@
+import ky from 'ky-universal';
 import {useState, useEffect} from 'react';
 
 function useFetch(apiUrl, apiParams) {
@@ -6,23 +7,19 @@ function useFetch(apiUrl, apiParams) {
   const [error, setError] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const params = apiParams
-        ? Object.keys(apiParams)
-            .map(key => key + '=' + apiParams[key])
-            .join('&')
-        : null;
-      const url = apiUrl + '?' + params;
-      try {
-        const response = await fetch(url);
-        setData(await response.json());
-        setLoading(false);
-      } catch (error_) {
-        setError(error_);
-      }
-    };
+    async function fetchData() {
+      setLoading(true);
+      const result = await ky(apiUrl, {
+        searchParams: apiParams
+      }).json();
+      setData(result);
+      setLoading(false);
+    }
 
-    fetchData();
+    fetchData().catch(error_ => {
+      console.log(error_);
+      setError(error_);
+    });
   }, [apiParams, apiUrl]);
 
   return [data, loading, error];
