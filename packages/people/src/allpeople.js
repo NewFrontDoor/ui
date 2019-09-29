@@ -1,8 +1,9 @@
 import React from 'react';
-import Person from './person';
+import PropTypes from 'prop-types';
+import People from './people';
 import {useFetch} from './utilities/hooks';
 
-export default function People({groups, apiUrl}) {
+export default function AllPeople({groups, apiUrl}) {
   const [apiData, loading, error] = useFetch(apiUrl);
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -16,34 +17,19 @@ export default function People({groups, apiUrl}) {
     <div>
       {groups.map(group => {
         return (
-          <div className="row">
-            <div className="col-md-12">
-              <h2 className="header-lightBlue text-center">{group.title}</h2>
-              <p className="text-center">
-                <strong>
-                  Contact: <a href={`mailto:${group.email}`}>{group.email}</a>
-                </strong>
-              </p>
-              <br />
-              {apiData
-                .filter(type => {
-                  console.log(type.roles);
-                  console.log(type.roles.includes(group.type));
-                  return type.roles.includes(group.type);
-                })
-                .map(person => {
-                  return (
-                    <Person
-                      name={person.name}
-                      title={person.title}
-                      url={person.avatar_url}
-                    />
-                  );
-                })}
-            </div>
-          </div>
+          <People
+            key={group.title}
+            people={apiData.filter(type => type.roles.includes(group.type))}
+            email={group.email}
+            title={group.title}
+          />
         );
       })}
     </div>
   );
 }
+
+AllPeople.propTypes = {
+  groups: PropTypes.array.isRequired,
+  apiUrl: PropTypes.string.isRequired
+};

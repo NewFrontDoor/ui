@@ -5,23 +5,25 @@ function useFetch(apiUrl, apiParams) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
-  const fetchData = async () => {
-    const params = apiParams ? Object.keys(apiParams)
-      .map(key => key + '=' + apiParams[key])
-      .join('&'): null;
-    const url = apiUrl + "?" + params;
-    const response = await fetch(url);
-    const status = await response.status;
-    setData(await response.json());
-    setLoading(false);
-    if (status !== 200) {
-      setError(status);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const params = apiParams
+        ? Object.keys(apiParams)
+            .map(key => key + '=' + apiParams[key])
+            .join('&')
+        : null;
+      const url = apiUrl + '?' + params;
+      try {
+        const response = await fetch(url);
+        setData(await response.json());
+        setLoading(false);
+      } catch (error_) {
+        setError(error_);
+      }
+    };
+
     fetchData();
-  }, [fetchData]);
+  }, [apiParams, apiUrl]);
 
   return [data, loading, error];
 }
