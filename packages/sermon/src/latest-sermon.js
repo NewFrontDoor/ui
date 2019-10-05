@@ -7,14 +7,15 @@ import Box from 'mineral-ui/Box';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
-class LatestSermon extends React.PureComponent {
-  render() {
-    const {title, preacher, sermonUrl, sermonImg} = this.props.latestSermon;
-    let content;
-    if (!this.props.loading && this.props.error !== null) {
-      content = <Text>Unable to find latest sermon</Text>;
-    } else {
-      content = (
+function LatestSermon({title, preacher, sermonUrl, sermonImg, loading, error}) {
+  return (
+    <Box element="section">
+      <Heading element="h2">Latest Sermon</Heading>
+      {loading ? (
+        <PulseLoader loading={loading} size={10} />
+      ) : error && !loading ? (
+        <Text>Unable to find latest sermon</Text>
+      ) : (
         <Box>
           <Box className="latest-sermon-art">
             <img src={sermonImg} alt="Sermon Art" />
@@ -22,7 +23,7 @@ class LatestSermon extends React.PureComponent {
           <Text>
             <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </Text>
-          <Text>{this.props.loading ? '...' : preacher}</Text>
+          <Text>{loading ? '...' : preacher}</Text>
           <Box>
             <ReactAudioPlayer controls src={sermonUrl} />
           </Box>
@@ -30,17 +31,9 @@ class LatestSermon extends React.PureComponent {
             <Link href={sermonUrl}>Download Sermon</Link>
           </Text>
         </Box>
-      );
-    }
-
-    return (
-      <Box element="section">
-        <Heading element="h2">Latest Sermon</Heading>
-        <PulseLoader loading={this.props.loading} size={10} />
-        {this.props.loading || content}
-      </Box>
-    );
-  }
+      )}
+    </Box>
+  );
 }
 
 LatestSermon.propTypes = {
