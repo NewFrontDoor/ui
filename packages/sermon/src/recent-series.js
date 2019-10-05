@@ -1,5 +1,6 @@
 import React from 'react';
-import {Box, Text, Link} from 'mineral-ui';
+import Box from 'mineral-ui/Box';
+import Text from 'mineral-ui/Text';
 import {PulseLoader} from 'react-spinners';
 import renderSeriesComponent from './render-series-content';
 
