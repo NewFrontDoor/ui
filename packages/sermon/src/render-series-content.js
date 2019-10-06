@@ -1,5 +1,7 @@
 import React from 'react';
-import {Box, Text, Link} from 'mineral-ui';
+import Box from 'mineral-ui/Box'
+import Text from 'mineral-ui/Text'
+import Link from 'mineral-ui/Link';
 
 export default function renderSeriesComponent({id, title, image, link}) {
   return (
