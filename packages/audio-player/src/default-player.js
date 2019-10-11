@@ -32,12 +32,10 @@ export default function DefaultPlayer({
   onSeeked,
   onVolumeChange,
   onLoadedMetadata,
-  setAudioPlayer,
-  getBuffered
+  setAudioPlayer
 }) {
   const audioEl = useRef();
   const [audio, setElement] = useState(null);
-  const [fullyLoaded, setFullyLoaded] = useState(false);
 
   const listeners = [
     ['error', onError],
@@ -72,13 +70,6 @@ export default function DefaultPlayer({
     }
   }, [audioEl, setAudioPlayer]);
 
-  useInterval(
-    () => {
-      getBuffered(audio.seekable);
-    },
-    fullyLoaded ? null : 100
-  );
-
   useEffect(() => {
     if (audio) {
       if (typeof volume === 'number' && volume !== audio.volume) {
@@ -105,7 +96,6 @@ export default function DefaultPlayer({
       style={style}
       onPlaying={onPlaying}
       onPlay={onPlay}
-      onCanPlayThrough={() => setFullyLoaded(true)}
     >
       {/* eslint-disable-next-line */}
       {children || (<p>Your browser does not support the<code>audio</code>element.</p>)} 
@@ -137,7 +127,6 @@ DefaultPlayer.defaultProps = {
   onLoadedMetadata: () => {},
   onDurationChange: () => {},
   setAudioPlayer: () => {},
-  getBuffered: () => {},
   preload: 'metadata',
   src: null,
   style: {},
@@ -168,7 +157,6 @@ DefaultPlayer.propTypes = {
   onSeeked: PropTypes.func,
   onVolumeChange: PropTypes.func,
   setAudioPlayer: PropTypes.func,
-  getBuffered: PropTypes.func,
   preload: PropTypes.oneOf(['', 'none', 'metadata', 'auto']),
   src: PropTypes.string, // Not required b/c can use <source>
   style: PropTypes.objectOf(PropTypes.string),

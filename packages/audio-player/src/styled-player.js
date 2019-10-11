@@ -111,7 +111,7 @@ export default function StyledPlayer({
   highlight = '#548BF4',
   base = '#ddd',
   hasBorder,
-  hasBackground,
+  background,
   isInvert,
   hasPlaybackspeed
 }) {
@@ -136,6 +136,17 @@ export default function StyledPlayer({
       },
       false
     );
+    return () => {
+      // eslint-disable-next-line no-undef
+      document.removeEventListener(
+        'mouseup',
+        () => {
+          setMouseDown(false);
+          setScrubDown(false);
+        },
+        false
+      );
+    };
   }, []);
 
   function togglePlay() {
@@ -190,23 +201,16 @@ export default function StyledPlayer({
   function updateVolume(value) {
     if (value[0]) {
       const actual = value[0];
-      console.log(actual);
       setVolume(actual);
     } else {
-      console.log('setting pure value');
       setVolume(value);
     }
-  }
-
-  function getBuffered(value) {
-    console.log(value);
   }
 
   return (
     <>
       <DefaultPlayer
         controls
-        getBuffered={value => getBuffered(value)}
         setAudioPlayer={setAudioPlayer}
         volume={volume}
         muted={muted}
@@ -221,7 +225,7 @@ export default function StyledPlayer({
         tabindex="0"
         color={isInvert ? '#eee' : '#111'}
         border={hasBorder}
-        background={hasBackground}
+        background={background}
         onMouseUp={() => setMouseDown(false)}
       >
         <Button
@@ -300,7 +304,7 @@ StyledPlayer.defaultProps = {
   highlight: '#548BF4',
   base: '#ddd',
   hasBorder: 'true',
-  hasBackground: 'none',
+  background: 'none',
   isInvert: 'false',
   hasPlaybackspeed: 'true'
 };
@@ -310,7 +314,7 @@ StyledPlayer.propTypes = {
   highlight: PropTypes.string,
   base: PropTypes.string,
   hasBorder: PropTypes.bool,
-  hasBackground: PropTypes.bool,
+  background: PropTypes.string,
   isInvert: PropTypes.bool,
   hasPlaybackspeed: PropTypes.bool
 };

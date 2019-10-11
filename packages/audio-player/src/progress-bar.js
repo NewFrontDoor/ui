@@ -92,15 +92,11 @@ ProgressBar.defaultProps = {
 };
 
 ProgressBar.propTypes = {
-  values: PropTypes.arrayOf(PropTypes.string).isRequired,
-  max: PropTypes.number.isRequired,
+  values: PropTypes.arrayOf(PropTypes.number).isRequired,
+  max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   updateValues: PropTypes.func.isRequired,
   step: PropTypes.number,
   isInteracting: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
-  isInvert: PropTypes.bool,
-  style: PropTypes.array.isRequired,
-  onMouseDown: PropTypes.func.isRequired,
-  onTouchStart: PropTypes.func.isRequired,
-  ref: PropTypes.any.isRequired
+  isInvert: PropTypes.bool
 };
