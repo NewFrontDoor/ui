@@ -20,8 +20,7 @@
   "dependencies": {
     "prop-types": "^15.7.2",
     "react-icons": "^3.7.0",
-    "react-range": "^1.4.1",
-    "react-spring": "^8.0.27"
+    "react-range": "^1.4.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.0.0",

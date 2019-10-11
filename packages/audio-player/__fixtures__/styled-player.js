@@ -7,9 +7,9 @@ export default [
     props: {
       base: '#ddd',
       highlight: '#edb512',
-      invert: true,
+      invert: false,
       border: true,
-      background: '#111',
+      playbackspeed: true,
       audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
     }
   }

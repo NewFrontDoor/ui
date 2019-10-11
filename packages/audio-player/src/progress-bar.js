@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Range, getTrackBackground} from 'react-range';
 import styled from '@emotion/styled';
 
@@ -10,8 +10,8 @@ const Thumb = styled.div(
     borderRadius: '50%',
     transition: 'opacity 0.2s linear'
   },
+  props => ({opacity: props.visible ? '1' : '0'}),
   props => ({backgroundColor: props.invert ? '#EEE' : '#111'}),
-  props => ({opacity: props.visible ? 1 : 0}),
   props => props.inbuiltStyle
 );
 
@@ -19,15 +19,19 @@ const Slider = styled('div')`
   height: 30px;
   display: flex;
   width: 100%;
+  padding: 0;
   :focus-within {
     outline: -webkit-focus-ring-color auto 5px;
+  }
+  &:hover {
+    .thumb {
+      opacity: 1;
+    }
   }
 `;
 
 const ProgressBar = React.forwardRef(
-  ({values, max, updateValues, step, interacting, enter, leave, color, invert}, ref) => {
-    const [visible, setVisible] = useState(false);
-
+  ({values, max, updateValues, step, interacting, color, invert}, ref) => {
     return (
       <Range
         ref={ref}
@@ -40,14 +44,12 @@ const ProgressBar = React.forwardRef(
             style={{...props.style}}
             onMouseDown={props.onMouseDown}
             onTouchStart={props.onTouchStart}
-            onMouseEnter={() => setVisible(true)}
-            onMouseLeave={() => setVisible(false)}
           >
             <div
               ref={props.ref}
               tabIndex={0}
               style={{
-                height: '5px',
+                height: '4px',
                 width: '100%',
                 borderRadius: '4px',
                 outline: 'none',
@@ -59,8 +61,6 @@ const ProgressBar = React.forwardRef(
                 }),
                 alignSelf: 'center'
               }}
-              onFocus={() => enter}
-              onBlur={() => leave}
             >
               {children}
             </div>
@@ -74,7 +74,7 @@ const ProgressBar = React.forwardRef(
             isDragged={isDragged}
             invert={invert}
             inbuiltStyle={props.style}
-            visible={visible || interacting}
+            visible={interacting}
           />
         )}
         onChange={values => updateValues(values)}
