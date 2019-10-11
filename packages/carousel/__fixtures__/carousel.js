@@ -27,6 +27,7 @@ export default [
     component: Carousel,
     name: 'autoplay on',
     props: {
+      dots: true,
       autoplay: true,
       delayLength: 2000,
       children: [
