@@ -8,7 +8,7 @@ import {PulseLoader} from 'react-spinners';
 
 function LatestSermon({title, preacher, sermonUrl, sermonImg, loading, error}) {
   return (
-    <Box element="section">
+    <Box as="section">
       <Text as="h2">Latest Sermon</Text>
       {loading ? (
         <PulseLoader loading={loading} size={10} />
@@ -16,9 +16,10 @@ function LatestSermon({title, preacher, sermonUrl, sermonImg, loading, error}) {
         <Text>Unable to find latest sermon</Text>
       ) : (
         <Box>
+        {sermonImg &&
           <Box className="latest-sermon-art">
             <img src={sermonImg} alt="Sermon Art" />
-          </Box>
+          </Box> }
           <Text>
             <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </Text>
