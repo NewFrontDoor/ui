@@ -23,11 +23,12 @@ const VolumeWrapper = styled.div`
   width: 50px;
   flex: 0 0 auto;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: right;
   overflow: hidden;
   transition: all 0.2s linear;
-  padding-left: 5%;
+  padding-left: 10%;
   border-radius: 25px;
   &:hover {
     background: ${props => props.color};
@@ -79,7 +80,6 @@ const Player = styled.div`
 const Button = styled.button`
   position: relative;
   display: block;
-  z-index: 0;
   width: 50px;
   height: 50px;
   padding: 0;
@@ -87,6 +87,7 @@ const Button = styled.button`
   background: none;
   border-radius: 50%;
   color: ${props => props.color};
+  transition: background 0.2s linear;
   &:hover {
     background: ${props => props.background};
   }
@@ -201,8 +202,17 @@ export default function StyledPlayer({
         onVolumeChange={e => updateVolume(e.target.volume)}
         onPlaying={() => setPlaying(true)}
       />
-      <Player tabindex="0" color={invert ? '#eee' : '#111'} border={border} background={background}>
-        <Button type="button" background={invert ? '#222' : base} onClick={() => togglePlay()}>
+      <Player
+        tabindex="0"
+        color={invert ? '#eee' : '#111'}
+        border={border}
+        background={background}
+      >
+        <Button
+          type="button"
+          background={invert ? '#222' : base}
+          onClick={() => togglePlay()}
+        >
           {playing ? (
             <Pause style={{width: '50px', height: '30px'}} />
           ) : (
@@ -239,6 +249,17 @@ export default function StyledPlayer({
               volumeBar.current.onWindowResize();
             }}
           >
+            <Button
+              type="button"
+              background={invert ? '#222' : base}
+              onClick={() => toggleMuted()}
+            >
+              {muted || volume === 0 ? (
+                <MdVolumeOff style={{width: '50px', height: '30px'}} />
+              ) : (
+                <MdVolumeUp style={{width: '50px', height: '30px'}} />
+              )}
+            </Button>
             <ProgressBar
               ref={volumeBar}
               tabindex="0"
@@ -255,17 +276,6 @@ export default function StyledPlayer({
               color={highlight}
               invert={invert}
             />
-            <Button
-              type="button"
-              background={invert ? '#222' : base}
-              onClick={() => toggleMuted()}
-            >
-              {muted || volume === 0 ? (
-                <MdVolumeOff style={{width: '50px', height: '30px'}} />
-              ) : (
-                <MdVolumeUp style={{width: '50px', height: '30px'}} />
-              )}
-            </Button>
           </VolumeWrapper>
         </ProgVolWrapper>
         <Button

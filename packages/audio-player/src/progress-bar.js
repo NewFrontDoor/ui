@@ -8,10 +8,10 @@ const Thumb = styled.div(
     width: '10px',
     backgroundColor: '#111',
     borderRadius: '50%',
-    zIndex: '20'
+    transition: 'opacity 0.2s linear'
   },
   props => ({backgroundColor: props.invert ? '#EEE' : '#111'}),
-  props => ({visibility: props.visible ? 'visible' : 'hidden'}),
+  props => ({opacity: props.visible ? 1 : 0}),
   props => props.inbuiltStyle
 );
 
