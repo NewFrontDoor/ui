@@ -9,7 +9,7 @@ export default [
       highlight: '#edb512',
       invert: false,
       border: true,
-      playbackspeed: true,
+      hasPlaybackspeed: true,
       audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
     }
   }

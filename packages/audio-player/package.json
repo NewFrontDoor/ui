@@ -18,6 +18,8 @@
     "dist"
   ],
   "dependencies": {
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
     "prop-types": "^15.7.2",
     "react-icons": "^3.7.0",
     "react-range": "^1.4.1"

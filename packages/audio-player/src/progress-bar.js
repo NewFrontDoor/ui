@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Range, getTrackBackground} from 'react-range';
 import styled from '@emotion/styled';
 
@@ -11,7 +12,7 @@ const Thumb = styled.div(
     transition: 'opacity 0.2s linear'
   },
   props => ({opacity: props.visible ? '1' : '0'}),
-  props => ({backgroundColor: props.invert ? '#EEE' : '#111'}),
+  props => ({backgroundColor: props.isInvert ? '#EEE' : '#111'}),
   props => props.inbuiltStyle
 );
 
@@ -31,11 +32,11 @@ const Slider = styled('div')`
 `;
 
 const ProgressBar = React.forwardRef(
-  ({values, max, updateValues, step, interacting, color, invert}, ref) => {
+  ({values, max, updateValues, step, isInteracting, color, isInvert}, ref) => {
     return (
       <Range
         ref={ref}
-        step={step || 1}
+        step={step}
         min={0}
         max={max}
         values={values}
@@ -72,9 +73,9 @@ const ProgressBar = React.forwardRef(
             className="thumb"
             {...props}
             isDragged={isDragged}
-            invert={invert}
+            isInvert={isInvert}
             inbuiltStyle={props.style}
-            visible={interacting}
+            visible={isInteracting}
           />
         )}
         onChange={values => updateValues(values)}
@@ -84,3 +85,22 @@ const ProgressBar = React.forwardRef(
 );
 
 export default ProgressBar;
+
+ProgressBar.defaultProps = {
+  step: 1,
+  isInvert: false
+};
+
+ProgressBar.propTypes = {
+  values: PropTypes.arrayOf(PropTypes.string).isRequired,
+  max: PropTypes.number.isRequired,
+  updateValues: PropTypes.func.isRequired,
+  step: PropTypes.number,
+  isInteracting: PropTypes.bool.isRequired,
+  color: PropTypes.string.isRequired,
+  isInvert: PropTypes.bool,
+  style: PropTypes.array.isRequired,
+  onMouseDown: PropTypes.func.isRequired,
+  onTouchStart: PropTypes.func.isRequired,
+  ref: PropTypes.any.isRequired
+};
