@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Text, Table} from 'mineral-ui';
 import {PulseLoader} from 'react-spinners';
 
-export default function({loading, series, seriesSermonList}) {
+export default function SermonSeriesList({loading, series, seriesSermonList}) {
   const columns = [
     {content: 'Title', key: 'title'},
     {content: 'Preacher', key: 'preacher'},
@@ -25,5 +25,3 @@ export default function({loading, series, seriesSermonList}) {
     </Box>
   );
 }
-
-
