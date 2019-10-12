@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/location-map",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "@react-google-maps/api": "^1.5.1",
     "prop-types": "^15.6.0",
