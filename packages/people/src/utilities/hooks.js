@@ -16,9 +16,9 @@ function useFetch(apiUrl, apiParams) {
       setLoading(false);
     }
 
-    fetchData().catch(error_ => {
-      console.log(error_);
-      setError(error_);
+    fetchData().catch(error => {
+      console.log(error);
+      setError(error);
     });
   }, [apiParams, apiUrl]);
 

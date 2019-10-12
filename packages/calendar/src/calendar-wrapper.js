@@ -4,7 +4,6 @@ import {getWeekOfMonth, startOfMonth} from 'date-fns';
 import Calendar from './calendar';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
 import useCalendarEvents from './use-calendar-events';
-import { getMonth } from 'date-fns/esm';
 
 export default function CalendarWrapper({client, initialView, isViewFixed}) {
   const [
