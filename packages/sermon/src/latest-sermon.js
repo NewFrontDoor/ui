@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {StyledPlayer} from '@newfrontdoor/audio-player';
-import ReactAudioPlayer from 'react-audio-player';
 import Text from 'mineral-ui/Text';
 import Link from 'mineral-ui/Link';
 import Box from 'mineral-ui/Box';
