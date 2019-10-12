@@ -6,7 +6,9 @@ import Box from 'mineral-ui/Box';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
-function LatestSermon({latestSermon: {title, preacher, sermonUrl, sermonImg, loading, error}}) {
+function LatestSermon({
+  latestSermon: {title, preacher, sermonUrl, sermonImg, seriesImg, loading, error}
+}) {
   return (
     <section>
       <Text as="h2">Latest Sermon</Text>
@@ -16,15 +18,16 @@ function LatestSermon({latestSermon: {title, preacher, sermonUrl, sermonImg, loa
         <Text>Unable to find latest sermon</Text>
       ) : (
         <section>
-        {sermonImg &&
-          <Box className="latest-sermon-art">
-            <img src={sermonImg} alt="Sermon Art" />
-          </Box> }
+          {(sermonImg || seriesImg) && (
+            <Box className="latest-sermon-art">
+              <img src={sermonImg || seriesImg} alt="Sermon Art" />
+            </Box>
+          )}
           <Text>
             <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </Text>
           <Text>{loading ? '...' : preacher}</Text>
-            <StyledPlayer hasPlaybackSpeed isInvert={false} audio={sermonUrl} />
+          <StyledPlayer hasPlaybackSpeed isInvert={false} audio={sermonUrl} />
           <Text>
             <Link href={sermonUrl}>Download Sermon</Link>
           </Text>

@@ -1,6 +1,5 @@
 import 'isomorphic-fetch';
 import React from 'react';
-import Box from 'mineral-ui/Box';
 import {ApiContext} from '@newfrontdoor/api-config';
 import LatestSermon from './latest-sermon';
 
@@ -25,6 +24,7 @@ class LatestSermonContainerDrupal extends React.PureComponent {
           datePreached: sermon.datepreached,
           sermonUrl: sermon.url,
           sermonImg: sermon.sermon_img,
+          seriesImg: sermon.series_img,
           sermonSeries: sermon.sermonseries,
           biblePassage: sermon.text
         };
