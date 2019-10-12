@@ -1,3 +1,3 @@
-import People from './people';
+import AllPeople from './people';
 
-export default People;
+export default AllPeople;

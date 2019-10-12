@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/people",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
