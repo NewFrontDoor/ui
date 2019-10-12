@@ -211,7 +211,6 @@ export default function StyledPlayer({
   return (
     <>
       <DefaultPlayer
-        controls
         setAudioPlayer={setAudioPlayer}
         volume={volume}
         muted={muted}
