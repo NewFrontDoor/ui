@@ -25,13 +25,13 @@ const VolumeWrapper = styled.div`
   width: 30px;
   flex: 0 0 auto;
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
   justify-content: right;
   overflow: hidden;
   transition: width 0.3s ease 0s, background 0.25s ease 0s;
   border-radius: 25px;
   padding-left: 15px;
+  cursor: pointer;
   &:hover {
     background: ${props => props.color};
     width: 65%;
@@ -91,6 +91,7 @@ const Button = styled.button`
   padding: 0;
   border: none;
   background: none;
+  cursor: pointer;
   border-radius: 50%;
   color: ${props => props.color};
   transition: background 0.3s ease 0s;
@@ -261,17 +262,6 @@ export default function StyledPlayer({
               volumeBar.current.onWindowResize();
             }}
           >
-            <Button
-              type="button"
-              background={isInvert ? '#222' : base}
-              onClick={() => toggleMuted()}
-            >
-              {muted || volume === 0 ? (
-                <MdVolumeOff style={{width: '30px', height: '20px'}} />
-              ) : (
-                <MdVolumeUp style={{width: '30px', height: '20px'}} />
-              )}
-            </Button>
             <ProgressBar
               ref={volumeBar}
               tabindex="0"
@@ -283,6 +273,17 @@ export default function StyledPlayer({
               color={highlight}
               isInvert={isInvert}
             />
+            <Button
+              type="button"
+              background="none"
+              onClick={() => toggleMuted()}
+            >
+              {muted || volume === 0 ? (
+                <MdVolumeOff style={{width: '30px', height: '20px'}} />
+              ) : (
+                <MdVolumeUp style={{width: '30px', height: '20px'}} />
+              )}
+            </Button>
           </VolumeWrapper>
         </ProgVolWrapper>
         {hasPlaybackspeed && (

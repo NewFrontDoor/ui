@@ -43,12 +43,12 @@ const ProgressBar = React.forwardRef(
         renderTrack={({props, children}) => (
           <Slider
             style={{...props.style}}
+            tabIndex={0}
             onMouseDown={props.onMouseDown}
             onTouchStart={props.onTouchStart}
           >
             <div
               ref={props.ref}
-              tabIndex={0}
               style={{
                 height: '4px',
                 width: '100%',
@@ -69,13 +69,13 @@ const ProgressBar = React.forwardRef(
         )}
         renderThumb={({props, isDragged}) => (
           <Thumb
-            tabIndex={false}
             className="thumb"
             {...props}
             isDragged={isDragged}
             isInvert={isInvert}
             inbuiltStyle={props.style}
             visible={isInteracting}
+            tabIndex={-1}
           />
         )}
         onChange={values => updateValues(values)}
