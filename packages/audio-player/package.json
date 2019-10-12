@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/audio-player",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An audio element wrapper written in React with hooks",
   "keywords": [
     "react",
