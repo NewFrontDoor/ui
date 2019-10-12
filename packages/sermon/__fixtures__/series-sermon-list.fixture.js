@@ -1,4 +1,4 @@
-import SermonSeriesList from '../src/series-sermon-list-container-drupal';
+import {SermonSeriesList} from '../src';
 
 export default {
   component: SermonSeriesList,

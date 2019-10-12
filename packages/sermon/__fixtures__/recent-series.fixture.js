@@ -1,4 +1,4 @@
-import RecentSeries from '../src/recent-series-container-drupal';
+import {RecentSeries} from '../src';
 
 export default {
   component: RecentSeries,

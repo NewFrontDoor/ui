@@ -1,4 +1,4 @@
-import CurrentSeries from '../src/current-series-container-drupal';
+import {CurrentSeries} from '../src';
 
 export default {
   component: CurrentSeries,
@@ -6,6 +6,7 @@ export default {
     header: 'Current Series',
     seriesTitle: 'Series Title',
     seriesUrl: 'http://localhost/series_url',
-    artUrl: 'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg'
+    artUrl:
+      'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg'
   }
 };

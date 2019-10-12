@@ -1,4 +1,4 @@
-import LatestSermon from '../src/latest-sermon';
+import {LatestSermon} from '../src';
 
 export default {
   component: LatestSermon
