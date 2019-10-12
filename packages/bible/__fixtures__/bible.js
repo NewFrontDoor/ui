@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import Text from 'mineral-ui/Text';
 import Bible from '../src';
 
-const BIBLE =
-  'https://8dk9jr13id.execute-api.us-west-2.amazonaws.com/dev/bible';
+const BIBLE = 'https://serverless.newfrontdoor.org/bible';
 
 function Blockquote(props) {
   const {passage} = props;
