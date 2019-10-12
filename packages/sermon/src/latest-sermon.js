@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {StyledPlayer} from '@newfrontdoor/audio-player';
 import ReactAudioPlayer from 'react-audio-player';
 import Text from 'mineral-ui/Text';
 import Link from 'mineral-ui/Link';
@@ -6,16 +7,16 @@ import Box from 'mineral-ui/Box';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
-function LatestSermon({title, preacher, sermonUrl, sermonImg, loading, error}) {
+function LatestSermon({latestSermon: {title, preacher, sermonUrl, sermonImg, loading, error}}) {
   return (
-    <Box as="section">
+    <section>
       <Text as="h2">Latest Sermon</Text>
       {loading ? (
         <PulseLoader loading={loading} size={10} />
       ) : error && !loading ? (
         <Text>Unable to find latest sermon</Text>
       ) : (
-        <Box>
+        <section>
         {sermonImg &&
           <Box className="latest-sermon-art">
             <img src={sermonImg} alt="Sermon Art" />
@@ -24,15 +25,13 @@ function LatestSermon({title, preacher, sermonUrl, sermonImg, loading, error}) {
             <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </Text>
           <Text>{loading ? '...' : preacher}</Text>
-          <Box>
-            <ReactAudioPlayer controls src={sermonUrl} />
-          </Box>
+            <StyledPlayer hasPlaybackSpeed isInvert={false} audio={sermonUrl} />
           <Text>
             <Link href={sermonUrl}>Download Sermon</Link>
           </Text>
-        </Box>
+        </section>
       )}
-    </Box>
+    </section>
   );
 }
 

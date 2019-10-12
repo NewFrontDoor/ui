@@ -49,9 +49,9 @@ class LatestSermonContainerDrupal extends React.PureComponent {
 
   render() {
     return (
-      <Box element="section">
+      <section>
         <LatestSermon {...this.state} />
-      </Box>
+      </section>
     );
   }
 }
