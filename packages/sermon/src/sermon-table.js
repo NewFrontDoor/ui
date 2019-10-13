@@ -36,8 +36,7 @@ const Tr = styled.tr`
 export default function SermonTable({
   sermons,
   headers,
-  columnHide,
-  headerWrapper
+  columnHide
 }) {
   const desiredColumns = headers
     .map(item => item.key)

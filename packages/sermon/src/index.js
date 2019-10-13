@@ -20,3 +20,4 @@ export {default as CurrentSeries} from './current-series';
 export {default as FeaturedSeries} from './featured-series';
 export {default as RecentSeries} from './recent-series';
 export {default as SermonSeriesList} from './series-sermon-list';
+export {default as SermonTable} from './sermon-table';
