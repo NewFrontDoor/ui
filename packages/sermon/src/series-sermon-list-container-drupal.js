@@ -63,13 +63,13 @@ class SeriesSermonListContainerDrupal extends React.PureComponent {
 
   getSeries = () => {
     return fetch(
-      `${this.props.baseUrl}all_sermon_series_api?display_id=services_1&nid=${this.props.seriesId}`
+      `${this.props.baseUrl}all_sermon_series_api?display_id=services_1&nid=${this.props.seriesId || ''}`
     ).then(resp => resp.json());
   };
 
   getSermonsForSeries = () => {
     return fetch(
-      `${this.props.baseUrl}all_sermons_api?display_id=services_1&filters[sermonSeries]=${this.props.seriesId}`
+      `${this.props.baseUrl}all_sermons_api?display_id=services_1${this.props.seriesId ? `&filters[sermonSeries]=${this.props.seriesId}` : ''}`
     ).then(resp => resp.json());
   };
 
