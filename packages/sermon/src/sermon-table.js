@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {FaDownload} from 'react-icons/fa';
 
 const Table = styled.table`
@@ -33,7 +33,12 @@ const Tr = styled.tr`
   }
 `;
 
-export default function SermonTable({sermons, headers, columnHide}) {
+export default function SermonTable({
+  sermons,
+  headers,
+  columnHide,
+  headerWrapper
+}) {
   const desiredColumns = headers
     .map(item => item.key)
     .filter(word => word !== 'title');
@@ -51,7 +56,7 @@ export default function SermonTable({sermons, headers, columnHide}) {
         {sermons.map((sermon, index) => (
           <Tr key={sermon.nid} num={index} columnHide={columnHide}>
             <td>
-              <a
+              <Link
                 href={`/sermon/${sermon.nid}`}
                 dangerouslySetInnerHTML={{
                   __html: sermon.node_title ? sermon.node_title : 'untitled'
