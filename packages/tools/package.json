@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "",
+  "scripts": {
+    "babel": "true"
+  },
   "dependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
