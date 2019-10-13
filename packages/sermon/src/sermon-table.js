@@ -57,7 +57,7 @@ export default function SermonTable({
           <Tr key={sermon.nid} num={index} columnHide={columnHide}>
             <td>
               <Link
-                href={`/sermon/${sermon.nid}`}
+                to={`/sermon/${sermon.nid}`}
                 dangerouslySetInnerHTML={{
                   __html: sermon[titleKey] ? sermon[titleKey] : 'untitled'
                 }}
