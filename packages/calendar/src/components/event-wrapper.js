@@ -35,19 +35,20 @@ class EventWrapper extends React.Component {
     return (
       <>
         <div
+          /* eslint-disable-next-line react/no-danger */
           dangerouslySetInnerHTML={{__html: event.name}}
           css={{
             overflow: 'hidden',
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis'
           }}
-          /* eslint-disable-next-line react/no-danger */
           onClick={this.toggleDialog}
         />
         <Dialog
           showCloseButton
           title={
             <DialogTitle>
+              {/* eslint-disable-next-line react/no-danger */}
               <span dangerouslySetInnerHTML={{__html: event.name}} />
             </DialogTitle>
           }
