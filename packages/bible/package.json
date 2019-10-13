@@ -10,7 +10,7 @@
     "dist"
   ],
   "dependencies": {
-    "ky": "^0.14.0",
+    "ky": "^0.15.0",
     "ky-universal": "^0.3.0",
     "prop-types": "^15.6.2",
     "sanitize-html": "^1.20.1"
