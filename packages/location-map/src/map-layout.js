@@ -68,7 +68,13 @@ export default function MapLayout({
           </GoogleMap>
         </LoadScript>
       </HomeMapInner>
-      <MapOverlay heading={heading} details={details} actions={actions} lat={location.location.lat} long={location.location.lng} />
+      <MapOverlay
+        heading={heading}
+        details={details}
+        actions={actions}
+        lat={location.location.lat}
+        long={location.location.lng}
+      />
     </HomeSection>
   );
 }

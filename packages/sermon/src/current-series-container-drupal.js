@@ -1,6 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch';
-import { ApiContext } from '@newfrontdoor/api-config';
+import {ApiContext} from '@newfrontdoor/api-config';
 import CurrentSeries from './current-series';
 
 class CurrentSeriesContainerDrupal extends React.PureComponent {
@@ -53,5 +53,3 @@ export default function() {
     </ApiContext.Consumer>
   );
 }
-
-

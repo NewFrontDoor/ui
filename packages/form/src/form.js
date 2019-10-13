@@ -57,7 +57,14 @@ function getFormField(field) {
       );
     case 'submit':
     case 'reset':
-        return <input className={field.fullwidth ? 'fullwidth' : ''} type={field.input} id={field.id} value={field.value} />
+      return (
+        <input
+          className={field.fullwidth ? 'fullwidth' : ''}
+          type={field.input}
+          id={field.id}
+          value={field.value}
+        />
+      );
     default:
       return (
         <div>
