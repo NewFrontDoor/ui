@@ -3,7 +3,7 @@ import {jsx} from '@emotion/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Text} from 'mineral-ui';
-import Dialog, { DialogTitle } from 'mineral-ui/Dialog';
+import Dialog, {DialogTitle} from 'mineral-ui/Dialog';
 
 class EventWrapper extends React.Component {
   constructor(props) {
@@ -35,18 +35,23 @@ class EventWrapper extends React.Component {
     return (
       <>
         <div
+          /* eslint-disable-next-line react/no-danger */
+          dangerouslySetInnerHTML={{__html: event.name}}
           css={{
             overflow: 'hidden',
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis'
           }}
           onClick={this.toggleDialog}
-          /* eslint-disable-next-line react/no-danger */
-          dangerouslySetInnerHTML={{__html: event.name}}
         />
         <Dialog
           showCloseButton
-          title={<DialogTitle><span dangerouslySetInnerHTML={{__html: event.name}} /></DialogTitle>}
+          title={
+            <DialogTitle>
+              {/* eslint-disable-next-line react/no-danger */}
+              <span dangerouslySetInnerHTML={{__html: event.name}} />
+            </DialogTitle>
+          }
           actions={[
             {onClick: this.toggleDialog, text: 'Close'},
             {onClick: this.toggleDialog, text: 'View'}

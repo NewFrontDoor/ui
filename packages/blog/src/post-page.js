@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import {jsx} from '@emotion/core';
 import React from 'react';
 import {css} from '@emotion/core';
 import styled from '@emotion/styled';
@@ -26,42 +28,44 @@ const Content = styled('div')`
 `;
 
 function postPage({post, dateFormat}) {
-    function createMarkup() { return {__html: post.body}; };
+  function createMarkup() {
+    return {__html: post.body};
+  }
 
-    return (
-        <ContentWrapper>
-            <Text as="h2">{post.title}</Text>
-            <Text appearance="mouse">by {post.author}</Text>
-            <Text appearance="mouse">
-                Posted on {format(new Date(post._createdAt), dateFormat)}
-            </Text>
-            <Text
-                css={css`
-                    display: none;
-                    @media (min-width: 420px) {
-                    display: block;
-                    }
-                `}
-                as="div"
-                appearance="mouse"
-            >
-                <ul>
-                    {post.categories.map(category => (
-                    <li key={category.title + post.date}>
-                        <Link {...category} />
-                    </li>
-                    ))}
-                </ul>
-            </Text>
-            <Content>
-                <div dangerouslySetInnerHTML={createMarkup()} /> 
-            </Content>
-        </ContentWrapper>
-    );
+  return (
+    <ContentWrapper>
+      <Text as="h2">{post.title}</Text>
+      <Text appearance="mouse">by {post.author}</Text>
+      <Text appearance="mouse">
+        Posted on {format(new Date(post._createdAt), dateFormat)}
+      </Text>
+      <Text
+        css={css`
+          display: none;
+          @media (min-width: 420px) {
+            display: block;
+          }
+        `}
+        as="div"
+        appearance="mouse"
+      >
+        <ul>
+          {post.categories.map(category => (
+            <li key={category.title + post.date}>
+              <Link {...category} />
+            </li>
+          ))}
+        </ul>
+      </Text>
+      <Content>
+        <div dangerouslySetInnerHTML={createMarkup()} />
+      </Content>
+    </ContentWrapper>
+  );
 }
 
 postPage.defaultProps = {
-    dateFormat: 'dddd, MMMM do yyyy'
+  dateFormat: 'dddd, MMMM do yyyy'
 };
 
 export default postPage;
