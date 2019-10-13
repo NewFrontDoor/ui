@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/sermon",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "license": "MIT",
   "scripts": {
     "babel": "babel src -d dist"
