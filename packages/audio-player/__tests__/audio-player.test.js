@@ -10,7 +10,7 @@ const audio = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
 test('Loads native audio player', async () => {
   const {baseElement} = render(<DefaultPlayer controls src={audio} />);
 
-  const actual = '';
+  const actual = 'Your browser does not support theaudioelement.';
 
   await wait(() => {
     expect(baseElement).toHaveTextContent(actual);
