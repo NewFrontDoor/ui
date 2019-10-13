@@ -1,14 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build",
-    "cosmos:export": "cosmos-export --config cosmos/cosmos.config.js",
     "babel": "yarn workspaces run babel",
+    "build": "next build",
     "cosmos": "cosmos --config cosmos/cosmos.config.js",
+    "cosmos:export": "cosmos-export --config cosmos/cosmos.config.js",
     "dev": "next",
-    "start": "next start",
     "lint": "xo",
+    "start": "next start",
     "test": "jest"
+  },
+  "dependencies": {
+    "react-cosmos-fetch-proxy": "^4.8.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -40,6 +43,13 @@
     "react-hot-loader": "^4.12.8",
     "webpack": "^4.7.0",
     "xo": "^0.25.3"
+  },
+  "eslint": {
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
   },
   "workspaces": [
     "packages/*"
@@ -77,15 +87,5 @@
         }
       }
     ]
-  },
-  "eslint": {
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    }
-  },
-  "dependencies": {
-    "react-cosmos-fetch-proxy": "^4.8.2"
   }
 }

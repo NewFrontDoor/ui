@@ -1,8 +1,8 @@
 {
   "name": "@newfrontdoor/tools",
   "version": "1.0.0",
-  "license": "MIT",
   "description": "",
+  "license": "MIT",
   "scripts": {
     "babel": "true"
   },
@@ -19,5 +19,6 @@
   },
   "devDependencies": {
     "babel-plugin-inline-react-svg": "^1.1.0"
-  }
+  },
+  "xo": false
 }
