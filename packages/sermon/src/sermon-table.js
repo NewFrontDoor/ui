@@ -36,7 +36,8 @@ const Tr = styled.tr`
 export default function SermonTable({
   sermons,
   headers,
-  columnHide
+  columnHide,
+  titleKey
 }) {
   const desiredColumns = headers
     .map(item => item.key)
@@ -58,7 +59,7 @@ export default function SermonTable({
               <Link
                 href={`/sermon/${sermon.nid}`}
                 dangerouslySetInnerHTML={{
-                  __html: sermon.node_title ? sermon.node_title : 'untitled'
+                  __html: sermon[titleKey] ? sermon[titleKey] : 'untitled'
                 }}
               />
             </td>
@@ -80,11 +81,13 @@ export default function SermonTable({
 }
 
 SermonTable.defaultProps = {
-  columnHide: []
+  columnHide: [],
+  titleKey: 'title'
 };
 
 SermonTable.propTypes = {
   columnHide: PropTypes.array,
   headers: PropTypes.array.isRequired,
-  sermons: PropTypes.array.isRequired
+  sermons: PropTypes.array.isRequired,
+  titleKey: PropTypes.string
 };
