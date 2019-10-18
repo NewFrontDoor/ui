@@ -5,7 +5,7 @@ import {searchData} from './filter-utility';
 export default function SearchCollection({
   dataCollection,
   setSubset,
-  headers,
+  fields,
   labels
 }) {
   const [searchString, setSearchString] = useState('');
@@ -17,7 +17,7 @@ export default function SearchCollection({
       searchString: value,
       isInclusive
     };
-    const subset = searchData(searchParams, dataCollection, headers);
+    const subset = searchData(searchParams, dataCollection, fields);
     setSubset(subset);
   }
 
@@ -58,6 +58,6 @@ SearchCollection.defaultProps = {
 SearchCollection.propTypes = {
   dataCollection: PropTypes.array,
   setSubset: PropTypes.func.isRequired,
-  headers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
   labels: PropTypes.objectOf(PropTypes.string)
 };
