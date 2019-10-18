@@ -23,8 +23,8 @@ function useBible(url, passage) {
       setData(result);
     }
 
-    fetchBible().catch(error => {
-      console.log(error);
+    fetchBible().catch(error_ => {
+      console.log(error_);
       setError(`Failed to load bible ${passage}`);
     });
   }, [passage, url]);

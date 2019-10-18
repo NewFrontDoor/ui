@@ -1,7 +1,7 @@
 import 'isomorphic-fetch';
 import React from 'react';
 import Box from 'mineral-ui/Box';
-import { ApiContext } from "@newfrontdoor/api-config";
+import {ApiContext} from '@newfrontdoor/api-config';
 import SermonSeriesList from './series-sermon-list';
 
 class SeriesSermonListContainerDrupal extends React.PureComponent {
@@ -92,7 +92,5 @@ export default function(props) {
         />
       )}
     </ApiContext.Consumer>
-  )
-
-;
+  );
 }

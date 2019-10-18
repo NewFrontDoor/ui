@@ -1,11 +1,13 @@
 {
   "name": "@newfrontdoor/location-map",
   "version": "0.0.0",
-  "dependencies": {
-    "@react-google-maps/api": "^1.5.1",
-    "prop-types": "^15.6.0",
-    "react-router-dom": "^5.1.1"
+  "main": "dist/index.js",
+  "scripts": {
+    "babel": "babel src -d dist"
   },
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
@@ -14,12 +16,10 @@
     "react": "^16.10.0",
     "react-dom": "^16.10.0"
   },
-  "xo": false,
-  "scripts": {
-    "babel": "babel src -d dist"
+  "dependencies": {
+    "@react-google-maps/api": "^1.5.1",
+    "prop-types": "^15.6.0",
+    "react-router-dom": "^5.1.1"
   },
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ]
+  "xo": false
 }

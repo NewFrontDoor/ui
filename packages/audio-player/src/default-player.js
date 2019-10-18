@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useEventListener, useInterval} from './custom-hooks';
+import {useEventListener} from './custom-hooks';
 
 export default function DefaultPlayer({
   autoPlay,
@@ -79,7 +79,6 @@ export default function DefaultPlayer({
   }, [volume, audio]);
 
   return (
-    // eslint-disable-next-line
     <audio
       ref={audioEl}
       autoPlay={autoPlay}
@@ -97,8 +96,11 @@ export default function DefaultPlayer({
       onPlaying={onPlaying}
       onPlay={onPlay}
     >
-      {/* eslint-disable-next-line */}
-      {children || (<p>Your browser does not support the<code>audio</code>element.</p>)} 
+      {children || (
+        <p>
+          Your browser does not support the<code>audio</code>element.
+        </p>
+      )}
     </audio>
   );
 }

@@ -102,8 +102,8 @@ function useCalendarEvents(initialView, client) {
       .then(result => {
         setData(result);
       })
-      .catch(error => {
-        console.error(error);
+      .catch(error_ => {
+        console.error(error_);
         setError(`Failed to load calendar events`);
       })
       .finally(() => setLoading(false));

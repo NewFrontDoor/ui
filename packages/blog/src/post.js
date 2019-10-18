@@ -47,16 +47,17 @@ const Content = styled('div')`
 `;
 
 function Post({body, title, date, dateFormat, categories}) {
-  function createMarkup() { return {__html: body}; };
+  function createMarkup() {
+    return {__html: body};
+  }
+
   const readingLength = readingTime(body.toString());
 
   return (
     <ContentWrapper display="flex">
       <Meta>
         <Text as="h2">{title}</Text>
-        <Text appearance="mouse">
-          {format(new Date(date), dateFormat)}
-        </Text>
+        <Text appearance="mouse">{format(new Date(date), dateFormat)}</Text>
         <Text appearance="mouse">{readingLength.text}</Text>
         <Text
           css={css`
@@ -78,11 +79,11 @@ function Post({body, title, date, dateFormat, categories}) {
         </Text>
       </Meta>
       <Content>
-        <div dangerouslySetInnerHTML={createMarkup()} /> 
+        <div dangerouslySetInnerHTML={createMarkup()} />
       </Content>
     </ContentWrapper>
   );
-};
+}
 
 export default Post;
 

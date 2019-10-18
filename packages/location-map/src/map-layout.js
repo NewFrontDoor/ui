@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
@@ -68,17 +70,38 @@ export default function MapLayout({
           </GoogleMap>
         </LoadScript>
       </HomeMapInner>
-      <MapOverlay heading={heading} details={details} actions={actions} lat={location.location.lat} long={location.location.lng} />
+      <MapOverlay
+        heading={heading}
+        details={details}
+        actions={actions}
+        lat={location.location.lat}
+        long={location.location.lng}
+      />
     </HomeSection>
   );
 }
 
 MapLayout.propTypes = {
-  heading: PropTypes.string,
+  heading: PropTypes.string.isRequired,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired
     })
-  )
+  ).isRequired,
+  details: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      value: PropTypes.string
+    })
+  ).isRequired,
+  location: PropTypes.shape({
+    latcentrepoint: PropTypes.number,
+    lngcentrepoint: PropTypes.number,
+    location: PropTypes.shape({
+      lat: PropTypes.number,
+      lng: PropTypes.number
+    })
+  }).isRequired,
+  mapsKey: PropTypes.string.isRequired
 };
