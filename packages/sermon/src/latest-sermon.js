@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
 function LatestSermon({
-  latestSermon: {
+
     title,
     preacher,
     sermonUrl,
@@ -15,7 +15,7 @@ function LatestSermon({
     seriesImg,
     loading,
     error
-  }
+
 }) {
   return (
     <section>
