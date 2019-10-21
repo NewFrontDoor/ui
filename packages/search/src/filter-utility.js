@@ -32,13 +32,18 @@ function searchFieldSet(searchArray, data, fields) {
   });
 }
 
-export const searchData = (searchParams, dataCollection, headers) => {
+export const searchData = (
+  searchParams,
+  dataCollection,
+  fields,
+  returnEmptySubset
+) => {
   // Destructure searchParams into the search string, and filter method
   const {searchString, isInclusive} = searchParams;
 
   // Display all data by default if there is no search string.
   if (dataCollection && searchString === '') {
-    return dataCollection;
+    return returnEmptySubset ? [] : dataCollection;
   }
 
   // Filter all data if there is a non-empty search string
@@ -63,7 +68,7 @@ export const searchData = (searchParams, dataCollection, headers) => {
     const initialFilteredValues = runFilter(
       searchArrayWithoutQuotedValues,
       dataCollection,
-      headers,
+      fields,
       isInclusive
     );
 
@@ -72,14 +77,14 @@ export const searchData = (searchParams, dataCollection, headers) => {
       return runFilter(
         quotedValues,
         initialFilteredValues,
-        headers,
+        fields,
         isInclusive
       );
     }
 
     if (quotedValues.length > 0) {
       // Will return a subset based only enquoted search strings.
-      return runFilter(quotedValues, dataCollection, headers, isInclusive);
+      return runFilter(quotedValues, dataCollection, fields, isInclusive);
     }
 
     // Will return a subset based on regular search string
@@ -89,4 +94,24 @@ export const searchData = (searchParams, dataCollection, headers) => {
   // Returns an empty array if there is no dataCollection passed through
   // This means the subset will not be undefined and so rendering will not fall over
   return [];
+};
+
+export const searchArray = searchParams => {
+  const {searchString} = searchParams;
+  const quotedValues = [
+    ...[...searchString.matchAll(/"([^"]+)"/g)].map(i => i[1].toLowerCase())
+  ];
+
+  // Create an array from searchString without these inquoted values
+  const searchArrayWithoutQuotedValues = searchString
+    // Strip out remaining double-quote characters
+    .replace(/"/gi, '')
+    // Strip out quoted values
+    .replace(new RegExp(quotedValues.join('|'), 'gi'), '')
+    .toLowerCase()
+    .split(' ')
+    // Remove any empty items, otherwise all will match once filtered
+    .filter(item => item !== '');
+
+  return searchArrayWithoutQuotedValues.concat(quotedValues);
 };

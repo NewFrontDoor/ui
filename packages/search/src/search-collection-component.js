@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {searchData} from './filter-utility';
+import {searchData, searchArray} from './filter-utility';
 
 export default function SearchCollection({
   dataCollection,
   setSubset,
   fields,
-  labels
+  labels,
+  passSearchArray,
+  returnEmptySubset
 }) {
   const [searchString, setSearchString] = useState('');
   const [isInclusive, setIsInclusive] = useState(false);
@@ -17,7 +19,13 @@ export default function SearchCollection({
       searchString: value,
       isInclusive
     };
-    const subset = searchData(searchParams, dataCollection, fields);
+    passSearchArray(searchArray(searchParams));
+    const subset = searchData(
+      searchParams,
+      dataCollection,
+      fields,
+      returnEmptySubset
+    );
     setSubset(subset);
   }
 
@@ -52,12 +60,16 @@ SearchCollection.defaultProps = {
   labels: {
     searchbox: 'Filter sermons:',
     checkbox: 'Use inclusive mode:'
-  }
+  },
+  passSearchArray: () => {},
+  returnEmptySubset: false
 };
 
 SearchCollection.propTypes = {
   dataCollection: PropTypes.array,
   setSubset: PropTypes.func.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-  labels: PropTypes.objectOf(PropTypes.string)
+  labels: PropTypes.objectOf(PropTypes.string),
+  passSearchArray: PropTypes.func,
+  returnEmptySubset: PropTypes.bool
 };
