@@ -3,7 +3,7 @@ import {FeaturedSeries} from '../src';
 export default {
   component: FeaturedSeries,
   props: {
-    header: 'Current Series',
+    header: 'Featured Series',
     seriesTitle: 'Series Title',
     seriesUrl: 'http://localhost/series_url',
     artUrl:

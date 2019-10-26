@@ -17,14 +17,14 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
     this.getCurrentSeries()
       .then(response => {
         // This transform could moved out into generic (Drupal => NFD) component structure for sermon series
-        const transformedSeriesData = response.map(x => ({
-          title: x.node_title,
-          image: x['series thumbnail'],
-          link: x.url,
-          id: x.series_id
-        }));
+        const series = response[0];
         this.setState({
-          seriesData: transformedSeriesData,
+          seriesData: {
+            title: series.node_title,
+            image: series['series thumbnail'],
+            link: series.url,
+            id: series.series_id
+          },
           loading: false
         });
       })
@@ -42,7 +42,12 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
   };
 
   render() {
-    return <CurrentSeries {...this.state} />;
+    return (
+      <CurrentSeries
+        seriesData={this.state.seriesData}
+        loading={this.state.loading}
+      />
+    );
   }
 }
 
