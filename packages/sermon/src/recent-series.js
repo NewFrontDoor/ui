@@ -7,13 +7,7 @@ export default function({loading, seriesData}) {
     <section>
       <h2>Recent Series</h2>
       <PulseLoader loading={loading} size={20} />
-      {loading || (
-        <section>
-          {seriesData.map(item => (
-            <RenderSeriesComponent {...item} />
-          ))}
-        </section>
-      )}
+      {loading || seriesData.map(item => <RenderSeriesComponent {...item} />)}
     </section>
   );
 }

@@ -16,6 +16,7 @@ export {
   default as CurrentSeriesContainerDrupal
 } from './current-series-container-drupal';
 
+export {default as RenderSeriesComponent} from './render-series-content';
 export {default as CurrentSeries} from './current-series';
 export {default as FeaturedSeries} from './featured-series';
 export {default as RecentSeries} from './recent-series';

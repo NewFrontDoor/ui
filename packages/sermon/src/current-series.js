@@ -7,11 +7,7 @@ export default function({loading, seriesData}) {
     <section>
       <h2>Current Series</h2>
       <PulseLoader loading={loading} size={20} />
-      {loading || (
-        <section>
-          <RenderSeriesComponent {...seriesData} />
-        </section>
-      )}
+      {loading || <RenderSeriesComponent {...seriesData} />}
     </section>
   );
 }
