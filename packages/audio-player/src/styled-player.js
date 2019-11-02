@@ -69,7 +69,7 @@ const ProgressWrapper = styled.div`
 
 const Player = styled.div`
   padding: 0 10px;
-  width: 280px;
+  width: ${props => props.width};
   border: ${props => (props.border ? `1px solid ${props.color}` : 'none')};
   background: ${props => props.background};
   display: flex;
@@ -114,7 +114,8 @@ export default function StyledPlayer({
   hasBorder,
   background,
   isInvert,
-  hasPlaybackspeed
+  hasPlaybackspeed,
+  width
 }) {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [playing, setPlaying] = useState(null);
@@ -209,7 +210,14 @@ export default function StyledPlayer({
   }
 
   return (
-    <>
+    <Player
+      tabindex="0"
+      color={isInvert ? '#eee' : '#111'}
+      border={hasBorder}
+      background={background}
+      width={width}
+      onMouseUp={() => setMouseDown(false)}
+    >
       <DefaultPlayer
         setAudioPlayer={setAudioPlayer}
         volume={volume}
@@ -221,82 +229,71 @@ export default function StyledPlayer({
         onVolumeChange={e => updateVolume(e.target.volume)}
         onPlaying={() => setPlaying(true)}
       />
-      <Player
-        tabindex="0"
-        color={isInvert ? '#eee' : '#111'}
-        border={hasBorder}
-        background={background}
-        onMouseUp={() => setMouseDown(false)}
+
+      <Button
+        type="button"
+        background={isInvert ? '#222' : base}
+        onClick={() => togglePlay()}
       >
+        {playing ? (
+          <Pause style={{width: '20px', height: '30px'}} />
+        ) : (
+          <Play style={{width: '20px', height: '30px'}} />
+        )}
+      </Button>
+      <Times>
+        {audioPlayer ? getTime(playingTime) : '0:00'} /{' '}
+        {durationTime ? getTime(durationTime) : '0:00'}
+      </Times>
+      <ProgVolWrapper>
+        <ProgressWrapper onMouseDown={() => setScrubDown(true)}>
+          <ProgressBar
+            values={playingTime ? [playingTime] : [0]}
+            max={durationTime ? durationTime.toFixed(0) : 1}
+            updateValues={updateValues}
+            color={highlight}
+            isInvert={isInvert}
+            isInteracting={scrubdown}
+          />
+        </ProgressWrapper>
+        <VolumeWrapper
+          color={isInvert ? '#222' : base}
+          onMouseDown={() => setMouseDown(true)}
+          onTransitionEnd={() => {
+            volumeBar.current.onWindowResize();
+          }}
+        >
+          <ProgressBar
+            ref={volumeBar}
+            tabindex="0"
+            values={[volume]}
+            step={0.01}
+            max={1}
+            updateValues={updateVolume}
+            isInteracting={down}
+            color={highlight}
+            isInvert={isInvert}
+          />
+          <Button type="button" background="none" onClick={() => toggleMuted()}>
+            {muted || volume === 0 ? (
+              <MdVolumeOff style={{width: '30px', height: '20px'}} />
+            ) : (
+              <MdVolumeUp style={{width: '30px', height: '20px'}} />
+            )}
+          </Button>
+        </VolumeWrapper>
+      </ProgVolWrapper>
+      {hasPlaybackspeed && (
         <Button
           type="button"
           background={isInvert ? '#222' : base}
-          onClick={() => togglePlay()}
+          color={isInvert ? '#eee' : '#111'}
+          onClick={() => toggleSpeed()}
         >
-          {playing ? (
-            <Pause style={{width: '20px', height: '30px'}} />
-          ) : (
-            <Play style={{width: '20px', height: '30px'}} />
-          )}
+          {speed.toFixed(1)}
         </Button>
-        <Times>
-          {audioPlayer ? getTime(playingTime) : '0:00'} /{' '}
-          {durationTime ? getTime(durationTime) : '0:00'}
-        </Times>
-        <ProgVolWrapper>
-          <ProgressWrapper onMouseDown={() => setScrubDown(true)}>
-            <ProgressBar
-              values={playingTime ? [playingTime] : [0]}
-              max={durationTime ? durationTime.toFixed(0) : 1}
-              updateValues={updateValues}
-              color={highlight}
-              isInvert={isInvert}
-              isInteracting={scrubdown}
-            />
-          </ProgressWrapper>
-          <VolumeWrapper
-            color={isInvert ? '#222' : base}
-            onMouseDown={() => setMouseDown(true)}
-            onTransitionEnd={() => {
-              volumeBar.current.onWindowResize();
-            }}
-          >
-            <ProgressBar
-              ref={volumeBar}
-              tabindex="0"
-              values={[volume]}
-              step={0.01}
-              max={1}
-              updateValues={updateVolume}
-              isInteracting={down}
-              color={highlight}
-              isInvert={isInvert}
-            />
-            <Button
-              type="button"
-              background="none"
-              onClick={() => toggleMuted()}
-            >
-              {muted || volume === 0 ? (
-                <MdVolumeOff style={{width: '30px', height: '20px'}} />
-              ) : (
-                <MdVolumeUp style={{width: '30px', height: '20px'}} />
-              )}
-            </Button>
-          </VolumeWrapper>
-        </ProgVolWrapper>
-        {hasPlaybackspeed && (
-          <Button
-            type="button"
-            background={isInvert ? '#222' : base}
-            color={isInvert ? '#eee' : '#111'}
-            onClick={() => toggleSpeed()}
-          >
-            {speed.toFixed(1)}
-          </Button>
-        )}
-      </Player>
-    </>
+      )}
+    </Player>
   );
 }
 
@@ -306,7 +303,8 @@ StyledPlayer.defaultProps = {
   hasBorder: 'true',
   background: 'none',
   isInvert: 'false',
-  hasPlaybackspeed: 'true'
+  hasPlaybackspeed: 'true',
+  width: '280px'
 };
 
 StyledPlayer.propTypes = {
@@ -316,5 +314,6 @@ StyledPlayer.propTypes = {
   hasBorder: PropTypes.bool,
   background: PropTypes.string,
   isInvert: PropTypes.bool,
-  hasPlaybackspeed: PropTypes.bool
+  hasPlaybackspeed: PropTypes.bool,
+  width: PropTypes.string
 };

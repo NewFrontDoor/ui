@@ -33,12 +33,7 @@ const Tr = styled.tr`
   }
 `;
 
-export default function SermonTable({
-  sermons,
-  headers,
-  columnHide,
-  titleKey
-}) {
+export default function SermonTable({sermons, headers, columnHide, titleKey, sermonDirectory}) {
   const desiredColumns = headers
     .map(item => item.key)
     .filter(word => word !== 'title');
@@ -57,7 +52,7 @@ export default function SermonTable({
           <Tr key={sermon.nid} num={index} columnHide={columnHide}>
             <td>
               <Link
-                to={`/sermon/${sermon.nid}`}
+                to={`/${sermonDirectory}/${sermon.slug}`}
                 dangerouslySetInnerHTML={{
                   __html: sermon[titleKey] ? sermon[titleKey] : 'untitled'
                 }}
@@ -82,12 +77,14 @@ export default function SermonTable({
 
 SermonTable.defaultProps = {
   columnHide: [],
-  titleKey: 'title'
+  titleKey: 'title',
+  sermonDirectory: 'sermons'
 };
 
 SermonTable.propTypes = {
   columnHide: PropTypes.array,
   headers: PropTypes.array.isRequired,
   sermons: PropTypes.array.isRequired,
-  titleKey: PropTypes.string
+  titleKey: PropTypes.string,
+  sermonDirectory: PropTypes.string
 };

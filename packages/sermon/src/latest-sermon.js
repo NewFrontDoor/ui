@@ -1,44 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {StyledPlayer} from '@newfrontdoor/audio-player';
-import Text from 'mineral-ui/Text';
-import Link from 'mineral-ui/Link';
-import Box from 'mineral-ui/Box';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
 function LatestSermon({
-
-    title,
-    preacher,
-    sermonUrl,
-    sermonImg,
-    seriesImg,
-    loading,
-    error
-
+  title,
+  preacher,
+  sermonUrl,
+  sermonImg,
+  seriesImg,
+  loading,
+  error
 }) {
   return (
     <section>
-      <Text as="h2">Latest Sermon</Text>
+      <h2>Latest Sermon</h2>
       {loading ? (
         <PulseLoader loading={loading} size={10} />
       ) : error && !loading ? (
-        <Text>Unable to find latest sermon</Text>
+        <p>Unable to find latest sermon</p>
       ) : (
         <section>
           {(sermonImg || seriesImg) && (
-            <Box className="latest-sermon-art">
+            <div className="latest-sermon-art">
               <img src={sermonImg || seriesImg} alt="Sermon Art" />
-            </Box>
+            </div>
           )}
-          <Text>
-            <Link href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
-          </Text>
-          <Text>{loading ? '...' : preacher}</Text>
+          <p>
+            <a href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
+          </p>
+          <p>{preacher}</p>
           <StyledPlayer hasPlaybackSpeed isInvert={false} audio={sermonUrl} />
-          <Text>
-            <Link href={sermonUrl}>Download Sermon</Link>
-          </Text>
+            <a href={sermonUrl}>Download Sermon</a>
         </section>
       )}
     </section>

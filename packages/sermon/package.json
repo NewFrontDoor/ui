@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/sermon",
-  "version": "0.2.9",
+  "version": "0.2.13",
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {

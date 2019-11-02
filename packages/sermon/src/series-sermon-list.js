@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Link, Table} from 'mineral-ui';
+import {Table} from 'mineral-ui';
 import styled from '@emotion/styled';
 import {PulseLoader} from 'react-spinners';
 import {FaDownload} from 'react-icons/fa';
@@ -11,9 +11,9 @@ const Root = styled('td')(({theme}) => ({
 const CustomCell = React.memo(props => {
   return (
     <Root {...props}>
-      <Link href={props.children} target="_blank" rel="noopener noreferrer">
+      <a href={props.children} target="_blank" rel="noopener noreferrer">
         <FaDownload />
-      </Link>
+      </a>
     </Root>
   );
 });
@@ -36,10 +36,10 @@ export default function SermonSeriesList({loading, series, seriesSermonList}) {
     {content: 'Sermon', key: 'sermonUrl', cell: cell}
   ];
   return (
-    <Box element="section">
+    <section>
       <PulseLoader loading={loading} size={10} />
       {loading || (
-        <Box element="section">
+        <section>
           <Table
             striped
             columns={columns}
@@ -47,8 +47,8 @@ export default function SermonSeriesList({loading, series, seriesSermonList}) {
             rowKey="title"
             title={series ? series.title : 'All Sermons'}
           />
-        </Box>
+        </section>
       )}
-    </Box>
+    </section>
   );
 }
