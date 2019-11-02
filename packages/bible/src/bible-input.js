@@ -15,7 +15,11 @@ function Output({isValid, arrays}) {
         );
       })
       .map((string, index) => {
-        return (index === 0 ? '' : ' - ') + string;
+        if (index === 0) {
+          return string;
+        }
+
+        return (arrays[index][3] === 'to' ? ' - ' : '; ') + string;
       });
   }
 
