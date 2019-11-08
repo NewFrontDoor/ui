@@ -2,7 +2,6 @@
 import {jsx, css} from '@emotion/core';
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import Text from 'mineral-ui/Text';
 import ky from 'ky-universal';
 
 function useBible(url, passage) {
@@ -36,36 +35,34 @@ function Bible({url, passage}) {
   const [error, data] = useBible(url, passage);
 
   if (error) {
-    return <Text>{error}</Text>;
+    return <p>{error}</p>;
   }
 
   if (data.length > 0) {
     return (
-      <Text>
+      <p>
         {data.map(({bookname, chapter, text, title, verse}) => (
           <React.Fragment key={`${bookname}-${chapter}-${verse}`}>
             {title && (
-              <Text
-                appearance="h5"
-                inherit={false}
+              <h5
                 css={css`
                   display: block;
                 `}
               >
                 {/* eslint-disable-next-line react/no-danger */}
                 <span dangerouslySetInnerHTML={{__html: title}} />
-              </Text>
+              </h5>
             )}
-            <Text inherit={false} appearance="prose">
-              <Text inherit={false} appearance="mouse">
+            <p>
+              <small>
                 {verse}{' '}
-              </Text>
+              </small>
               {/* eslint-disable-next-line react/no-danger */}
               <span dangerouslySetInnerHTML={{__html: text}} />
-            </Text>
+            </p>
           </React.Fragment>
         ))}
-      </Text>
+      </p>
     );
   }
 
