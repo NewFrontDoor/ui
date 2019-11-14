@@ -7,7 +7,8 @@ export default {
       {
         title: 'Returning to campus',
         _createdAt: '2018-09-25T08:11:14Z',
-        body: ['Line one', 'line two', 'line three'],
+        body:
+          '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id mollis erat. Vestibulum suscipit tincidunt commodo.</p>',
         author: 'Alan Reader',
         slug: 'returning-to-campus',
         categories: [
@@ -25,7 +26,8 @@ export default {
       {
         title: 'Test blog two',
         _createdAt: '2018-09-28T09:11:14Z',
-        body: ['Line one', 'line two', 'line three'],
+        body:
+          '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id mollis erat. Vestibulum suscipit tincidunt commodo.</p>',
         author: 'Alan Reader',
         slug: 'test-blog-two',
         categories: [

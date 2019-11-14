@@ -1,11 +1,24 @@
 import ky from 'ky-universal';
-import {addHours, addMonths, subMonths, startOfMonth, endOfMonth, format} from 'date-fns';
+import {
+  addHours,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  format
+} from 'date-fns';
 
 export default function createElvantoClient(apiUrl) {
   return {
     async fetchEvents(currentDate) {
-      const startDate = format(subMonths(startOfMonth(currentDate), 1), 'yyyy-MM-dd');
-      const endDate = format(addMonths(endOfMonth(currentDate), 1), 'yyyy-MM-dd');
+      const startDate = format(
+        subMonths(startOfMonth(currentDate), 1),
+        'yyyy-MM-dd'
+      );
+      const endDate = format(
+        addMonths(endOfMonth(currentDate), 1),
+        'yyyy-MM-dd'
+      );
 
       const result = await ky(apiUrl, {
         searchParams: {

@@ -1,8 +1,6 @@
+import 'isomorphic-fetch';
 import React from 'react';
-import {decode} from 'he';
-import fetch from 'isomorphic-fetch';
-import Box from 'mineral-ui/Box';
-import config from 'react-global-configuration';
+import {ApiContext} from '@newfrontdoor/api-config';
 import LatestSermon from './latest-sermon';
 
 class LatestSermonContainerDrupal extends React.PureComponent {
@@ -21,11 +19,12 @@ class LatestSermonContainerDrupal extends React.PureComponent {
         const sermon = ls[0];
         // This transform could moved out into generic (Drupal => NFD) component structure for sermons
         const lsTransformed = {
-          title: decode(sermon.node_title),
+          title: sermon.node_title,
           preacher: sermon.preacher,
           datePreached: sermon.datepreached,
           sermonUrl: sermon.url,
           sermonImg: sermon.sermon_img,
+          seriesImg: sermon.series_img,
           sermonSeries: sermon.sermonseries,
           biblePassage: sermon.text
         };
@@ -44,19 +43,23 @@ class LatestSermonContainerDrupal extends React.PureComponent {
 
   getLatestSermon = () => {
     return fetch(
-      `${config.get(
-        'DRUPAL_BASE_API_URL'
-      )}all_sermons_api?limit=1&display_id=services_1`
+      `${this.props.baseUrl}all_sermons_api?limit=1&display_id=services_1`
     ).then(resp => resp.json());
   };
 
   render() {
     return (
-      <Box element="section">
+      <section>
         <LatestSermon {...this.state} />
-      </Box>
+      </section>
     );
   }
 }
 
-export default LatestSermonContainerDrupal;
+export default function() {
+  return (
+    <ApiContext.Consumer>
+      {({baseUrl}) => <LatestSermonContainerDrupal baseUrl={baseUrl} />}
+    </ApiContext.Consumer>
+  );
+}

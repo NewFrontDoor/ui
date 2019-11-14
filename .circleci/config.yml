@@ -26,7 +26,7 @@ jobs:
 
       - run:
           name: Run Tests with Coverage
-          command: yarn test --collectCoverage
+          command: yarn test --collectCoverage --maxWorkers=2
 
       - run:
           name: Upload Coverage

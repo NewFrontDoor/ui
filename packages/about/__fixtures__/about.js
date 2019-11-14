@@ -1,4 +1,4 @@
-import About from '..';
+import About from '../src';
 
 export default {
   component: About,

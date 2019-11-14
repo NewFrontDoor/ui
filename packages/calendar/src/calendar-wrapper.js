@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {startOfWeek, getWeekOfMonth} from 'date-fns';
+import {getWeekOfMonth, startOfMonth} from 'date-fns';
 import Calendar from './calendar';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
 import useCalendarEvents from './use-calendar-events';
@@ -23,7 +23,7 @@ export default function CalendarWrapper({client, initialView, isViewFixed}) {
           calendarData={calendarData}
           isViewFixed={isViewFixed}
           weekNumber={getWeekOfMonth(currentDate)}
-          startOfWeek={startOfWeek(currentDate)}
+          startOfMonth={startOfMonth(currentDate)}
         />
       )}
     </CalendarDispatch.Provider>

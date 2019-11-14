@@ -1,0 +1,16 @@
+{
+  "name": "@newfrontdoor/api-config",
+  "version": "0.1.0",
+  "private": false,
+  "main": "dist/index.js",
+  "scripts": {
+    "babel": "babel src -d dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^16.0"
+  },
+  "xo": false
+}

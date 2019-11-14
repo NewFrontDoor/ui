@@ -2,23 +2,23 @@
   "name": "@newfrontdoor/blog",
   "version": "0.1.0",
   "license": "MIT",
-  "dependencies": {
-    "date-fns": "^1.30.1",
-    "prop-types": "^15.6.2",
-    "reading-time-estimator": "^1.0.3"
+  "main": "dist/index.js",
+  "scripts": {
+    "babel": "babel src -d dist"
   },
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "@emotion/core": "^10.0",
     "@emotion/styled": "^10.0",
     "mineral-ui": "^0.58.0",
     "react": "^16.0"
   },
-  "xo": false,
-  "scripts": {
-    "babel": "babel src -d dist"
+  "dependencies": {
+    "date-fns": "^2.4.0",
+    "prop-types": "^15.6.2",
+    "reading-time-estimator": "^1.0.3"
   },
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ]
+  "xo": false
 }

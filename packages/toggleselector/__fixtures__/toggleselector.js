@@ -1,4 +1,4 @@
-import ToggleSelector from '..';
+import ToggleSelector from '../src';
 
 export default {
   component: ToggleSelector,

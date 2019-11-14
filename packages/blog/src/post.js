@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
 import {readingTime} from 'reading-time-estimator';
-import {blocksToText} from './blog-fns';
 import Link from './link';
 
 const ContentWrapper = styled('div')`
@@ -47,16 +46,18 @@ const Content = styled('div')`
   }
 `;
 
-const Post = props => {
-  console.log(props.body);
-  const readingLength = readingTime(blocksToText(props.body));
+function Post({body, title, date, dateFormat, categories}) {
+  function createMarkup() {
+    return {__html: body};
+  }
+
+  const readingLength = readingTime(body.toString());
+
   return (
     <ContentWrapper display="flex">
       <Meta>
-        <Text as="h2">{props.title}</Text>
-        <Text appearance="mouse">
-          {format(new Date(props.date), props.dateFormat)}
-        </Text>
+        <Text as="h2">{title}</Text>
+        <Text appearance="mouse">{format(new Date(date), dateFormat)}</Text>
         <Text appearance="mouse">{readingLength.text}</Text>
         <Text
           css={css`
@@ -69,8 +70,8 @@ const Post = props => {
           appearance="mouse"
         >
           <ul>
-            {props.categories.map(category => (
-              <li key={category.title + props.date}>
+            {categories.map(category => (
+              <li key={category.title + date}>
                 <Link {...category} />
               </li>
             ))}
@@ -78,14 +79,11 @@ const Post = props => {
         </Text>
       </Meta>
       <Content>
-        {props.body.map(para => {
-          console.log(para);
-          return <p>{para}</p>;
-        })}
+        <div dangerouslySetInnerHTML={createMarkup()} />
       </Content>
     </ContentWrapper>
   );
-};
+}
 
 export default Post;
 

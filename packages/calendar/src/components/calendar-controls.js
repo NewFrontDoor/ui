@@ -11,10 +11,10 @@ import MethodToggle from './method-toggle';
 
 export default function CalendarControls({
   location,
-  startOfWeek,
   calendarView,
   input,
-  isViewFixed
+  isViewFixed,
+  startOfMonth
 }) {
   const dispatch = useContext(CalendarDispatch);
   let jump;
@@ -74,8 +74,8 @@ export default function CalendarControls({
       <FlexItem grow={3} shrink={1} width="50%">
         <Text as="h2" align="center" data-testid="calendar-title">
           {calendarView === 'day'
-            ? format(startOfWeek, 'yyyy')
-            : format(startOfWeek, 'MMMM - yyyy')}
+            ? format(startOfMonth, 'yyyy')
+            : format(startOfMonth, 'MMMM - yyyy')}
         </Text>
       </FlexItem>
       <FlexItem grow={1} shrink={1} width="20%">
@@ -98,7 +98,6 @@ export default function CalendarControls({
 
 CalendarControls.propTypes = {
   calendarView: PropTypes.string.isRequired,
-  startOfWeek: PropTypes.instanceOf(Date).isRequired,
   location: PropTypes.string.isRequired,
   input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   isViewFixed: PropTypes.bool
