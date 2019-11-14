@@ -59,8 +59,30 @@ const Dot = styled.button`
   }
 `;
 
+const Dot2 = styled.button`
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.75rem;
+  margin-left: 0.75rem;
+  border: 0;
+  display: flex;
+  align-items: center;
+  &:after {
+    background-color: ${props => (props.selected ? '#1bcacd' : '#efefef')};
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 50%;
+    content: '';
+  }
+`;
+
 export const DotButton = ({selected, onClick}) => (
-  <Dot selected={selected} onClick={onClick} />
+  <Dot2 selected={selected} onClick={onClick} />
 );
 
 export const PrevButton = ({enabled, onClick}) => (
