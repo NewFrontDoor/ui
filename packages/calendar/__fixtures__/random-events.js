@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import React from 'react';
 import faker from 'faker';
 import {startOfMonth, endOfMonth, addHours} from 'date-fns';
 
@@ -35,10 +36,4 @@ const client = {
   }
 };
 
-export default {
-  component: Calendar,
-  props: {
-    client,
-    initialView: 'month'
-  }
-};
+export default <Calendar client={client} initialView="month" />;

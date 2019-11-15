@@ -29,7 +29,6 @@ const Event = styled.div(
     maxWidth: '100%',
     whiteSpace: 'nowrap',
     height: '18px',
-    zIndex: '1',
     cursor: 'pointer',
     display: 'block',
     marginRight: '5px'

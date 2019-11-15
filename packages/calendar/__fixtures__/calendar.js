@@ -1,15 +1,12 @@
+import React from 'react';
 import Calendar from '../src';
 // eslint-disable-next-line import/extensions
 import events from './events.json';
 
-export default {
-  component: Calendar,
-  props: {
-    client: {
-      fetchEvents() {
-        return Promise.resolve(events);
-      }
-    },
-    initialView: 'week'
+const client = {
+  fetchEvents: () => {
+    return Promise.resolve(events);
   }
 };
+
+export default <Calendar client={client} initialView="week" />;

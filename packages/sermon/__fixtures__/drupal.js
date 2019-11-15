@@ -1,3 +1,4 @@
+import React from 'react';
 import config from 'react-global-configuration';
 import {
   LatestSermonContainerDrupal,
@@ -10,17 +11,9 @@ config.set({
   DRUPAL_BASE_API_URL: 'https://cornerstoneapi.newfrontdoor.org/api/views/'
 });
 
-export default [
-  {
-    component: LatestSermonContainerDrupal
-  },
-  {
-    component: CurrentSeriesContainerDrupal
-  },
-  {
-    component: RecentSeriesContainerDrupal
-  },
-  {
-    component: SeriesSermonListContainerDrupal
-  }
-];
+export default {
+  'latest sermon': <LatestSermonContainerDrupal />,
+  'current series': <CurrentSeriesContainerDrupal />,
+  'recent series': <RecentSeriesContainerDrupal />,
+  'series sermon list': <SeriesSermonListContainerDrupal />
+};

@@ -1,11 +1,9 @@
+import React from 'react';
 import ToggleSelector from '../src';
 
-export default {
-  component: ToggleSelector,
-  props: {
-    inputs: ['day', 'week', 'month'],
-    styles: {
-      borderRadius: 0
-    }
-  }
-};
+export default (
+  <ToggleSelector
+    inputs={['day', 'week', 'month']}
+    styles={{borderRadius: 0}}
+  />
+);
