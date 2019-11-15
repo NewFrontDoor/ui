@@ -29,9 +29,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^9.2.0",
-    "css-loader": "^3.2.0",
-    "faker": "^4.1.0",
-    "style-loader": "^1.0.0"
+    "faker": "^4.1.0"
   },
   "xo": false
 }
