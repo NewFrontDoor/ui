@@ -1,3 +1,4 @@
+import React from 'react';
 import {SearchCollection} from '../src';
 
 const sermonData = [
@@ -25,15 +26,11 @@ const headers = [
   {heading: 'Date delivered', key: 'date', searchable: false}
 ];
 
-export default {
-  component: SearchCollection,
-  props: {
-    headers,
-    dataCollection: sermonData,
-    setSubset: () => {},
-    labels: {
-      searchbox: 'Filter talks:',
-      checkbox: 'use inclusive mode'
-    }
-  }
-};
+export default (
+  <SearchCollection
+    headers
+    dataCollection={sermonData}
+    setSubset={() => {}}
+    labels={{searchbox: 'Filter talks:', checkbox: 'use inclusive mode'}}
+  />
+);

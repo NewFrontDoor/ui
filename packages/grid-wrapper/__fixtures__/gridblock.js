@@ -48,7 +48,34 @@ function GridItem({title, imgSrc, action, slug}) {
   );
 }
 
-const WrapperGridBlock = props => (
+const props = {
+  items: [
+    {
+      _id: '1',
+      title: 'first',
+      imgSrc:
+        'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
+      slug: 'first-slug'
+    },
+    {
+      _id: '2',
+      title: 'second',
+      imgSrc:
+        'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
+      slug: 'second-slug'
+    },
+    {
+      _id: '3',
+      title: 'third',
+      imgSrc:
+        'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
+      slug: 'third-slug'
+    }
+  ],
+  columns: '3'
+};
+
+export default (
   <GridBlock
     items={props.items}
     columns={props.columns}
@@ -57,35 +84,3 @@ const WrapperGridBlock = props => (
     renderProp={data => <GridItem {...data} />}
   />
 );
-
-export default [
-  {
-    component: WrapperGridBlock,
-    props: {
-      items: [
-        {
-          _id: '1',
-          title: 'first',
-          imgSrc:
-            'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
-          slug: 'first-slug'
-        },
-        {
-          _id: '2',
-          title: 'second',
-          imgSrc:
-            'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
-          slug: 'second-slug'
-        },
-        {
-          _id: '3',
-          title: 'third',
-          imgSrc:
-            'https://vignette.wikia.nocookie.net/gumby/images/c/c7/Gumby_at_his_Desk.jpg',
-          slug: 'third-slug'
-        }
-      ],
-      columns: '3'
-    }
-  }
-];

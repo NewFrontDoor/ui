@@ -16,6 +16,7 @@
     "react": "^16.8.6"
   },
   "dependencies": {
+    "@reach/dialog": "^0.5.4",
     "date-fns": "^2.4.0",
     "ky": "^0.15.0",
     "ky-universal": "^0.3.0",
