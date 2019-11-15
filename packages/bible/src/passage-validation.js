@@ -1,4 +1,4 @@
-import {default as bible} from './bible.json';
+import bible from './bible.json';
 const books = Object.keys(bible);
 
 function extractAndValidate(value) {
