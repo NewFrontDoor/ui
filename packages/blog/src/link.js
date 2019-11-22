@@ -9,7 +9,7 @@ const Link = props => (
       search: `?category=${props.title}`
     }}
   >
-    {props.title}
+    <span dangerouslySetInnerHTML={{ __html: props.title }} />
   </MineralLink>
 );
 

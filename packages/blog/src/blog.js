@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Post from './post';
 import DateFilter from './date-filter';
 
-export default function Blog({posts, category, dateFormat}) {
+export default function Blog({ client, posts, category, dateFormat }) {
+  const [data, setData] = useState([]);
+  if(client)
+  {
+    useEffect(() => {
+      client
+        .fetchPosts()
+        .then(result => {
+          setData(result);
+        })
+        .catch(err => {
+          console.error(err);
+        })
+    }, [client]);
+  }
+  else{
+    useEffect(() => {
+          setData(posts);
+        })
+    
+  }
   return (
     <div>
       <DateFilter />
-      {posts
+      {data
         .filter(post => {
+          console.log(post.categories)
           if (category && Object.keys(category).length !== 0) {
             return post.categories.map(a => a.title).includes(category);
           }
