@@ -9,7 +9,7 @@ const StyledRadioGroup = styled(RadioGroup)`
     props.styles.fontSize
       ? props.styles.fontSize * 2 + props.styles.fontSize / 2
       : `30`}px;
-  margin: 10px 10px 0 10px;
+  margin: 0 10px;
   position: relative;
   display: flex;
   z-index: 1;

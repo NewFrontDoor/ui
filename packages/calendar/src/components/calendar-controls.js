@@ -1,10 +1,8 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core';
+import {jsx} from 'theme-ui';
 import {useContext} from 'react';
 import PropTypes from 'prop-types';
-import Button from 'mineral-ui/Button';
-import Text from 'mineral-ui/Text';
-import Flex, {FlexItem} from 'mineral-ui/Flex';
+import {Flex, Heading, Button, Box} from '@theme-ui/components';
 import {format} from 'date-fns';
 import CalendarDispatch from '../utilities/calendar-dispatch-provider';
 import MethodToggle from './method-toggle';
@@ -33,52 +31,56 @@ export default function CalendarControls({
   }
 
   return (
-    <Flex alignItems="start" justifyContent="between">
-      <FlexItem grow={1} shrink={1} width="20%">
+    <Flex sx={{marginBottom: "10px"}}>
+      <Box sx={{flex: '1 1 20%'}}>
         <Button
-          size="medium"
+          variant="calendar"
           aria-label={`previous ${jump}`}
           onClick={() => dispatch({type: `decrement-${jump}`})}
         >
           &lt;&lt;
         </Button>
         <Button
-          size="medium"
+          variant="calendar"
           aria-label={`previous ${calendarView}`}
           onClick={() => dispatch({type: `decrement-${calendarView}`})}
         >
           &lt;
         </Button>
         <Button
-          variant="success"
-          size="medium"
+          color="rgb(42, 133, 78)"
+          variant="calendar"
           onClick={() => dispatch({type: 'today'})}
         >
           Today
         </Button>
         <Button
-          size="medium"
+          variant="calendar"
           aria-label={`next ${calendarView}`}
           onClick={() => dispatch({type: `increment-${calendarView}`})}
         >
           &gt;
         </Button>
         <Button
-          size="medium"
+          variant="calendar"
           aria-label={`next ${jump}`}
           onClick={() => dispatch({type: `increment-${jump}`})}
         >
           &gt;&gt;
         </Button>
-      </FlexItem>
-      <FlexItem grow={3} shrink={1} width="50%">
-        <Text as="h2" align="center" data-testid="calendar-title">
+      </Box>
+      <Box sx={{flex: '3 1 50%'}}>
+        <Heading
+          as="h2"
+          sx={{textAlign: 'center'}}
+          data-testid="calendar-title"
+        >
           {calendarView === 'day'
             ? format(startOfMonth, 'yyyy')
             : format(startOfMonth, 'MMMM - yyyy')}
-        </Text>
-      </FlexItem>
-      <FlexItem grow={1} shrink={1} width="20%">
+        </Heading>
+      </Box>
+      <Box sx={{flex: '1 1 20%'}}>
         {isViewFixed ? (
           ''
         ) : (
@@ -91,7 +93,7 @@ export default function CalendarControls({
             }}
           />
         )}
-      </FlexItem>
+      </Box>
     </Flex>
   );
 }

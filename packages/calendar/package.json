@@ -16,7 +16,9 @@
     "react": "^16.8.6"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.22",
     "@reach/dialog": "^0.5.4",
+    "@theme-ui/components": "^0.2.49",
     "date-fns": "^2.4.0",
     "ky": "^0.15.0",
     "ky-universal": "^0.3.0",
@@ -24,6 +26,7 @@
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
     "react-radio-group": "^3.0.3",
+    "theme-ui": "^0.2.49",
     "typeface-montserrat": "0.0.75"
   },
   "devDependencies": {
