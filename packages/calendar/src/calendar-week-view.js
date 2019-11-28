@@ -124,7 +124,7 @@ const hours = [
   '11pm'
 ];
 
-const Week = ({calendarData}) => {
+const Week = ({calendarData, handleNav}) => {
   const week = calendarData;
 
   return (
@@ -153,7 +153,7 @@ const Week = ({calendarData}) => {
                     color={event.color}
                     role="button"
                   >
-                    <EventWrapper event={event} />
+                    <EventWrapper event={event} handleNav={handleNav} />
                   </Event>
                 );
               })}

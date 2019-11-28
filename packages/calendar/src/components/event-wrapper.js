@@ -17,7 +17,7 @@ const Footer = styled('footer')`
   }
 `;
 
-export default function EventWrapper({event}) {
+export default function EventWrapper({event, handleNav}) {
   const [showDialog, setShowDialog] = React.useState(false);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
@@ -51,13 +51,18 @@ export default function EventWrapper({event}) {
         {/* eslint-disable-next-line react/no-danger */}
         <section dangerouslySetInnerHTML={{__html: event.description}} />
         <Footer>
-          <div />
-          <button type="button" onClick={close}>
+          <button
+            type="button"
+            style={{gridColumnStart: `${event.url ? 2 : 3}`}}
+            onClick={close}
+          >
             Close
           </button>
-          <button type="button" onClick={close}>
-            View
-          </button>
+          {event.url && (
+            <button type="button" onClick={() => handleNav(event.url)}>
+              View
+            </button>
+          )}
         </Footer>
       </Dialog>
     </>

@@ -48,7 +48,8 @@ export default function Calendar({
   calendarData,
   weekNumber,
   isViewFixed,
-  startOfMonth
+  startOfMonth,
+  handleNav
 }) {
   const CalendarView = views[calendarView];
 
@@ -80,6 +81,7 @@ export default function Calendar({
         calendarView={calendarView}
         calendarData={calendarData}
         weekNumber={weekNumber}
+        handleNav={handleNav}
       />
     </CalendarContainer>
   );
