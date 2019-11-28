@@ -23,8 +23,7 @@ const Event = styled.div(
     overflow: 'hidden',
     maxWidth: '100%',
     whiteSpace: 'nowrap',
-    cursor: 'pointer',
-    zIndex: '1'
+    cursor: 'pointer'
   },
   props => ({
     gridRow: `${props.row} / span ${props.rowspan}`,

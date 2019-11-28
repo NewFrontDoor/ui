@@ -23,7 +23,6 @@ const Event = styled.div(
     overflow: 'hidden',
     maxWidth: '100%',
     whiteSpace: 'nowrap',
-    zIndex: '1',
     cursor: 'pointer',
     ':hover, :focus': {
       gridColumn: 'span 10'
