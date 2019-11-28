@@ -9,4 +9,10 @@ const client = {
   }
 };
 
-export default <Calendar client={client} initialView="week" />;
+function handleNav(url) {
+  alert(url);
+}
+
+export default (
+  <Calendar client={client} handleNav={handleNav} initialView="week" />
+);

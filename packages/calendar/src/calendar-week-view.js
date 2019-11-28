@@ -23,7 +23,6 @@ const Event = styled.div(
     overflow: 'hidden',
     maxWidth: '100%',
     whiteSpace: 'nowrap',
-    zIndex: '1',
     cursor: 'pointer',
     ':hover, :focus': {
       gridColumn: 'span 10'
@@ -125,7 +124,7 @@ const hours = [
   '11pm'
 ];
 
-const Week = ({calendarData}) => {
+const Week = ({calendarData, handleNav}) => {
   const week = calendarData;
 
   return (
@@ -154,7 +153,7 @@ const Week = ({calendarData}) => {
                     color={event.color}
                     role="button"
                   >
-                    <EventWrapper event={event} />
+                    <EventWrapper event={event} handleNav={handleNav} />
                   </Event>
                 );
               })}

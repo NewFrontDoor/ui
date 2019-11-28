@@ -5,7 +5,7 @@ import Calendar from './calendar';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
 import useCalendarEvents from './use-calendar-events';
 
-export default function CalendarWrapper({client, initialView, isViewFixed}) {
+export default function CalendarWrapper({client, initialView, isViewFixed, handleNav}) {
   const [
     {calendarData, currentDate, calendarView},
     loading,
@@ -24,6 +24,7 @@ export default function CalendarWrapper({client, initialView, isViewFixed}) {
           isViewFixed={isViewFixed}
           weekNumber={getWeekOfMonth(currentDate)}
           startOfMonth={startOfMonth(currentDate)}
+          handleNav={handleNav}
         />
       )}
     </CalendarDispatch.Provider>

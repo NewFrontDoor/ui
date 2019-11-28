@@ -101,7 +101,7 @@ const SeeMore = styled.div(
   })
 );
 
-const Month = ({calendarData}) => {
+const Month = ({calendarData, handleNav}) => {
   const dispatch = useContext(CalendarDispatch);
   return (
     <>
@@ -135,7 +135,7 @@ const Month = ({calendarData}) => {
                         span={event.event_length}
                         color={event.color}
                       >
-                        <EventWrapper event={event}>
+                        <EventWrapper event={event} handleNav={handleNav}>
                           {event.start_time} {event.name}
                         </EventWrapper>
                       </Event>
