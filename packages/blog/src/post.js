@@ -1,9 +1,7 @@
 /** @jsx jsx */
-import React from 'react';
 import PropTypes from 'prop-types';
 import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
-import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
 import {readingTime} from 'reading-time-estimator';
 import Link from './link';
@@ -56,18 +54,19 @@ function Post({body, title, date, dateFormat, categories}) {
   return (
     <ContentWrapper display="flex">
       <Meta>
-        <Text as="h2">{title}</Text>
-        <Text appearance="mouse">{format(new Date(date), dateFormat)}</Text>
-        <Text appearance="mouse">{readingLength.text}</Text>
-        <Text
+        <h2>{title}</h2>
+        <br />
+        <small>{format(new Date(date), dateFormat)}</small>
+        <br />
+        <small>{readingLength.text}</small>
+        <br />
+        <small
           css={css`
             display: none;
             @media (min-width: 420px) {
               display: block;
             }
           `}
-          as="div"
-          appearance="mouse"
         >
           <ul>
             {categories.map(category => (
@@ -76,7 +75,7 @@ function Post({body, title, date, dateFormat, categories}) {
               </li>
             ))}
           </ul>
-        </Text>
+        </small>
       </Meta>
       <Content>
         <div dangerouslySetInnerHTML={createMarkup()} />

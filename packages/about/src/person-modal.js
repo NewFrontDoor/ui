@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Text from 'mineral-ui/Text';
 
 const PersonModal = props => (
   <div>
-    <Text element="h2">{props.name}</Text>
+    <h2>{props.name}</h2>
     <img src={props.image} />
-    <Text element="p">{props.body}</Text>
-    <Text element="h3">Contact</Text>
-    <Text>{props.email}</Text>
-    <Text>{props.phone}</Text>
+    <p>{props.body}</p>
+    <h3>Contact</h3>
+    <p>{props.email}</p>
+    <p>{props.phone}</p>
   </div>
 );
 

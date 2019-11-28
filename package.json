@@ -11,7 +11,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "react-cosmos-fetch-proxy": "^4.8.2"
+    "@mdx-js/react": "^1.5.1",
+    "react-cosmos-fetch-proxy": "^4.8.2",
+    "theme-ui": "^0.2.49"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",

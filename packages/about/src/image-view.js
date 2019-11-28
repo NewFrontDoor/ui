@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Text from 'mineral-ui/Text';
 
 const ImageView = props => (
   <div>
     <img src={props.image} />
-    <Text>{props.name}</Text>
+    <p>{props.name}</p>
   </div>
 );
 

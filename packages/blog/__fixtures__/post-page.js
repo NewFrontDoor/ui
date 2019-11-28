@@ -1,5 +1,5 @@
 import React from 'react';
-import postPage from '../src/post-page';
+import PostPage from '../src/post-page';
 
 const props = {
   post: {
@@ -23,4 +23,4 @@ const props = {
   }
 };
 
-export default <postPage {...props} />;
+export default <PostPage {...props} />;

@@ -1,9 +1,6 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core';
-import React from 'react';
-import {css} from '@emotion/core';
+import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
-import Text from 'mineral-ui/Text';
 import format from 'date-fns/format';
 import Link from './link';
 
@@ -27,27 +24,25 @@ const Content = styled('div')`
   }
 `;
 
-function postPage({post, dateFormat}) {
+function PostPage({post, dateFormat}) {
   function createMarkup() {
     return {__html: post.body};
   }
 
   return (
     <ContentWrapper>
-      <Text as="h2">{post.title}</Text>
-      <Text appearance="mouse">by {post.author}</Text>
-      <Text appearance="mouse">
+      <h2>{post.title}</h2>
+      <small>by {post.author}</small>
+      <small>
         Posted on {format(new Date(post._createdAt), dateFormat)}
-      </Text>
-      <Text
+      </small>
+      <small
         css={css`
           display: none;
           @media (min-width: 420px) {
             display: block;
           }
         `}
-        as="div"
-        appearance="mouse"
       >
         <ul>
           {post.categories.map(category => (
@@ -56,7 +51,7 @@ function postPage({post, dateFormat}) {
             </li>
           ))}
         </ul>
-      </Text>
+      </small>
       <Content>
         <div dangerouslySetInnerHTML={createMarkup()} />
       </Content>
@@ -64,8 +59,8 @@ function postPage({post, dateFormat}) {
   );
 }
 
-postPage.defaultProps = {
+PostPage.defaultProps = {
   dateFormat: 'dddd, MMMM do yyyy'
 };
 
-export default postPage;
+export default PostPage;

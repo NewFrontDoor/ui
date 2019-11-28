@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import {jsx, css} from '@emotion/core';
+import {jsx} from 'theme-ui';
+import {css} from '@emotion/core';
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ky from 'ky-universal';
@@ -40,7 +41,7 @@ function Bible({url, passage}) {
 
   if (data.length > 0) {
     return (
-      <p>
+      <p sx={{color: 'text'}}>
         {data.map(({bookname, chapter, text, title, verse}) => (
           <React.Fragment key={`${bookname}-${chapter}-${verse}`}>
             {title && (
@@ -54,9 +55,13 @@ function Bible({url, passage}) {
               </h5>
             )}
             <p>
-              <small>
+              <sup
+                css={css`
+                  vertical-align: top;
+                `}
+              >
                 {verse}{' '}
-              </small>
+              </sup>
               {/* eslint-disable-next-line react/no-danger */}
               <span dangerouslySetInnerHTML={{__html: text}} />
             </p>

@@ -1,9 +1,8 @@
 import React from 'react';
+import {useThemeUI} from 'theme-ui';
 import {StyledPlayer} from '../src';
 
 const props = {
-  base: '#ddd',
-  highlight: '#edb512',
   isInvert: false,
   hasBorder: true,
   hasPlaybackspeed: true,
@@ -11,4 +10,14 @@ const props = {
   width: '300px'
 };
 
-export default <StyledPlayer {...props} />;
+export default () => {
+  const {theme, colorMode, setColorMode} = useThemeUI();
+
+  return (
+    <StyledPlayer
+      {...props}
+      base={theme.colors.secondary || '#ddd'}
+      highlight={theme.colors.accent || '#edb512'}
+    />
+  );
+};
