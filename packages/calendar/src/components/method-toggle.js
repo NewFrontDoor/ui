@@ -12,7 +12,6 @@ const StyledRadioGroup = styled(RadioGroup)`
   margin: 0 10px;
   position: relative;
   display: flex;
-  z-index: 1;
 
   input {
     position: absolute !important;
