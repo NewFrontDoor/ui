@@ -2,23 +2,10 @@
 import {jsx} from 'theme-ui';
 import {useContext} from 'react';
 import PropTypes from 'prop-types';
-import {Heading, Button, Box} from '@theme-ui/components';
+import {Flex, Heading, Button, Box} from '@theme-ui/components';
 import {format} from 'date-fns';
-import styled from '@emotion/styled';
 import CalendarDispatch from '../utilities/calendar-dispatch-provider';
 import MethodToggle from './method-toggle';
-
-const Outer = styled('div')`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: 'title title'
-    'left right';
-  @media (min-width: 700px) {
-    grid-template-columns: 2fr 5fr 2fr;
-    grid-template-areas: 'left title right';
-  }
-`;
 
 export default function CalendarControls({
   location,
@@ -44,8 +31,8 @@ export default function CalendarControls({
   }
 
   return (
-    <Outer>
-      <Box sx={{gridArea: 'left'}}>
+    <Flex sx={{marginBottom: "10px"}}>
+      <Box sx={{flex: '1 1 20%'}}>
         <Button
           variant="calendar"
           aria-label={`previous ${jump}`}
@@ -65,7 +52,7 @@ export default function CalendarControls({
           variant="calendar"
           onClick={() => dispatch({type: 'today'})}
         >
-          T
+          Today
         </Button>
         <Button
           variant="calendar"
@@ -82,7 +69,7 @@ export default function CalendarControls({
           &gt;&gt;
         </Button>
       </Box>
-      <Box sx={{gridArea: 'title'}}>
+      <Box sx={{flex: '3 1 50%'}}>
         <Heading
           as="h2"
           sx={{textAlign: 'center'}}
@@ -93,7 +80,7 @@ export default function CalendarControls({
             : format(startOfMonth, 'MMMM - yyyy')}
         </Heading>
       </Box>
-      <Box sx={{gridArea: 'right'}}>
+      <Box sx={{flex: '1 1 20%'}}>
         {isViewFixed ? (
           ''
         ) : (
@@ -107,7 +94,7 @@ export default function CalendarControls({
           />
         )}
       </Box>
-    </Outer>
+    </Flex>
   );
 }
 
