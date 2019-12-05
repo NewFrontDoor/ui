@@ -151,6 +151,13 @@ export default function StyledPlayer({
     };
   }, []);
 
+  useEffect(() => {
+    setPlaying(false)
+    if (audioPlayer) {
+      audioPlayer.load()
+    }
+  }, [audio])
+
   function togglePlay() {
     if (playing) {
       audioPlayer.pause();
