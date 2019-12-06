@@ -115,7 +115,8 @@ export default function StyledPlayer({
   background,
   isInvert,
   hasPlaybackspeed,
-  width
+  width,
+  playOnLoad
 }) {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [playing, setPlaying] = useState(null);
@@ -155,6 +156,9 @@ export default function StyledPlayer({
     setPlaying(false)
     if (audioPlayer) {
       audioPlayer.load()
+    }
+    if (audioPlayer && playOnLoad) {
+      audioPlayer.play()
     }
   }, [audio])
 

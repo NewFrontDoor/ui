@@ -30,6 +30,7 @@ export default () => {
       audio={audioTrack}
       base={theme.colors.secondary || '#ddd'}
       highlight={theme.colors.accent || '#edb512'}
+      playOnLoad
     />
     <button value="track1" onClick={e => handleClick(e.target.value)}>Track 1</button>
     <button value="track2" onClick={e => handleClick(e.target.value)}>Track 2</button>
