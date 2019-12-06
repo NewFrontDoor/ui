@@ -116,10 +116,12 @@ export default function StyledPlayer({
   isInvert,
   hasPlaybackspeed,
   width,
-  playOnLoad
+  playOnLoad,
+  statusEvent
 }) {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [playing, setPlaying] = useState(null);
+  const [status, setStatus] = useState(null);
   const [playingTime, setTime] = useState(null);
   const [durationTime, setDuration] = useState(null);
   const [volume, setVolume] = useState(0.4);
@@ -151,6 +153,10 @@ export default function StyledPlayer({
       );
     };
   }, []);
+
+  useEffect(() => {
+    statusEvent(status)
+  }, [status])
 
   useEffect(() => {
     setPlaying(false)
@@ -234,11 +240,12 @@ export default function StyledPlayer({
         volume={volume}
         muted={muted}
         src={audio}
-        onPause={() => setPlaying(false)}
+        onPause={() => {setPlaying(false); setStatus('paused');}}
         onTimeUpdate={e => setTime(e.target.currentTime)}
         onDurationChange={e => setDuration(e.target.duration)}
         onVolumeChange={e => updateVolume(e.target.volume)}
-        onPlaying={() => setPlaying(true)}
+        onPlaying={() => {setPlaying(true); setStatus('playing');}}
+        onEnded={() => setStatus('stopped')}
       />
 
       <Button
@@ -315,7 +322,8 @@ StyledPlayer.defaultProps = {
   background: 'none',
   isInvert: 'false',
   hasPlaybackspeed: 'true',
-  width: '280px'
+  width: '280px',
+  statusEvent: () => {}
 };
 
 StyledPlayer.propTypes = {
@@ -326,5 +334,6 @@ StyledPlayer.propTypes = {
   background: PropTypes.string,
   isInvert: PropTypes.bool,
   hasPlaybackspeed: PropTypes.bool,
-  width: PropTypes.string
+  width: PropTypes.string,
+  statusEvent: PropTypes.func
 };
