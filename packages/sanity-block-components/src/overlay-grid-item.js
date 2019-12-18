@@ -1,6 +1,6 @@
-import React from 'react';
+/** @jsx jsx */
 import styled from '@emotion/styled';
-import {Styled} from 'theme-ui';
+import {Styled, jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 
 const Header = styled(Styled.h5)`
@@ -29,7 +29,7 @@ const ShadedOverlay = styled.div`
 
 export default function Overlay({title, image, link, LinkComponent}) {
   return (
-    <LinkComponent url={link}>
+    <LinkComponent url={link} sx={{display: 'contents'}}>
       <Image src={image} alt={title} />
       <ShadedOverlay />
       <Header>{title}</Header>

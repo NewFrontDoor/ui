@@ -22,31 +22,37 @@ export default function HorizontalCard({
   LinkComponent
 }) {
   const relative = link && isRelative.test(link);
-  return (
+  return relative ? (
     <Wrapper>
-      {relative ? (
-        <LinkComponent url={link}>
-          <img src={image} alt={title} />
-          <div>
-            <Styled.h3>{title}</Styled.h3>
-            {description}
-          </div>
-        </LinkComponent>
-      ) : link ? (
-        <a href={link}>
-          <img src={image} alt={title} />
-          <div>
-            <Styled.h3>{title}</Styled.h3>
-            {description}
-          </div>
-        </a>
-      ) : (
+      <LinkComponent url={link}>
+        <img src={image} alt={title} />
+      </LinkComponent>
+      <LinkComponent url={link}>
         <div>
-          <img src={image} alt={title} />
           <Styled.h3>{title}</Styled.h3>
           {description}
         </div>
-      )}
+      </LinkComponent>
+    </Wrapper>
+  ) : link ? (
+    <Wrapper>
+      <a href={link}>
+        <img src={image} alt={title} />
+      </a>
+      <a href={link}>
+        <div>
+          <Styled.h3>{title}</Styled.h3>
+          {description}
+        </div>
+      </a>
+    </Wrapper>
+  ) : (
+    <Wrapper>
+      <div>
+        <img src={image} alt={title} />
+        <Styled.h3>{title}</Styled.h3>
+        {description}
+      </div>
     </Wrapper>
   );
 }
@@ -56,5 +62,5 @@ HorizontalCard.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   link: PropTypes.string,
-  LinkComponent: PropTypes.element,
+  LinkComponent: PropTypes.element
 };
