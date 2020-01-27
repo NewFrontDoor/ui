@@ -1,7 +1,6 @@
 /** @jsx jsx */
-import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
-import {Styled} from 'theme-ui';
+import {Styled, jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 
 const Actions = styled('section')`
@@ -20,26 +19,25 @@ const Actions = styled('section')`
   }
 `;
 
-const actLink = props => css`
-  text-decoration: none;
-  padding: 10px 0;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  border: 1px solid;
-  border-color: #444446;
-  border-radius: 40px;
-  grid-column-start: NaN;
-  color: #444446;
-  width: 7.25rem;
-  :hover {
-    background-color: #444446;
-    color: white;
-    cursor: pointer;
+const actLink = props => ({
+  textDecoration: 'none',
+  padding: '10px 0',
+  fontSize: '0.8em',
+  textTransform: 'uppercase',
+  border: '1px solid',
+  borderColor: '#444446',
+  borderRadius: '40px',
+  color: '#444446',
+  width: '7.25rem',
+  ':hover': {
+    backgroundColor: '#444446',
+    color: 'white',
+    cursor: 'pointer'
+  },
+  '@media (min-width: 420px)': {
+    gridColumnStart: props.column + 2
   }
-  @media (min-width: 420px) {
-    grid-column-start: ${props.column + 2};
-  }
-`;
+});
 
 const Header = styled(Styled.h3)`
   grid-column: 1/1;
@@ -67,7 +65,7 @@ export default function Card({
       {description}
       <Actions>
         <LinkComponent url={link}>
-          <span css={actLink}>{action ? action : 'VIEW PAGE'}</span>
+          <span sx={actLink}>{action ? action : 'VIEW PAGE'}</span>
         </LinkComponent>
       </Actions>
     </div>
@@ -78,7 +76,7 @@ export default function Card({
         <Header>{title}</Header>
         {description}
         <Actions>
-          <Styled.a css={actLink} href={link.url}>
+          <Styled.a sx={actLink} href={link.url}>
             {action ? action : 'VIEW PAGE'}
           </Styled.a>
         </Actions>

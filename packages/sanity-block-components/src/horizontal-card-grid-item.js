@@ -11,6 +11,12 @@ const Wrapper = styled('section')`
   }
 `;
 
+const Img = styled('img')`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 // A regex to capture all non-absolute urls
 const isRelative = /^(?!www\.|(?:http|ftp)s?:\/\/|[A-Za-z]:\\|\/\/).*/;
 
@@ -25,7 +31,7 @@ export default function HorizontalCard({
   return relative ? (
     <Wrapper>
       <LinkComponent url={link}>
-        <img src={image} alt={title} />
+        <Img src={image} alt={title} />
       </LinkComponent>
       <LinkComponent url={link}>
         <div>
@@ -37,7 +43,7 @@ export default function HorizontalCard({
   ) : link ? (
     <Wrapper>
       <a href={link}>
-        <img src={image} alt={title} />
+        <Img src={image} alt={title} />
       </a>
       <a href={link}>
         <div>
@@ -49,7 +55,7 @@ export default function HorizontalCard({
   ) : (
     <Wrapper>
       <div>
-        <img src={image} alt={title} />
+        <Img src={image} alt={title} />
         <Styled.h3>{title}</Styled.h3>
         {description}
       </div>

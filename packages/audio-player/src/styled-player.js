@@ -71,7 +71,8 @@ const Player = styled.div`
   padding: 0 10px;
   width: ${props => props.width};
   border: ${props => (props.border ? `1px solid ${props.color}` : 'none')};
-  background: ${props => props.background};
+  background-color: ${props => props.background};
+  transition: background-color 0.5s ease;
   display: flex;
   align-items: center;
   color: ${props => props.color};
