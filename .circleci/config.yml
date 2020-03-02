@@ -5,7 +5,7 @@ jobs:
   build:
     working_directory: ~/ui
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     steps:
       - checkout
 
