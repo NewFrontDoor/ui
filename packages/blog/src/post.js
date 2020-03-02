@@ -44,11 +44,7 @@ const Content = styled('div')`
   }
 `;
 
-function Post({body, title, date, dateFormat, categories}) {
-  function createMarkup() {
-    return {__html: body};
-  }
-
+const Post = ({body, title, date, dateFormat, categories}) => {
   const readingLength = readingTime(body.toString());
 
   return (
@@ -78,25 +74,24 @@ function Post({body, title, date, dateFormat, categories}) {
         </small>
       </Meta>
       <Content>
-        <div dangerouslySetInnerHTML={createMarkup()} />
+        {/* eslint-disable-next-line react/no-danger */}
+        <div dangerouslySetInnerHTML={{__html: body}} />
       </Content>
     </ContentWrapper>
   );
-}
+};
 
 export default Post;
 
 Post.propTypes = {
   title: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  date: PropTypes.string.isRequired,
   dateFormat: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
+      date: PropTypes.string
     })
-  ).isRequired,
-  renderContent: PropTypes.func.isRequired,
-  linkComponent: PropTypes.func.isRequired
+  ).isRequired
 };

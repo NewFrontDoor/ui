@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {RadioGroup, Radio} from 'react-radio-group';
 import styled from '@emotion/styled';
@@ -114,34 +114,34 @@ const StyledRadioGroup = styled(RadioGroup)`
     )}
 `;
 
-class ToggleSelector extends Component {
-  render() {
-    return (
-      <StyledRadioGroup
-        id="methodField"
-        name="method"
-        inputs={this.props.inputs}
-        styles={this.props.styles}
-        selectedValue={this.props.valueMethod}
-        onChange={option => {
-          this.props.handleChange(option);
-        }}
-      >
-        {this.props.inputs.map(input => {
-          return [
-            <Radio value={input} id={this.props.location + input} />,
-            <label htmlFor={this.props.location + input}>{input}</label>
-          ];
-        })}
-      </StyledRadioGroup>
-    );
-  }
-}
+const ToggleSelector = props => {
+  return (
+    <StyledRadioGroup
+      id="methodField"
+      name="method"
+      inputs={props.inputs}
+      styles={props.styles}
+      selectedValue={props.valueMethod}
+      onChange={option => {
+        props.handleChange(option);
+      }}
+    >
+      {props.inputs.map(input => {
+        const id = props.location + input;
 
-export default ToggleSelector;
+        return (
+          <React.Fragment key={id}>
+            <Radio value={input} id={id} />
+            <label htmlFor={props.location + input}>{input}</label>
+          </React.Fragment>
+        );
+      })}
+    </StyledRadioGroup>
+  );
+};
 
 ToggleSelector.propTypes = {
-  location: PropTypes.string.isRequired,
+  location: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   valueMethod: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -156,3 +156,9 @@ ToggleSelector.propTypes = {
     highlightColor: PropTypes.string
   })
 };
+
+ToggleSelector.defaultProps = {
+  location: ''
+};
+
+export default ToggleSelector;

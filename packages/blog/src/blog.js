@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Post from './post';
 import DateFilter from './date-filter';
 
-export default function Blog({posts, category, dateFormat}) {
+const Blog = ({posts, category, dateFormat}) => {
   return (
     <div>
       <DateFilter />
@@ -32,7 +32,7 @@ export default function Blog({posts, category, dateFormat}) {
         ))}
     </div>
   );
-}
+};
 
 Blog.propTypes = {
   posts: PropTypes.arrayOf(
@@ -40,13 +40,19 @@ Blog.propTypes = {
       title: PropTypes.string.isRequired,
       _createdAt: PropTypes.string.isRequired,
       body: PropTypes.string,
-      categories: PropTypes.string.isRequired
+      categories: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string
+        })
+      ).isRequired
     })
   ).isRequired,
-  category: PropTypes.objectOf(PropTypes.string).isRequired,
+  category: PropTypes.objectOf(PropTypes.string),
   dateFormat: PropTypes.string
 };
 
 Blog.defaultProps = {
   dateFormat: 'dddd, MMMM do yyyy'
 };
+
+export default Blog;

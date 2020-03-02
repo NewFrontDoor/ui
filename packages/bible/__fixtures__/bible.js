@@ -6,7 +6,7 @@ import Bible from '../src';
 
 const BIBLE = 'https://serverless.newfrontdoor.org/bible';
 
-function Blockquote(props) {
+const Blockquote = props => {
   const {passage} = props;
   return (
     <blockquote
@@ -44,7 +44,7 @@ function Blockquote(props) {
       </Text>
     </blockquote>
   );
-}
+};
 
 Blockquote.propTypes = {
   passage: PropTypes.string.isRequired

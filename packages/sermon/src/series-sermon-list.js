@@ -20,12 +20,7 @@ const CustomCell = React.memo(props => {
 
 const cell = ({props}) => <CustomCell {...props} />;
 
-
 const celt = ({props}) => <CustomCell {...props} />;
-
-
-
-
 
 export default function SermonSeriesList({loading, series, seriesSermonList}) {
   console.log(seriesSermonList);
@@ -33,7 +28,7 @@ export default function SermonSeriesList({loading, series, seriesSermonList}) {
     {content: 'Title', key: 'title', cell: {celt}},
     {content: 'Preacher', key: 'preacher'},
     {content: 'Date Preached', key: 'datePreached'},
-    {content: 'Sermon', key: 'sermonUrl', cell: cell}
+    {content: 'Sermon', key: 'sermonUrl', cell}
   ];
   return (
     <section>

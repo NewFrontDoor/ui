@@ -5,7 +5,12 @@ import Calendar from './calendar';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
 import useCalendarEvents from './use-calendar-events';
 
-export default function CalendarWrapper({client, initialView, isViewFixed, handleNav}) {
+export default function CalendarWrapper({
+  client,
+  initialView,
+  isViewFixed,
+  handleNav
+}) {
   const [
     {calendarData, currentDate, calendarView},
     loading,

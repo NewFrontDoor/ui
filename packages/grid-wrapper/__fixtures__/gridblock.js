@@ -36,7 +36,7 @@ const Action = styled('a')`
   }
 `;
 
-function GridItem({title, imgSrc, action, slug}) {
+const GridItem = ({title, imgSrc, action, slug}) => {
   return (
     <>
       <img src={imgSrc} alt={title} style={{width: '100%'}} />
@@ -46,7 +46,7 @@ function GridItem({title, imgSrc, action, slug}) {
       </Actions>
     </>
   );
-}
+};
 
 const props = {
   items: [

@@ -18,10 +18,11 @@
     "react-router-dom": "^5.1.2"
   },
   "dependencies": {
-    "@newfrontdoor/api-config": "0.1.0",
-    "@newfrontdoor/audio-player": "0.1.2",
+    "@newfrontdoor/api-config": "^0.1.0",
+    "@newfrontdoor/audio-player": "^0.1.2",
     "@newfrontdoor/base": "^0.1.2",
-    "isomorphic-fetch": "^2.2.1",
+    "ky": "^0.18.0",
+    "ky-universal": "^0.5.0",
     "prop-types": "^15.6.0",
     "react-global-configuration": "^1.3.0",
     "react-icons": "^3.7.0",

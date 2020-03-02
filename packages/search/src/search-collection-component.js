@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {searchData, searchArray} from './filter-utility';
 
-export default function SearchCollection({
+const SearchCollection = ({
   dataCollection,
   setSubset,
   fields,
   labels,
   passSearchArray,
   returnEmptySubset
-}) {
+}) => {
   const [searchString, setSearchString] = useState('');
   const [isInclusive, setIsInclusive] = useState(false);
 
@@ -53,7 +53,7 @@ export default function SearchCollection({
       />
     </div>
   );
-}
+};
 
 SearchCollection.defaultProps = {
   dataCollection: null,
@@ -68,8 +68,10 @@ SearchCollection.defaultProps = {
 SearchCollection.propTypes = {
   dataCollection: PropTypes.array,
   setSubset: PropTypes.func.isRequired,
-  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object),
   labels: PropTypes.objectOf(PropTypes.string),
   passSearchArray: PropTypes.func,
   returnEmptySubset: PropTypes.bool
 };
+
+export default SearchCollection;

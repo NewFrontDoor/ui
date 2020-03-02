@@ -1,8 +1,7 @@
 /** @jsx jsx */
-import {jsx} from 'theme-ui';
+import {jsx, Flex, Heading, Button, Box} from 'theme-ui';
 import {useContext} from 'react';
 import PropTypes from 'prop-types';
-import {Flex, Heading, Button, Box} from '@theme-ui/components';
 import {format} from 'date-fns';
 import CalendarDispatch from '../utilities/calendar-dispatch-provider';
 import MethodToggle from './method-toggle';
@@ -31,7 +30,7 @@ export default function CalendarControls({
   }
 
   return (
-    <Flex sx={{marginBottom: "10px"}}>
+    <Flex sx={{marginBottom: '10px'}}>
       <Box sx={{flex: '1 1 20%'}}>
         <Button
           variant="calendar"

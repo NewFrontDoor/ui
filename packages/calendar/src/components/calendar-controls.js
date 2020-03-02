@@ -1,8 +1,7 @@
 /** @jsx jsx */
-import {jsx} from 'theme-ui';
+import {jsx, Heading, Button, Box} from 'theme-ui';
 import {useContext} from 'react';
 import PropTypes from 'prop-types';
-import {Heading, Button, Box} from '@theme-ui/components';
 import {format} from 'date-fns';
 import styled from '@emotion/styled';
 import CalendarDispatch from '../utilities/calendar-dispatch-provider';
@@ -12,7 +11,8 @@ const Outer = styled('div')`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
-  grid-template-areas: 'title title'
+  grid-template-areas:
+    'title title'
     'left right';
   @media (min-width: 700px) {
     grid-template-columns: 2fr 5fr 2fr;

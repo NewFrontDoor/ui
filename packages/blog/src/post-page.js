@@ -24,7 +24,7 @@ const Content = styled('div')`
   }
 `;
 
-function PostPage({post, dateFormat}) {
+const PostPage = ({post, dateFormat}) => {
   function createMarkup() {
     return {__html: post.body};
   }
@@ -33,9 +33,7 @@ function PostPage({post, dateFormat}) {
     <ContentWrapper>
       <h2>{post.title}</h2>
       <small>by {post.author}</small>
-      <small>
-        Posted on {format(new Date(post._createdAt), dateFormat)}
-      </small>
+      <small>Posted on {format(new Date(post._createdAt), dateFormat)}</small>
       <small
         css={css`
           display: none;
@@ -57,7 +55,7 @@ function PostPage({post, dateFormat}) {
       </Content>
     </ContentWrapper>
   );
-}
+};
 
 PostPage.defaultProps = {
   dateFormat: 'dddd, MMMM do yyyy'

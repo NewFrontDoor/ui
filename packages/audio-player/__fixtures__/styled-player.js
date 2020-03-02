@@ -13,27 +13,39 @@ const props = {
 const tracks = {
   track1: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   track2: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-}
+};
 
 export default () => {
-  const {theme, colorMode, setColorMode} = useThemeUI();
-  const [audioTrack, setTrack] = useState(null)
+  const {theme} = useThemeUI();
+  const [audioTrack, setTrack] = useState(null);
 
-  function handleClick(event){
-    setTrack(tracks[event])
+  function handleClick(event) {
+    setTrack(tracks[event]);
   }
 
   return (
     <>
-    <StyledPlayer
-      {...props}
-      audio={audioTrack}
-      base={theme.colors.secondary || '#ddd'}
-      highlight={theme.colors.accent || '#edb512'}
-      playOnLoad
-    />
-    <button value="track1" onClick={e => handleClick(e.target.value)}>Track 1</button>
-    <button value="track2" onClick={e => handleClick(e.target.value)}>Track 2</button>
+      <StyledPlayer
+        {...props}
+        playOnLoad
+        audio={audioTrack}
+        base={theme.colors.secondary || '#ddd'}
+        highlight={theme.colors.accent || '#edb512'}
+      />
+      <button
+        type="button"
+        value="track1"
+        onClick={e => handleClick(e.target.value)}
+      >
+        Track 1
+      </button>
+      <button
+        type="button"
+        value="track2"
+        onClick={e => handleClick(e.target.value)}
+      >
+        Track 2
+      </button>
     </>
   );
 };

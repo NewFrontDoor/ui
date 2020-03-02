@@ -3,7 +3,7 @@ import {StyledPlayer} from '@newfrontdoor/audio-player';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
-function LatestSermon({
+const LatestSermon = ({
   title,
   preacher,
   sermonUrl,
@@ -11,7 +11,7 @@ function LatestSermon({
   seriesImg,
   loading,
   error
-}) {
+}) => {
   return (
     <section>
       <h2>Latest Sermon</h2>
@@ -27,21 +27,30 @@ function LatestSermon({
             </div>
           )}
           <p>
+            {/* eslint-disable-next-line react/no-danger */}
             <a href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </p>
           <p>{preacher}</p>
           <StyledPlayer hasPlaybackSpeed isInvert={false} audio={sermonUrl} />
-            <a href={sermonUrl}>Download Sermon</a>
+          <a href={sermonUrl}>Download Sermon</a>
         </section>
       )}
     </section>
   );
-}
+};
 
 LatestSermon.propTypes = {
-  latestSermon: PropTypes.object.isRequired,
+  title: PropTypes.string,
+  preacher: PropTypes.string,
+  sermonUrl: PropTypes.string,
+  sermonImg: PropTypes.string,
+  seriesImg: PropTypes.string,
   error: PropTypes.string,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool
+};
+
+LatestSermon.defaultProps = {
+  loading: false
 };
 
 export default LatestSermon;

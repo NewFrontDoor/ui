@@ -1,4 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
+/** @jsx jsx */
+import {useState, useRef, useEffect} from 'react';
 import {
   MdPlayArrow as Play,
   MdPause as Pause,
@@ -6,6 +7,7 @@ import {
   MdVolumeOff
 } from 'react-icons/md';
 import PropTypes from 'prop-types';
+import {jsx} from 'theme-ui';
 import styled from '@emotion/styled';
 import ProgressBar from './progress-bar';
 import DefaultPlayer from './default-player';
@@ -107,7 +109,7 @@ const Times = styled.span`
   padding-left: 4px;
 `;
 
-export default function StyledPlayer({
+const StyledPlayer = ({
   audio,
   highlight = '#548BF4',
   base = '#ddd',
@@ -116,9 +118,9 @@ export default function StyledPlayer({
   isInvert,
   hasPlaybackspeed,
   width,
-  playOnLoad,
+  isPlayOnLoad,
   statusEvent
-}) {
+}) => {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [playing, setPlaying] = useState(null);
   const [status, setStatus] = useState(null);
@@ -132,7 +134,6 @@ export default function StyledPlayer({
   const volumeBar = useRef(null);
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     document.addEventListener(
       'mouseup',
       () => {
@@ -142,7 +143,6 @@ export default function StyledPlayer({
       false
     );
     return () => {
-      // eslint-disable-next-line no-undef
       document.removeEventListener(
         'mouseup',
         () => {
@@ -155,18 +155,19 @@ export default function StyledPlayer({
   }, []);
 
   useEffect(() => {
-    statusEvent(status)
-  }, [status])
+    statusEvent(status);
+  }, [statusEvent, status]);
 
   useEffect(() => {
-    setPlaying(false)
+    setPlaying(false);
     if (audioPlayer) {
-      audioPlayer.load()
+      audioPlayer.load();
     }
-    if (audioPlayer && playOnLoad) {
-      audioPlayer.play()
+
+    if (audioPlayer && isPlayOnLoad) {
+      audioPlayer.play();
     }
-  }, [audio])
+  }, [audioPlayer, audio, isPlayOnLoad]);
 
   function togglePlay() {
     if (playing) {
@@ -240,11 +241,17 @@ export default function StyledPlayer({
         volume={volume}
         muted={muted}
         src={audio}
-        onPause={() => {setPlaying(false); setStatus('paused');}}
+        onPause={() => {
+          setPlaying(false);
+          setStatus('paused');
+        }}
         onTimeUpdate={e => setTime(e.target.currentTime)}
         onDurationChange={e => setDuration(e.target.duration)}
         onVolumeChange={e => updateVolume(e.target.volume)}
-        onPlaying={() => {setPlaying(true); setStatus('playing');}}
+        onPlaying={() => {
+          setPlaying(true);
+          setStatus('playing');
+        }}
         onEnded={() => setStatus('stopped')}
       />
 
@@ -313,7 +320,7 @@ export default function StyledPlayer({
       )}
     </Player>
   );
-}
+};
 
 StyledPlayer.defaultProps = {
   highlight: '#548BF4',
@@ -323,7 +330,8 @@ StyledPlayer.defaultProps = {
   isInvert: 'false',
   hasPlaybackspeed: 'true',
   width: '280px',
-  statusEvent: () => {}
+  statusEvent: () => {},
+  isPlayOnLoad: false
 };
 
 StyledPlayer.propTypes = {
@@ -335,5 +343,8 @@ StyledPlayer.propTypes = {
   isInvert: PropTypes.bool,
   hasPlaybackspeed: PropTypes.bool,
   width: PropTypes.string,
-  statusEvent: PropTypes.func
+  statusEvent: PropTypes.func,
+  isPlayOnLoad: PropTypes.bool
 };
+
+export default StyledPlayer;

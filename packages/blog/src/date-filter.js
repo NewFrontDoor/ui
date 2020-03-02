@@ -73,7 +73,7 @@ const months = [
   'December'
 ];
 
-export default function DateFilter() {
+const DateFilter = () => {
   const startYear = new Date().getFullYear() - 6;
   const [dateFilter, toggleDateFilter] = useState(false);
 
@@ -91,11 +91,9 @@ export default function DateFilter() {
           >
             &lt;
           </Arrow>
-          {[...new Array(7)]
-            .map((x, index) => startYear + index)
-            .map(item => (
-              <Year>{item}</Year>
-            ))}
+          {Array.from({length: 7}, (_, i) => startYear + i).map(item => (
+            <Year key={item}>{item}</Year>
+          ))}
           <Arrow
             css={css`
               text-align: right;
@@ -105,13 +103,13 @@ export default function DateFilter() {
           </Arrow>
         </Years>
         <Months>
-          {[...new Array(12)]
-            .map((x, index) => 0 + index)
-            .map(item => (
-              <Month>{months[item]}</Month>
-            ))}
+          {Array.from({length: 12}, (_, i) => months[i]).map(month => (
+            <Month key={month}>{month}</Month>
+          ))}
         </Months>
       </FilterOptions>
     </FilterWrapper>
   );
-}
+};
+
+export default DateFilter;

@@ -1,6 +1,5 @@
 /** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {css} from '@emotion/core';
+import {jsx, css} from 'theme-ui';
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ky from 'ky-universal';
@@ -32,7 +31,7 @@ function useBible(url, passage) {
   return [error, data];
 }
 
-function Bible({url, passage}) {
+const Bible = ({url, passage}) => {
   const [error, data] = useBible(url, passage);
 
   if (error) {
@@ -72,7 +71,7 @@ function Bible({url, passage}) {
   }
 
   return null;
-}
+};
 
 Bible.propTypes = {
   url: PropTypes.string.isRequired,

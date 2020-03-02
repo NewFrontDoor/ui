@@ -14,14 +14,7 @@ const Link = props => (
 );
 
 Link.propTypes = {
-  as: PropTypes.string,
-  href: PropTypes.string.isRequired,
-  prefetch: PropTypes.bool
-};
-
-Link.defaultProps = {
-  as: undefined,
-  prefetch: false
+  title: PropTypes.string
 };
 
 export default Link;

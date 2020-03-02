@@ -1,20 +1,12 @@
 export {default as LatestSermon} from './latest-sermon';
 
-export {
-  default as LatestSermonContainerDrupal
-} from './latest-sermon-container-drupal';
+export {default as LatestSermonContainerDrupal} from './latest-sermon-container-drupal';
 
-export {
-  default as RecentSeriesContainerDrupal
-} from './recent-series-container-drupal';
+export {default as RecentSeriesContainerDrupal} from './recent-series-container-drupal';
 
-export {
-  default as SeriesSermonListContainerDrupal
-} from './series-sermon-list-container-drupal';
+export {default as SeriesSermonListContainerDrupal} from './series-sermon-list-container-drupal';
 
-export {
-  default as CurrentSeriesContainerDrupal
-} from './current-series-container-drupal';
+export {default as CurrentSeriesContainerDrupal} from './current-series-container-drupal';
 
 export {default as RenderSeriesComponent} from './render-series-content';
 export {default as CurrentSeries} from './current-series';

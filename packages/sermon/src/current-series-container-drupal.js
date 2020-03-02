@@ -1,6 +1,6 @@
 import React from 'react';
-import fetch from 'isomorphic-fetch';
 import {ApiContext} from '@newfrontdoor/api-config';
+import ky from 'ky-universal';
 import CurrentSeries from './current-series';
 
 class CurrentSeriesContainerDrupal extends React.PureComponent {
@@ -35,11 +35,11 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
       });
   }
 
-  getCurrentSeries = () => {
-    return fetch(
-      `${this.props.baseUrl}current_series_api?display_id=services_1`
-    ).then(resp => resp.json());
-  };
+  getCurrentSeries() {
+    return ky
+      .get(`${this.props.baseUrl}current_series_api?display_id=services_1`)
+      .json();
+  }
 
   render() {
     return (

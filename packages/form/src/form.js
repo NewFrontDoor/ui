@@ -14,7 +14,7 @@ const RadioGroup = styled('fieldset')`
   }
 `;
 
-function getFormField(field) {
+const getFormField = field => {
   switch (field.input) {
     case 'textarea':
       return (
@@ -76,7 +76,7 @@ function getFormField(field) {
         </div>
       );
   }
-}
+};
 
 export default function Form({title, id, description, fields}) {
   return (

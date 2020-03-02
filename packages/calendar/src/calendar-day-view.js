@@ -127,7 +127,9 @@ const Day = ({calendarData, handleNav}) => {
             color={event.color}
             role="button"
           >
-            <EventWrapper event={event} handleNav={handleNav}>{event.name}</EventWrapper>
+            <EventWrapper event={event} handleNav={handleNav}>
+              {event.name}
+            </EventWrapper>
           </Event>
         );
       })}

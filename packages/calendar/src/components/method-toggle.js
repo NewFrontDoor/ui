@@ -115,7 +115,7 @@ const StyledRadioGroup = styled(RadioGroup)`
     )}
 `;
 
-function MethodToggle(props) {
+const MethodToggle = props => {
   const dispatch = useContext(CalendarDispatch);
 
   return (
@@ -135,7 +135,7 @@ function MethodToggle(props) {
       ])}
     </StyledRadioGroup>
   );
-}
+};
 
 export default MethodToggle;
 

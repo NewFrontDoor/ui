@@ -18,18 +18,19 @@
     "hooks"
   ],
   "peerDependencies": {
+    "@emotion/core": "^10.0",
+    "@emotion/styled": "^10.0",
+    "theme-ui": "^0.3.1",
     "react": "^16.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.21",
-    "@emotion/styled": "^10.0.17",
     "prop-types": "^15.7.2",
     "react-icons": "^3.7.0",
     "react-range": "^1.4.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^9.2.0"
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/react": "^9.4.1"
   },
   "xo": false
 }

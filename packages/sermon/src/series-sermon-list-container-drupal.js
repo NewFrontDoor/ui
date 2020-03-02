@@ -1,4 +1,3 @@
-import 'isomorphic-fetch';
 import React from 'react';
 import {ApiContext} from '@newfrontdoor/api-config';
 import SermonSeriesList from './series-sermon-list';

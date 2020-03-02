@@ -33,7 +33,13 @@ const Tr = styled.tr`
   }
 `;
 
-export default function SermonTable({sermons, headers, columnHide, titleKey, sermonDirectory}) {
+const SermonTable = ({
+  sermons,
+  headers,
+  columnHide,
+  titleKey,
+  sermonDirectory
+}) => {
   const desiredColumns = headers
     .map(item => item.key)
     .filter(word => word !== 'title');
@@ -60,7 +66,9 @@ export default function SermonTable({sermons, headers, columnHide, titleKey, ser
             </td>
             {desiredColumns.map(item => (
               <td key={sermon.nid + item}>
-                {sermon.hasOwnProperty(item) ? sermon[item] : ''}
+                {Object.prototype.hasOwnProperty.call(sermon, item)
+                  ? sermon[item]
+                  : ''}
               </td>
             ))}
             <td>
@@ -73,9 +81,11 @@ export default function SermonTable({sermons, headers, columnHide, titleKey, ser
       </tbody>
     </Table>
   );
-}
+};
 
 SermonTable.defaultProps = {
+  sermons: [],
+  headers: [],
   columnHide: [],
   titleKey: 'title',
   sermonDirectory: 'sermons'
@@ -83,8 +93,10 @@ SermonTable.defaultProps = {
 
 SermonTable.propTypes = {
   columnHide: PropTypes.array,
-  headers: PropTypes.array.isRequired,
-  sermons: PropTypes.array.isRequired,
+  headers: PropTypes.array,
+  sermons: PropTypes.array,
   titleKey: PropTypes.string,
   sermonDirectory: PropTypes.string
 };
+
+export default SermonTable;
