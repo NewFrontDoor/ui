@@ -3,7 +3,8 @@ import {jsx} from '@emotion/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
-import {Dialog, DialogOverlay, DialogContent} from '@reach/dialog';
+import {Dialog} from '@reach/dialog';
+
 import '@reach/dialog/styles.css';
 
 const Footer = styled('footer')`
@@ -17,7 +18,7 @@ const Footer = styled('footer')`
   }
 `;
 
-export default function EventWrapper({event, handleNav}) {
+const EventWrapper = ({event, handleNav}) => {
   const [showDialog, setShowDialog] = React.useState(false);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
@@ -67,10 +68,13 @@ export default function EventWrapper({event, handleNav}) {
       </Dialog>
     </>
   );
-}
+};
 
 EventWrapper.propTypes = {
   event: PropTypes.PropTypes.shape({
     name: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  handleNav: PropTypes.func
 };
+
+export default EventWrapper;

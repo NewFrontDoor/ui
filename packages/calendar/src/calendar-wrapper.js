@@ -5,12 +5,7 @@ import Calendar from './calendar';
 import CalendarDispatch from './utilities/calendar-dispatch-provider';
 import useCalendarEvents from './use-calendar-events';
 
-export default function CalendarWrapper({
-  client,
-  initialView,
-  isViewFixed,
-  handleNav
-}) {
+const CalendarWrapper = ({client, initialView, isViewFixed, handleNav}) => {
   const [
     {calendarData, currentDate, calendarView},
     loading,
@@ -34,7 +29,7 @@ export default function CalendarWrapper({
       )}
     </CalendarDispatch.Provider>
   );
-}
+};
 
 CalendarWrapper.propTypes = {
   initialView: PropTypes.oneOf(['day', 'week', 'month']).isRequired,
@@ -45,3 +40,5 @@ CalendarWrapper.propTypes = {
 CalendarWrapper.defaultProps = {
   isViewFixed: false
 };
+
+export default CalendarWrapper;

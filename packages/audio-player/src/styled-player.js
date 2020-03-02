@@ -325,10 +325,10 @@ const StyledPlayer = ({
 StyledPlayer.defaultProps = {
   highlight: '#548BF4',
   base: '#ddd',
-  hasBorder: 'true',
+  hasBorder: true,
   background: 'none',
-  isInvert: 'false',
-  hasPlaybackspeed: 'true',
+  isInvert: false,
+  hasPlaybackspeed: true,
   width: '280px',
   statusEvent: () => {},
   isPlayOnLoad: false

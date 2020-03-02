@@ -40,7 +40,7 @@ const Bible = ({url, passage}) => {
 
   if (data.length > 0) {
     return (
-      <p sx={{color: 'text'}}>
+      <div sx={{color: 'text'}}>
         {data.map(({bookname, chapter, text, title, verse}) => (
           <React.Fragment key={`${bookname}-${chapter}-${verse}`}>
             {title && (
@@ -66,7 +66,7 @@ const Bible = ({url, passage}) => {
             </p>
           </React.Fragment>
         ))}
-      </p>
+      </div>
     );
   }
 
