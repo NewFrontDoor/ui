@@ -1,41 +1,30 @@
 /** @jsx jsx */
 import {jsx, css} from 'theme-ui';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ky from 'ky-universal';
+import {useQuery} from 'react-query';
 
-function useBible(url, passage) {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    async function fetchBible() {
-      const result = await ky(url, {
-        searchParams: {
-          passage,
-          type: 'json'
-        },
-        mode: 'cors',
-        credentials: 'omit'
-      }).json();
-
-      setData(result);
-    }
-
-    fetchBible().catch(error_ => {
-      console.log(error_);
-      setError(`Failed to load bible ${passage}`);
-    });
-  }, [passage, url]);
-
-  return [error, data];
+async function fetchBible(url, passage) {
+  return ky(url, {
+    searchParams: {
+      passage,
+      type: 'json'
+    },
+    mode: 'cors',
+    credentials: 'omit'
+  }).json();
 }
 
 const Bible = ({url, passage}) => {
-  const [error, data] = useBible(url, passage);
+  const {data, status, error} = useQuery([url, passage], fetchBible);
 
   if (error) {
     return <p>{error}</p>;
+  }
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
   }
 
   if (data.length > 0) {
