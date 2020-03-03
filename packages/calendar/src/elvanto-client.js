@@ -5,12 +5,14 @@ import {
   subMonths,
   startOfMonth,
   endOfMonth,
-  format
+  format,
+  parseISO
 } from 'date-fns';
 
 export default function createElvantoClient(apiUrl) {
   return {
-    async fetchEvents(currentDate) {
+    async fetchEvents(date) {
+      const currentDate = parseISO(date);
       const startDate = format(
         subMonths(startOfMonth(currentDate), 1),
         'yyyy-MM-dd'

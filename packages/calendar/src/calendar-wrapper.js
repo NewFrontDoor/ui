@@ -8,14 +8,14 @@ import useCalendarEvents from './use-calendar-events';
 const CalendarWrapper = ({client, initialView, isViewFixed, handleNav}) => {
   const [
     {calendarData, currentDate, calendarView},
-    loading,
-    error,
+    status,
+    ,
     dispatch
   ] = useCalendarEvents(initialView, client);
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      {loading ? (
+      {status === 'loading' ? (
         <div>loading...</div>
       ) : (
         <Calendar

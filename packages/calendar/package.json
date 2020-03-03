@@ -24,6 +24,7 @@
     "polished": "^3.3.0",
     "prop-types": "^15.6.0",
     "react-portal": "^4.1.5",
+    "react-query": "^1.0.5",
     "react-radio-group": "^3.0.3",
     "typeface-montserrat": "0.0.75"
   },

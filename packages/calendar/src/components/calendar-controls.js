@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import {jsx, Heading, Button, Box} from 'theme-ui';
-import {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
 import styled from '@emotion/styled';
-import CalendarDispatch from '../utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from '../utilities/calendar-dispatch-provider';
 import MethodToggle from './method-toggle';
 
 const Outer = styled('div')`
@@ -20,14 +19,14 @@ const Outer = styled('div')`
   }
 `;
 
-export default function CalendarControls({
+const CalendarControls = ({
   location,
   calendarView,
   input,
   isViewFixed,
   startOfMonth
-}) {
-  const dispatch = useContext(CalendarDispatch);
+}) => {
+  const dispatch = useCalendarDispatch();
   let jump;
   switch (calendarView) {
     case 'day':
@@ -109,7 +108,7 @@ export default function CalendarControls({
       </Box>
     </Outer>
   );
-}
+};
 
 CalendarControls.propTypes = {
   calendarView: PropTypes.string.isRequired,
@@ -121,3 +120,5 @@ CalendarControls.propTypes = {
 CalendarControls.defaultProps = {
   isViewFixed: false
 };
+
+export default CalendarControls;

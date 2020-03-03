@@ -43,14 +43,14 @@ const views = {
   month: Month
 };
 
-export default function Calendar({
+const Calendar = ({
   calendarView,
   calendarData,
   weekNumber,
   isViewFixed,
   startOfMonth,
   handleNav
-}) {
+}) => {
   const CalendarView = views[calendarView];
 
   return (
@@ -85,7 +85,7 @@ export default function Calendar({
       />
     </CalendarContainer>
   );
-}
+};
 
 Calendar.propTypes = {
   calendarView: PropTypes.string.isRequired,
@@ -99,3 +99,5 @@ Calendar.propTypes = {
 Calendar.defaultProps = {
   isViewFixed: false
 };
+
+export default Calendar;

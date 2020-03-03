@@ -1,4 +1,5 @@
-import {useState, useEffect, useReducer} from 'react';
+import {useReducer} from 'react';
+import {useQuery} from 'react-query';
 import {
   addMonths,
   subMonths,
@@ -92,26 +93,13 @@ function useCalendarEvents(initialView, client) {
     init
   );
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState();
+  const {data, status, error} = useQuery(currentDate, client.fetchEvents);
 
-  useEffect(() => {
-    client
-      .fetchEvents(currentDate)
-      .then(result => {
-        setData(result);
-      })
-      .catch(error_ => {
-        console.error(error_);
-        setError(`Failed to load calendar events`);
-      })
-      .finally(() => setLoading(false));
-  }, [client, currentDate]);
+  const calendarData = data
+    ? buildCalendarData(calendarView, currentDate, data)
+    : [];
 
-  const calendarData = buildCalendarData(calendarView, currentDate, data);
-
-  return [{calendarData, currentDate, calendarView}, loading, error, dispatch];
+  return [{calendarData, currentDate, calendarView}, status, error, dispatch];
 }
 
 export default useCalendarEvents;

@@ -1,6 +1,5 @@
 import React from 'react';
 import Calendar from '../src';
-// eslint-disable-next-line import/extensions
 import events from './events.json';
 
 const client = {

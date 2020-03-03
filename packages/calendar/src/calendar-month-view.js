@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {shade, lighten, readableColor} from 'polished';
 import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
-import CalendarDispatch from './utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from './utilities/calendar-dispatch-provider';
 
 const WeekBlock = styled.div({
   display: 'grid',
@@ -102,7 +102,9 @@ const SeeMore = styled.div(
 );
 
 const Month = ({calendarData, handleNav}) => {
-  const dispatch = useContext(CalendarDispatch);
+  console.log(calendarData);
+  const dispatch = useCalendarDispatch();
+
   return (
     <>
       {calendarData.map(({week, weekNumber}) => (

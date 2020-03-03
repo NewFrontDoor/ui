@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {RadioGroup, Radio} from 'react-radio-group';
 import styled from '@emotion/styled';
-import CalendarDispatch from '../utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from '../utilities/calendar-dispatch-provider';
 
 const StyledRadioGroup = styled(RadioGroup)`
   height: ${props =>
@@ -116,8 +116,8 @@ const StyledRadioGroup = styled(RadioGroup)`
 `;
 
 const MethodToggle = props => {
-  const dispatch = useContext(CalendarDispatch);
-
+  const dispatch = useCalendarDispatch();
+  ``;
   return (
     <StyledRadioGroup
       id="methodField"

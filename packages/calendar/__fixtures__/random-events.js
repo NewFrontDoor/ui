@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import faker from 'faker';
-import {startOfMonth, endOfMonth, addHours} from 'date-fns';
+import {startOfMonth, endOfMonth, addHours, parseISO} from 'date-fns';
 
 import Calendar from '../src';
 
@@ -27,7 +27,9 @@ export function buildEvent(currentDate) {
 }
 
 const client = {
-  fetchEvents(currentDate) {
+  fetchEvents(date) {
+    const currentDate = parseISO(date);
+
     const events = Array.from({length: 50})
       .map(() => buildEvent(currentDate))
       .sort((a, b) => a.start_date - b.start_date);
