@@ -102,7 +102,6 @@ const SeeMore = styled.div(
 );
 
 const Month = ({calendarData, handleNav}) => {
-  console.log(calendarData);
   const dispatch = useCalendarDispatch();
 
   return (

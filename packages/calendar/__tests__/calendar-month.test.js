@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, fireEvent, cleanup, wait} from '@testing-library/react';
+import {act, render, fireEvent, cleanup, wait} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import {format, subMonths, subYears, addMonths, addYears} from 'date-fns';
 import Calendar from '../src';
@@ -39,17 +39,31 @@ test('Can navigate to the previous month and year', async () => {
     expect(getByLabelText('previous month')).toBeInTheDocument();
   });
 
-  fireEvent.click(getByLabelText('previous month'));
-  const previousMonth = subMonths(new Date(), 1);
-  expect(getByTestId('calendar-title')).toHaveTextContent(
-    format(previousMonth, 'MMMM - yyyy')
-  );
+  act(() => {
+    fireEvent.click(getByLabelText('previous month'));
+  });
 
-  fireEvent.click(getByLabelText('previous year'));
+  const previousMonth = subMonths(new Date(), 1);
+  await wait(() => {
+    expect(getByTestId('calendar-title')).toBeInTheDocument();
+
+    expect(getByTestId('calendar-title')).toHaveTextContent(
+      format(previousMonth, 'MMMM - yyyy')
+    );
+  });
+
+  act(() => {
+    fireEvent.click(getByLabelText('previous year'));
+  });
+
   const previousYear = subYears(previousMonth, 1);
-  expect(getByTestId('calendar-title')).toHaveTextContent(
-    format(previousYear, 'MMMM - yyyy')
-  );
+  await wait(() => {
+    expect(getByTestId('calendar-title')).toBeInTheDocument();
+
+    expect(getByTestId('calendar-title')).toHaveTextContent(
+      format(previousYear, 'MMMM - yyyy')
+    );
+  });
 });
 
 test('Can navigate to the next month and year', async () => {
@@ -67,15 +81,29 @@ test('Can navigate to the next month and year', async () => {
     expect(getByLabelText('next month')).toBeInTheDocument();
   });
 
-  fireEvent.click(getByLabelText('next month'));
-  const nextMonth = addMonths(new Date(), 1);
-  expect(getByTestId('calendar-title')).toHaveTextContent(
-    format(nextMonth, 'MMMM - yyyy')
-  );
+  act(() => {
+    fireEvent.click(getByLabelText('next month'));
+  });
 
-  fireEvent.click(getByLabelText('next year'));
+  const nextMonth = addMonths(new Date(), 1);
+  await wait(() => {
+    expect(getByTestId('calendar-title')).toBeInTheDocument();
+
+    expect(getByTestId('calendar-title')).toHaveTextContent(
+      format(nextMonth, 'MMMM - yyyy')
+    );
+  });
+
+  act(() => {
+    fireEvent.click(getByLabelText('next year'));
+  });
+
   const nextYear = addYears(nextMonth, 1);
-  expect(getByTestId('calendar-title')).toHaveTextContent(
-    format(nextYear, 'MMMM - yyyy')
-  );
+  await wait(() => {
+    expect(getByTestId('calendar-title')).toBeInTheDocument();
+
+    expect(getByTestId('calendar-title')).toHaveTextContent(
+      format(nextYear, 'MMMM - yyyy')
+    );
+  });
 });
