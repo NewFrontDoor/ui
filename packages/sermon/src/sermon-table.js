@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {FaDownload} from 'react-icons/fa';
 
 const Table = styled.table`
