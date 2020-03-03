@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/sermon",
-  "version": "0.2.13",
+  "version": "0.3.0",
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,6 @@
   "peerDependencies": {
     "@emotion/core": "^10.0",
     "@emotion/styled": "^10.0",
-    "mineral-ui": "^0.58.0",
     "react": "^16.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2"
@@ -27,7 +26,8 @@
     "react-global-configuration": "^1.3.0",
     "react-icons": "^3.7.0",
     "react-query": "^1.0.5",
-    "react-spinners": "^0.6.1"
+    "react-spinners": "^0.6.1",
+    "react-table": "^7.0.0-rc.16"
   },
   "xo": false
 }
