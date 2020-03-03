@@ -38,7 +38,8 @@ const SermonTable = ({
   headers,
   columnHide,
   titleKey,
-  sermonDirectory
+  sermonDirectory,
+  renderLink
 }) => {
   const desiredColumns = headers
     .map(item => item.key)
@@ -57,12 +58,7 @@ const SermonTable = ({
         {sermons.map((sermon, index) => (
           <Tr key={sermon.nid} num={index} columnHide={columnHide}>
             <td>
-              <Link
-                to={`/${sermonDirectory}/${sermon.slug}`}
-                dangerouslySetInnerHTML={{
-                  __html: sermon[titleKey] ? sermon[titleKey] : 'untitled'
-                }}
-              />
+              {renderLink(sermonDirectory, sermon.slug, sermon[titleKey])}
             </td>
             {desiredColumns.map(item => (
               <td key={sermon.nid + item}>
@@ -88,7 +84,8 @@ SermonTable.defaultProps = {
   headers: [],
   columnHide: [],
   titleKey: 'title',
-  sermonDirectory: 'sermons'
+  sermonDirectory: 'sermons',
+  renderLink: () => {}
 };
 
 SermonTable.propTypes = {
@@ -96,7 +93,8 @@ SermonTable.propTypes = {
   headers: PropTypes.array,
   sermons: PropTypes.array,
   titleKey: PropTypes.string,
-  sermonDirectory: PropTypes.string
+  sermonDirectory: PropTypes.string,
+  renderLink: PropTypes.func
 };
 
 export default SermonTable;
