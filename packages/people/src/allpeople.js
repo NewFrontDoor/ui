@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ky from 'ky-universal';
+import {useQuery} from 'react-query';
 import People from './people';
-import {useFetch} from './utilities/hooks';
 
-export default function AllPeople({groups, apiUrl}) {
-  const [apiData, loading, error] = useFetch(apiUrl);
+async function fetchPeople(apiUrl) {
+  return ky(apiUrl).json();
+}
+
+const AllPeople = ({groups, apiUrl}) => {
+  const {status, data, error} = useQuery(apiUrl, fetchPeople);
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  if (loading) {
+  if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
@@ -19,7 +24,7 @@ export default function AllPeople({groups, apiUrl}) {
         return (
           <People
             key={group.title}
-            people={apiData.filter(type => type.roles.includes(group.type))}
+            people={data.filter(type => type.roles.includes(group.type))}
             email={group.email}
             title={group.title}
           />
@@ -27,9 +32,11 @@ export default function AllPeople({groups, apiUrl}) {
       })}
     </div>
   );
-}
+};
 
 AllPeople.propTypes = {
   groups: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired
 };
+
+export default AllPeople;

@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Person from './person';
 
-export default function People({people, title, email}) {
+const People = ({people, title, email}) => {
   return (
     <div className="row">
       <div className="col-md-12">
@@ -25,4 +26,21 @@ export default function People({people, title, email}) {
       </div>
     </div>
   );
-}
+};
+
+People.propTypes = {
+  email: PropTypes.string,
+  title: PropTypes.string,
+  people: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      title: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string)
+      ]),
+      avatar_url: PropTypes.string
+    })
+  )
+};
+
+export default People;
