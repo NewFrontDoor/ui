@@ -1,5 +1,5 @@
 import React from 'react';
-import Blog from '../src';
+import {Blog} from '../src';
 
 const props = {
   posts: [

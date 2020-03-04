@@ -16,7 +16,7 @@ async function fetchBible(url, passage) {
   }).json();
 }
 
-const Bible = ({url, passage}) => {
+export const Bible = ({url, passage}) => {
   const {data, status, error} = useQuery([url, passage], fetchBible);
 
   if (error) {
@@ -66,5 +66,3 @@ Bible.propTypes = {
   url: PropTypes.string.isRequired,
   passage: PropTypes.string.isRequired
 };
-
-export default Bible;

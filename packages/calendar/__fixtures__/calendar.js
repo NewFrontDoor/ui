@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar from '../src';
+import {Calendar} from '../src';
 import events from './events.json';
 
 const client = {

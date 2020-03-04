@@ -10,10 +10,13 @@
   ],
   "author": "Alan Reader",
   "license": "MIT",
-  "scripts": {
-    "babel": "babel src -d dist"
-  },
+  "source": "src/index.js",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "scripts": {
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
+  },
   "files": [
     "dist"
   ],

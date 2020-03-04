@@ -1,5 +1,5 @@
 import React from 'react';
-import PostPage from '../src/post-page';
+import {PostPage} from '../src';
 
 const props = {
   post: {

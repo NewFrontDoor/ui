@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar, {drupalClient} from '../src';
+import {Calendar, drupalClient} from '../src';
 
 const apiUrl =
   'https://cornerstoneapi.newfrontdoor.org/api/views/all_events_api';

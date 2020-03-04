@@ -4,9 +4,12 @@
   "description": "An audio element wrapper written in React with hooks",
   "license": "MIT",
   "author": "Alan Reader",
+  "source": "src/index.js",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
   "scripts": {
-    "babel": "babel src -d dist"
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
   },
   "files": [
     "dist"
