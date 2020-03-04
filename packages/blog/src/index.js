@@ -1,5 +1,2 @@
-import Blog from './blog';
-
-export default Blog;
-
-export {default as postPage} from './post-page';
+export {default as Blog} from './blog';
+export {default as PostPage} from './post-page';

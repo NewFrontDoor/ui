@@ -5,35 +5,33 @@ import ImageView from './image-view';
 import Modal from './modal';
 import PersonModal from './person-modal';
 
-export default class About extends React.Component {
-  render() {
-    return (
-      <div>
-        {this.props.people.map(person => (
-          <PortalWithState
-            key={person.name + '-portal'}
-            closeOnOutsideClick
-            closeOnEsc
-          >
-            {({openPortal, closePortal, portal}) => [
-              <ImageView
-                key={person.image}
-                image={person.image}
-                name={person.name}
-                onClick={openPortal}
-              />,
-              portal(
-                <Modal closeClick={closePortal}>
-                  <PersonModal {...person} />
-                </Modal>
-              )
-            ]}
-          </PortalWithState>
-        ))}
-      </div>
-    );
-  }
-}
+const About = props => {
+  return (
+    <div>
+      {props.people.map(person => (
+        <PortalWithState
+          key={person.name + '-portal'}
+          closeOnOutsideClick
+          closeOnEsc
+        >
+          {({openPortal, closePortal, portal}) => [
+            <ImageView
+              key={person.image}
+              image={person.image}
+              name={person.name}
+              onClick={openPortal}
+            />,
+            portal(
+              <Modal closeClick={closePortal}>
+                <PersonModal {...person} />
+              </Modal>
+            )
+          ]}
+        </PortalWithState>
+      ))}
+    </div>
+  );
+};
 
 About.propTypes = {
   people: PropTypes.arrayOf(
@@ -46,3 +44,5 @@ About.propTypes = {
     })
   ).isRequired
 };
+
+export default About;

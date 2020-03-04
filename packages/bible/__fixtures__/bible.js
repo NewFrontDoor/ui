@@ -1,8 +1,7 @@
 /** @jsx jsx */
-import {css, jsx} from '@emotion/core';
+import {css, jsx, Text} from 'theme-ui';
 import PropTypes from 'prop-types';
-import Text from 'mineral-ui/Text';
-import Bible from '../src';
+import {Bible} from '../src';
 
 const BIBLE = 'https://serverless.newfrontdoor.org/bible';
 

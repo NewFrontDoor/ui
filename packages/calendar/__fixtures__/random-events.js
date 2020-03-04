@@ -3,7 +3,7 @@ import React from 'react';
 import faker from 'faker';
 import {startOfMonth, endOfMonth, addHours, parseISO} from 'date-fns';
 
-import Calendar from '../src';
+import {Calendar} from '../src';
 
 export function buildEvent(currentDate) {
   const twoMonthsAgo = startOfMonth(currentDate);

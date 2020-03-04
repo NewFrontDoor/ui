@@ -2,7 +2,7 @@ import React from 'react';
 import {act, render, fireEvent, cleanup, wait} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import {format, subMonths, subYears, addMonths, addYears} from 'date-fns';
-import Calendar from '../src';
+import {Calendar} from '../src';
 
 afterEach(cleanup);
 

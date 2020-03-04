@@ -1,6 +1,4 @@
-import Bible from './bible';
-
-export default Bible;
+export * from './bible';
 
 export {extractAndValidate} from './passage-validation';
 export {fullBookTitle} from './passage-validation';
