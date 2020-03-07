@@ -2,9 +2,11 @@ import bible from './bible.json';
 const books = Object.keys(bible);
 
 function extractAndValidate(value) {
-  const book = [];
-  const chapter = [];
-  const verse = [];
+  let storedRef = {
+    book: undefined,
+    chapter: undefined,
+    verse: undefined
+  };
   const splits = value.match(/(?:-|,+\s|;+\s|\s\s|to|and)/g);
   const connections =
     splits &&
@@ -13,9 +15,8 @@ function extractAndValidate(value) {
         .replace(/(?:-|to)/g, 'to')
         .replace(/(?:,+\s|\s\s|;+\s|and)/g, 'and');
     });
-  console.log(connections);
   // --- Start manipulation of incoming value
-  const arrays = value
+  const objects = value
     .toLowerCase()
     // Fix any numerical mistypes or variants
     .replace(/!|one|first|1st/g, '1')
@@ -32,59 +33,63 @@ function extractAndValidate(value) {
     .split(/(?:-|,+\s|;+\s|\s\s|to|and)/)
     .map((item, index) => {
       if (!item) return null;
-      // Remove leading/trailing spaces and split chapter and verse to separate array elements
-      const raw = item.trim().split(/[\s:.,;'"/]+/);
+      const bibleRef = {
+        book: undefined,
+        chapter: undefined,
+        verse: undefined,
+        connection: undefined
+      };
+      // Remove leading/trailing spaces and split book, chapter and verse to separate array elements
+      // removing any extra junk that isn't letters or numbers
+      const raw = item
+        .trim()
+        .split(/([a-zA-Z]+|[0-9]+)/)
+        .filter(el => el !== '' && !el.match(/[^A-Za-z0-9]+/));
 
-      // If a space was omitted between book number and name, put one in
-      if (raw[0].match(/[\d!@#][A-Za-z]/)) {
-        const addspace = raw[0].split(/(\D[A-Za-z0-9]+)/);
-        raw[0] = `${addspace[0]} ${addspace[1]}`;
+      if (raw[0].match(/\d+/)) {
+        bibleRef.book = `${raw[0]} ${raw[1]}`;
+        if (raw[2]) raw.splice(0, 1);
+      } else {
+        bibleRef.book = raw[0].trim();
       }
 
-      if (raw[1] && raw[1].match(/\D+/)) {
-        // Otherwise, stitch the book number and name back together
-        raw[0] = `${raw[0]} ${raw[1]}`;
-        raw.splice(1, 1);
-      }
+      // If the book is omitted grab previous book reference
+      if (raw[0].match(/^[^a-zA-Z]+$/)) bibleRef.book = storedRef.book;
 
-      // If a space was omitted between book name and chapter, split it off
-      // The slice removes the leading numbers for correct positive regex match
-      if (raw[0].slice(2).match(/\w+\d+/)) {
-        const splitString = raw[0].match(/(\d*\D*)/g);
-        raw.splice(0, 1, splitString[0], splitString[1]);
+      if (raw[1] && raw[1].match(/\d+/)) {
+        bibleRef.chapter = raw[1];
       }
 
       // If the chapter is omitted from this array member
       // Grab the one from the previous array member
-      // Same with the book
       if (
-        raw[1] === undefined &&
-        book[index - 1] !== undefined &&
-        chapter[index - 1] !== undefined &&
-        verse[index - 1] !== undefined &&
+        bibleRef.chapter === undefined &&
+        storedRef.book !== undefined &&
+        storedRef.chapter !== undefined &&
+        storedRef.verse !== undefined &&
         index !== 0
       ) {
-        raw.unshift(chapter[index - 1]);
+        bibleRef.chapter = storedRef.chapter;
       }
 
-      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(book[index - 1]);
+      // Populate the verse value (if it exists)
+      bibleRef.verse = raw[2] || raw[1] || raw[0];
 
-      // Save the book in an array so that the it can be retrieved as above
-      book.push(raw[0]);
-      chapter.push(raw[1]);
-      verse.push(raw[2]);
+      // Save the book in a new object so that the it can be retrieved as above
+      storedRef = bibleRef;
+
       // Return this transformed element of the array
-      raw[3] = index === 0 ? 'init' : connections[index - 1];
-      return raw;
+      bibleRef.connection = index === 0 ? 'init' : connections[index - 1];
+      return bibleRef;
     });
   // --- End manipulation of incoming value
 
-  const validation = arrays.map((item, index) => {
+  const validation = objects.map((item, index) => {
     if (!item) return false;
-    return validate(arrays, item, index);
+    return validate(objects, item, index);
   });
-
-  return [arrays, validation];
+console.log(objects)
+  return [objects, validation];
 }
 
 function fullBookTitle(book) {
@@ -95,8 +100,8 @@ function fullBookTitle(book) {
   });
 }
 
-function validate(arrays, item, index) {
-  const [book, chapter, verse, connection] = item;
+function validate(objects, item, index) {
+  const {book, chapter, verse, connection} = item;
   const fullTitle = fullBookTitle(book);
   const valid = [false, false, false];
 
@@ -111,10 +116,10 @@ function validate(arrays, item, index) {
 
   // Check if passages are sequential,
   // and push the outcome to the valid array
-  const prevValue = index > 0 ? arrays[index - 1] : null;
-  if (index > 0 && connection === 'to' && book === prevValue[0]) {
-    const chapMath = Number(chapter) - Number(prevValue[1]);
-    const verseMath = Number(verse) - Number(prevValue[2]);
+  const prevValue = index > 0 ? objects[index - 1] : null;
+  if (index > 0 && connection === 'to' && book === prevValue.book) {
+    const chapMath = Number(chapter) - Number(prevValue.chapter);
+    const verseMath = Number(verse) - Number(prevValue.verse);
     if (chapMath < 0) valid.push('non-sequential');
     if (chapMath > 0) valid.push(true);
     if (chapMath === 0) {
@@ -125,13 +130,15 @@ function validate(arrays, item, index) {
   } else if (
     index > 0 &&
     connection === 'to' &&
-    books.findIndex(title => title === fullBookTitle(book)) <
-      books.findIndex(title => title === fullBookTitle(prevValue[0]))
+    books.findIndex(title => title === fullTitle) <
+      books.findIndex(title => title === fullBookTitle(prevValue.book))
   ) {
     valid.push('non-sequential');
   } else {
     valid.push(true);
   }
+
+  console.log(valid);
 
   return valid;
 }
