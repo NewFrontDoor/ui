@@ -8,14 +8,19 @@ function Output({isValid, objects}) {
     return objects
       .map(collection => {
         const {book, chapter = null, verse = null} = collection;
-        return `${fullBookTitle(book)} ${chapter ? chapter : ''}${verse ? ':' + verse : ''}`;
+        return (
+          collection &&
+          `${fullBookTitle(book)} ${chapter ? chapter : ''}${
+            verse ? ':' + verse : ''
+          }`
+        );
       })
       .map((string, index) => {
         if (index === 0) {
           return string;
         }
 
-        return (objects[index].connection === 'to' ? ' - ' : '; ') + string;
+        return (objects[index][3] === 'to' ? ' - ' : '; ') + string;
       });
   }
 
@@ -28,13 +33,13 @@ function Output({isValid, objects}) {
 export default function BibleInput() {
   const [input, setInput] = useState('');
   const [valid, setValid] = useState([]);
-  const [objects, setObjects] = useState([]);
+  const [objects, setArrays] = useState([]);
 
   function handleInputChange(e) {
     setInput(e.currentTarget.value);
     const [objects, validated] = extractAndValidate(e.currentTarget.value);
     setValid(validated);
-    setObjects(objects);
+    setArrays(objects);
   }
 
   const isValid = valid.map(array => {
