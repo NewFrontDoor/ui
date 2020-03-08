@@ -20,7 +20,7 @@ function Output({isValid, objects}) {
           return string;
         }
 
-        return (objects[index][3] === 'to' ? ' - ' : '; ') + string;
+        return (objects[index].connection === 'to' ? ' - ' : '; ') + string;
       });
   }
 
@@ -33,13 +33,13 @@ function Output({isValid, objects}) {
 export default function BibleInput() {
   const [input, setInput] = useState('');
   const [valid, setValid] = useState([]);
-  const [objects, setArrays] = useState([]);
+  const [objects, setObjects] = useState([]);
 
   function handleInputChange(e) {
     setInput(e.currentTarget.value);
     const [objects, validated] = extractAndValidate(e.currentTarget.value);
     setValid(validated);
-    setArrays(objects);
+    setObjects(objects);
   }
 
   const isValid = valid.map(array => {
