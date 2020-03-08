@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import {extractAndValidate, fullBookTitle} from './passage-validation';
 
-function Output({isValid, arrays}) {
+function Output({isValid, objects}) {
   if (isValid[0] === null) return 'Please enter a passage';
 
   if (isValid.every(element => element === true)) {
-    return arrays
+    return objects
       .map(collection => {
+        const {book, chapter = null, verse = null} = collection;
         return (
           collection &&
-          `${fullBookTitle(collection[0])} ${
-            collection[1] ? collection[1] : ''
-          }${collection[2] ? ':' + collection[2] : ''}`
+          `${fullBookTitle(book)} ${chapter ? chapter : ''}${
+            verse ? ':' + verse : ''
+          }`
         );
       })
       .map((string, index) => {
@@ -19,7 +20,7 @@ function Output({isValid, arrays}) {
           return string;
         }
 
-        return (arrays[index][3] === 'to' ? ' - ' : '; ') + string;
+        return (objects[index][3] === 'to' ? ' - ' : '; ') + string;
       });
   }
 
@@ -32,13 +33,13 @@ function Output({isValid, arrays}) {
 export default function BibleInput() {
   const [input, setInput] = useState('');
   const [valid, setValid] = useState([]);
-  const [arrays, setArrays] = useState([]);
+  const [objects, setArrays] = useState([]);
 
   function handleInputChange(e) {
     setInput(e.currentTarget.value);
-    const [arrays, validated] = extractAndValidate(e.currentTarget.value);
+    const [objects, validated] = extractAndValidate(e.currentTarget.value);
     setValid(validated);
-    setArrays(arrays);
+    setArrays(objects);
   }
 
   const isValid = valid.map(array => {
@@ -53,7 +54,7 @@ export default function BibleInput() {
       <h2>Passage</h2>
       <input value={input} onChange={handleInputChange} />
       <p>
-        <Output isValid={isValid} arrays={arrays} />
+        <Output isValid={isValid} objects={objects} />
       </p>
     </div>
   );

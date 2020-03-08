@@ -2,9 +2,11 @@ import bible from './bible.json';
 const books = Object.keys(bible);
 
 function extractAndValidate(value) {
-  const book = [];
-  const chapter = [];
-  const verse = [];
+  let storedRef = {
+    book: undefined,
+    chapter: undefined,
+    verse: undefined
+  };
   const splits = value.match(/(?:-|,+\s|;+\s|\s\s|to|and)/g);
   const connections =
     splits &&
@@ -13,9 +15,8 @@ function extractAndValidate(value) {
         .replace(/(?:-|to)/g, 'to')
         .replace(/(?:,+\s|\s\s|;+\s|and)/g, 'and');
     });
-  console.log(connections);
   // --- Start manipulation of incoming value
-  const arrays = value
+  const objects = value
     .toLowerCase()
     // Fix any numerical mistypes or variants
     .replace(/!|one|first|1st/g, '1')
@@ -59,32 +60,39 @@ function extractAndValidate(value) {
       // Same with the book
       if (
         raw[1] === undefined &&
-        book[index - 1] !== undefined &&
-        chapter[index - 1] !== undefined &&
-        verse[index - 1] !== undefined &&
+        storedRef.book !== undefined &&
+        storedRef.chapter !== undefined &&
+        storedRef.verse !== undefined &&
         index !== 0
       ) {
-        raw.unshift(chapter[index - 1]);
+        raw.unshift(storedRef.chapter);
       }
 
-      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(book[index - 1]);
+      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(storedRef.book);
 
-      // Save the book in an array so that the it can be retrieved as above
-      book.push(raw[0]);
-      chapter.push(raw[1]);
-      verse.push(raw[2]);
       // Return this transformed element of the array
       raw[3] = index === 0 ? 'init' : connections[index - 1];
-      return raw;
+
+      const bibleRef = {
+        connection: raw[3],
+        book: raw[0],
+        chapter: raw[1],
+        verse: raw[2]
+      };
+
+      // Save the book in an object so that the it can be retrieved as above
+      storedRef = bibleRef;
+
+      return bibleRef;
     });
   // --- End manipulation of incoming value
 
-  const validation = arrays.map((item, index) => {
+  const validation = objects.map((item, index) => {
     if (!item) return false;
-    return validate(arrays, item, index);
+    return validate(objects, item, index);
   });
 
-  return [arrays, validation];
+  return [objects, validation];
 }
 
 function fullBookTitle(book) {
@@ -95,8 +103,8 @@ function fullBookTitle(book) {
   });
 }
 
-function validate(arrays, item, index) {
-  const [book, chapter, verse, connection] = item;
+function validate(objects, item, index) {
+  const {connection, book, chapter, verse} = item;
   const fullTitle = fullBookTitle(book);
   const valid = [false, false, false];
 
@@ -111,7 +119,7 @@ function validate(arrays, item, index) {
 
   // Check if passages are sequential,
   // and push the outcome to the valid array
-  const prevValue = index > 0 ? arrays[index - 1] : null;
+  const prevValue = index > 0 ? objects[index - 1] : null;
   if (index > 0 && connection === 'to' && book === prevValue[0]) {
     const chapMath = Number(chapter) - Number(prevValue[1]);
     const verseMath = Number(verse) - Number(prevValue[2]);
