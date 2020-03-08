@@ -120,9 +120,9 @@ function validate(objects, item, index) {
   // Check if passages are sequential,
   // and push the outcome to the valid array
   const prevValue = index > 0 ? objects[index - 1] : null;
-  if (index > 0 && connection === 'to' && book === prevValue[0]) {
-    const chapMath = Number(chapter) - Number(prevValue[1]);
-    const verseMath = Number(verse) - Number(prevValue[2]);
+  if (index > 0 && connection === 'to' && book === prevValue.book) {
+    const chapMath = Number(chapter) - Number(prevValue.chapter);
+    const verseMath = Number(verse) - Number(prevValue.verse);
     if (chapMath < 0) valid.push('non-sequential');
     if (chapMath > 0) valid.push(true);
     if (chapMath === 0) {
@@ -134,7 +134,7 @@ function validate(objects, item, index) {
     index > 0 &&
     connection === 'to' &&
     books.findIndex(title => title === fullBookTitle(book)) <
-      books.findIndex(title => title === fullBookTitle(prevValue[0]))
+      books.findIndex(title => title === fullBookTitle(prevValue.book))
   ) {
     valid.push('non-sequential');
   } else {
