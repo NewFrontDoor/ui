@@ -1,25 +1,21 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import Card, {
-  CardActions,
-  CardBlock,
-  CardDivider,
-  CardFooter,
-  CardImage,
-  CardTitle
-} from 'mineral-ui/Card';
+import {PulseLoader} from 'react-spinners';
+import RenderSeriesComponent from './render-series-content';
 
-class FeaturedSeries extends React.PureComponent {
-  render() {
-    const {header, seriesTitle, seriesUrl, artUrl, ...props} = this.props;
+const FeaturedSeries = ({loading, seriesData}) => {
+  return (
+    <section>
+      <h2>Featured Series</h2>
+      <PulseLoader loading={loading} size={20} />
+      {loading || <RenderSeriesComponent {...seriesData} />}
+    </section>
+  );
+};
 
-    return (
-      <Card>
-        <CardTitle>Featured Series</CardTitle>
-        <CardImage src={this.props.artUrl} alt="Sermon Art" />
-        <CardBlock>{this.props.seriesTitle}</CardBlock>
-      </Card>
-    );
-  }
-}
+FeaturedSeries.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  seriesData: PropTypes.array.isRequired
+};
 
 export default FeaturedSeries;
