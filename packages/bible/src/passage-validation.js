@@ -2,9 +2,11 @@ import bible from './bible.json';
 const books = Object.keys(bible);
 
 function extractAndValidate(value) {
-  const book = [];
-  const chapter = [];
-  const verse = [];
+  let storedRef = {
+    book: undefined,
+    chapter: undefined,
+    verse: undefined
+  };
   const splits = value.match(/(?:-|,+\s|;+\s|\s\s|to|and)/g);
   const connections =
     splits &&
@@ -13,9 +15,8 @@ function extractAndValidate(value) {
         .replace(/(?:-|to)/g, 'to')
         .replace(/(?:,+\s|\s\s|;+\s|and)/g, 'and');
     });
-  console.log(connections);
   // --- Start manipulation of incoming value
-  const arrays = value
+  const references = value
     .toLowerCase()
     // Fix any numerical mistypes or variants
     .replace(/!|one|first|1st/g, '1')
@@ -32,6 +33,10 @@ function extractAndValidate(value) {
     .split(/(?:-|,+\s|;+\s|\s\s|to|and)/)
     .map((item, index) => {
       if (!item) return null;
+      /* ******************************************* */
+      /* This is the reference-level splitting stuff */
+      /* ******************************************* */
+
       // Remove leading/trailing spaces and split chapter and verse to separate array elements
       const raw = item.trim().split(/[\s:.,;'"/]+/);
 
@@ -54,37 +59,48 @@ function extractAndValidate(value) {
         raw.splice(0, 1, splitString[0], splitString[1]);
       }
 
-      // If the chapter is omitted from this array member
-      // Grab the one from the previous array member
-      // Same with the book
+      /* ************************************* */
+      /* This is the adding missing info stuff */
+      /* ************************************* */
+
+      // If the chapter or book is omitted from this
+      // array member grab the one from storedRef
       if (
         raw[1] === undefined &&
-        book[index - 1] !== undefined &&
-        chapter[index - 1] !== undefined &&
-        verse[index - 1] !== undefined &&
+        storedRef.book !== undefined &&
+        storedRef.chapter !== undefined &&
+        storedRef.verse !== undefined &&
         index !== 0
       ) {
-        raw.unshift(chapter[index - 1]);
+        raw.unshift(storedRef.chapter); // Chapter
       }
 
-      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(book[index - 1]);
+      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(storedRef.book); // Book
 
-      // Save the book in an array so that the it can be retrieved as above
-      book.push(raw[0]);
-      chapter.push(raw[1]);
-      verse.push(raw[2]);
-      // Return this transformed element of the array
-      raw[3] = index === 0 ? 'init' : connections[index - 1];
-      return raw;
+      // Set the relation/connection to previous element
+      const connection = index === 0 ? 'init' : connections[index - 1];
+
+      const bibleRef = {
+        connection,
+        book: raw[0],
+        chapter: raw[1],
+        verse: raw[2]
+      };
+
+      // Duplicate the final object into storedRef so
+      // that it can be retrieved in next array item
+      storedRef = bibleRef; // Defined line 5
+
+      return bibleRef;
     });
   // --- End manipulation of incoming value
 
-  const validation = arrays.map((item, index) => {
+  const validation = references.map((item, index) => {
     if (!item) return false;
-    return validate(arrays, item, index);
+    return validate(references, item, index);
   });
 
-  return [arrays, validation];
+  return [references, validation];
 }
 
 function fullBookTitle(book) {
@@ -95,8 +111,8 @@ function fullBookTitle(book) {
   });
 }
 
-function validate(arrays, item, index) {
-  const [book, chapter, verse, connection] = item;
+function validate(references, item, index) {
+  const {connection, book, chapter, verse} = item;
   const fullTitle = fullBookTitle(book);
   const valid = [false, false, false];
 
@@ -111,10 +127,10 @@ function validate(arrays, item, index) {
 
   // Check if passages are sequential,
   // and push the outcome to the valid array
-  const prevValue = index > 0 ? arrays[index - 1] : null;
-  if (index > 0 && connection === 'to' && book === prevValue[0]) {
-    const chapMath = Number(chapter) - Number(prevValue[1]);
-    const verseMath = Number(verse) - Number(prevValue[2]);
+  const prevValue = index > 0 ? references[index - 1] : null;
+  if (index > 0 && connection === 'to' && book === prevValue.book) {
+    const chapMath = Number(chapter) - Number(prevValue.chapter);
+    const verseMath = Number(verse) - Number(prevValue.verse);
     if (chapMath < 0) valid.push('non-sequential');
     if (chapMath > 0) valid.push(true);
     if (chapMath === 0) {
@@ -126,7 +142,7 @@ function validate(arrays, item, index) {
     index > 0 &&
     connection === 'to' &&
     books.findIndex(title => title === fullBookTitle(book)) <
-      books.findIndex(title => title === fullBookTitle(prevValue[0]))
+      books.findIndex(title => title === fullBookTitle(prevValue.book))
   ) {
     valid.push('non-sequential');
   } else {
