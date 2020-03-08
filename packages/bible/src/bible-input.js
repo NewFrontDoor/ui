@@ -7,11 +7,8 @@ function Output({isValid, objects}) {
   if (isValid.every(element => element === true)) {
     return objects
       .map(collection => {
-        return (
-          collection &&
-          `${fullBookTitle(collection.book)} ${collection.chapter &&
-            collection.chapter}${collection.verse && ':' + collection.verse}`
-        );
+        const {book, chapter = null, verse = null} = collection;
+        return `${fullBookTitle(book)} ${chapter ? chapter : ''}${verse ? ':' + verse : ''}`;
       })
       .map((string, index) => {
         if (index === 0) {

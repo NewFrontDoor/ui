@@ -32,12 +32,12 @@ function extractAndValidate(value) {
     // Split into individual verse references
     .split(/(?:-|,+\s|;+\s|\s\s|to|and)/)
     .map((item, index) => {
-      if (!item) return null;
+      if (!item || item === ' ') return null;
       const bibleRef = {
+        connection: undefined,
         book: undefined,
         chapter: undefined,
-        verse: undefined,
-        connection: undefined
+        verse: undefined
       };
       // Remove leading/trailing spaces and split book, chapter and verse to separate array elements
       // removing any extra junk that isn't letters or numbers
@@ -46,17 +46,31 @@ function extractAndValidate(value) {
         .split(/([a-zA-Z]+|[0-9]+)/)
         .filter(el => el !== '' && !el.match(/[^A-Za-z0-9]+/));
 
-      if (raw[0].match(/\d+/)) {
-        bibleRef.book = `${raw[0]} ${raw[1]}`;
-        if (raw[2]) raw.splice(0, 1);
-      } else {
-        bibleRef.book = raw[0].trim();
+      if (raw[0].match(/[\d!@#][A-Za-z]/)) {
+        const addspace = raw[0].split(/(\D[A-Za-z0-9]+)/);
+        raw[0] = `${addspace[0]} ${addspace[1]}`;
       }
 
-      // If the book is omitted grab previous book reference
+      if (raw[1] && raw[1].match(/\D+/)) {
+        // Otherwise, stitch the book number and name back together
+        raw[0] = `${raw[0]} ${raw[1]}`;
+        raw.splice(1, 1);
+      }
+
+      while (raw.length < 3) {
+        raw.unshift(undefined);
+        console.log(raw)
+      }
+
+      if (raw[0].match(/[\d!@#]\s[A-Za-z]+/ || /[A-Za-z]+/)) {
+        bibleRef.book = raw[0];
+      }
+
       if (raw[0].match(/^[^a-zA-Z]+$/)) bibleRef.book = storedRef.book;
 
-      if (raw[1] && raw[1].match(/\d+/)) {
+      // If the book is omitted grab previous book reference
+
+      if (raw[1].match(/\d+/)) {
         bibleRef.chapter = raw[1];
       }
 
@@ -73,7 +87,7 @@ function extractAndValidate(value) {
       }
 
       // Populate the verse value (if it exists)
-      bibleRef.verse = raw[2] || raw[1] || raw[0];
+      bibleRef.verse = raw[2];
 
       // Save the book in a new object so that the it can be retrieved as above
       storedRef = bibleRef;
@@ -85,10 +99,9 @@ function extractAndValidate(value) {
   // --- End manipulation of incoming value
 
   const validation = objects.map((item, index) => {
-    if (!item) return false;
+    if (!item || item === '') return false;
     return validate(objects, item, index);
   });
-console.log(objects)
   return [objects, validation];
 }
 
@@ -106,13 +119,15 @@ function validate(objects, item, index) {
   const valid = [false, false, false];
 
   // Check if the item is actually a valid text
-  valid[0] = book && Object.hasOwnProperty.call(bible, fullTitle);
-  valid[1] = chapter
-    ? valid[0] && Object.hasOwnProperty.call(bible[fullTitle], chapter)
-    : true;
-  valid[2] = verse
-    ? valid[1] && bible[fullTitle][chapter] >= verse && verse !== '0'
-    : true;
+  valid[0] = books.includes(fullTitle);
+  valid[1] =
+    book && chapter
+      ? Object.hasOwnProperty.call(bible[fullTitle], chapter)
+      : true;
+  valid[2] =
+    book && chapter && verse
+      ? bible[fullTitle][chapter] >= verse && verse !== '0'
+      : true;
 
   // Check if passages are sequential,
   // and push the outcome to the valid array
@@ -137,8 +152,6 @@ function validate(objects, item, index) {
   } else {
     valid.push(true);
   }
-
-  console.log(valid);
 
   return valid;
 }
