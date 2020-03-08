@@ -42,11 +42,11 @@ const BibleInput = () => {
     setReferences(references);
   }
 
-  const isValid = valid.map(array => {
-    if (Array.isArray(array) === false) return null;
-    if (array.some(e => e === 'incomplete')) return 'incomplete';
-    if (array.some(e => e === 'non-sequential')) return 'non-sequential';
-    return array.every(e => e === true);
+  const isValid = valid.map(object => {
+    console.log(Object.values(object))
+    if (Object.values(object).includes('incomplete')) return 'incomplete';
+    if (Object.values(object).includes('non-sequential')) return 'non-sequential';
+    return Object.values(object).every(e => e === true);
   });
 
   return (

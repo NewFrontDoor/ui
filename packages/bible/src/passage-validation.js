@@ -114,15 +114,20 @@ function fullBookTitle(book) {
 function validate(references, item, index) {
   const {connection, book, chapter, verse} = item;
   const fullTitle = fullBookTitle(book);
-  const valid = [false, false, false];
+  const valid2 = {
+    book: false,
+    chapter: false,
+    verse: false,
+    meta: null
+  };
 
   // Check if the item is actually a valid text
-  valid[0] = book && Object.hasOwnProperty.call(bible, fullTitle);
-  valid[1] = chapter
-    ? valid[0] && Object.hasOwnProperty.call(bible[fullTitle], chapter)
+  valid2.book = book && books.includes(fullTitle);
+  valid2.chapter = chapter
+    ? valid2.book && Object.hasOwnProperty.call(bible[fullTitle], chapter)
     : true;
-  valid[2] = verse
-    ? valid[1] && bible[fullTitle][chapter] >= verse && verse !== '0'
+  valid2.verse = verse
+    ? valid2.chapter && bible[fullTitle][chapter] >= verse && verse !== '0'
     : true;
 
   // Check if passages are sequential,
@@ -131,12 +136,12 @@ function validate(references, item, index) {
   if (index > 0 && connection === 'to' && book === prevValue.book) {
     const chapMath = Number(chapter) - Number(prevValue.chapter);
     const verseMath = Number(verse) - Number(prevValue.verse);
-    if (chapMath < 0) valid.push('non-sequential');
-    if (chapMath > 0) valid.push(true);
+    if (chapMath < 0) valid2.meta = 'non-sequential';
+    if (chapMath > 0) valid2.meta = true;
     if (chapMath === 0) {
-      if (Number.isNaN(verseMath)) valid.push('incomplete');
-      if (verseMath <= 0) valid.push('non-sequential');
-      if (verseMath > 0) valid.push(true);
+      if (Number.isNaN(verseMath)) valid2.meta = 'incomplete';
+      if (verseMath <= 0) valid2.meta = 'non-sequential';
+      if (verseMath > 0) valid2.meta = true;
     }
   } else if (
     index > 0 &&
@@ -144,12 +149,12 @@ function validate(references, item, index) {
     books.findIndex(title => title === fullBookTitle(book)) <
       books.findIndex(title => title === fullBookTitle(prevValue.book))
   ) {
-    valid.push('non-sequential');
+    valid2.meta = 'non-sequential';
   } else {
-    valid.push(true);
+    valid2.meta = true;
   }
 
-  return valid;
+  return valid2;
 }
 
 export {extractAndValidate, fullBookTitle};
