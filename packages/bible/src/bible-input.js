@@ -30,7 +30,7 @@ function Output({isValid, references}) {
   });
 }
 
-export default function BibleInput() {
+const BibleInput = () => {
   const [input, setInput] = useState('');
   const [valid, setValid] = useState([]);
   const [references, setReferences] = useState([]);
@@ -58,4 +58,6 @@ export default function BibleInput() {
       </p>
     </div>
   );
-}
+};
+
+export default BibleInput;
