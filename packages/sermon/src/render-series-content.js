@@ -1,6 +1,6 @@
+/** @jsx jsx */
 import PropTypes from 'prop-types';
-import React from 'react';
-import {Styled} from 'theme-ui';
+import {jsx, Styled} from 'theme-ui';
 
 const RenderSeriesComponent = ({id, title, image, link}) => {
   return (
