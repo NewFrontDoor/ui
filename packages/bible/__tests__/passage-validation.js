@@ -189,6 +189,11 @@ test('extractAndValidate - invalid references', async () => {
     [{book: true, chapter: true, verse: true, meta: true}, false]
   ]);
 
+  expect(extractAndValidate('1 Cor 4:5-')).toEqual([
+    [{book: '1 cor', chapter: '4', verse: '5', connection: 'init'}, null],
+    [{book: true, chapter: true, verse: true, meta: true}, false]
+  ]);
+
   expect(extractAndValidate('1 tim 4 to 4')).toEqual([
     [
       {book: '1 tim', chapter: '4', verse: undefined, connection: 'init'},

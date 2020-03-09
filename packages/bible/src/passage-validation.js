@@ -59,9 +59,9 @@ function extractAndValidate(value) {
         raw.splice(0, 1, splitString[0], splitString[1]);
       }
 
-      /* ************************************* */
-      /* This is the adding missing info stuff */
-      /* ************************************* */
+      /* *********************************** */
+      /* This is the adding any missing info */
+      /* *********************************** */
 
       // If the chapter or book is omitted from this
       // array member grab the one from storedRef
