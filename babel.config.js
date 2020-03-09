@@ -12,7 +12,6 @@ module.exports = {
     '@emotion/babel-preset-css-prop'
   ],
   plugins: [
-    'emotion',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-transform-spread',
     '@babel/plugin-proposal-object-rest-spread',

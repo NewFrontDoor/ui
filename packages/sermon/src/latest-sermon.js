@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import React from 'react';
 import {Styled, jsx} from 'theme-ui';
 import {StyledPlayer} from '@newfrontdoor/audio-player';
 import PropTypes from 'prop-types';

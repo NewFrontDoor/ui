@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import React from 'react';
 import {jsx} from 'theme-ui';
 import styled from '@emotion/styled';
 import {PulseLoader} from 'react-spinners';

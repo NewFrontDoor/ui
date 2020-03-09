@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import React from 'react';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 import {Styled, jsx} from 'theme-ui';

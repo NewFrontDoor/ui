@@ -23,12 +23,6 @@ const Grid = styled('section')`
     width: 100%;
     box-sizing: border-box;
   }
-  .fullwidth {
-    grid-column: 1 / 3;
-  }
-  .inline {
-    display: inline;
-  }
 `;
 
 export default function FormGrid({children}) {
