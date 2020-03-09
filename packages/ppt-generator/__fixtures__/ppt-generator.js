@@ -1,13 +1,9 @@
 import React from 'react';
 import Form from '../src';
-import bgimg from '../public/PWADbg.jpg';
-import mainbg from '../public/PWADbg2.jpg';
 
 const props = {
   title: 'Test PPT Generator',
   description: 'This is a test button for testing PPT generation',
-  bgimg,
-  mainbg,
   contents: [
     {
       body: `A charge to keep I have,
