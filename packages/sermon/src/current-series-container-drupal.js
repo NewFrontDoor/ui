@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
 import {ApiContext} from '@newfrontdoor/api-config';
 import ky from 'ky-universal';
 import CurrentSeries from './current-series';

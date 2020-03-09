@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
 import {useApiConfig} from '@newfrontdoor/api-config';
 import ky from 'ky-universal';
 import {useQuery} from 'react-query';
