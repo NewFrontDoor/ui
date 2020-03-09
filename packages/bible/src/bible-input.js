@@ -5,8 +5,10 @@ function Output({isValid, references}) {
   if (isValid[0] === null) return 'Please enter a passage';
 
   if (isValid.every(element => element === true)) {
+    console.log(references);
     return references
       .map(collection => {
+        if (collection === null) return null;
         const {book, chapter = null, verse = null} = collection;
         return (
           collection &&
@@ -16,6 +18,7 @@ function Output({isValid, references}) {
         );
       })
       .map((string, index) => {
+        if (string === null) return null;
         if (index === 0) {
           return string;
         }
@@ -43,9 +46,9 @@ const BibleInput = () => {
   }
 
   const isValid = valid.map(object => {
-    console.log(Object.values(object))
     if (Object.values(object).includes('incomplete')) return 'incomplete';
-    if (Object.values(object).includes('non-sequential')) return 'non-sequential';
+    if (Object.values(object).includes('non-sequential'))
+      return 'non-sequential';
     return Object.values(object).every(e => e === true);
   });
 

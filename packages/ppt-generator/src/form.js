@@ -4,7 +4,7 @@ import {Styled} from 'theme-ui';
 import {Button} from '@theme-ui/components';
 import pptxgen from 'pptxgenjs';
 
-export default function Form({title, description, bgimg, mainbg, contents}) {
+export default function Form({title, description, contents}) {
   const pptx = new pptxgen();
   pptx.title = 'PptxGenJS Sample Presentation';
   pptx.layout = 'LAYOUT_16x10';
@@ -12,7 +12,6 @@ export default function Form({title, description, bgimg, mainbg, contents}) {
   pptx.defineSlideMaster({
     title: 'TITLE_SLIDE',
     objects: [
-      {image: {x: 0, y: 0, w: '100%', h: '100%', path: bgimg}},
       {
         placeholder: {
           options: {
@@ -64,7 +63,6 @@ export default function Form({title, description, bgimg, mainbg, contents}) {
 
   pptx.defineSlideMaster({
     title: 'LYRIC_SLIDE',
-    bkgd: {path: mainbg},
     objects: [
       {
         placeholder: {
