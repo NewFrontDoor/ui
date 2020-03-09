@@ -1,13 +1,26 @@
-import React from 'react';
+/** @jsx jsx */
+import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
+import {Styled, jsx} from 'theme-ui';
 import RenderSeriesComponent from './render-series-content';
 
-export default function({loading, seriesData}) {
+export const RecentSeries = ({loading, seriesData, style}) => {
   return (
-    <section>
-      <h2>Recent Series</h2>
+    <section sx={style}>
+      <Styled.h2>Recent Series</Styled.h2>
       <PulseLoader loading={loading} size={20} />
-      {loading || seriesData.map(item => <RenderSeriesComponent {...item} />)}
+      {loading ||
+        seriesData.map(item => <RenderSeriesComponent key={item} {...item} />)}
     </section>
   );
-}
+};
+
+RecentSeries.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  seriesData: PropTypes.array.isRequired,
+  style: PropTypes.object
+};
+
+RecentSeries.defaultProps = {
+  style: {}
+};
