@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import {Styled, jsx} from 'theme-ui';
 import {StyledPlayer} from '@newfrontdoor/audio-player';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
@@ -14,11 +15,11 @@ const LatestSermon = ({
 }) => {
   return (
     <section>
-      <h2>Latest Sermon</h2>
+      <Styled.h2>Latest Sermon</Styled.h2>
       {loading ? (
         <PulseLoader loading={loading} size={10} />
       ) : error && !loading ? (
-        <p>Unable to find latest sermon</p>
+        <Styled.p>Unable to find latest sermon</Styled.p>
       ) : (
         <section>
           {(sermonImg || seriesImg) && (
