@@ -1,24 +1,14 @@
+/** @jsx jsx */
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import FormGrid from './form-grid';
-
-const RadioGroup = styled('fieldset')`
-  input {
-    width: initial;
-  }
-  label {
-    display: inline;
-    margin-left: 10px;
-    padding-bottom: 0px;
-  }
-`;
+import {Styled, Box, Button, jsx} from 'theme-ui';
 
 const getFormField = field => {
   switch (field.input) {
     case 'textarea':
       return (
-        <div className="fullwidth">
+        <div sx={{gridColumn: '1/3'}}>
           <label htmlFor={field.id}>{field.label}</label>
           <textarea id={field.id} name={field.label} />
         </div>
@@ -29,14 +19,27 @@ const getFormField = field => {
           <label htmlFor={field.id}>{field.label}</label>
           <select id={field.id} name={field.label}>
             {field.values.map(value => (
-              <option value={value}>{value}</option>
+              <option key={value} value={value}>
+                {value}
+              </option>
             ))}
           </select>
         </div>
       );
     case 'radio':
       return (
-        <RadioGroup>
+        <fieldset
+          sx={{
+            input: {
+              width: 'initial'
+            },
+            label: {
+              display: 'inline',
+              marginLeft: '10px',
+              paddingBottom: '0px'
+            }
+          }}
+        >
           <legend>{field.label}</legend>
           {field.values.map(value => (
             <div key={field.id}>
@@ -44,22 +47,27 @@ const getFormField = field => {
               <label htmlFor={value}>{value}</label>
             </div>
           ))}
-        </RadioGroup>
+        </fieldset>
       );
     case 'checkbox':
       return (
         <div>
           <input type="checkbox" id={field.id} name={field.label} />
-          <label className="inline" htmlFor={field.id}>
+          <label sx={{display: 'inline'}} htmlFor={field.id}>
             {field.label}
           </label>
         </div>
       );
     case 'submit':
+      return (
+        <Button sx={{gridColumn: '1/3'}} type="submit" value="submit">
+          Submit
+        </Button>
+      );
     case 'reset':
       return (
         <input
-          className={field.fullwidth ? 'fullwidth' : ''}
+          sx={{gridColumn: field.fullwidth ? '1/3' : ''}}
           type={field.input}
           id={field.id}
           value={field.value}
@@ -78,21 +86,21 @@ const getFormField = field => {
   }
 };
 
-export default function Form({title, id, description, fields}) {
+const Form = ({title, id, description, fields}) => {
   return (
-    <form id={id}>
+    <Box as="form" id={id}>
       <fieldset>
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <Styled.h2>{title}</Styled.h2>
+        <Styled.p>{description}</Styled.p>
         <FormGrid>
           {fields.map(field => {
             return getFormField(field);
           })}
         </FormGrid>
       </fieldset>
-    </form>
+    </Box>
   );
-}
+};
 
 Form.propTypes = {
   title: PropTypes.string.isRequired,
@@ -100,3 +108,5 @@ Form.propTypes = {
   description: PropTypes.string.isRequired,
   fields: PropTypes.array.isRequired
 };
+
+export default Form;

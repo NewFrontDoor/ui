@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import {jsx} from 'theme-ui';
+import React from 'react';
+import {jsx, Styled} from 'theme-ui';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import {FaDownload} from 'react-icons/fa';
@@ -11,16 +12,18 @@ const Table = styled.table`
     text-align: left;
     padding: 0 5px;
   }
+  tr:nth-of-type(even) {
+    background-color: #eee
+  }
   @media (max-width: 505px) {
     ${props =>
       props.columnHide.map(
-        column => `th:nth-child(${column}) { display: none;}`
+        column => `th:nth-of-type(${column}) { display: none;}`
       )}
   }
 `;
 
 const Tr = styled.tr`
-  background-color: ${props => (props.num % 2 ? '#eee' : '#fff')};
   border-bottom: 1px solid #ccc;
   td {
     padding: 0 5px;
@@ -28,7 +31,7 @@ const Tr = styled.tr`
   @media (max-width: 505px) {
     ${props =>
       props.columnHide.map(
-        column => `td:nth-child(${column}) { display: none;}`
+        column => `td:nth-of-type(${column}) { display: none;}`
       )}
   }
 `;
@@ -47,31 +50,29 @@ const SermonTable = ({
   return (
     <Table columnHide={columnHide}>
       <thead>
-        <tr>
+        <Styled.tr>
           {headers.map(column => (
-            <th key={column.key}>{column.heading}</th>
+            <Styled.th key={column.key}>{column.heading}</Styled.th>
           ))}
-          <tr />
-        </tr>
+          <th />
+        </Styled.tr>
       </thead>
       <tbody>
-        {sermons.map((sermon, index) => (
-          <Tr key={sermon.nid} num={index} columnHide={columnHide}>
-            <td>
+        {sermons.map((sermon) => (
+          <Tr key={sermon.nid} columnHide={columnHide}>
+            <Styled.td>
               {renderLink(sermonDirectory, sermon.slug, sermon[titleKey])}
-            </td>
+            </Styled.td>
             {desiredColumns.map(item => (
-              <td key={sermon.nid + item}>
-                {Object.prototype.hasOwnProperty.call(sermon, item)
-                  ? sermon[item]
-                  : ''}
-              </td>
+              <Styled.td key={sermon.nid + item}>
+                {Object.prototype.hasOwnProperty.call(sermon, item) && sermon[item]}
+              </Styled.td>
             ))}
-            <td>
-              <a href={sermon.url} target="_blank" rel="noopener noreferrer">
+            <Styled.td>
+              <Styled.a href={sermon.url} target="_blank" rel="noopener noreferrer">
                 <FaDownload />
-              </a>
-            </td>
+              </Styled.a>
+            </Styled.td>
           </Tr>
         ))}
       </tbody>
