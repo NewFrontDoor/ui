@@ -1,5 +1,4 @@
 import React from 'react';
-import FormGrid from '../src/form-grid';
 import Form from '../src';
 
 const props = {
@@ -14,16 +13,16 @@ const props = {
       required: true
     },
     {
-      id: 'phone',
+      id: 'mobile',
       input: 'telephone',
-      label: 'Phone',
-      required: false
+      label: 'Mobile',
+      required: true
     },
     {
       id: 'opt',
       input: 'radio',
       label: 'Options',
-      required: true,
+      required: false,
       values: ['first', 'second', 'third'],
       length: 3
     },
@@ -56,11 +55,33 @@ const props = {
       value: 'Extra button',
       fullwidth: true
     }
-  ]
+  ],
+  blockText: value => <p>{value}</p>,
+  submitForm: e => {
+    console.log('Submitted!');
+    e.preventDefault();
+  },
+  validations: values => {
+    const errors = {};
+    console.log(Object.keys(values)[0]);
+    if (!values.name) {
+      errors.name = 'Required';
+    }
+
+    if (!values.textarea) {
+      errors.textarea = 'Required';
+    }
+
+    if (!values.mobile) {
+      errors.phone = 'Required';
+    } else if (isNaN(values.mobile)) {
+      errors.mobile = 'Must be a number';
+    } else if (!/(04+)\w+/.test(values.mobile)) {
+      errors.mobile = "Doesn't start with 04...";
+    }
+
+    return errors;
+  }
 };
 
-export default (
-  <FormGrid>
-    <Form {...props} />
-  </FormGrid>
-);
+export default <Form {...props} />;
