@@ -11,6 +11,12 @@ export default {
     heading: 700,
     bold: 700
   },
+  text: {
+    warning: {
+      color: 'primary',
+      p: '5px'
+    }
+  },
   lineHeights: {
     body: 1.5,
     heading: 1.125
