@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../src';
+import {Form} from '../src';
 
 const props = {
   title: 'Test Form',
@@ -16,7 +16,11 @@ const props = {
       id: 'mobile',
       input: 'telephone',
       label: 'Mobile',
-      required: true
+      required: true,
+      regex: {
+        regexString: /(04+)\d+/,
+        warning: "Doesn't start with '04'"
+      }
     },
     {
       id: 'opt',
@@ -63,23 +67,20 @@ const props = {
   },
   validations: values => {
     const errors = {};
-    console.log(Object.keys(values)[0]);
-    if (!values.name) {
-      errors.name = 'Required';
-    }
-
-    if (!values.textarea) {
-      errors.textarea = 'Required';
-    }
-
-    if (!values.mobile) {
-      errors.phone = 'Required';
-    } else if (isNaN(values.mobile)) {
-      errors.mobile = 'Must be a number';
-    } else if (!/(04+)\w+/.test(values.mobile)) {
-      errors.mobile = "Doesn't start with 04...";
-    }
-
+    props.fields.forEach(field => {
+      const rg = field.regex && field.regex.regexString
+        ? new RegExp(field.regex.regexString, 'i')
+        : false;
+      if (field.required) {
+        if (!values[field.id]) {
+          errors[field.id] = 'Required';
+        } else if (rg && !rg.test(values[field.id])) {
+          errors[field.id] = field.regex.warning;
+        }
+      } else if (rg && values[field.id] && !rg.test(values[field.id])) {
+        errors[field.id] = field.regex.warning;
+      }
+    });
     return errors;
   }
 };
