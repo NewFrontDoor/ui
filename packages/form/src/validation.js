@@ -2,11 +2,12 @@ import regexLookup from './regex-lookup';
 
 const validation = (values, node, regexs) => {
   const regexObj = regexs ? regexs : regexLookup;
-  const errorMessage = node.requiredError;
+  const errorMessage = node.requiredError || 'Required';
   const errors = {};
   node.fields.forEach(field => {
     const rg =
       field.validation &&
+      field.validation.validationType &&
       field.validation.validationType === 'custom' &&
       field.validation.regexString
         ? new RegExp(field.validation.regexString, 'i')
@@ -15,7 +16,7 @@ const validation = (values, node, regexs) => {
         : 'false';
     if (field.required) {
       if (!values[field.id]) {
-        errors[field.id] = errorMessage || 'Required';
+        errors[field.id] = errorMessage;
       } else if (rg && !rg.test(values[field.id])) {
         errors[field.id] = field.validation.warning;
       }
