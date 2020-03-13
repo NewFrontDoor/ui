@@ -96,14 +96,6 @@ _**validationFn**_ <Function> [optional]
 
 You can opt into validation by adding a function which takes the object `values{}` and returns an object `errors{}`. This package provides a function `validation` (see below) to test both if a field is 'required' and/or against a regex provided per field.
 
-_**placeholder**_ <String> [optional]
-
-As you'd expect, a string placeholder for text/number input fields.
-
-_**initialValue**_ <String>, <Bool> [optional]
-
-Set an initial value for your form input. Accepts strings, or a string to match one of your options (if using radio/select) or a bool for checkboxes.
-
 ## Functions
 
 ### `validation`
