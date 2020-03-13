@@ -15,9 +15,9 @@ Primarily built to work with data provided by sanity.io, and styling injected by
 `npm install @newfrontdoor/form` and optionally `theme-ui`
 
 ## Usage
+```
 import {Form, validation} from '@newfrontdoor/form'
 
-```
 const MyFormPage = ({formData}) => {
 
 const {fields requiredError} = formData
