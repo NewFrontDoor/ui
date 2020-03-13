@@ -11,8 +11,9 @@ Primarily built to work with data provided by sanity.io, and styling injected by
 
 
 ## Installation
-`yarn add @newfrontdoor/form` and optionally `theme-ui`
-`npm install @newfrontdoor/form` and optionally `theme-ui`
+`yarn add @newfrontdoor/form` (and optionally `theme-ui`)
+
+`npm install @newfrontdoor/form` (and optionally `theme-ui`)
 
 ## Usage
 ```
@@ -37,7 +38,19 @@ return <Form
 - `<VanillaForm>` - same props as form, but uses plain html tags, rather than theme-ui elements.
 
 ### Props
-- fields `<Array>` (required) - 
+- fields `<Array>` (required) - an array of objects with the following shape:
+```
+{
+    id: 'mobile',
+    input: 'telephone',
+    label: 'Mobile',
+    required: true,
+    validation: {
+        regexString: "(04+)\d+",
+        warning: "Doesn't start with '04'"
+    }
+}
+```
 - submitForm `<Function>` (required) - your callback for the form submission
 - title `<String>` (optional) - A string to output as your title
 - id `<String>` (optional) - To set an ID on the wrapping element
@@ -46,9 +59,10 @@ return <Form
 - validationFn `<Function>` (optional) - You can opt into validation by adding a function which takes the object `values{}` and returns an object `errors{}`. This package provides a function to test for whether a field is 'required' or against a custom regex provided per field, which you can use by copying the syntax in the [Usage](#usage) example above.
 
 ## Functions
-###`validation()`
+### `validation()`
 This function provides the validation check for your form. As it's not baked into the Form component you're free to supply your own validation by swapping it out on the validations prop of the form component.
-Arguments:
+
+#### Arguments:
 - values (required) - this is the values returned from the form component for checking
 - formData (required) - this is an object with keys `fields` and (optionally) `requiredError`. This is what validation() maps over to check all your fields. requiredError is an optional replacement for the default erro shown when a field is required: "required".
 - regexLookup (option) - the validation function by default pulls in the 'regex-lookup' exported from this package, but you're also able to supply your own default regex values as an optional argument, as, frankly, the regex values supplied are more geared toward Australians...
