@@ -13,9 +13,11 @@ Or just use this library as an inspiration!
 
 
 ## Installation
-`yarn add @newfrontdoor/form theme-ui`)
+`yarn add @newfrontdoor/form theme-ui`
+
 or
-`npm install @newfrontdoor/form theme-ui`)
+
+`npm install @newfrontdoor/form theme-ui`
 
 ## Usage
 
