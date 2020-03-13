@@ -13,15 +13,20 @@ Error.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-const getVanillaFormField = field => {
+const handleReset = (e, form) => {
+  e.preventDefault();
+  form.reset();
+};
+
+const getVanillaFormField = (field, form) => {
   switch (field.input) {
     case 'textarea':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.id}>
+        <Field key={field.id} name={field.id} placeholder={field.placeholder}>
+          {({input, otherProps}) => (
+            <div key={field.id + field.label}>
               <label htmlFor={field.id}>{field.label}</label>
-              <textarea id={field.id} {...input} rows="8" />
+              <textarea id={field.id} {...input} {...otherProps} rows="8" />
               <Error name={field.id} />
             </div>
           )}
@@ -29,11 +34,11 @@ const getVanillaFormField = field => {
       );
     case 'select':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.id}>
+        <Field key={field.id} name={field.id}>
+          {({input, otherProps}) => (
+            <div key={field.id + field.label}>
               <label htmlFor={field.id}>{field.label}</label>
-              <select id={field.id} {...input}>
+              <select id={field.id} {...input} {...otherProps}>
                 {field.values.map(value => (
                   <option key={value} value={value}>
                     {value}
@@ -47,16 +52,18 @@ const getVanillaFormField = field => {
       );
     case 'radio':
       return (
-        <fieldset key={field.label}>
+        <fieldset key={field.id}>
           <legend>{field.label}</legend>
           {field.values.map(value => (
-            <div key={field.id}>
+            <div key={field.id + value}>
               <label key={value}>
                 <Field
                   name={field.id}
                   type="radio"
                   value={value}
-                  component={({input}) => <radio {...input} />}
+                  component={({input, otherProps}) => (
+                    <radio {...input} {...otherProps} />
+                  )}
                 />
                 {value}
               </label>
@@ -66,10 +73,15 @@ const getVanillaFormField = field => {
       );
     case 'checkbox':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.label}>
-              <checkbox type="checkbox" id={field.id} {...input} />
+        <Field key={field.id} name={field.id}>
+          {({input, otherProps}) => (
+            <div key={field.id + field.label}>
+              <checkbox
+                type="checkbox"
+                id={field.id}
+                {...input}
+                {...otherProps}
+              />
               <label htmlFor={field.id}>{field.label}</label>
               <Error name={field.id} />
             </div>
@@ -78,25 +90,30 @@ const getVanillaFormField = field => {
       );
     case 'reset':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.label}>
-              <input type={field.input} id={field.id} {...input} />
-              <Error name={field.id} />
-            </div>
-          )}
-        </Field>
+        <button
+          type="button"
+          value="reset"
+          id={field.id}
+          onClick={e => handleReset(e, form)}
+        >
+          {field.label}
+        </button>
       );
     default:
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.id}>
+        <Field key={field.id} name={field.id}>
+          {({input, otherProps}) => (
+            <div key={field.id + field.label}>
               <label htmlFor={field.id} required={field.required}>
                 {field.label}
                 {field.required && <strong>*</strong>}
               </label>
-              <input type={field.input} id={field.id} {...input} />
+              <input
+                type={field.input}
+                id={field.id}
+                {...input}
+                {...otherProps}
+              />
               <Error name={field.id} />
             </div>
           )}
@@ -116,7 +133,7 @@ const VanillaFormComponent = ({
 }) => {
   return (
     <Form
-      render={({handleSubmit}) => (
+      render={({handleSubmit, form, submitting, pristine}) => (
         <form id={id} onSubmit={handleSubmit}>
           <fieldset>
             {title && <h2>{title}</h2>}
@@ -127,14 +144,19 @@ const VanillaFormComponent = ({
             )}
             <div>
               {fields.map(field => {
-                return getVanillaFormField(field);
+                return getVanillaFormField(field, form);
               })}
-              <button type="submit">Submit</button>
+              <button type="submit"
+                  disabled={submitting || pristine}>Submit</button>
             </div>
           </fieldset>
         </form>
       )}
       validate={validationFn}
+      initialValues={fields.reduce((obj, field) => {
+        if (field.initialValue) obj[field.id] = field.initialValue;
+        return obj;
+      }, {})}
       onSubmit={submitForm}
     />
   );
