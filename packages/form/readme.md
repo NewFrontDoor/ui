@@ -124,5 +124,5 @@ This is what `validation()` maps over to check all your fields.
 
 _**regexLookup**_ [optional]
 
-The validation function by default pulls in the ['regex-lookup'](/src/regex-lookup.js) exported from this package with a collection of default validation regular expressions, but you're also able to supply your own default regex values as an optional argument, as (frankly) the regex values supplied are entirely geared toward my use case... So use `regex-lookup.js` as a launching point.
+The validation function by default pulls in the ['regex-lookup'](src/regex-lookup.js) exported from this package with a collection of default validation regular expressions, but you're also able to supply your own default regex values as an optional argument, as (frankly) the regex values supplied are entirely geared toward my use case... So use `regex-lookup.js` as a launching point.
 
