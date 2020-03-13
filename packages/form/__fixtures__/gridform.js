@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../src';
+import {Form, validation} from '../src';
 
 const props = {
   title: 'Test Form',
@@ -16,7 +16,11 @@ const props = {
       id: 'mobile',
       input: 'telephone',
       label: 'Mobile',
-      required: true
+      required: true,
+      regex: {
+        regexString: /(04+)\d+/,
+        warning: "Doesn't start with '04'"
+      }
     },
     {
       id: 'opt',
@@ -56,32 +60,11 @@ const props = {
       fullwidth: true
     }
   ],
-  blockText: value => <p>{value}</p>,
   submitForm: e => {
     console.log('Submitted!');
     e.preventDefault();
   },
-  validations: values => {
-    const errors = {};
-    console.log(Object.keys(values)[0]);
-    if (!values.name) {
-      errors.name = 'Required';
-    }
-
-    if (!values.textarea) {
-      errors.textarea = 'Required';
-    }
-
-    if (!values.mobile) {
-      errors.phone = 'Required';
-    } else if (isNaN(values.mobile)) {
-      errors.mobile = 'Must be a number';
-    } else if (!/(04+)\w+/.test(values.mobile)) {
-      errors.mobile = "Doesn't start with 04...";
-    }
-
-    return errors;
-  }
+  validationFn: values => validation(props.fields, values)
 };
 
 export default <Form {...props} />;
