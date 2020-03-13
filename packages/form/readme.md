@@ -18,6 +18,9 @@ or
 `npm install @newfrontdoor/form theme-ui`)
 
 ## Usage
+
+If you're using Sanity, you can find some suitable schemas for your studio [in the schemas folder](schemas). They're also exported from this project as `formObject` and `formField`;
+
 ```
 import {Form, validation} from '@newfrontdoor/form'
 const MyFormPage = ({formData}) => {
