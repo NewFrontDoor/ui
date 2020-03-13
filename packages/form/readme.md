@@ -40,7 +40,7 @@ Obviously all props could be passed in from your data store, meaning you can end
 
 
 ## Available components
-**`<Form>`** see above for basic usage
+**`<Form>`** see above for basic usage. See prop definitions below.
 
 **`<VanillaForm>`** - same props as form, but uses plain html tags, rather than theme-ui elements.
 
@@ -63,13 +63,20 @@ an array of objects with the following shape:
 
 _**submitForm**_ <Function> [required]
 
-your callback for the form submission
+Your callback for the form submission. The form values can be accessed on submission as below. As per React-Final-Form design, the submitForm callback will not be run unless the form has no validation errors.
+
+```
+submitForm={formValues => {
+      console.log('Submitted!');
+      console.log(formValues);
+    }}
+```
 
 _**title**_ <String> [optional]
 
 A string to output as your title
 
-_**id**_ <String> [optiona]
+_**id**_ <String> [optional]
 
 To set an ID on the wrapping element
 
