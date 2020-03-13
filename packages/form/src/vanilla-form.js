@@ -1,46 +1,27 @@
-/** @jsx jsx */
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import {Form, Field, useField} from 'react-final-form';
 import PropTypes from 'prop-types';
-import {
-  Label,
-  Textarea,
-  Input,
-  Checkbox,
-  Button,
-  Radio,
-  Select,
-  Grid,
-  Box,
-  Styled,
-  Text,
-  jsx
-} from 'theme-ui';
 
 const Error = ({name}) => {
   const {
     meta: {touched, error}
   } = useField(name, {subscription: {touched: true, error: true}});
-  return touched && error ? (
-    <Text variant="warning" mb={2}>
-      {error}
-    </Text>
-  ) : null;
+  return touched && error ? <p>{error}</p> : null;
 };
 
 Error.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-const getFormField = field => {
+const getVanillaFormField = field => {
   switch (field.input) {
     case 'textarea':
       return (
         <Field name={field.id}>
           {({input}) => (
-            <div key={field.id} sx={{gridColumn: '1/3'}}>
-              <Label htmlFor={field.id}>{field.label}</Label>
-              <Textarea id={field.id} {...input} rows="8" />
+            <div key={field.id}>
+              <label htmlFor={field.id}>{field.label}</label>
+              <textarea id={field.id} {...input} rows="8" />
               <Error name={field.id} />
             </div>
           )}
@@ -51,14 +32,14 @@ const getFormField = field => {
         <Field name={field.id}>
           {({input}) => (
             <div key={field.id}>
-              <Label htmlFor={field.id}>{field.label}</Label>
-              <Select id={field.id} {...input}>
+              <label htmlFor={field.id}>{field.label}</label>
+              <select id={field.id} {...input}>
                 {field.values.map(value => (
                   <option key={value} value={value}>
                     {value}
                   </option>
                 ))}
-              </Select>
+              </select>
               <Error name={field.id} />
             </div>
           )}
@@ -67,24 +48,15 @@ const getFormField = field => {
     case 'radio':
       return (
         <fieldset key={field.label}>
-          <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
+          <legend>{field.label}</legend>
           {field.values.map(value => (
             <div key={field.id}>
-              <label
-                key={value}
-                sx={{
-                  boxSizing: 'border-box',
-                  minWidth: '0px',
-                  width: '100%',
-                  display: 'flex',
-                  margin: '0px'
-                }}
-              >
+              <label key={value}>
                 <Field
                   name={field.id}
                   type="radio"
                   value={value}
-                  component={({input}) => <Radio {...input} />}
+                  component={({input}) => <radio {...input} />}
                 />
                 {value}
               </label>
@@ -97,10 +69,8 @@ const getFormField = field => {
         <Field name={field.id}>
           {({input}) => (
             <div key={field.label}>
-              <Checkbox type="checkbox" id={field.id} {...input} />
-              <Label sx={{display: 'inline'}} htmlFor={field.id}>
-                {field.label}
-              </Label>
+              <checkbox type="checkbox" id={field.id} {...input} />
+              <label htmlFor={field.id}>{field.label}</label>
               <Error name={field.id} />
             </div>
           )}
@@ -111,12 +81,7 @@ const getFormField = field => {
         <Field name={field.id}>
           {({input}) => (
             <div key={field.label}>
-              <input
-                sx={{gridColumn: field.fullwidth ? '1/3' : ''}}
-                type={field.input}
-                id={field.id}
-                {...input}
-              />
+              <input type={field.input} id={field.id} {...input} />
               <Error name={field.id} />
             </div>
           )}
@@ -127,11 +92,11 @@ const getFormField = field => {
         <Field name={field.id}>
           {({input}) => (
             <div key={field.id}>
-              <Label htmlFor={field.id} required={field.required}>
+              <label htmlFor={field.id} required={field.required}>
                 {field.label}
                 {field.required && <strong>*</strong>}
-              </Label>
-              <Input type={field.input} id={field.id} {...input} />
+              </label>
+              <input type={field.input} id={field.id} {...input} />
               <Error name={field.id} />
             </div>
           )}
@@ -140,7 +105,7 @@ const getFormField = field => {
   }
 };
 
-const FormComponent = ({
+const VanillaFormComponent = ({
   title,
   id,
   description,
@@ -152,24 +117,22 @@ const FormComponent = ({
   return (
     <Form
       render={({handleSubmit}) => (
-        <Box as="form" id={id} onSubmit={handleSubmit}>
+        <form id={id} onSubmit={handleSubmit}>
           <fieldset>
-            {title && <Styled.h2>{title}</Styled.h2>}
+            {title && <h2>{title}</h2>}
             {description && blockText ? (
               blockText(description)
             ) : (
-              <Styled.p>{description}</Styled.p>
+              <p>{description}</p>
             )}
-            <Grid gap={20} columns={['1fr, 1fr']}>
+            <div>
               {fields.map(field => {
-                return getFormField(field);
+                return getVanillaFormField(field);
               })}
-              <Button sx={{gridColumn: '1/3'}} type="submit">
-                Submit
-              </Button>
-            </Grid>
+              <button type="submit">Submit</button>
+            </div>
           </fieldset>
-        </Box>
+        </form>
       )}
       validate={validationFn}
       onSubmit={submitForm}
@@ -177,7 +140,7 @@ const FormComponent = ({
   );
 };
 
-FormComponent.propTypes = {
+VanillaFormComponent.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -187,5 +150,5 @@ FormComponent.propTypes = {
   validationFn: PropTypes.func
 };
 
-export default FormComponent;
-export {getFormField};
+export default VanillaFormComponent;
+export {getVanillaFormField};
