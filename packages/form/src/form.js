@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'; // eslint-disable-line no-unused-vars
-import {Form, Field, useField} from 'react-final-form';
+import {Form, Field, useField, useForm} from 'react-final-form';
 import PropTypes from 'prop-types';
 import {
   Label,
@@ -32,15 +32,20 @@ Error.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-const getFormField = field => {
+const handleReset = (e, form) => {
+  e.preventDefault();
+  form.reset();
+};
+
+const getFormField = (field, form) => {
   switch (field.input) {
     case 'textarea':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.id} sx={{gridColumn: '1/3'}}>
+        <Field key={field.id} name={field.id} placeholder={field.placeholder}>
+          {({input, ...otherProps}) => (
+            <div key={field.id + field.label} sx={{gridColumn: '1/3'}}>
               <Label htmlFor={field.id}>{field.label}</Label>
-              <Textarea id={field.id} {...input} rows="8" />
+              <Textarea id={field.id} {...input} {...otherProps} rows="8" />
               <Error name={field.id} />
             </div>
           )}
@@ -48,13 +53,13 @@ const getFormField = field => {
       );
     case 'select':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.id}>
+        <Field key={field.id} name={field.id}>
+          {({input, ...otherProps}) => (
+            <div key={field.id + field.label}>
               <Label htmlFor={field.id}>{field.label}</Label>
-              <Select id={field.id} {...input}>
+              <Select id={field.id} {...input} {...otherProps}>
                 {field.values.map(value => (
-                  <option key={value} value={value}>
+                  <option key={field.id + value} value={value}>
                     {value}
                   </option>
                 ))}
@@ -66,10 +71,10 @@ const getFormField = field => {
       );
     case 'radio':
       return (
-        <fieldset key={field.label}>
+        <fieldset key={field.id}>
           <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
           {field.values.map(value => (
-            <div key={field.id}>
+            <div key={field.id + value}>
               <label
                 key={value}
                 sx={{
@@ -84,7 +89,9 @@ const getFormField = field => {
                   name={field.id}
                   type="radio"
                   value={value}
-                  component={({input}) => <Radio {...input} />}
+                  component={({input, ...otherProps}) => (
+                    <Radio {...input} {...otherProps} />
+                  )}
                 />
                 {value}
               </label>
@@ -94,10 +101,15 @@ const getFormField = field => {
       );
     case 'checkbox':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.label}>
-              <Checkbox type="checkbox" id={field.id} {...input} />
+        <Field key={field.id} name={field.id}>
+          {({input, ...otherProps}) => (
+            <div key={field.id + field.label}>
+              <Checkbox
+                type="checkbox"
+                id={field.id}
+                {...input}
+                {...otherProps}
+              />
               <Label sx={{display: 'inline'}} htmlFor={field.id}>
                 {field.label}
               </Label>
@@ -108,30 +120,30 @@ const getFormField = field => {
       );
     case 'reset':
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.label}>
-              <input
-                sx={{gridColumn: field.fullwidth ? '1/3' : ''}}
-                type={field.input}
-                id={field.id}
-                {...input}
-              />
-              <Error name={field.id} />
-            </div>
-          )}
-        </Field>
+        <Button
+          sx={{gridColumn: field.fullwidth ? '1/3' : ''}}
+          type={field.input}
+          id={field.id}
+          onClick={e => handleReset(e, form)}
+        >
+          {field.label}
+        </Button>
       );
     default:
       return (
-        <Field name={field.id}>
-          {({input}) => (
-            <div key={field.id}>
+        <Field key={field.id} name={field.id} placeholder={field.placeholder}>
+          {({input, ...otherProps}) => (
+            <div key={field.id + field.label}>
               <Label htmlFor={field.id} required={field.required}>
                 {field.label}
                 {field.required && <strong>*</strong>}
               </Label>
-              <Input type={field.input} id={field.id} {...input} />
+              <Input
+                type={field.input}
+                id={field.id}
+                {...input}
+                {...otherProps}
+              />
               <Error name={field.id} />
             </div>
           )}
@@ -151,27 +163,37 @@ const FormComponent = ({
 }) => {
   return (
     <Form
-      render={({handleSubmit}) => (
-        <Box as="form" id={id} onSubmit={handleSubmit}>
-          <fieldset>
-            {title && <Styled.h2>{title}</Styled.h2>}
-            {description && blockText ? (
-              blockText(description)
-            ) : (
-              <Styled.p>{description}</Styled.p>
-            )}
-            <Grid gap={20} columns={['1fr, 1fr']}>
-              {fields.map(field => {
-                return getFormField(field);
-              })}
-              <Button sx={{gridColumn: '1/3'}} type="submit">
-                Submit
-              </Button>
-            </Grid>
-          </fieldset>
-        </Box>
-      )}
+      render={({handleSubmit, form, submitting, pristine}) => {
+        return (
+          <Box as="form" id={id} onSubmit={handleSubmit}>
+            <fieldset>
+              {title && <Styled.h2>{title}</Styled.h2>}
+              {description && blockText ? (
+                blockText(description)
+              ) : (
+                <Styled.p>{description}</Styled.p>
+              )}
+              <Grid gap={20} columns={['1fr, 1fr']}>
+                {fields.map(field => {
+                  return getFormField(field, form);
+                })}
+                <Button
+                  sx={{gridColumn: '1/3'}}
+                  type="submit"
+                  disabled={submitting || pristine}
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </fieldset>
+          </Box>
+        );
+      }}
       validate={validationFn}
+      initialValues={fields.reduce((obj, field) => {
+        if (field.initialValue) obj[field.id] = field.initialValue;
+        return obj;
+      }, {})}
       onSubmit={submitForm}
     />
   );
