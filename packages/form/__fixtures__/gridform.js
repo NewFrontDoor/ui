@@ -57,6 +57,32 @@ const props = {
         id: 'reset',
         input: 'reset',
         label: 'Reset me again!'
+      },
+      {
+        id: 'testing',
+        input: 'field-array',
+        label: 'Time for some field arrays',
+        childLabel: 'Family member',
+        required: false,
+        childFields: [
+          {
+            id: 'name',
+            input: 'text',
+            label: 'Name',
+            placeholder: 'Kermit'
+          },
+          {
+            id: 'mobile',
+            input: 'telephone',
+            label: 'Mobile',
+            required: false,
+            validation: {
+              validationType: 'default',
+              warning: 'you need to put in a mobile'
+            },
+            placeholder: '04********'
+          }
+        ]
       }
     ],
     requiredError: "it's required yo!"
