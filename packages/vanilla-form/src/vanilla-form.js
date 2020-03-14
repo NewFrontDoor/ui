@@ -1,5 +1,7 @@
 import React from 'react';
 import {Form, Field, useField} from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
+import {FieldArray} from 'react-final-form-arrays';
 import PropTypes from 'prop-types';
 
 const Error = ({name}) => {
@@ -18,7 +20,37 @@ const handleReset = (e, form) => {
   form.reset();
 };
 
-const getVanillaFormField = (field, form) => {
+const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
+  return (
+    <div key={name}>
+      <fieldset>
+        {childLabel && (
+          <h2>
+            {childLabel} {index + 1}
+          </h2>
+        )}
+        {childFields.map(field => {
+          return getVanillaFormField(field, form, name);
+        })}
+        <button type="button" onClick={() => fields.remove(index)}>
+          Remove
+        </button>
+      </fieldset>
+    </div>
+  );
+};
+
+NestedForm.propTypes = {
+  childFields: PropTypes.array.isRequired,
+  form: PropTypes.any,
+  name: PropTypes.string.isRequired,
+  childLabel: PropTypes.string,
+  fields: PropTypes.array.isRequired,
+  index: PropTypes.number.isRequired
+};
+
+const getVanillaFormField = (field, form, name = '') => {
+  const {push, pop} = form.mutators;
   switch (field.input) {
     case 'textarea':
       return (
@@ -31,6 +63,35 @@ const getVanillaFormField = (field, form) => {
             </div>
           )}
         </Field>
+      );
+    case 'field-array':
+      return (
+        <div>
+          <button
+            type="button"
+            onClick={() => push(name + field.id, undefined)}
+          >
+            Add
+          </button>
+          <button type="button" onClick={() => pop(name + field.id, undefined)}>
+            Remove
+          </button>
+          <FieldArray name={name + field.id}>
+            {({fields}) =>
+              fields.map((name, index) => (
+                <NestedForm
+                  key={name + field.id}
+                  childLabel={field.childLabel}
+                  name={name}
+                  form={form}
+                  fields={fields}
+                  index={index}
+                  childFields={field.childFields}
+                />
+              ))
+            }
+          </FieldArray>
+        </div>
       );
     case 'select':
       return (
@@ -133,6 +194,9 @@ const VanillaFormComponent = ({
 }) => {
   return (
     <Form
+      mutators={{
+        ...arrayMutators
+      }}
       render={({handleSubmit, form, submitting, pristine}) => (
         <form id={id} onSubmit={handleSubmit}>
           <fieldset>

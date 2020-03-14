@@ -24,7 +24,12 @@ export default {
       type: 'array',
       of: [
         {
-          type: 'formfield'
+          type: 'formfield',
+          title: 'Field'
+        },
+        {
+          type: 'formarrayfield',
+          title: 'Form Array'
         }
       ]
     },
