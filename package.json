@@ -25,6 +25,7 @@
     "@mdx-js/react": "^1.5.1",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.1",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.9",
     "babel-plugin-inline-react-svg": "^1.1.0",
@@ -70,6 +71,7 @@
       "xo-react",
       "plugin:jest/recommended"
     ],
+    "parser": "babel-eslint",
     "prettier": true,
     "space": true,
     "plugins": [

@@ -8,6 +8,11 @@ module.exports = webpackConfig => {
         {
           test: /\.(png|jpe?g|gif)$/i,
           use: ['file-loader']
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader'
         }
       ]
     }

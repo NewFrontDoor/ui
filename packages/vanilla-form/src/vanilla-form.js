@@ -62,7 +62,7 @@ const getVanillaFormField = (field, form) => {
                   type="radio"
                   value={value}
                   component={({input, otherProps}) => (
-                    <radio {...input} {...otherProps} />
+                    <input {...input} {...otherProps} />
                   )}
                 />
                 {value}
@@ -146,8 +146,9 @@ const VanillaFormComponent = ({
               {fields.map(field => {
                 return getVanillaFormField(field, form);
               })}
-              <button type="submit"
-                  disabled={submitting || pristine}>Submit</button>
+              <button type="submit" disabled={submitting || pristine}>
+                Submit
+              </button>
             </div>
           </fieldset>
         </form>

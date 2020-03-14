@@ -1,9 +1,9 @@
-# Form component
+# VanillaForm
 ### for dynamically building out forms from JSON
 
-A wrapper around React-Final-Form primarily built to work with data provided by [sanity.io](sanity.io) (json), and styling injected by [theme-ui](https://theme-ui.com/). However, you're not stuck with theme-ui! Check out (VanillaForm)[https://www.npmjs.com/package/@newfrontdoor/vanilla-form] if you'd prefer work with your own styling.
+A wrapper around React-Final-Form primarily built to work with data provided by [sanity.io](sanity.io) (json), and no styling included.
 
-Or just use this library as an inspiration!
+An alternative package [Form](https://www.npmjs.com/package/@newfrontdoor/form) offers style injected by [theme-ui](https://theme-ui.com/). 
 
 ## Table of Contents
 * [Installation](#installation)
@@ -13,21 +13,21 @@ Or just use this library as an inspiration!
 
 
 ## Installation
-`yarn add @newfrontdoor/form theme-ui`
+`yarn add @newfrontdoor/vanilla-form`
 
 or
 
-`npm install @newfrontdoor/form theme-ui`
+`npm install @newfrontdoor/vanilla-form`
 
 ## Usage
 
 If you're using Sanity, you can find some suitable schemas for your studio [in the schemas folder](schemas). They're also exported from this project as `formObject` and `formField`;
 
 ```
-import {Form, validation} from '@newfrontdoor/form'
+import {VanillaForm, validation} from '@newfrontdoor/vanilla-form'
 const MyFormPage = ({formData}) => {
     const {fields requiredError} = formData
-    return  <Form
+    return  <VanillaForm
               fields
               title="My Form"
               description="This is a cool form"
@@ -39,12 +39,12 @@ const MyFormPage = ({formData}) => {
 Obviously all props could be passed in from your data store, meaning you can end up just doing:
 
 ```
-<Form {..props} validationFn={values => validation(values, formData)}>
+<VanillaForm {..props} validationFn={values => validation(values, formData)}>
 ```
 
 
 ## Available components
-**`<Form>`** see above for basic usage. See prop definitions below.
+**`<VanillaForm>`** see above for basic usage. See prop definitions below (compared to it's sister package, it uses plain html tags, rather than theme-ui elements)
 
 ### Props
 _**fields**_ <Array> [required]
