@@ -51,6 +51,10 @@ NestedForm.propTypes = {
 
 const getVanillaFormField = (field, form, name = '') => {
   const {push, pop} = form.mutators;
+
+  // This is a hack while Sanity doesn't enable initial values on array-level items
+  if (field.childFields) field.input = 'field-array';
+
   switch (field.input) {
     case 'textarea':
       return (
