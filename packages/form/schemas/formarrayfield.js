@@ -4,6 +4,13 @@ export default {
   type: 'document',
   fields: [
     {
+      // This (along with it's initialValue) is necessary for rendering the formarrayfield on the front end.
+      name: 'input',
+      title: 'Input',
+      type: 'string',
+      hidden: true
+    },
+    {
       name: 'label',
       title: 'Label',
       type: 'string',
@@ -40,5 +47,8 @@ export default {
         }
       ]
     }
-  ]
+  ],
+  initialValue: {
+    input: 'field-array'
+  }
 };

@@ -5,3 +5,4 @@ export {default as validation} from './validation';
 
 export {default as formObject} from '../../form/schemas/form';
 export {default as formField} from '../../form/schemas/formfield';
+export {default as formArrayField} from '../../form/schemas/formarrayfield';

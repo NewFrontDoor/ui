@@ -102,5 +102,11 @@ export default {
         }
       ]
     }
-  ]
+  ],
+  initialValue: {
+    required: false,
+    validation: {
+      validationType: 'none'
+    }
+  }
 };
