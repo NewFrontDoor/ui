@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/vanilla-form",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "license": "MIT",
   "source": "src/index.js",
   "main": "dist/index.js",
