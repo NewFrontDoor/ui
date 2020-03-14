@@ -1,5 +1,5 @@
 export default {
-  name: 'formarrayfield',
+  name: 'field-array',
   title: 'Sub-form Object',
   type: 'document',
   fields: [
