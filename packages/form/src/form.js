@@ -87,7 +87,7 @@ const getFormField = (field, form, name = '') => {
           )}
         </Field>
       );
-    case 'field-array':
+    case 'formarrayfield':
       return (
         <Box sx={{gridColumn: '1/3', display: 'contents'}}>
           <Button
