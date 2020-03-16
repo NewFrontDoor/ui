@@ -1,87 +1,47 @@
 /** @jsx jsx */
+import React from 'react';
 import PropTypes from 'prop-types';
-import {css, jsx} from '@emotion/core';
-import styled from '@emotion/styled';
-import format from 'date-fns/format';
-import {readingTime} from 'reading-time-estimator';
-import Link from './link';
+import {Flex, jsx} from 'theme-ui';
+import readingTime from 'reading-time';
+import Sidebar from './sidebar';
 
-const ContentWrapper = styled('div')`
-  display: flex;
-  flex-flow: row wrap;
-  margin: auto;
-  width: 100vw;
-  max-width: 920px;
-  padding-top: 40px;
-  @media (min-width: 420px) {
-    min-height: 600px;
-  }
-`;
+const Post = props => {
+  const {body, blockText, sidebar, options} = props;
+  const readingLength = readingTime((body && body.toString()) || 'test');
+  const {height, top} = options;
 
-const Meta = styled('div')`
-  flex: 1 0 auto;
-  height: auto;
-  overflow: hidden;
-  width: 250px;
-  padding: 20px;
-  position: sticky;
-  top: 40px;
-  height: 50px;
-  background: inherit;
-  @media (min-width: 420px) {
-    top: 110px;
-    height: 150px;
-  }
-`;
+  const sidebarProps = {
+    ...props,
+    height,
+    top,
+    readingLength
+  };
 
-const Content = styled('div')`
-  flex: 1 0 auto;
-  width: auto;
-  max-width: 24em;
-  @media (min-width: 420px) {
-    max-width: 32em;
-    padding-top: 23.5px;
-  }
-`;
-
-const Post = ({body, title, date, dateFormat, categories}) => {
-  const readingLength = readingTime(body.toString());
-
-  return (
-    <ContentWrapper display="flex">
-      <Meta>
-        <h2>{title}</h2>
-        <br />
-        <small>{format(new Date(date), dateFormat)}</small>
-        <br />
-        <small>{readingLength.text}</small>
-        <br />
-        <small
-          css={css`
-            display: none;
-            @media (min-width: 420px) {
-              display: block;
-            }
-          `}
-        >
-          <ul>
-            {categories.map(category => (
-              <li key={category.title + date}>
-                <Link {...category} />
-              </li>
-            ))}
-          </ul>
-        </small>
-      </Meta>
-      <Content>
-        {/* eslint-disable-next-line react/no-danger */}
-        <div dangerouslySetInnerHTML={{__html: body}} />
-      </Content>
-    </ContentWrapper>
-  );
+  return body ? (
+    <Flex
+      sx={{
+        flexFlow: 'row wrap',
+        margin: 'auto',
+        width: '100vw',
+        maxWidth: '920px',
+        paddingTop: '40px',
+        minHeight: [null, '600px']
+      }}
+    >
+      {sidebar(sidebarProps)}
+      <div
+        sx={{
+          flex: '1 0 auto',
+          width: 'auto',
+          maxWidth: ['24em', '32em'],
+          paddingTop: [null, '23.5px']
+        }}
+      >
+        {blockText(body)}
+      </div>
+    </Flex>
+  ) : null;
 };
-
-export default Post;
 
 Post.propTypes = {
   title: PropTypes.string.isRequired,
@@ -93,5 +53,15 @@ Post.propTypes = {
       title: PropTypes.string.isRequired,
       date: PropTypes.string
     })
-  ).isRequired
+  ).isRequired,
+  blockText: PropTypes.func.isRequired,
+  link: PropTypes.func.isRequired,
+  sidebar: PropTypes.func,
+  options: PropTypes.object
 };
+
+Post.defaultProps = {
+  sidebar: props => <Sidebar {...props} />
+};
+
+export default Post;

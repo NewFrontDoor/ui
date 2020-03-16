@@ -1,12 +1,12 @@
+/** @jsx jsx */
 import React from 'react';
+import {jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 import Post from './post';
-import DateFilter from './date-filter';
 
-const Blog = ({posts, category, dateFormat}) => {
+const Blog = ({posts, category, dateFormat, blockText, link, options, sidebar, overrides}) => {
   return (
     <div>
-      <DateFilter />
       {posts
         .filter(post => {
           if (category && Object.keys(category).length !== 0) {
@@ -28,6 +28,11 @@ const Blog = ({posts, category, dateFormat}) => {
             dateFormat={dateFormat}
             categories={post.categories}
             body={post.body}
+            blockText={blockText}
+            link={link}
+            options={options}
+            sidebar={sidebar}
+            overrides={overrides}
           />
         ))}
     </div>
@@ -48,7 +53,9 @@ Blog.propTypes = {
     })
   ).isRequired,
   category: PropTypes.objectOf(PropTypes.string),
-  dateFormat: PropTypes.string
+  dateFormat: PropTypes.string,
+  blockText: PropTypes.func.isRequired,
+  link: PropTypes.func.isRequired
 };
 
 Blog.defaultProps = {

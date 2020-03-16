@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/blog",
-  "version": "0.1.0",
+  "version": "0.2.5",
   "license": "MIT",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -13,15 +13,13 @@
     "dist"
   ],
   "peerDependencies": {
-    "@emotion/core": "^10.0",
-    "@emotion/styled": "^10.0",
-    "mineral-ui": "^0.58.0",
-    "react": "^16.0"
+    "react": "^16.0",
+    "theme-ui": "^0.3.1"
   },
   "dependencies": {
     "date-fns": "^2.4.0",
     "prop-types": "^15.6.2",
-    "reading-time-estimator": "^1.0.3"
+    "reading-time": "^1.2.0"
   },
   "xo": false
 }
