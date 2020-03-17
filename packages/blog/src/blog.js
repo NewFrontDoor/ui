@@ -4,7 +4,8 @@ import {jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 import Post from './post';
 
-const Blog = ({posts, category, dateFormat, blockText, link, options, sidebar, overrides}) => {
+const Blog = props => {
+  const {posts, category} = props;
   return (
     <div>
       {posts
@@ -21,19 +22,7 @@ const Blog = ({posts, category, dateFormat, blockText, link, options, sidebar, o
           );
         })
         .map(post => (
-          <Post
-            key={post.title}
-            title={post.title}
-            date={post._createdAt}
-            dateFormat={dateFormat}
-            categories={post.categories}
-            body={post.body}
-            blockText={blockText}
-            link={link}
-            options={options}
-            sidebar={sidebar}
-            overrides={overrides}
-          />
+          <Post key={post.title} {...post} {...props} />
         ))}
     </div>
   );
@@ -52,14 +41,7 @@ Blog.propTypes = {
       ).isRequired
     })
   ).isRequired,
-  category: PropTypes.objectOf(PropTypes.string),
-  dateFormat: PropTypes.string,
-  blockText: PropTypes.func.isRequired,
-  link: PropTypes.func.isRequired
-};
-
-Blog.defaultProps = {
-  dateFormat: 'dddd, MMMM do yyyy'
+  category: PropTypes.objectOf(PropTypes.string)
 };
 
 export default Blog;

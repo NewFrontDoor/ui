@@ -1,5 +1,5 @@
 import React from 'react';
-import {Blog, Sidebar} from '../src';
+import {Blog} from '../src';
 
 const props = {
   posts: [
@@ -38,17 +38,13 @@ const props = {
         }
       ]
     }
-  ],
-  options: {
-    height: '300px',
-    top: '0px'
-  }
+  ]
 };
 
 export default (
   <Blog
     {...props}
-    link={link => <a>{link}</a>}
+    link={(link, children) => <a href={link}>{children}</a>}
     blockText={text => <p>{text}</p>}
   />
 );

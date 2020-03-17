@@ -6,16 +6,8 @@ import readingTime from 'reading-time';
 import Sidebar from './sidebar';
 
 const Post = props => {
-  const {body, blockText, sidebar, options} = props;
-  const readingLength = readingTime((body && body.toString()) || 'test');
-  const {height, top} = options;
-
-  const sidebarProps = {
-    ...props,
-    height,
-    top,
-    readingLength
-  };
+  const {body, blockText, sidebar, bodyTransform} = props;
+  const readingLength = readingTime(bodyTransform(body));
 
   return body ? (
     <Flex
@@ -28,7 +20,7 @@ const Post = props => {
         minHeight: [null, '600px']
       }}
     >
-      {sidebar(sidebarProps)}
+      {sidebar({...props, readingLength})}
       <div
         sx={{
           flex: '1 0 auto',
@@ -44,23 +36,14 @@ const Post = props => {
 };
 
 Post.propTypes = {
-  title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  dateFormat: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      date: PropTypes.string
-    })
-  ).isRequired,
   blockText: PropTypes.func.isRequired,
-  link: PropTypes.func.isRequired,
   sidebar: PropTypes.func,
-  options: PropTypes.object
+  bodyTransform: PropTypes.func
 };
 
 Post.defaultProps = {
+  bodyTransform: props => props,
   sidebar: props => <Sidebar {...props} />
 };
 
