@@ -3662,11 +3662,6 @@ date-fns@^2.4.0:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.10.0.tgz#abd10604d8bafb0bcbd2ba2e9b0563b922ae4b6b"
   integrity sha512-EhfEKevYGWhWlZbNeplfhIU/+N+x0iCIx7VzKlXma2EdQyznVlZhCptXUY+BegNpPW2kjdx15Rvq503YcXXrcA==
 
-debounce@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
-  integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
-
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -3935,11 +3930,6 @@ dot-prop@^5.2.0:
   integrity sha512-uEUyaDKoSQ1M4Oq8l45hSE26SnTxL6snNnqvK/VWx5wJhmff5z0FUVJDKDanor/6w3kzE3i7XZOk+7wC0EXr1A==
   dependencies:
     is-obj "^2.0.0"
-
-dropzone@^5.5.1:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.7.0.tgz#8d1007f3ebcc6e6d64096823f854d898f7564ef2"
-  integrity sha512-kOltiZXH5cO/72I22JjE+w6BoT6uaVLfWdFMsi1PMKFkU6BZWpqRwjnsRm0o6ANGTBuZar5Piu7m/CbKqRPiYg==
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -8893,15 +8883,15 @@ react-cosmos-fetch-proxy@^4.8.2:
     fetch-mock "^5.12.2"
     react-cosmos-shared "^4.8.2"
 
-react-cosmos-playground2@^5.0.9:
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/react-cosmos-playground2/-/react-cosmos-playground2-5.0.9.tgz#9e39ba11fbc6bc4a1247020450e621ceaa0e4f89"
-  integrity sha512-ja+LQUTUgR6AKQymUR0qqdcNejGXbA6hLgSlTx1epP4tfxBz3eekgF1U1XoG4oLNAPflMKOdzPSlheqakO5HTQ==
+react-cosmos-playground2@^5.0.11:
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/react-cosmos-playground2/-/react-cosmos-playground2-5.0.11.tgz#b41f180c6c0f50db77f17bfeb518ee30868c8784"
+  integrity sha512-l/78pjDhX87d1XSP4Apyorvq0F9FQ93n8vd/06vDTQp6Xp/v4b+bpF7j8Ehk2FDD9ytzUaDFBqmOX5DYkRJZmw==
 
-react-cosmos-shared2@^5.0.9:
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/react-cosmos-shared2/-/react-cosmos-shared2-5.0.9.tgz#ed6652218343be27966d03a6199d811d9cc35cad"
-  integrity sha512-aDV1KADH5HaJ6DRwquBhypMs2QSCKtejevUdA5FuaH8bEeJFeq1/hWajf+Js8DHvQ0yO8Pl8M9Lna33zGAnnIg==
+react-cosmos-shared2@^5.0.11:
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/react-cosmos-shared2/-/react-cosmos-shared2-5.0.11.tgz#0d75ba0c68dc48c12fe9f2708825e4723f022a8d"
+  integrity sha512-aHEuHwVfvX1iUl3GQ2SToLrEDx1YzoqWoUU8J31t7bpi0TYohp4cfiP49wMs6h9dvh/gCB6fIJRSDccYftqCww==
   dependencies:
     lodash "^4.17.15"
     query-string "5.1.1"
@@ -8920,10 +8910,10 @@ react-cosmos-shared@^4.8.2:
     resolve-from "^4.0.0"
     slash "^2.0.0"
 
-react-cosmos@^5.0.0-rc.0:
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/react-cosmos/-/react-cosmos-5.0.9.tgz#fb93f408fdffb5d82f7caf938a51e3e09ea96d9a"
-  integrity sha512-/E8vXfzHYZZ6xUWL81Brqj5Ptob9KhqJLmAlLGejUsoL2bZs0L6Ck1W49nbobmdbMqg7smbe+i2AZGeere8sPA==
+react-cosmos@^5.0.11:
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/react-cosmos/-/react-cosmos-5.0.11.tgz#b81b775f418fa54160385f2b088ed88567347895"
+  integrity sha512-02mmasSxdYXnfQWXIP8DfyN6MSqmWKCCr/bej9Aj3n7hKjAdkc1efHece89n0pqu/6G8cGbhSvUsx7i/+LyosQ==
   dependencies:
     "@skidding/launch-editor" "^2.2.3"
     "@skidding/webpack-hot-middleware" "^2.25.0"
@@ -8938,8 +8928,8 @@ react-cosmos@^5.0.0-rc.0:
     micromatch "^4.0.2"
     open "^7.0.0"
     pkg-up "^3.1.0"
-    react-cosmos-playground2 "^5.0.9"
-    react-cosmos-shared2 "^5.0.9"
+    react-cosmos-playground2 "^5.0.11"
+    react-cosmos-shared2 "^5.0.11"
     react-error-overlay "^6.0.4"
     regenerator-runtime "^0.13.3"
     resolve-from "^5.0.0"
@@ -9246,12 +9236,10 @@ readdirp@~3.3.0:
   dependencies:
     picomatch "^2.0.7"
 
-reading-time-estimator@^1.0.3:
+reading-time@^1.2.0:
   version "1.2.0"
-  resolved "https://registry.yarnpkg.com/reading-time-estimator/-/reading-time-estimator-1.2.0.tgz#d4cb3ba54c82c41425b8576ea714c8ed2310ff58"
-  integrity sha512-smXmjrLt1ie7Z+9dQHivq7RLysOR5XXfYljhFrtX2y8iXLk02rrpl9voy0QYIa21n4KTuiPQy0LB1eI5cR2ojQ==
-  dependencies:
-    vue-wysiwyg "^1.7.2"
+  resolved "https://registry.yarnpkg.com/reading-time/-/reading-time-1.2.0.tgz#ced71c06715762f805506328dcc1fd45d8249ac4"
+  integrity sha512-5b4XmKK4MEss63y0Lw0vn0Zn6G5kiHP88mUnD8UeEsyORj3sh1ghTH0/u6m1Ax9G2F4wUZrknlp6WlIsCvoXVA==
 
 realpath-native@^1.1.0:
   version "1.1.0"
@@ -11155,27 +11143,6 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
-
-vue-wysiwyg@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/vue-wysiwyg/-/vue-wysiwyg-1.7.2.tgz#8f5ffe46e95e984c1f36874cc42ede5213e3b2d8"
-  integrity sha512-ypj9vqmGJTuM/YYC30+vRPWm6+UizBqvNHnIJr1l6k92eHA33q5ubE+WPfij8Qr8mK+wbaCwaVBO7dQqvxzSTQ==
-  dependencies:
-    debounce "^1.1.0"
-    vue "^2.5.13"
-    vue2-dropzone "^3.0.4"
-
-vue2-dropzone@^3.0.4:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/vue2-dropzone/-/vue2-dropzone-3.6.0.tgz#b4bb4b64de1cbbb3b88f04b24878e06780a51546"
-  integrity sha512-YXC1nCWIZvfa98e/i6h+EshZCkFSxFEh0Sxr9ODfThAPPDVhAzLLlz/4XIx0NGO1QeSy6htwSstte47R7vVhLQ==
-  dependencies:
-    dropzone "^5.5.1"
-
-vue@^2.5.13:
-  version "2.6.11"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
-  integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
 w3c-hr-time@^1.0.1:
   version "1.0.2"

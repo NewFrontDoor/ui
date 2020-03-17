@@ -1,6 +1,8 @@
 import React from 'react';
 import {Blog} from '../src';
 
+const Link = ({link, children}) => <a href={link}>{children}</a>;
+
 const props = {
   posts: [
     {
@@ -42,9 +44,5 @@ const props = {
 };
 
 export default (
-  <Blog
-    {...props}
-    link={(link, children) => <a href={link}>{children}</a>}
-    blockText={text => <p>{text}</p>}
-  />
+  <Blog {...props} Link={Link} blockText={text => <p>{text}</p>} />
 );

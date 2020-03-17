@@ -11,7 +11,7 @@ const Sidebar = ({
   dateFormat,
   readingLength,
   categories,
-  link,
+  Link,
   overrides
 }) => {
   return (
@@ -31,14 +31,20 @@ const Sidebar = ({
     >
       <Styled.h2>{title}</Styled.h2>
       <div>
-        {author && link(author._id, <p>{author}</p>)}
+        {author && (
+          <Link link={author._id}>
+            <p>{author}</p>
+          </Link>
+        )}
         <p>{format(new Date(_createdAt), dateFormat)}</p>
         <p>{readingLength.text}</p>
         <span sx={{display: ['none', 'block']}}>
           <ul>
             {categories.map(category => (
               <li key={category.title + _createdAt}>
-                {link(category._id, <p>{category.title}</p>)}
+                <Link link={category._id}>
+                  <p>{category.title}</p>
+                </Link>
               </li>
             ))}
           </ul>
@@ -59,7 +65,7 @@ Sidebar.propTypes = {
       date: PropTypes.string
     })
   ).isRequired,
-  link: PropTypes.func.isRequired,
+  Link: PropTypes.element.isRequired,
   overrides: PropTypes.object,
   readingLength: PropTypes.string
 };

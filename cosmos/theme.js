@@ -5,6 +5,7 @@ export default {
     heading: `"Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     monospace: 'Menlo, monospace'
   },
+  breakpoints: ['40em', '56em', '64em'],
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
   fontWeights: {
     body: 400,
@@ -57,6 +58,12 @@ export default {
       minWidth: '2em',
       cursor: 'pointer',
       borderRadius: '3px'
+    }
+  },
+  box: {
+    blog: {
+      fontSize: '10px',
+      color: 'green'
     }
   }
 };

@@ -18,6 +18,11 @@ export default {
         'The label which will accompany this form input on the screen'
     },
     {
+      name: 'description',
+      title: 'Form description',
+      type: 'blockContent'
+    },
+    {
       name: 'id',
       title: 'ID',
       type: 'string',

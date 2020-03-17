@@ -41,12 +41,12 @@ const handleReset = (e, form) => {
 
 const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
   return (
-    <div key={name} sx={{display: 'contents'}}>
-      <fieldset>
+    <div key={name} sx={{gridColumn: '1/3'}}>
+      <fieldset sx={{display: 'contents'}}>
         {childLabel && (
-          <Styled.h2>
+          <Styled.h4>
             {childLabel} {index + 1}
-          </Styled.h2>
+          </Styled.h4>
         )}
         {childFields.map(field => {
           return getFormField(field, form, name);
@@ -68,7 +68,7 @@ NestedForm.propTypes = {
   index: PropTypes.number.isRequired
 };
 
-const getFormField = (field, form, name = '') => {
+const getFormField = (field, form, blockText, name = '') => {
   const {push, pop} = form.mutators;
 
   // This is a hack while Sanity doesn't enable initial values on array-level items
@@ -93,31 +93,46 @@ const getFormField = (field, form, name = '') => {
       );
     case 'field-array':
       return (
-        <Box sx={{gridColumn: '1/3', display: 'contents'}}>
-          <Button
-            type="button"
-            onClick={() => push(name + field.id, undefined)}
-          >
-            Add
-          </Button>
-          <Button type="button" onClick={() => pop(name + field.id, undefined)}>
-            Remove
-          </Button>
-          <FieldArray name={name + field.id}>
-            {({fields}) =>
-              fields.map((name, index) => (
-                <NestedForm
-                  key={name + field.id}
-                  childLabel={field.childLabel}
-                  name={name}
-                  form={form}
-                  fields={fields}
-                  index={index}
-                  childFields={field.childFields}
-                />
-              ))
-            }
-          </FieldArray>
+        <Box sx={{gridColumn: '1/3'}}>
+          {field.label && <Styled.h2>{field.label}</Styled.h2>}
+          {field.description && blockText ? (
+            blockText(field.description)
+          ) : (
+            <Styled.p>{field.description}</Styled.p>
+          )}
+          <Grid gap={20} columns={['1fr 1fr']}>
+            <div sx={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <Button
+                type="button"
+                sx={{width: '35%'}}
+                onClick={() => push(name + field.id, undefined)}
+              >
+                Add
+              </Button>
+              <Button
+                type="button"
+                sx={{width: '35%'}}
+                onClick={() => pop(name + field.id, undefined)}
+              >
+                Remove
+              </Button>
+            </div>
+            <FieldArray name={name + field.id}>
+              {({fields}) =>
+                fields.map((name, index) => (
+                  <NestedForm
+                    key={name + field.id}
+                    childLabel={field.childLabel}
+                    name={name}
+                    form={form}
+                    fields={fields}
+                    index={index}
+                    childFields={field.childFields}
+                  />
+                ))
+              }
+            </FieldArray>
+          </Grid>
         </Box>
       );
     case 'select':
@@ -251,7 +266,7 @@ const FormComponent = ({
               )}
               <Grid gap={20} columns={['1fr 1fr']}>
                 {fields.map(field => {
-                  return getFormField(field, form);
+                  return getFormField(field, form, blockText);
                 })}
                 <Button
                   sx={{gridColumn: '1/3'}}
