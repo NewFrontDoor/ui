@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Flex, jsx} from 'theme-ui';
 import readingTime from 'reading-time';
-import Sidebar from './sidebar';
 
 const Post = props => {
-  const {body, blockText, sidebar} = props;
-  const readingLength = readingTime((body && body.toString()) || 'test');
+  const {body, blockText, sidebar, bodyTransform} = props;
+  console.log(props);
+  const readingLength = readingTime((body && bodyTransform(body)) || 'test');
 
   const sidebarProps = {
     ...props,
@@ -41,23 +41,10 @@ const Post = props => {
 };
 
 Post.propTypes = {
-  title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  dateFormat: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      date: PropTypes.string
-    })
-  ).isRequired,
   blockText: PropTypes.func.isRequired,
-  link: PropTypes.func.isRequired,
-  sidebar: PropTypes.func
-};
-
-Post.defaultProps = {
-  sidebar: props => <Sidebar {...props} />
+  sidebar: PropTypes.func.isRequired,
+  bodyTransform: PropTypes.func.isRequired
 };
 
 export default Post;

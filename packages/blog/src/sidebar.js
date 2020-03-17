@@ -45,13 +45,18 @@ const Sidebar = ({
 };
 
 Sidebar.propTypes = {
-  categories: PropTypes.any,
-  date: PropTypes.any,
-  dateFormat: PropTypes.any,
-  link: PropTypes.any,
-  readingLength: PropTypes.any,
-  title: PropTypes.any,
-  overrides: PropTypes.object
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  dateFormat: PropTypes.string.isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      date: PropTypes.string
+    })
+  ).isRequired,
+  link: PropTypes.func.isRequired,
+  overrides: PropTypes.object.isRequired,
+  readingLength: PropTypes.string
 };
 
 export default Sidebar;

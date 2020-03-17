@@ -3,8 +3,18 @@ import React from 'react';
 import {jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 import Post from './post';
+import Sidebar from './sidebar';
 
-const Blog = ({posts, category, dateFormat, blockText, link, sidebar, overrides}) => {
+const Blog = ({
+  posts,
+  category,
+  dateFormat,
+  blockText,
+  link,
+  sidebar,
+  overrides,
+  bodyTransform
+}) => {
   return (
     <div>
       {posts
@@ -32,6 +42,7 @@ const Blog = ({posts, category, dateFormat, blockText, link, sidebar, overrides}
             link={link}
             sidebar={sidebar}
             overrides={overrides}
+            bodyTransform={bodyTransform}
           />
         ))}
     </div>
@@ -54,11 +65,17 @@ Blog.propTypes = {
   category: PropTypes.objectOf(PropTypes.string),
   dateFormat: PropTypes.string,
   blockText: PropTypes.func.isRequired,
+  bodyTransform: PropTypes.func,
+  overrides: PropTypes.object,
+  sidebar: PropTypes.func,
   link: PropTypes.func.isRequired
 };
 
 Blog.defaultProps = {
-  dateFormat: 'dddd, MMMM do yyyy'
+  overrides: {},
+  dateFormat: 'EEEE, MMMM do yyyy',
+  bodyTransform: props => props,
+  sidebar: props => <Sidebar {...props} />
 };
 
 export default Blog;
