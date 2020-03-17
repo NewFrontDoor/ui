@@ -6,7 +6,7 @@ import readingTime from 'reading-time';
 import DefaultSidebar from './sidebar';
 
 const Post = props => {
-  const {body, blockText, Sidebar, bodyTransform} = props;
+  const {body, blockText, bodyTransform, Sidebar} = props;
   const readingLength = readingTime(bodyTransform(body));
 
   return body ? (
@@ -38,7 +38,7 @@ const Post = props => {
 Post.propTypes = {
   body: PropTypes.string.isRequired,
   blockText: PropTypes.func.isRequired,
-  Sidebar: PropTypes.element,
+  Sidebar: PropTypes.elementType,
   bodyTransform: PropTypes.func
 };
 

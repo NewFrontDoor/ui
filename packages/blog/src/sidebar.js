@@ -32,8 +32,8 @@ const Sidebar = ({
       <Styled.h2>{title}</Styled.h2>
       <div>
         {author && (
-          <Link link={author._id}>
-            <p>{author}</p>
+          <Link link={author._id} data={author}>
+            <p>{author.name}</p>
           </Link>
         )}
         <p>{format(new Date(_createdAt), dateFormat)}</p>
@@ -42,7 +42,7 @@ const Sidebar = ({
           <ul>
             {categories.map(category => (
               <li key={category.title + _createdAt}>
-                <Link link={category._id}>
+                <Link link={category._id} data={category}>
                   <p>{category.title}</p>
                 </Link>
               </li>
