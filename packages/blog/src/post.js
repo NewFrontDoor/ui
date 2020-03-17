@@ -3,16 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Flex, jsx} from 'theme-ui';
 import readingTime from 'reading-time';
+import Sidebar from './sidebar';
 
 const Post = props => {
   const {body, blockText, sidebar, bodyTransform} = props;
-  console.log(props);
-  const readingLength = readingTime((body && bodyTransform(body)) || 'test');
-
-  const sidebarProps = {
-    ...props,
-    readingLength
-  };
+  const readingLength = readingTime(bodyTransform(body));
 
   return body ? (
     <Flex
@@ -25,7 +20,7 @@ const Post = props => {
         minHeight: [null, '600px']
       }}
     >
-      {sidebar(sidebarProps)}
+      {sidebar({...props, readingLength})}
       <div
         sx={{
           flex: '1 0 auto',
@@ -43,8 +38,13 @@ const Post = props => {
 Post.propTypes = {
   body: PropTypes.string.isRequired,
   blockText: PropTypes.func.isRequired,
-  sidebar: PropTypes.func.isRequired,
-  bodyTransform: PropTypes.func.isRequired
+  sidebar: PropTypes.func,
+  bodyTransform: PropTypes.func
+};
+
+Post.defaultProps = {
+  bodyTransform: props => props,
+  sidebar: props => <Sidebar {...props} />
 };
 
 export default Post;

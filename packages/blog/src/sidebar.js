@@ -6,7 +6,8 @@ import format from 'date-fns/format';
 
 const Sidebar = ({
   title,
-  date,
+  author,
+  _createdAt,
   dateFormat,
   readingLength,
   categories,
@@ -30,12 +31,15 @@ const Sidebar = ({
     >
       <Styled.h2>{title}</Styled.h2>
       <div>
-        <p>{format(new Date(date), dateFormat)}</p>
+        {author && link(author._id, <p>{author}</p>)}
+        <p>{format(new Date(_createdAt), dateFormat)}</p>
         <p>{readingLength.text}</p>
         <span sx={{display: ['none', 'block']}}>
           <ul>
             {categories.map(category => (
-              <li key={category.title + date}>{link(category.title)}</li>
+              <li key={category.title + _createdAt}>
+                {link(category._id, <p>{category.title}</p>)}
+              </li>
             ))}
           </ul>
         </span>
@@ -46,8 +50,9 @@ const Sidebar = ({
 
 Sidebar.propTypes = {
   title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  dateFormat: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  _createdAt: PropTypes.string.isRequired,
+  dateFormat: PropTypes.string,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -55,8 +60,13 @@ Sidebar.propTypes = {
     })
   ).isRequired,
   link: PropTypes.func.isRequired,
-  overrides: PropTypes.object.isRequired,
+  overrides: PropTypes.object,
   readingLength: PropTypes.string
+};
+
+Sidebar.defaultProps = {
+  overrides: {},
+  dateFormat: 'EEEE, MMMM do yyyy'
 };
 
 export default Sidebar;

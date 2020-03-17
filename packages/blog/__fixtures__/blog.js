@@ -44,7 +44,7 @@ const props = {
 export default (
   <Blog
     {...props}
-    link={link => <a>{link}</a>}
+    link={(link, children) => <a href={link}>{children}</a>}
     blockText={text => <p>{text}</p>}
   />
 );
