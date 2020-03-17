@@ -6,14 +6,11 @@ import readingTime from 'reading-time';
 import Sidebar from './sidebar';
 
 const Post = props => {
-  const {body, blockText, sidebar, options} = props;
+  const {body, blockText, sidebar} = props;
   const readingLength = readingTime((body && body.toString()) || 'test');
-  const {height, top} = options;
 
   const sidebarProps = {
     ...props,
-    height,
-    top,
     readingLength
   };
 
@@ -56,8 +53,7 @@ Post.propTypes = {
   ).isRequired,
   blockText: PropTypes.func.isRequired,
   link: PropTypes.func.isRequired,
-  sidebar: PropTypes.func,
-  options: PropTypes.object
+  sidebar: PropTypes.func
 };
 
 Post.defaultProps = {

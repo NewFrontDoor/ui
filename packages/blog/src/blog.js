@@ -4,7 +4,7 @@ import {jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 import Post from './post';
 
-const Blog = ({posts, category, dateFormat, blockText, link, options, sidebar, overrides}) => {
+const Blog = ({posts, category, dateFormat, blockText, link, sidebar, overrides}) => {
   return (
     <div>
       {posts
@@ -30,7 +30,6 @@ const Blog = ({posts, category, dateFormat, blockText, link, options, sidebar, o
             body={post.body}
             blockText={blockText}
             link={link}
-            options={options}
             sidebar={sidebar}
             overrides={overrides}
           />

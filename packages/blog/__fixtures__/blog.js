@@ -1,5 +1,5 @@
 import React from 'react';
-import {Blog, Sidebar} from '../src';
+import {Blog} from '../src';
 
 const props = {
   posts: [
@@ -38,11 +38,7 @@ const props = {
         }
       ]
     }
-  ],
-  options: {
-    height: '300px',
-    top: '0px'
-  }
+  ]
 };
 
 export default (
