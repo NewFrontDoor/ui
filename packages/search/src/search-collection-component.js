@@ -12,7 +12,8 @@ const SearchCollection = ({
   labels,
   passSearchArray,
   returnEmptySubset,
-  passedSx
+  passedSx,
+  debounceTime
 }) => {
   const [searchString, setSearchString] = useState('');
   const [isInclusive, setIsInclusive] = useState(false);
@@ -22,7 +23,7 @@ const SearchCollection = ({
       setSearchString(value);
     },
     // Delay in ms
-    1000
+    debounceTime
   );
 
   useEffect(() => {
@@ -56,11 +57,10 @@ const SearchCollection = ({
         id="searchBox"
         name="searchBox"
         disabled={!dataCollection}
-        value={searchString}
         onChange={e => debouncedCallback(e.target.value)}
       />
       <Label htmlFor="searchbox">{labels.checkbox} </Label>
-      <Input
+      <input
         type="checkbox"
         id="isInclusive"
         name="isInclusive"
@@ -82,7 +82,8 @@ SearchCollection.defaultProps = {
   },
   passSearchArray: () => {},
   returnEmptySubset: false,
-  passedSx: {}
+  passedSx: {},
+  debounceTime: 1000
 };
 
 SearchCollection.propTypes = {
@@ -92,7 +93,8 @@ SearchCollection.propTypes = {
   labels: PropTypes.objectOf(PropTypes.string),
   passSearchArray: PropTypes.func,
   returnEmptySubset: PropTypes.bool,
-  passedSx: PropTypes.object
+  passedSx: PropTypes.object,
+  debounceTime: PropTypes.number
 };
 
 export default SearchCollection;
