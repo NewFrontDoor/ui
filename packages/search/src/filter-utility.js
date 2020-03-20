@@ -25,8 +25,9 @@ function searchFieldSet(searchArray, data, fields) {
   return searchArray.map(value => {
     return data.filter(item => {
       // Returns item if the string is found in one of the fields
+      // optional chaining allows for field to be empty on item
       return requiredFields
-        .map(field => item[field].toLowerCase().includes(value))
+        .map(field => item[field]?.toLowerCase().includes(value))
         .some(val => val === true);
     });
   });

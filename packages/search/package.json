@@ -21,7 +21,8 @@
     "dist"
   ],
   "dependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "use-debounce": "^3.4.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",

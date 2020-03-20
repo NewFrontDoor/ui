@@ -42,9 +42,7 @@ const Sidebar = ({
           <ul>
             {categories.map(category => (
               <li key={category.title + _createdAt}>
-                <Link link={category._id} data={category}>
-                  <p>{category.title}</p>
-                </Link>
+                <Link link={category._id} data={category}>{category.title}</Link>
               </li>
             ))}
           </ul>
@@ -56,7 +54,7 @@ const Sidebar = ({
 
 Sidebar.propTypes = {
   title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
+  author: PropTypes.object.isRequired,
   _createdAt: PropTypes.string.isRequired,
   dateFormat: PropTypes.string,
   categories: PropTypes.arrayOf(
@@ -65,9 +63,9 @@ Sidebar.propTypes = {
       date: PropTypes.string
     })
   ).isRequired,
-  Link: PropTypes.element.isRequired,
+  Link: PropTypes.func.isRequired,
   overrides: PropTypes.object,
-  readingLength: PropTypes.string
+  readingLength: PropTypes.object
 };
 
 Sidebar.defaultProps = {
