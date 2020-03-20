@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, cleanup, wait} from '@testing-library/react';
+import {render, fireEvent, cleanup, act} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import {SearchCollection} from '../src';
 
@@ -30,12 +30,16 @@ const sermonData = [
   }
 ];
 
-test('Loads search component', async () => {
-  const {baseElement} = render(
+function setup() {
+  const passSearchArray = jest.fn();
+  const setSubset = jest.fn();
+
+  const utils = render(
     <SearchCollection
       dataCollection={sermonData}
       headers={headers}
-      setSubset={() => {}}
+      setSubset={setSubset}
+      passSearchArray={passSearchArray}
       labels={{
         searchbox: 'Filter talks:',
         checkbox: 'use inclusive mode'
@@ -43,10 +47,27 @@ test('Loads search component', async () => {
     />
   );
 
-  const actual =
-    '<div><label for="searchbox">Filter talks: </label><input type="text" id="searchBox" name="searchBox" value=""><label for="searchbox">use inclusive mode </label><input type="checkbox" id="isInclusive" name="isInclusive"></div>';
+  return {
+    ...utils,
+    passSearchArray,
+    setSubset,
+    searchbox: utils.getByLabelText('Filter talks:'),
+    checkbox: utils.getByLabelText('use inclusive mode')
+  };
+}
 
-  await wait(() => {
-    expect(baseElement).toContainHTML(actual);
-  });
+test('Loads search component', async () => {
+  const {searchbox, checkbox} = setup();
+
+  expect(searchbox).toBeInTheDocument();
+  expect(checkbox).toBeInTheDocument();
+});
+
+test('Searches data', async () => {
+  const {searchbox, passSearchArray, setSubset} = setup();
+
+  fireEvent.change(searchbox, {target: {value: 'two'}});
+
+  expect(passSearchArray).toHaveBeenCalledWith([]);
+  expect(setSubset).toHaveBeenCalledWith(sermonData);
 });
