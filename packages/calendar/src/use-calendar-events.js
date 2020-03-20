@@ -93,7 +93,7 @@ function useCalendarEvents(initialView, client) {
     init
   );
 
-  const {data, status, error} = useQuery(currentDate, client.fetchEvents);
+  const {data, status, error} = useQuery([currentDate], client.fetchEvents);
 
   const calendarData = data
     ? buildCalendarData(calendarView, currentDate, data)

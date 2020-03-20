@@ -14,8 +14,6 @@
   "peerDependencies": {
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
-    "emotion-theming": "^10.0.19",
-    "mineral-ui": "^0.58.0",
     "react": "^16.10.0",
     "react-dom": "^16.10.0"
   },

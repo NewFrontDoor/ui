@@ -21,7 +21,6 @@
   "dependencies": {
     "@newfrontdoor/api-config": "^0.1.0",
     "@newfrontdoor/audio-player": "^0.1.2",
-    "@newfrontdoor/base": "^0.1.2",
     "ky": "^0.18.0",
     "ky-universal": "^0.5.0",
     "prop-types": "^15.6.0",

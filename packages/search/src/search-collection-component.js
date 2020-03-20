@@ -51,7 +51,7 @@ const SearchCollection = ({
 
   return (
     <div sx={passedSx}>
-      <Label htmlFor="searchbox">{labels.searchbox} </Label>
+      <Label htmlFor="searchBox">{labels.searchbox} </Label>
       <Input
         type="text"
         id="searchBox"
@@ -59,7 +59,7 @@ const SearchCollection = ({
         disabled={!dataCollection}
         onChange={e => debouncedCallback(e.target.value)}
       />
-      <Label htmlFor="searchbox">{labels.checkbox} </Label>
+      <Label htmlFor="isInclusive">{labels.checkbox} </Label>
       <input
         type="checkbox"
         id="isInclusive"
