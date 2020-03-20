@@ -36,7 +36,7 @@ const Post = props => {
 };
 
 Post.propTypes = {
-  body: PropTypes.string.isRequired,
+  body: PropTypes.oneOf([PropTypes.array, PropTypes.string]).isRequired,
   blockText: PropTypes.func.isRequired,
   Sidebar: PropTypes.elementType,
   bodyTransform: PropTypes.func

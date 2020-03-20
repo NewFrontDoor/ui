@@ -33,7 +33,7 @@ Blog.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       _createdAt: PropTypes.string.isRequired,
-      body: PropTypes.string,
+      body: PropTypes.oneOf([PropTypes.array, PropTypes.string]).isRequired,
       categories: PropTypes.arrayOf(
         PropTypes.shape({
           title: PropTypes.string

@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
+/** @jsx jsx */
+import {jsx, Label, Input} from 'theme-ui';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {searchData, searchArray} from './filter-utility';
+import {useDebouncedCallback} from 'use-debounce';
 
 const SearchCollection = ({
   dataCollection,
@@ -8,15 +11,23 @@ const SearchCollection = ({
   fields,
   labels,
   passSearchArray,
-  returnEmptySubset
+  returnEmptySubset,
+  passedSx
 }) => {
   const [searchString, setSearchString] = useState('');
   const [isInclusive, setIsInclusive] = useState(false);
+  const [debouncedCallback] = useDebouncedCallback(
+    // Function
+    value => {
+      setSearchString(value);
+    },
+    // Delay in ms
+    1000
+  );
 
-  function updateSubset(value) {
-    setSearchString(value);
+  useEffect(() => {
     const searchParams = {
-      searchString: value,
+      searchString,
       isInclusive
     };
     passSearchArray(searchArray(searchParams));
@@ -27,21 +38,29 @@ const SearchCollection = ({
       returnEmptySubset
     );
     setSubset(subset);
-  }
+  }, [
+    searchString,
+    isInclusive,
+    dataCollection,
+    fields,
+    returnEmptySubset,
+    passSearchArray,
+    setSubset
+  ]);
 
   return (
-    <div>
-      <label htmlFor="searchbox">{labels.searchbox} </label>
-      <input
+    <div sx={passedSx}>
+      <Label htmlFor="searchbox">{labels.searchbox} </Label>
+      <Input
         type="text"
         id="searchBox"
         name="searchBox"
         disabled={!dataCollection}
         value={searchString}
-        onChange={e => updateSubset(e.target.value || '')}
+        onChange={e => debouncedCallback(e.target.value)}
       />
-      <label htmlFor="searchbox">{labels.checkbox} </label>
-      <input
+      <Label htmlFor="searchbox">{labels.checkbox} </Label>
+      <Input
         type="checkbox"
         id="isInclusive"
         name="isInclusive"
@@ -62,7 +81,8 @@ SearchCollection.defaultProps = {
     checkbox: 'Use inclusive mode:'
   },
   passSearchArray: () => {},
-  returnEmptySubset: false
+  returnEmptySubset: false,
+  passedSx: {}
 };
 
 SearchCollection.propTypes = {
@@ -71,7 +91,8 @@ SearchCollection.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.object),
   labels: PropTypes.objectOf(PropTypes.string),
   passSearchArray: PropTypes.func,
-  returnEmptySubset: PropTypes.bool
+  returnEmptySubset: PropTypes.bool,
+  passedSx: PropTypes.object
 };
 
 export default SearchCollection;
