@@ -3,7 +3,7 @@ import {jsx, Heading, Button, Box} from 'theme-ui';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
 import styled from '@emotion/styled';
-import {useCalendarDispatch} from '../utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from '../use-calendar-events.ts';
 import MethodToggle from './method-toggle';
 
 const Outer = styled('div')`

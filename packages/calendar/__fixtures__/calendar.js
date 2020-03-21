@@ -9,7 +9,7 @@ const client = {
 };
 
 function handleNav(url) {
-  alert(url);
+  alert(url); // eslint-disable-line no-alert
 }
 
 export default (

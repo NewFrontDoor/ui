@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": true,
+    "allowJs": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
     "moduleResolution": "node",
-    "strict": true
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": false,
   }
 }

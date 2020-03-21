@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {RadioGroup, Radio} from 'react-radio-group';
 import styled from '@emotion/styled';
-import {useCalendarDispatch} from '../utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from '../use-calendar-events.ts';
 
 const StyledRadioGroup = styled(RadioGroup)`
   height: ${props =>

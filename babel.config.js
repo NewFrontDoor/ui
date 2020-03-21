@@ -1,21 +1,13 @@
 module.exports = {
   presets: [
+    '@babel/preset-env',
     '@babel/preset-react',
-    [
-      '@babel/preset-env',
-      {
-        targets: {
-          esmodules: true
-        }
-      }
-    ],
-    '@babel/preset-typescript',
-    '@emotion/babel-preset-css-prop'
+    '@babel/preset-typescript'
   ],
-  plugins: [
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-transform-spread',
-    '@babel/plugin-proposal-object-rest-spread',
-    'inline-react-svg'
-  ]
+  plugins: ['@babel/plugin-proposal-class-properties', 'inline-react-svg'],
+  env: {
+    test: {
+      plugins: ['@babel/plugin-transform-runtime']
+    }
+  }
 };

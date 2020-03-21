@@ -2,7 +2,7 @@
 import {jsx, Flex, Heading, Button, Box} from 'theme-ui';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
-import {useCalendarDispatch} from '../utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from '../use-calendar-events';
 import MethodToggle from './method-toggle';
 
 const CalendarControls = ({

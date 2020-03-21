@@ -1,4 +1,4 @@
-import {useReducer} from 'react';
+import React, {useContext, useReducer, Dispatch} from 'react';
 import {useQuery} from 'react-query';
 import {
   addMonths,
@@ -9,9 +9,50 @@ import {
   subWeeks
 } from 'date-fns';
 
-import {buildCalendarData} from './utilities/date-utils-grid';
+import {
+  buildCalendarData,
+  CalendarView,
+  CalendarDay,
+  CalendarMonth,
+  InputEvent
+} from './utilities/date-utils-grid';
 
-function reducer(state, action) {
+export const CalendarDispatch = React.createContext<Dispatch<Action>>(
+  (_: Action) => undefined
+);
+
+export const useCalendarDispatch = (): Dispatch<Action> =>
+  useContext(CalendarDispatch);
+
+type State = {
+  calendarView: CalendarView;
+  currentDate: Date;
+};
+
+type Action =
+  | {
+      type: 'see-more';
+      date: Date;
+    }
+  | {
+      type: 'set-view';
+      view: CalendarView;
+    }
+  | {type: 'today'}
+  | {
+      type: 'set-date';
+      date: Date;
+    }
+  | {type: 'decrement-year'}
+  | {type: 'decrement-month'}
+  | {type: 'decrement-week'}
+  | {type: 'decrement-day'}
+  | {type: 'increment-year'}
+  | {type: 'increment-month'}
+  | {type: 'increment-week'}
+  | {type: 'increment-day'};
+
+function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'see-more':
       return {
@@ -75,31 +116,57 @@ function reducer(state, action) {
         currentDate: addMonths(state.currentDate, 12)
       };
     default:
-      throw new Error(`Action type ${action.type} does not exist`);
+      return state;
   }
 }
 
-function init(calendarView) {
+function init(calendarView: CalendarView): State {
   return {
     calendarView,
     currentDate: new Date()
   };
 }
 
-function useCalendarEvents(initialView, client) {
+type Status = 'loading' | 'error' | 'success';
+
+type QueryResult = {
+  data?: InputEvent[];
+  status: Status;
+  error?: Error;
+};
+
+type UseCalendarEvents = [
+  {
+    calendarData: CalendarMonth | CalendarDay[] | CalendarDay | [];
+    currentDate: Date;
+    calendarView: string;
+  },
+  Status,
+  Error | undefined,
+  Dispatch<Action>
+];
+
+export type CalendarClient = {
+  fetchEvents(date: Date): Promise<InputEvent[]>;
+};
+
+export function useCalendarEvents(
+  initialView: CalendarView,
+  client: CalendarClient
+): UseCalendarEvents {
   const [{currentDate, calendarView}, dispatch] = useReducer(
     reducer,
     initialView,
     init
   );
 
-  const {data, status, error} = useQuery([currentDate], client.fetchEvents);
+  const {data, status, error}: QueryResult = useQuery(
+    [currentDate.toISOString()],
+    client.fetchEvents
+  );
 
-  const calendarData = data
-    ? buildCalendarData(calendarView, currentDate, data)
-    : [];
+  const calendarData =
+    (data && buildCalendarData(calendarView, currentDate, data)) ?? [];
 
   return [{calendarData, currentDate, calendarView}, status, error, dispatch];
 }
-
-export default useCalendarEvents;

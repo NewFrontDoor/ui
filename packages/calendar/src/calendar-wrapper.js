@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {getWeekOfMonth, startOfMonth} from 'date-fns';
 import Calendar from './calendar';
-import CalendarDispatch from './utilities/calendar-dispatch-provider';
-import useCalendarEvents from './use-calendar-events';
+import {useCalendarEvents, CalendarDispatch} from './use-calendar-events';
 
 const CalendarWrapper = ({client, initialView, isViewFixed, handleNav}) => {
   const [
