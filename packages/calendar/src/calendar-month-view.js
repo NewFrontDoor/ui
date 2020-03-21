@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import {shade, lighten, readableColor} from 'polished';
 import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
-import {useCalendarDispatch} from './utilities/calendar-dispatch-provider';
+import {useCalendarDispatch} from './use-calendar-events.ts';
 
 const WeekBlock = styled.div({
   display: 'grid',

@@ -2,9 +2,10 @@
   "name": "@newfrontdoor/calendar",
   "version": "2.2.0",
   "license": "MIT",
-  "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "microbundle --no-compress",
     "watch": "microbundle watch --no-compress"

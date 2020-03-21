@@ -1,5 +1,4 @@
 {
-  "proxiesPath": "./cosmos/cosmos.proxies",
   "staticPath": "static",
   "publicUrl": "/static/",
   "rootDir": "..",

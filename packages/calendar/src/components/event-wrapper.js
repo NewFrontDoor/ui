@@ -1,7 +1,9 @@
-/** @jsx jsx */
-import {jsx} from '@emotion/core';
+/** @jsx jsx  */
+/** @jsxFrag React.Fragment */
+
+import {jsx} from 'theme-ui';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import styled from '@emotion/styled';
 import {Dialog} from '@reach/dialog';
 
@@ -19,7 +21,7 @@ const Footer = styled('footer')`
 `;
 
 const EventWrapper = ({event, handleNav}) => {
-  const [showDialog, setShowDialog] = React.useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
@@ -28,7 +30,7 @@ const EventWrapper = ({event, handleNav}) => {
       <div
         /* eslint-disable-next-line react/no-danger */
         dangerouslySetInnerHTML={{__html: event.name}}
-        css={{
+        sx={{
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis'
@@ -71,7 +73,7 @@ const EventWrapper = ({event, handleNav}) => {
 };
 
 EventWrapper.propTypes = {
-  event: PropTypes.PropTypes.shape({
+  event: PropTypes.PropTypes.exact({
     name: PropTypes.string.isRequired
   }).isRequired,
   handleNav: PropTypes.func
