@@ -1,65 +1,57 @@
 import React from 'react';
-import {act, render, fireEvent, cleanup, wait} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import {render, fireEvent, waitFor} from '@testing-library/react';
 import {format, subMonths, subYears, addMonths, addYears} from 'date-fns';
+import {queryCache} from 'react-query';
 import {Calendar} from '../src';
 
-afterEach(cleanup);
+afterEach(() => {
+  queryCache.clear();
+});
 
-test('Loads and displays todays date', async () => {
+async function setup() {
   const client = {
     fetchEvents() {
       return Promise.resolve([]);
     }
   };
 
-  const {getByTestId} = render(
-    <Calendar initialView="month" client={client} />
-  );
+  const utils = render(<Calendar initialView="month" client={client} />);
+
+  return utils;
+}
+
+test('Loads and displays todays date', async () => {
+  const {getByTestId} = await setup();
 
   const actual = format(new Date(), 'MMMM - yyyy');
 
-  await wait(() => {
+  await waitFor(() => {
     expect(getByTestId('calendar-title')).toHaveTextContent(actual);
   });
 });
 
 test('Can navigate to the previous month and year', async () => {
-  const client = {
-    fetchEvents() {
-      return Promise.resolve([]);
-    }
-  };
+  const {getByTestId, getByLabelText} = await setup();
 
-  const {getByTestId, getByLabelText} = render(
-    <Calendar initialView="month" client={client} />
-  );
-
-  await wait(() => {
+  await waitFor(() => {
     expect(getByLabelText('previous month')).toBeInTheDocument();
   });
 
-  act(() => {
-    fireEvent.click(getByLabelText('previous month'));
-  });
+  fireEvent.click(getByLabelText('previous month'));
 
   const previousMonth = subMonths(new Date(), 1);
-  await wait(() => {
-    expect(getByTestId('calendar-title')).toBeInTheDocument();
 
+  await waitFor(() => {
     expect(getByTestId('calendar-title')).toHaveTextContent(
       format(previousMonth, 'MMMM - yyyy')
     );
   });
 
-  act(() => {
-    fireEvent.click(getByLabelText('previous year'));
-  });
+  fireEvent.click(getByLabelText('previous year'));
 
   const previousYear = subYears(previousMonth, 1);
-  await wait(() => {
-    expect(getByTestId('calendar-title')).toBeInTheDocument();
 
+  await waitFor(() => {
     expect(getByTestId('calendar-title')).toHaveTextContent(
       format(previousYear, 'MMMM - yyyy')
     );
@@ -67,41 +59,26 @@ test('Can navigate to the previous month and year', async () => {
 });
 
 test('Can navigate to the next month and year', async () => {
-  const client = {
-    fetchEvents() {
-      return Promise.resolve([]);
-    }
-  };
+  const {getByTestId, getByLabelText} = await setup();
 
-  const {getByTestId, getByLabelText} = render(
-    <Calendar initialView="month" client={client} />
-  );
-
-  await wait(() => {
+  await waitFor(() => {
     expect(getByLabelText('next month')).toBeInTheDocument();
   });
 
-  act(() => {
-    fireEvent.click(getByLabelText('next month'));
-  });
+  fireEvent.click(getByLabelText('next month'));
 
   const nextMonth = addMonths(new Date(), 1);
-  await wait(() => {
-    expect(getByTestId('calendar-title')).toBeInTheDocument();
 
+  await waitFor(() => {
     expect(getByTestId('calendar-title')).toHaveTextContent(
       format(nextMonth, 'MMMM - yyyy')
     );
   });
-
-  act(() => {
-    fireEvent.click(getByLabelText('next year'));
-  });
+  fireEvent.click(getByLabelText('next year'));
 
   const nextYear = addYears(nextMonth, 1);
-  await wait(() => {
-    expect(getByTestId('calendar-title')).toBeInTheDocument();
 
+  await waitFor(() => {
     expect(getByTestId('calendar-title')).toHaveTextContent(
       format(nextYear, 'MMMM - yyyy')
     );

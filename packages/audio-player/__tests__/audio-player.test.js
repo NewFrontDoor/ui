@@ -1,9 +1,6 @@
 import React from 'react';
-import {render, cleanup, wait} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import {render} from '@testing-library/react';
 import {DefaultPlayer} from '../src';
-
-afterEach(cleanup);
 
 const audio = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
 
@@ -12,7 +9,5 @@ test('Loads native audio player', async () => {
 
   const actual = 'Your browser does not support theaudioelement.';
 
-  await wait(() => {
-    expect(baseElement).toHaveTextContent(actual);
-  });
+  expect(baseElement).toHaveTextContent(actual);
 });
