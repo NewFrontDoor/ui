@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {css, jsx, Text} from 'theme-ui';
+import {jsx, Text} from 'theme-ui';
 import PropTypes from 'prop-types';
 import {Bible} from '../src';
 
@@ -9,34 +9,34 @@ const Blockquote = props => {
   const {passage} = props;
   return (
     <blockquote
-      css={css`
-        max-width: 30rem;
-        margin: 1.5em 10px;
-        padding: 0.5em 10px;
-        quotes: '“' '”' '‘' '’';
+      sx={{
+        maxWidth: '30rem',
+        margin: '1.5em 10px',
+        padding: '0.5em 10px',
+        quotes: "'“' '”' '‘' '’'",
 
-        &::before {
-          content: open-quote;
-          font-size: 4em;
-          line-height: 0.1em;
-          margin-right: 0.25em;
-          vertical-align: -0.4em;
-        }
+        '&::before': {
+          content: 'open-quote',
+          fontSize: '4em',
+          lineHeight: '0.1em',
+          marginRight: '0.25em',
+          verticalAlign: '-0.4em'
+        },
 
-        & p {
-          display: inline;
+        '& p': {
+          display: 'inline'
         }
-      `}
+      }}
     >
       <Bible {...props} />
       <Text
         appearance="prose"
         align="end"
         as="i"
-        css={css`
-          margin-top: 1rem;
-          display: block;
-        `}
+        sx={{
+          marginTop: '1rem',
+          display: 'block'
+        }}
       >
         {' '}
         – {passage}
