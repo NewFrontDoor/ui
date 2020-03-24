@@ -24,8 +24,20 @@ const initialPT = [
         _key: 'a345f913565b0',
         _type: 'span',
         marks: [],
+        text: 'We gather at '
+      },
+      {
+        _key: 'a345f913565b0',
+        _type: 'span',
+        marks: ['strong'],
+        text: '4.00pm and 6.00pm'
+      },
+      {
+        _key: 'a345f913565b0',
+        _type: 'span',
+        marks: [],
         text:
-          'We gather at 4.00pm and 6.00pm on Sundays to pray, listen to a sermon, sing Christian songs and spend informal time together. Our sermons tend to be exegetical. This means the content comes from a careful, week-by-week study of whole books of the Bible. Occasionally sermons are structured to respond to a topic.'
+          ' on Sundays to pray, listen to a sermon, sing Christian songs and spend informal time together. Our sermons tend to be exegetical. This means the content comes from a careful, week-by-week study of whole books of the Bible. Occasionally sermons are structured to respond to a topic.'
       }
     ],
     markDefs: [],
@@ -130,7 +142,7 @@ const initialPT = [
       {
         _key: '50cba026be063',
         _type: 'span',
-        marks: ['17d13c6d9985'],
+        marks: ['17d13c6d9985', 'strong'],
         text: 'Breaking the silence'
       },
       {

@@ -7,6 +7,11 @@ export function toPortableText(nodes) {
       ...(node.type === 'block-quote' && {style: 'blockquote'}),
       ...(node.type === 'numbered-list' && {listItem: 'number'}),
       ...(node.type === 'bulleted-list' && {listItem: 'bullet'}),
+      ...(node.type === 'heading-one' && {style: 'h1'}),
+      ...(node.type === 'heading-two' && {style: 'h2'}),
+      ...(node.type === 'heading-three' && {style: 'h3'}),
+      ...(node.type === 'heading-four' && {style: 'h4'}),
+      ...(node.type === 'heading-five' && {style: 'h5'}),
       children: node.children.map(span => ({
         _type: 'span',
         text: Node.string(span),

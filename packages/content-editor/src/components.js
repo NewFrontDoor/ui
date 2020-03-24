@@ -1,4 +1,5 @@
 /** @jsx jsx */
+/** @jsxFrag React.Fragment */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {cx, css} from 'emotion';

@@ -1,4 +1,5 @@
 /** @jsx jsx */
+/** @jsxFrag React.Fragment */
 import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
 import {jsx, Styled} from 'theme-ui';
