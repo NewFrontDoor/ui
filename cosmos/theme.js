@@ -135,17 +135,19 @@ export default {
       fontSize: 'inherit'
     },
     table: {
-      width: '100%',
       borderCollapse: 'separate',
-      borderSpacing: 0
+      width: '50%',
+      sermonTable: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        borderSpacing: 0
+      }
     },
     th: {
-      textAlign: 'left',
-      borderBottomStyle: 'solid'
+      textAlign: 'left'
     },
     td: {
-      textAlign: 'left',
-      borderBottomStyle: 'solid'
+      textAlign: 'left'
     },
     img: {
       maxWidth: '100%'
