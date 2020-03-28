@@ -71,8 +71,7 @@ NestedForm.propTypes = {
 
 const getFormField = (field, form, blockText, name = '') => {
   const {push, pop} = form.mutators;
-  const {fullWidth, border} = field.styling;
-  const width = fullWidth ? '1/3' : null;
+  const width = field.styling && field.styling.fullWidth ? '1/3' : null;
   // This is a hack while Sanity doesn't enable initial values on array-level items
   if (field.childFields) field.input = 'field-array';
 
