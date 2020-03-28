@@ -71,7 +71,8 @@ NestedForm.propTypes = {
 
 const getFormField = (field, form, blockText, name = '') => {
   const {push, pop} = form.mutators;
-
+  const {fullWidth, border} = field.styling;
+  const width = fullWidth ? '1/3' : null;
   // This is a hack while Sanity doesn't enable initial values on array-level items
   if (field.childFields) field.input = 'field-array';
 
@@ -140,7 +141,7 @@ const getFormField = (field, form, blockText, name = '') => {
       return (
         <Field key={field.id} name={name + field.id}>
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label}>
+            <div key={field.id + field.label} sx={{gridColumn: width}}>
               <Label htmlFor={field.id}>{field.label}</Label>
               <Select id={field.id} {...input} {...otherProps}>
                 {field.values.map(value => (
@@ -156,7 +157,7 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     case 'radio':
       return (
-        <fieldset key={field.id}>
+        <fieldset key={field.id} sx={{gridColumn: width}}>
           <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
           {field.values.map(value => (
             <div key={field.id + value}>
@@ -185,7 +186,7 @@ const getFormField = (field, form, blockText, name = '') => {
       return (
         <>
           {field.label && field.values && field.values.length > 0 ? (
-            <fieldset key={field.id}>
+            <fieldset key={field.id} sx={{gridColumn: width}}>
               <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
               {field.values.map(value => (
                 <div key={field.id + value}>
@@ -210,7 +211,7 @@ const getFormField = (field, form, blockText, name = '') => {
               ))}
             </fieldset>
           ) : (
-            <React.Fragment key={field.id + field.label}>
+            <div key={field.id + field.label} sx={{gridColumn: width}}>
               <Label sx={{display: 'inline-block'}}>
                 <Field key={field.id} name={name + field.id}>
                   {({input, ...otherProps}) => (
@@ -220,14 +221,14 @@ const getFormField = (field, form, blockText, name = '') => {
                 {field.label}
                 <Error name={name + field.id} />
               </Label>
-            </React.Fragment>
+            </div>
           )}
         </>
       );
     case 'reset':
       return (
         <Button
-          sx={{gridColumn: field.fullwidth ? '1/3' : ''}}
+          sx={{gridColumn: width}}
           type={field.input}
           id={field.id}
           onClick={e => handleReset(e, form)}
@@ -243,7 +244,7 @@ const getFormField = (field, form, blockText, name = '') => {
           placeholder={field.placeholder}
         >
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label}>
+            <div key={field.id + field.label} sx={{gridColumn: width}}>
               <Label htmlFor={field.id} required={field.required}>
                 {field.label}
                 {field.required && <strong>*</strong>}
