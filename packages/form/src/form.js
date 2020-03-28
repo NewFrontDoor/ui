@@ -1,4 +1,5 @@
 /** @jsx jsx */
+/** @jsxFrag React.Fragment */
 import React from 'react'; // eslint-disable-line no-unused-vars
 import {Form, Field, useField} from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -169,14 +170,11 @@ const getFormField = (field, form, blockText, name = '') => {
                   margin: '0px'
                 }}
               >
-                <Field
-                  name={name + field.id}
-                  type="radio"
-                  value={value}
-                  component={({input, ...otherProps}) => (
+                <Field name={name + field.id} type="radio" value={value}>
+                  {({input, ...otherProps}) => (
                     <Radio {...input} {...otherProps} />
                   )}
-                />
+                </Field>
                 {value}
               </label>
             </div>
@@ -185,22 +183,46 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     case 'checkbox':
       return (
-        <Field key={field.id} name={name + field.id}>
-          {({input, ...otherProps}) => (
-            <div key={field.id + field.label}>
-              <Checkbox
-                type="checkbox"
-                id={field.id}
-                {...input}
-                {...otherProps}
-              />
-              <Label sx={{display: 'inline'}} htmlFor={field.id}>
+        <>
+          {field.label && field.values && field.values.length > 0 ? (
+            <fieldset key={field.id}>
+              <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
+              {field.values.map(value => (
+                <div key={field.id + value}>
+                  <label
+                    key={value}
+                    sx={{
+                      boxSizing: 'border-box',
+                      minWidth: '0px',
+                      width: '100%',
+                      display: 'flex',
+                      margin: '0px'
+                    }}
+                  >
+                    <Field name={name + field.id} value={value}>
+                      {({input, ...otherProps}) => (
+                        <Checkbox {...input} {...otherProps} />
+                      )}
+                    </Field>
+                    {value}
+                  </label>
+                </div>
+              ))}
+            </fieldset>
+          ) : (
+            <React.Fragment key={field.id + field.label}>
+              <Label sx={{display: 'inline-block'}}>
+                <Field key={field.id} name={name + field.id}>
+                  {({input, ...otherProps}) => (
+                    <Checkbox {...input} {...otherProps} />
+                  )}
+                </Field>
                 {field.label}
+                <Error name={name + field.id} />
               </Label>
-              <Error name={name + field.id} />
-            </div>
+            </React.Fragment>
           )}
-        </Field>
+        </>
       );
     case 'reset':
       return (
