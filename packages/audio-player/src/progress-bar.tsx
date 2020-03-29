@@ -1,38 +1,25 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
+import React, {Ref} from 'react';
 import PropTypes from 'prop-types';
 import {Range, getTrackBackground} from 'react-range';
-import styled from '@emotion/styled';
+import {ITrackProps} from 'react-range/lib/types';
 
-const Thumb = styled.div(
-  {
-    height: '10px',
-    width: '10px',
-    backgroundColor: '#111',
-    borderRadius: '50%',
-    transition: 'opacity 0.2s linear'
-  },
-  props => ({opacity: props.visible ? '1' : '0'}),
-  props => ({backgroundColor: props.isInvert ? '#EEE' : '#111'}),
-  props => props.inbuiltStyle
-);
+type ProgressBarProps = {
+  values: number[];
+  max?: number;
+  updateValues: (values: number[]) => void;
+  step?: number;
+  isInteracting: boolean;
+  color?: string;
+  isInvert?: boolean;
+};
 
-const Slider = styled('div')`
-  height: 30px;
-  display: flex;
-  width: 100%;
-  padding: 0;
-  :focus-within {
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-  &:hover {
-    .thumb {
-      opacity: 1;
-    }
-  }
-`;
-
-const ProgressBar = React.forwardRef(
-  ({values, max, updateValues, step, isInteracting, color, isInvert}, ref) => {
+const ProgressBar = React.forwardRef<Range, ProgressBarProps>(
+  (
+    {values, max, updateValues, step, isInteracting, color, isInvert},
+    ref: Ref<Range>
+  ) => {
     return (
       <Range
         ref={ref}
@@ -40,10 +27,24 @@ const ProgressBar = React.forwardRef(
         min={0}
         max={max}
         values={values}
-        renderTrack={({props, children}) => (
-          <Slider
+        renderTrack={({
+          props,
+          children
+        }: {
+          props: ITrackProps;
+          children: React.ReactNode;
+        }) => (
+          <div
             style={{...props.style}}
             tabIndex={0}
+            sx={{
+              height: '30px',
+              display: 'flex',
+              width: '100%',
+              padding: '0',
+              ':focus-within': {outline: '-webkit-focus-ring-color auto 5px'},
+              '&:hover': {'.thumb': {opacity: '1'}}
+            }}
             onMouseDown={props.onMouseDown}
             onTouchStart={props.onTouchStart}
           >
@@ -65,17 +66,22 @@ const ProgressBar = React.forwardRef(
             >
               {children}
             </div>
-          </Slider>
+          </div>
         )}
-        renderThumb={({props, isDragged}) => (
-          <Thumb
+        renderThumb={({props}) => (
+          <div
             className="thumb"
             {...props}
-            isDragged={isDragged}
-            isInvert={isInvert}
-            inbuiltStyle={props.style}
-            visible={isInteracting}
+            style={props.style}
             tabIndex={-1}
+            sx={{
+              height: '10px',
+              width: '10px',
+              borderRadius: '50%',
+              transition: 'opacity 0.2s linear',
+              opacity: isInteracting ? '1' : '0',
+              backgroundColor: isInvert ? '#EEE' : '#111'
+            }}
           />
         )}
         onChange={values => updateValues(values)}
@@ -93,7 +99,7 @@ ProgressBar.defaultProps = {
 
 ProgressBar.propTypes = {
   values: PropTypes.arrayOf(PropTypes.number).isRequired,
-  max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  max: PropTypes.number,
   updateValues: PropTypes.func.isRequired,
   step: PropTypes.number,
   isInteracting: PropTypes.bool.isRequired,

@@ -1,16 +1,20 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {FC, HTMLProps, useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useEventListener} from './custom-hooks';
 
-export default function DefaultPlayer({
+type DefaultPlayerProps = HTMLProps<HTMLAudioElement> & {
+  volume?: number;
+  setAudioPlayer?: (element: HTMLAudioElement) => void;
+};
+
+const noop = (): void => undefined;
+
+const DefaultPlayer: FC<DefaultPlayerProps> = ({
   autoPlay,
   children,
   className,
   controls,
   crossOrigin,
-  controlsList,
   id,
-  listenInterval,
   loop,
   preload,
   src,
@@ -28,40 +32,28 @@ export default function DefaultPlayer({
   onAbort,
   onEnded,
   onPause,
-  onListen,
   onSeeked,
   onVolumeChange,
   onLoadedMetadata,
   setAudioPlayer
-}) {
-  const audioEl = useRef();
-  const [audio, setElement] = useState(null);
+}) => {
+  const audioEl = useRef<HTMLAudioElement>(null);
+  const [audio, setElement] = useState<HTMLAudioElement>(null);
 
-  const listeners = [
-    ['error', onError],
-    ['canplay', onCanPlay],
-    ['canplaythrough', onCanPlayThrough],
-    ['play', onPlay],
-    ['playing', onPlaying],
-    ['abort', onAbort],
-    ['ended', onEnded],
-    ['pause', onPause],
-    ['seeked', onSeeked],
-    ['loadedmetadata', onLoadedMetadata],
-    ['volumechange', onVolumeChange],
-    ['timeupdate', onTimeUpdate],
-    ['durationchange', onDurationChange]
-  ];
-
-  listeners.map(([name, fn]) => {
-    return useEventListener(
-      name,
-      e => {
-        fn(e);
-      },
-      audio
-    );
-  });
+  // These may be needed? ¯\_(ツ)_/¯
+  // useEventListener('error', onError, audio);
+  // useEventListener('canplay', onCanPlay, audio);
+  // useEventListener('canplaythrough', onCanPlayThrough, audio);
+  // useEventListener('play', onPlay, audio);
+  // useEventListener('playing', onPlaying, audio);
+  // useEventListener('abort', onAbort, audio);
+  // useEventListener('ended', onEnded, audio);
+  // useEventListener('pause', onPause, audio);
+  // useEventListener('seeked', onSeeked, audio);
+  // useEventListener('loadedmetadata', onLoadedMetadata, audio);
+  // useEventListener('volumechange', onVolumeChange, audio);
+  // useEventListener('timeupdate', onTimeUpdate, audio);
+  // useEventListener('durationchange', onDurationChange, audio);
 
   useEffect(() => {
     setElement(audioEl.current);
@@ -82,7 +74,7 @@ export default function DefaultPlayer({
     <audio
       ref={audioEl}
       autoPlay={autoPlay}
-      controls={!(controls === false)}
+      controls={Boolean(controls)}
       crossOrigin={crossOrigin}
       id={id}
       loop={loop}
@@ -90,11 +82,21 @@ export default function DefaultPlayer({
       className={`react-audio-player ${className}`}
       title={title || src}
       preload={preload}
-      controlsList={controlsList}
       src={src}
       style={style}
-      onPlaying={onPlaying}
+      onError={onError}
+      onCanPlay={onCanPlay}
+      onCanPlayThrough={onCanPlayThrough}
       onPlay={onPlay}
+      onPlaying={onPlaying}
+      onTimeUpdate={onTimeUpdate}
+      onDurationChange={onDurationChange}
+      onAbort={onAbort}
+      onEnded={onEnded}
+      onPause={onPause}
+      onSeeked={onSeeked}
+      onVolumeChange={onVolumeChange}
+      onLoadedMetadata={onLoadedMetadata}
     >
       {children || (
         <p>
@@ -103,32 +105,29 @@ export default function DefaultPlayer({
       )}
     </audio>
   );
-}
+};
 
 DefaultPlayer.defaultProps = {
   autoPlay: false,
   children: null,
   className: '',
   controls: false,
-  controlsList: '',
   crossOrigin: null,
   id: '',
-  listenInterval: 10000,
   loop: false,
   muted: false,
-  onAbort: () => {},
-  onCanPlay: () => {},
-  onCanPlayThrough: () => {},
-  onEnded: () => {},
-  onError: () => {},
-  onListen: () => {},
-  onPause: () => {},
-  onPlay: () => {},
-  onSeeked: () => {},
-  onVolumeChange: () => {},
-  onLoadedMetadata: () => {},
-  onDurationChange: () => {},
-  setAudioPlayer: () => {},
+  onAbort: noop,
+  onCanPlay: noop,
+  onCanPlayThrough: noop,
+  onEnded: noop,
+  onError: noop,
+  onPause: noop,
+  onPlay: noop,
+  onSeeked: noop,
+  onVolumeChange: noop,
+  onLoadedMetadata: noop,
+  onDurationChange: noop,
+  setAudioPlayer: noop,
   preload: 'metadata',
   src: null,
   style: {},
@@ -141,10 +140,8 @@ DefaultPlayer.propTypes = {
   children: PropTypes.element,
   className: PropTypes.string,
   controls: PropTypes.bool,
-  controlsList: PropTypes.string,
   crossOrigin: PropTypes.string,
   id: PropTypes.string,
-  listenInterval: PropTypes.number,
   loop: PropTypes.bool,
   muted: PropTypes.bool,
   onAbort: PropTypes.func,
@@ -152,7 +149,9 @@ DefaultPlayer.propTypes = {
   onCanPlayThrough: PropTypes.func,
   onEnded: PropTypes.func,
   onError: PropTypes.func,
-  onListen: PropTypes.func,
+  onPlaying: PropTypes.func,
+  onTimeUpdate: PropTypes.func,
+  onDurationChange: PropTypes.func,
   onLoadedMetadata: PropTypes.func,
   onPause: PropTypes.func,
   onPlay: PropTypes.func,
@@ -165,3 +164,4 @@ DefaultPlayer.propTypes = {
   title: PropTypes.string,
   volume: PropTypes.number
 };
+export default DefaultPlayer;
