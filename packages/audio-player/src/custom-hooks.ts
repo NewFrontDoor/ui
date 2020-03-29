@@ -3,7 +3,7 @@ import {SyntheticEvent, useRef, useEffect} from 'react';
 export function useEventListener<K extends keyof WindowEventMap>(
   eventName: K,
   handler: (event: Event) => void,
-  element?: Window
+  element?: Window | Document
 ): void;
 
 export function useEventListener<
@@ -34,7 +34,7 @@ export function useEventListener(
 
     const eventListener = (event: Event): void =>
       savedHandler.current && savedHandler.current(event);
-    element.addEventListener(eventName, eventListener);
+    element.addEventListener(eventName, eventListener, false);
     return () => element.removeEventListener(eventName, eventListener);
   }, [eventName, element]);
 }

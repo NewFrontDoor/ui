@@ -10,6 +10,7 @@ import {
 } from 'react-icons/md';
 import ProgressBar from './progress-bar';
 import DefaultPlayer from './default-player';
+import {useEventListener} from './custom-hooks';
 
 type Status = 'playing' | 'paused' | 'stopped';
 
@@ -90,26 +91,14 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
 
   const playing = status === 'playing';
 
-  useEffect(() => {
-    document.addEventListener(
-      'mouseup',
-      () => {
-        setMouseDown(false);
-        setScrubDown(false);
-      },
-      false
-    );
-    return () => {
-      document.removeEventListener(
-        'mouseup',
-        () => {
-          setMouseDown(false);
-          setScrubDown(false);
-        },
-        false
-      );
-    };
-  }, []);
+  useEventListener(
+    'mouseup',
+    () => {
+      setMouseDown(false);
+      setScrubDown(false);
+    },
+    document
+  );
 
   useEffect(() => {
     statusEvent(status);
