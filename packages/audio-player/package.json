@@ -4,9 +4,10 @@
   "description": "An audio element wrapper written in React with hooks",
   "license": "MIT",
   "author": "Alan Reader",
-  "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "microbundle --no-compress",
     "watch": "microbundle watch --no-compress"
@@ -21,8 +22,6 @@
     "hooks"
   ],
   "peerDependencies": {
-    "@emotion/core": "^10.0",
-    "@emotion/styled": "^10.0",
     "theme-ui": "^0.3.1",
     "react": "^16.0"
   },
