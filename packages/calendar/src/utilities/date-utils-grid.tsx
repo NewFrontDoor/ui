@@ -1,10 +1,8 @@
 import {
   addDays,
-  differenceInDays,
   eachDayOfInterval,
   endOfDay,
   endOfWeek,
-  format,
   getWeek,
   getWeeksInMonth,
   isAfter,
@@ -18,6 +16,15 @@ import {
   startOfMonth,
   startOfWeek
 } from 'date-fns';
+
+import {
+  CalendarState,
+  CalendarData,
+  CalendarEvent,
+  CalendarDay,
+  CalendarMonth,
+  Day
+} from '../types';
 
 function buildDay(inputDate: Date, mapDay: MapDay): CalendarDay {
   const today = new Date();
@@ -52,18 +59,18 @@ function buildMonth(
   const startDate = startOfWeek(startOfMonth(date), {weekStartsOn});
   const numberOfWeeks = getWeeksInMonth(date);
   const month: CalendarMonth = [];
-  let weekIndex;
-  let week;
-  let weekNumber;
-  let startOfWeekDate;
+  let weekIndex: number;
+  let week: CalendarDay[];
+  let weekNumber: number;
+  let startOfWeekDate: Date;
 
   for (weekIndex = 0; weekIndex < numberOfWeeks; weekIndex++) {
     startOfWeekDate = addDays(startDate, weekIndex * 7);
     weekNumber = getWeek(startOfWeekDate);
-    week = buildWeek(startOfWeekDate, mapDay, weekStartsOn).map(dayData => {
+    week = buildWeek(startOfWeekDate, mapDay, weekStartsOn).map(day => {
       return {
-        ...dayData,
-        isPeripheral: !isSameMonth(date, dayData.date)
+        ...day,
+        isPeripheral: !isSameMonth(date, day.date)
       };
     });
 
@@ -73,163 +80,77 @@ function buildMonth(
   return month;
 }
 
-function getEvents(events: InputEvent[]) {
+function getEvents(events: CalendarEvent[]) {
   return function(day: Day): CalendarDay {
     const todaysEvents = events.filter(event => {
-      return isSameDay(new Date(event.start_date), day.date);
+      return isSameDay(event.startDate, day.date);
     });
 
     const eventsOnToday = events.filter(event => {
-      const start = startOfDay(new Date(event.start_date));
-      const end = endOfDay(new Date(event.end_date));
+      const start = startOfDay(event.startDate);
+      const end = endOfDay(event.endDate);
       return isWithinInterval(day.date, {start, end});
-    });
-
-    const normalisedEvents: OutputEvent[] = todaysEvents.map(event => {
-      const normalisedEvent = {
-        ...event,
-        id: event.id,
-        name: event.name,
-        color: event.color,
-        start_date: new Date(event.start_date),
-        end_date: new Date(event.end_date),
-        start_date_format: format(new Date(event.start_date), 'yyyy-MM-dd'),
-        start_time: format(new Date(event.start_date), "h:mmaaaaa'm'"),
-        end_date_format: format(new Date(event.end_date), 'yyyy-MM-dd'),
-        end_time: format(new Date(event.end_date), "h:mmaaaaa'm'"),
-        event_length:
-          differenceInDays(
-            new Date(event.end_date),
-            new Date(event.start_date)
-          ) + 1,
-        description: event.description,
-        location: event.location ?? event.where,
-        url: event.url
-      };
-
-      return normalisedEvent;
     });
 
     return {
       ...day,
-      events: normalisedEvents,
+      events: todaysEvents,
       numberOfEventsToday: eventsOnToday.length
     };
   };
 }
 
 export function calendarDay(
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarDay {
+  currentDate: Date,
+  events: CalendarEvent[]
+): CalendarData {
   const withEvents = getEvents(events);
-  return buildDay(passedDate, withEvents);
+  return {
+    calendarView: 'day',
+    dayData: buildDay(currentDate, withEvents),
+    currentDate
+  };
 }
 
 export function calendarWeek(
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarDay[] {
+  currentDate: Date,
+  events: CalendarEvent[]
+): CalendarData {
   const withEvents = getEvents(events);
-  return buildWeek(passedDate, withEvents);
+  return {
+    calendarView: 'week',
+    weekData: buildWeek(currentDate, withEvents),
+    currentDate
+  };
 }
 
 export function calendarMonth(
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarMonth {
+  currentDate: Date,
+  events: CalendarEvent[]
+): CalendarData {
   const withEvents = getEvents(events);
-  return buildMonth(passedDate, withEvents);
+  return {
+    calendarView: 'month',
+    monthData: buildMonth(currentDate, withEvents),
+    currentDate
+  };
 }
 
 type MapDay = (day: Day) => CalendarDay;
 
-const calendarView = ['day', 'week', 'month'] as const;
-
-export type CalendarView = typeof calendarView[number];
-
-export type InputEvent = {
-  id: string;
-  name: string;
-  color: string;
-  start_date: string;
-  end_date: string;
-  description?: string;
-  location?: string;
-  url?: string;
-  where?: string;
-};
-
-export type OutputEvent = {
-  id: string;
-  name: string;
-  color: string;
-  start_date: Date;
-  end_date: Date;
-  description?: string;
-  location?: string;
-  url?: string;
-};
-
-export type Day = {
-  date: Date;
-  isToday: boolean;
-  isWeekend: boolean;
-  isFirstDayOfMonth: boolean;
-  isLastDayOfMonth: boolean;
-  isFuture: boolean;
-};
-
-export type CalendarDay = Day & {
-  events: OutputEvent[];
-  numberOfEventsToday: number;
-};
-
-export type CalendarWeek = {
-  weekNumber: number;
-  week: CalendarDay[];
-};
-
-export type CalendarMonth = CalendarWeek[];
-
 export function buildCalendarData(
-  calendarView: 'day',
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarDay;
-
-export function buildCalendarData(
-  calendarView: 'week',
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarDay[];
-
-export function buildCalendarData(
-  calendarView: 'month',
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarMonth;
-
-export function buildCalendarData(
-  calendarView: string,
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarMonth | CalendarDay[] | CalendarDay | undefined;
-
-export function buildCalendarData(
-  calendarView: string,
-  passedDate: Date,
-  events: InputEvent[]
-): CalendarMonth | CalendarDay[] | CalendarDay | undefined {
+  {calendarView, currentDate}: CalendarState,
+  events: CalendarEvent[]
+): CalendarData {
   if (calendarView === 'day') {
-    return calendarDay(passedDate, events);
+    return calendarDay(currentDate, events);
   }
 
   if (calendarView === 'week') {
-    return calendarWeek(passedDate, events);
+    return calendarWeek(currentDate, events);
   }
 
   if (calendarView === 'month') {
-    return calendarMonth(passedDate, events);
+    return calendarMonth(currentDate, events);
   }
 }

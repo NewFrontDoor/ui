@@ -1,11 +1,21 @@
 /** @jsx jsx */
-import {jsx, Flex, Heading, Button, Box} from 'theme-ui';
+import {jsx, Heading, Button, Box} from 'theme-ui';
+import {FC} from 'react';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
+import {calendarViews, CalendarView} from '../types';
 import {useCalendarDispatch} from '../use-calendar-events';
 import MethodToggle from './method-toggle';
 
-const CalendarControls = ({
+type CalendarControlsProps = {
+  location: string;
+  input: string[];
+  calendarView: CalendarView;
+  isViewFixed: boolean;
+  startOfMonth: Date;
+};
+
+const CalendarControls: FC<CalendarControlsProps> = ({
   location,
   calendarView,
   input,
@@ -13,7 +23,8 @@ const CalendarControls = ({
   startOfMonth
 }) => {
   const dispatch = useCalendarDispatch();
-  let jump;
+  let jump: 'week' | 'month' | 'year';
+
   switch (calendarView) {
     case 'day':
       jump = 'week';
@@ -29,19 +40,30 @@ const CalendarControls = ({
   }
 
   return (
-    <Flex sx={{marginBottom: '10px'}}>
-      <Box sx={{flex: '1 1 20%'}}>
+    <div
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gridTemplateRows: 'auto',
+        gridTemplateAreas: `'title title' 'left right'`,
+        '@media (min-width: 700px)': {
+          gridTemplateColumns: '2fr 5fr 2fr',
+          gridTemplateAreas: "'left title right'"
+        }
+      }}
+    >
+      <Box sx={{gridArea: 'left'}}>
         <Button
           variant="calendar"
           aria-label={`previous ${jump}`}
-          onClick={() => dispatch({type: `decrement-${jump}`})}
+          onClick={() => dispatch({type: `decrement-jump`})}
         >
           &lt;&lt;
         </Button>
         <Button
           variant="calendar"
           aria-label={`previous ${calendarView}`}
-          onClick={() => dispatch({type: `decrement-${calendarView}`})}
+          onClick={() => dispatch({type: `decrement-step`})}
         >
           &lt;
         </Button>
@@ -50,24 +72,24 @@ const CalendarControls = ({
           variant="calendar"
           onClick={() => dispatch({type: 'today'})}
         >
-          Today
+          T
         </Button>
         <Button
           variant="calendar"
           aria-label={`next ${calendarView}`}
-          onClick={() => dispatch({type: `increment-${calendarView}`})}
+          onClick={() => dispatch({type: `increment-step`})}
         >
           &gt;
         </Button>
         <Button
           variant="calendar"
           aria-label={`next ${jump}`}
-          onClick={() => dispatch({type: `increment-${jump}`})}
+          onClick={() => dispatch({type: `increment-jump`})}
         >
           &gt;&gt;
         </Button>
       </Box>
-      <Box sx={{flex: '3 1 50%'}}>
+      <Box sx={{gridArea: 'title'}}>
         <Heading
           as="h2"
           sx={{textAlign: 'center'}}
@@ -78,7 +100,7 @@ const CalendarControls = ({
             : format(startOfMonth, 'MMMM - yyyy')}
         </Heading>
       </Box>
-      <Box sx={{flex: '1 1 20%'}}>
+      <Box sx={{gridArea: 'right'}}>
         {isViewFixed ? (
           ''
         ) : (
@@ -86,21 +108,22 @@ const CalendarControls = ({
             calendarView={calendarView}
             location={location}
             inputs={input}
-            styles={{
+            sx={{
               borderRadius: 0
             }}
           />
         )}
       </Box>
-    </Flex>
+    </div>
   );
 };
 
 CalendarControls.propTypes = {
-  calendarView: PropTypes.string.isRequired,
+  calendarView: PropTypes.oneOf(calendarViews).isRequired,
   location: PropTypes.string.isRequired,
   input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  isViewFixed: PropTypes.bool
+  isViewFixed: PropTypes.bool,
+  startOfMonth: PropTypes.instanceOf(Date).isRequired
 };
 
 CalendarControls.defaultProps = {
