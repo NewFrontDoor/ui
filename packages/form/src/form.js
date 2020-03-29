@@ -1,4 +1,5 @@
 /** @jsx jsx */
+/** @jsxFrag React.Fragment */
 import React from 'react'; // eslint-disable-line no-unused-vars
 import {Form, Field, useField} from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -70,7 +71,7 @@ NestedForm.propTypes = {
 
 const getFormField = (field, form, blockText, name = '') => {
   const {push, pop} = form.mutators;
-
+  const width = field.styling && field.styling.fullWidth ? '1/3' : null;
   // This is a hack while Sanity doesn't enable initial values on array-level items
   if (field.childFields) field.input = 'field-array';
 
@@ -139,7 +140,7 @@ const getFormField = (field, form, blockText, name = '') => {
       return (
         <Field key={field.id} name={name + field.id}>
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label}>
+            <div key={field.id + field.label} sx={{gridColumn: width}}>
               <Label htmlFor={field.id}>{field.label}</Label>
               <Select id={field.id} {...input} {...otherProps}>
                 {field.values.map(value => (
@@ -155,7 +156,7 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     case 'radio':
       return (
-        <fieldset key={field.id}>
+        <fieldset key={field.id} sx={{gridColumn: width}}>
           <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
           {field.values.map(value => (
             <div key={field.id + value}>
@@ -169,14 +170,11 @@ const getFormField = (field, form, blockText, name = '') => {
                   margin: '0px'
                 }}
               >
-                <Field
-                  name={name + field.id}
-                  type="radio"
-                  value={value}
-                  component={({input, ...otherProps}) => (
+                <Field name={name + field.id} type="radio" value={value}>
+                  {({input, ...otherProps}) => (
                     <Radio {...input} {...otherProps} />
                   )}
-                />
+                </Field>
                 {value}
               </label>
             </div>
@@ -185,27 +183,51 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     case 'checkbox':
       return (
-        <Field key={field.id} name={name + field.id}>
-          {({input, ...otherProps}) => (
-            <div key={field.id + field.label}>
-              <Checkbox
-                type="checkbox"
-                id={field.id}
-                {...input}
-                {...otherProps}
-              />
-              <Label sx={{display: 'inline'}} htmlFor={field.id}>
+        <>
+          {field.label && field.values && field.values.length > 0 ? (
+            <fieldset key={field.id} sx={{gridColumn: width}}>
+              <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
+              {field.values.map(value => (
+                <div key={field.id + value}>
+                  <label
+                    key={value}
+                    sx={{
+                      boxSizing: 'border-box',
+                      minWidth: '0px',
+                      width: '100%',
+                      display: 'flex',
+                      margin: '0px'
+                    }}
+                  >
+                    <Field name={name + field.id} value={value}>
+                      {({input, ...otherProps}) => (
+                        <Checkbox {...input} {...otherProps} />
+                      )}
+                    </Field>
+                    {value}
+                  </label>
+                </div>
+              ))}
+            </fieldset>
+          ) : (
+            <div key={field.id + field.label} sx={{gridColumn: width}}>
+              <Label sx={{display: 'inline-block'}}>
+                <Field key={field.id} name={name + field.id}>
+                  {({input, ...otherProps}) => (
+                    <Checkbox {...input} {...otherProps} />
+                  )}
+                </Field>
                 {field.label}
+                <Error name={name + field.id} />
               </Label>
-              <Error name={name + field.id} />
             </div>
           )}
-        </Field>
+        </>
       );
     case 'reset':
       return (
         <Button
-          sx={{gridColumn: field.fullwidth ? '1/3' : ''}}
+          sx={{gridColumn: width}}
           type={field.input}
           id={field.id}
           onClick={e => handleReset(e, form)}
@@ -221,7 +243,7 @@ const getFormField = (field, form, blockText, name = '') => {
           placeholder={field.placeholder}
         >
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label}>
+            <div key={field.id + field.label} sx={{gridColumn: width}}>
               <Label htmlFor={field.id} required={field.required}>
                 {field.label}
                 {field.required && <strong>*</strong>}

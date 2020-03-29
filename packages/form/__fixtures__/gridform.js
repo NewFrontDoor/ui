@@ -42,6 +42,20 @@ const props = {
         values: ['Select1', 'Select2', 'Select3']
       },
       {
+        id: 'opt3',
+        input: 'checkbox',
+        label: 'Options',
+        required: false,
+        values: ['first', 'second', 'third'],
+        length: 3
+      },
+      {
+        id: 'opt4',
+        input: 'checkbox',
+        label: 'Single choice',
+        required: false
+      },
+      {
         id: 'textarea',
         input: 'textarea',
         label: 'Describe how you find this form',
