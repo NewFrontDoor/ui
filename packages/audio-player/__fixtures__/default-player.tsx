@@ -1,5 +1,5 @@
 import React, {FC, Fragment, useState} from 'react';
-import {DefaultPlayer} from '../src';
+import {DefaultPlayer} from '..';
 
 const props = {
   isInvert: false,

@@ -1,4 +1,6 @@
-import React, {FC, HTMLProps, useState, useRef, useEffect} from 'react';
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
+import {FC, HTMLProps, useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 type DefaultPlayerProps = HTMLProps<HTMLAudioElement> & {

@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@newfrontdoor/api-config": "^0.1.0",
-    "@newfrontdoor/audio-player": "^0.1.2",
+    "@newfrontdoor/audio-player": "^0.2.0",
     "ky": "^0.19.0",
     "ky-universal": "^0.5.0",
     "prop-types": "^15.6.0",

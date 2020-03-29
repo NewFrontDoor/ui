@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import {DefaultPlayer} from '../src';
+import {DefaultPlayer} from '..';
 
 const audio = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
 

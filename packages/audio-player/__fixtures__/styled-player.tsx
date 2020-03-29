@@ -1,6 +1,6 @@
 import React, {FC, Fragment, useState} from 'react';
 import {useThemeUI} from 'theme-ui';
-import {StyledPlayer} from '../src';
+import {StyledPlayer} from '..';
 
 const props = {
   isInvert: false,
