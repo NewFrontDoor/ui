@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui';
-import {FC, HTMLProps, useState, useRef, useEffect} from 'react';
+import {FC, HTMLProps, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {
   MdPlayArrow as Play,
@@ -8,11 +8,10 @@ import {
   MdVolumeUp,
   MdVolumeOff
 } from 'react-icons/md';
+import {Range} from 'react-range';
 import ProgressBar from './progress-bar';
-import DefaultPlayer from './default-player';
-import {useEventListener} from './custom-hooks';
-
-type Status = 'playing' | 'paused' | 'stopped';
+import {useEventListener} from './use-event-listener';
+import {useAudioPlayer} from './use-audio-manager';
 
 type ButtonProps = HTMLProps<HTMLButtonElement> & {
   background: string;
@@ -24,7 +23,6 @@ const Button: FC<ButtonProps> = ({background, ...props}) => {
       {...props}
       type="button"
       sx={{
-        position: 'relative',
         display: 'block',
         width: '32px',
         height: '32px',
@@ -53,123 +51,62 @@ Button.propTypes = {
   background: PropTypes.string.isRequired
 };
 
-type StyledPlayerProps = {
-  audio?: string;
+export type StyledPlayerProps = {
   highlight?: string;
   base?: string;
-  hasBorder: boolean;
+  hasBorder?: boolean;
   background?: string;
-  isInvert: boolean;
-  hasPlaybackspeed: boolean;
-  width: string;
-  statusEvent?: (status: Status) => void;
-  isPlayOnLoad?: boolean;
+  isInvert?: boolean;
+  hasPlaybackspeed?: boolean;
+  width?: string;
 };
 
 const StyledPlayer: FC<StyledPlayerProps> = ({
-  audio,
-  highlight = '#548BF4',
-  base = '#ddd',
+  highlight,
+  base,
   hasBorder,
   background,
   isInvert,
   hasPlaybackspeed,
-  width,
-  isPlayOnLoad,
-  statusEvent
+  width
 }) => {
-  const [audioPlayer, setAudioPlayer] = useState<HTMLAudioElement>(null);
-  const [status, setStatus] = useState<Status>(null);
-  const [playingTime, setTime] = useState<number>(null);
-  const [durationTime, setDuration] = useState<number>(null);
-  const [volume, setVolume] = useState<number>(0.4);
-  const [speed, rotateSpeed] = useState(1);
-  const [muted, setMuted] = useState(false);
-  const [down, setMouseDown] = useState(false);
-  const [scrubdown, setScrubDown] = useState(false);
-  const volumeBar = useRef(null);
+  const volumeBar = useRef<Range>();
+  const {playerState, playerProps, dispatch} = useAudioPlayer();
 
-  const playing = status === 'playing';
+  const {
+    src,
+    playing,
+    duration,
+    speed,
+    volume,
+    muted,
+    playingTime,
+    seekTime,
+    timeAndDuration,
+    seeking,
+    changingVolume
+  } = playerState;
 
   useEventListener(
     'mouseup',
-    () => {
-      setMouseDown(false);
-      setScrubDown(false);
-    },
+    () => dispatch({type: 'stop-interaction'}),
     document
   );
 
-  useEffect(() => {
-    statusEvent(status);
-  }, [statusEvent, status]);
-
-  useEffect(() => {
-    setStatus('paused');
-    if (audioPlayer) {
-      audioPlayer.load();
-    }
-
-    if (audioPlayer && isPlayOnLoad) {
-      audioPlayer.play().catch(() => setStatus('paused'));
-    }
-  }, [audioPlayer, audio, isPlayOnLoad]);
-
   function togglePlay(): void {
     if (playing) {
-      audioPlayer.pause();
+      dispatch({type: 'pause'});
     } else {
-      audioPlayer.play().catch(() => setStatus('paused'));
+      dispatch({type: 'play'});
     }
   }
 
-  function toggleSpeed(): void {
-    switch (speed) {
-      case 1:
-        rotateSpeed(1.2);
-        audioPlayer.playbackRate = 1.2;
-        break;
-      case 1.2:
-        rotateSpeed(1.5);
-        audioPlayer.playbackRate = 1.5;
-        break;
-      case 1.5:
-        rotateSpeed(2);
-        audioPlayer.playbackRate = 2;
-        break;
-      case 2:
-        rotateSpeed(1);
-        audioPlayer.playbackRate = 1;
-        break;
-      default:
-        rotateSpeed(1);
-        audioPlayer.playbackRate = 1;
-    }
+  function updatePlayingTime(time: number): void {
+    dispatch({type: 'set-time', time});
   }
 
-  function toggleMuted(): void {
-    setMuted(!muted);
-  }
-
-  function getTime(time: number): string {
-    if (!isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const seconds = `0${Math.floor(time % 60)}`.slice(-2);
-      return `${minutes}:${seconds}`;
-    }
-  }
-
-  function updateValues(value: number[]): void {
-    audioPlayer.currentTime = value[0];
-    setTime(value[0]);
-  }
-
-  function updateVolume(volume: number[] | number): void {
-    if (Array.isArray(volume)) {
-      setVolume(volume[0]);
-    } else {
-      setVolume(volume);
-    }
+  function updateVolume(volume: number): void {
+    dispatch({type: 'set-volume', volume});
   }
 
   return (
@@ -186,27 +123,12 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
         opacity: '0.87',
         fontSize: '14px'
       }}
-      onMouseUp={() => setMouseDown(false)}
+      onMouseUp={() => dispatch({type: 'stop-interaction'})}
+      onKeyUp={() => dispatch({type: 'stop-interaction'})}
     >
-      <DefaultPlayer
-        setAudioPlayer={setAudioPlayer}
-        volume={volume}
-        muted={muted}
-        src={audio}
-        onPause={() => {
-          setStatus('paused');
-        }}
-        onTimeUpdate={e => setTime(e.currentTarget.currentTime)}
-        onDurationChange={e => setDuration(e.currentTarget.duration)}
-        onVolumeChange={e => updateVolume(e.currentTarget.volume)}
-        onPlaying={() => {
-          setStatus('playing');
-        }}
-        onEnded={() => setStatus('stopped')}
-      />
-
+      <audio {...playerProps} />
       <Button
-        disabled={typeof audio === 'undefined'}
+        disabled={typeof src === 'undefined'}
         background={isInvert ? '#222' : base}
         onClick={() => togglePlay()}
       >
@@ -218,91 +140,91 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
       </Button>
       <span
         sx={{
-          paddingLeft: '4px'
+          width: `${timeAndDuration.length - 1}ch`
         }}
       >
-        {audioPlayer ? getTime(playingTime) : '0:00'} /{' '}
-        {durationTime ? getTime(durationTime) : '0:00'}
+        {timeAndDuration}
       </span>
       <div
         sx={{
-          position: 'relative',
-          height: '100%',
-          width: '128px',
-          paddingLeft: '16px',
           display: 'flex',
-          alignItems: 'center'
+          flex: '1 1 0%',
+          alignItems: 'center',
+          height: '100%'
         }}
       >
         <div
           sx={{
-            position: 'relative',
             height: '54px',
-            width: '32px',
-            flex: '10 1 auto',
             display: 'flex',
+            flex: '1 0 32px',
+            padding: '0 15px',
             alignItems: 'center',
-            transition: 'width 0.3s ease 0s',
+            transition: 'flex-basis 0.3s ease 0s',
             '&:focus-within': {'.thumb': {visibility: 'visible'}}
           }}
-          onMouseDown={() => setScrubDown(true)}
+          onMouseDown={() => dispatch({type: 'start-seeking'})}
+          onKeyDown={() => dispatch({type: 'start-seeking'})}
         >
           <ProgressBar
-            values={playingTime ? [playingTime] : [0]}
-            max={durationTime ? Math.floor(durationTime) : 1}
-            updateValues={updateValues}
+            value={seeking ? seekTime : playingTime}
+            max={duration ? Math.floor(duration) : 1}
             color={highlight}
             isInvert={isInvert}
-            isInteracting={scrubdown}
+            isInteracting={seeking}
+            onChange={updatePlayingTime}
           />
         </div>
         <div
           sx={{
-            position: 'relative',
             height: '32px',
-            width: '30px',
-            flex: '0 0 auto',
             display: 'flex',
+            flex: '0 1 15px',
             alignItems: 'center',
-            justifyContent: 'right',
             overflow: 'hidden',
-            transition: 'width 0.3s ease 0s, background 0.25s ease 0s',
+            transition: 'flex-basis 0.3s ease 0s, background 0.25s ease 0s',
             borderRadius: '25px',
-            paddingLeft: '15px',
             cursor: 'pointer',
             '&:hover': {
               background: isInvert ? '#222' : base,
-              width: '65%',
-              marginLeft: '15px'
+              flexBasis: '65%',
+              padding: '0 15px'
             },
             '&:active': {
               background: isInvert ? '#222' : base,
-              width: '65%',
-              marginLeft: '15px'
+              flexBasis: '65%',
+              padding: '0 15px'
             },
             '&:focus-within': {
               background: isInvert ? '#222' : base,
-              width: '65%',
-              marginLeft: '15px',
+              flexBasis: '65%',
+              padding: '0 15px',
               '.thumb': {opacity: '1'}
             }
           }}
-          onMouseDown={() => setMouseDown(true)}
+          onMouseDown={() => dispatch({type: 'start-volume-change'})}
           onTransitionEnd={() => {
             volumeBar.current.onWindowResize();
           }}
         >
           <ProgressBar
             ref={volumeBar}
-            values={[volume]}
+            value={volume}
             step={0.01}
             max={1}
-            updateValues={updateVolume}
-            isInteracting={down}
+            isInteracting={changingVolume}
             color={highlight}
             isInvert={isInvert}
+            onChange={updateVolume}
           />
-          <Button background="none" onClick={() => toggleMuted()}>
+          <Button
+            background="unset"
+            sx={{
+              marginRight: '-15px',
+              zIndex: 1
+            }}
+            onClick={() => dispatch({type: 'toggle-mute'})}
+          >
             {muted || volume === 0 ? (
               <MdVolumeOff style={{width: '30px', height: '20px'}} />
             ) : (
@@ -316,7 +238,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
           type="button"
           background={isInvert ? '#222' : base}
           color={isInvert ? '#eee' : '#111'}
-          onClick={() => toggleSpeed()}
+          onClick={() => dispatch({type: 'toggle-speed'})}
         >
           {speed.toFixed(1)}
         </Button>
@@ -329,25 +251,20 @@ StyledPlayer.defaultProps = {
   highlight: '#548BF4',
   base: '#ddd',
   hasBorder: true,
-  background: 'none',
+  background: 'unset',
   isInvert: false,
   hasPlaybackspeed: true,
-  width: '280px',
-  statusEvent: () => undefined,
-  isPlayOnLoad: false
+  width: '280px'
 };
 
 StyledPlayer.propTypes = {
-  audio: PropTypes.string,
   highlight: PropTypes.string,
   base: PropTypes.string,
   hasBorder: PropTypes.bool,
   background: PropTypes.string,
   isInvert: PropTypes.bool,
   hasPlaybackspeed: PropTypes.bool,
-  width: PropTypes.string,
-  statusEvent: PropTypes.func,
-  isPlayOnLoad: PropTypes.bool
+  width: PropTypes.string
 };
 
 export default StyledPlayer;

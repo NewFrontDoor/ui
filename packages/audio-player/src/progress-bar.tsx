@@ -1,90 +1,92 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui';
-import React, {Ref} from 'react';
+import {forwardRef} from 'react';
 import PropTypes from 'prop-types';
 import {Range, getTrackBackground} from 'react-range';
-import {ITrackProps} from 'react-range/lib/types';
 
 type ProgressBarProps = {
-  values: number[];
-  max?: number;
-  updateValues: (values: number[]) => void;
+  value: number;
+  max: number;
+  onChange: (values: number) => void;
   step?: number;
   isInteracting: boolean;
   color?: string;
   isInvert?: boolean;
 };
 
-const ProgressBar = React.forwardRef<Range, ProgressBarProps>(
-  (
-    {values, max, updateValues, step, isInteracting, color, isInvert},
-    ref: Ref<Range>
-  ) => {
+const ProgressBar = forwardRef<Range, ProgressBarProps>(
+  ({value, max, onChange, step, isInteracting, color, isInvert}, rangeRef) => {
     return (
       <Range
-        ref={ref}
+        ref={rangeRef}
         step={step}
         min={0}
         max={max}
-        values={values}
+        values={[value]}
         renderTrack={({
-          props,
+          props: {style, onMouseDown, onTouchStart, ref},
           children
-        }: {
-          props: ITrackProps;
-          children: React.ReactNode;
         }) => (
           <div
-            style={{...props.style}}
-            tabIndex={0}
             sx={{
-              height: '30px',
-              display: 'flex',
+              ...style,
               width: '100%',
-              padding: '0',
-              ':focus-within': {outline: '-webkit-focus-ring-color auto 5px'},
-              '&:hover': {'.thumb': {opacity: '1'}}
+              height: '42px',
+              display: 'flex',
+              '&:hover': {
+                '.thumb': {
+                  opacity: '1'
+                }
+              }
             }}
-            onMouseDown={props.onMouseDown}
-            onTouchStart={props.onTouchStart}
+            onMouseDown={onMouseDown}
+            onTouchStart={onTouchStart}
           >
             <div
-              ref={props.ref}
+              ref={ref}
               style={{
                 height: '4px',
                 width: '100%',
                 borderRadius: '4px',
-                outline: 'none',
+                alignSelf: 'center',
                 background: getTrackBackground({
-                  values,
+                  values: [value],
                   colors: [color, '#ccc'],
                   min: 0,
                   max
-                }),
-                alignSelf: 'center'
+                })
               }}
             >
               {children}
             </div>
           </div>
         )}
-        renderThumb={({props}) => (
+        renderThumb={({props: {style, ...props}}) => (
           <div
-            className="thumb"
             {...props}
-            style={props.style}
-            tabIndex={-1}
             sx={{
-              height: '10px',
-              width: '10px',
-              borderRadius: '50%',
-              transition: 'opacity 0.2s linear',
-              opacity: isInteracting ? '1' : '0',
-              backgroundColor: isInvert ? '#EEE' : '#111'
+              ...style,
+              height: '42px',
+              width: '42px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
-          />
+          >
+            <div
+              className="thumb"
+              sx={{
+                height: '10px',
+                width: '10px',
+                borderRadius: '50%',
+                transition: 'opacity 0.2s linear',
+                opacity: isInteracting ? '1' : '0',
+                backgroundColor: isInvert ? '#EEE' : '#111'
+              }}
+            />
+          </div>
         )}
-        onChange={values => updateValues(values)}
+        onChange={values => onChange(values[0])}
       />
     );
   }
@@ -98,9 +100,9 @@ ProgressBar.defaultProps = {
 };
 
 ProgressBar.propTypes = {
-  values: PropTypes.arrayOf(PropTypes.number).isRequired,
-  max: PropTypes.number,
-  updateValues: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
   step: PropTypes.number,
   isInteracting: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,

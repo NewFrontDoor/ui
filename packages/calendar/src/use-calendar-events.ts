@@ -15,7 +15,6 @@ import {buildCalendarData} from './utilities/date-utils-grid';
 import {
   CalendarData,
   CalendarClient,
-  CalendarEvent,
   CalendarView,
   CalendarState
 } from './types';
@@ -164,13 +163,7 @@ function init(calendarView: CalendarView): CalendarState {
 
 type Status = 'loading' | 'error' | 'success';
 
-type QueryResult = {
-  status: Status;
-  resolvedData: CalendarEvent[];
-  error: Error;
-};
-
-type UseCalendarEvents = [CalendarData, Status, Error | void, Dispatch<Action>];
+type UseCalendarEvents = [CalendarData, Status, unknown, Dispatch<Action>];
 
 export function useCalendarEvents(
   initialView: CalendarView,
@@ -186,9 +179,8 @@ export function useCalendarEvents(
     resolvedData,
     status,
     error
-  }: QueryResult = usePaginatedQuery(
-    currentDate.toISOString(),
-    async (date: string) => client.fetchEvents(date)
+  } = usePaginatedQuery(currentDate.toISOString(), async (date: string) =>
+    client.fetchEvents(date)
   );
 
   const calendarData = buildCalendarData(
