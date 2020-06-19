@@ -1,0 +1,25 @@
+{
+  "name": "@newfrontdoor/link",
+  "version": "0.1.0",
+  "license": "MIT",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "scripts": {
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "next": "^9.4.4",
+    "react": "^16.0",
+    "theme-ui": "^0.3.1"
+  },
+  "dependencies": {
+    "next": "^9.4.4",
+    "prop-types": "^15.6.0"
+  },
+  "xo": false
+}
