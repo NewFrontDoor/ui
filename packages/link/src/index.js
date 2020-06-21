@@ -1,2 +1,2 @@
 export {default as Link} from './link';
-export {default as NavLink} from './navlink';
+export {default as Navlink} from './navlink';

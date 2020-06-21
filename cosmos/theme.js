@@ -18,6 +18,15 @@ export default {
       p: '5px'
     }
   },
+  link: {
+    nav: {
+      color: 'primary',
+      textTransform: 'uppercase',
+      '&:hover': {
+        color: 'accent'
+      }
+    }
+  },
   lineHeights: {
     body: 1.5,
     heading: 1.125
@@ -31,7 +40,8 @@ export default {
     background: '#fff',
     primary: '#33e',
     secondary: '#33ccff',
-    accent: '#ee00ff'
+    accent: '#ee00ff',
+    active: '#ee00ff'
   },
   buttons: {
     primary: {

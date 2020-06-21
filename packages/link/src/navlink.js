@@ -1,28 +1,28 @@
 import React from 'react';
-import {Styled} from 'theme-ui';
-import {useRouter} from 'next/router';
-import Link from './link';
 import PropTypes from 'prop-types';
+import {Styled} from 'theme-ui';
+import Link from './link';
 
 /** Navlink **/
 // Basically just highlights on route and has a 'nav' variant prop
-
-const Navlink = ({link, text}) => {
-  const router = useRouter();
-  const {slug} = router.query;
-
+const Navlink = ({href, active, children}) => {
   return (
     <Styled.li>
-      <Link link={link} variant="nav" color={slug === link ? 'active' : ''}>
-        {text}
+      <Link href={href} variant="nav" color={active ? 'active' : ''}>
+        {children}
       </Link>
     </Styled.li>
   );
 };
 
 Navlink.propTypes = {
-  link: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  active: PropTypes.bool,
+  href: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired
+};
+
+Navlink.defaulProps = {
+  active: false
 };
 
 export default Navlink;
