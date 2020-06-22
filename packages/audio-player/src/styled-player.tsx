@@ -204,7 +204,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
           }}
           onMouseDown={() => dispatch({type: 'start-volume-change'})}
           onTransitionEnd={() => {
-            volumeBar.current.onWindowResize();
+            volumeBar.current.onResize();
           }}
         >
           <ProgressBar
