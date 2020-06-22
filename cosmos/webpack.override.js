@@ -1,4 +1,4 @@
-module.exports = webpackConfig => {
+module.exports = (webpackConfig) => {
   return {
     ...webpackConfig,
     module: {

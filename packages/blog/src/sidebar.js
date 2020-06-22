@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import PropTypes from 'prop-types';
-import React from 'react';
 import {jsx, Styled} from 'theme-ui';
 import format from 'date-fns/format';
 
@@ -40,9 +39,11 @@ const Sidebar = ({
         <p>{readingLength.text}</p>
         <span sx={{display: ['none', 'block']}}>
           <ul>
-            {categories.map(category => (
+            {categories.map((category) => (
               <li key={category.title + _createdAt}>
-                <Link link={category._id} data={category}>{category.title}</Link>
+                <Link link={category._id} data={category}>
+                  {category.title}
+                </Link>
               </li>
             ))}
           </ul>

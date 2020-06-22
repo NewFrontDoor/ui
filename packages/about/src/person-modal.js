@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PersonModal = props => (
+const PersonModal = (props) => (
   <div>
     <h2>{props.name}</h2>
     <img src={props.image} />

@@ -1,17 +1,16 @@
 /** @jsx jsx */
-import React from 'react';
 import {jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 import Post from './post';
 
-const Blog = props => {
+const Blog = (props) => {
   const {posts, category} = props;
   return (
     <div>
       {posts
-        .filter(post => {
+        .filter((post) => {
           if (category && Object.keys(category).length !== 0) {
-            return post.categories.map(a => a.title).includes(category);
+            return post.categories.map((a) => a.title).includes(category);
           }
 
           return post;
@@ -21,7 +20,7 @@ const Blog = props => {
             new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()
           );
         })
-        .map(post => (
+        .map((post) => (
           <Post key={post.title} {...post} {...props} />
         ))}
     </div>

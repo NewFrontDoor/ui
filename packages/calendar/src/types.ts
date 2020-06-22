@@ -35,7 +35,7 @@ export type CalendarWeek = {
 export type CalendarMonth = CalendarWeek[];
 
 export type CalendarClient = {
-  fetchEvents(date: string): Promise<CalendarEvent[]>;
+  fetchEvents: (date: string) => Promise<CalendarEvent[]>;
 };
 
 export const calendarViews = ['day', 'week', 'month'] as const;
@@ -61,20 +61,20 @@ export type CalendarData =
       calendarView: 'day';
       currentDate: Date;
       dayData: CalendarDay;
-      weekData?: void;
-      monthData?: void;
+      weekData?: undefined;
+      monthData?: undefined;
     }
   | {
       calendarView: 'week';
       currentDate: Date;
-      dayData?: void;
+      dayData?: undefined;
       weekData?: CalendarDay[];
-      monthData?: void;
+      monthData?: undefined;
     }
   | {
       calendarView: 'month';
       currentDate: Date;
-      dayData?: void;
-      weekData?: void;
+      dayData?: undefined;
+      weekData?: undefined;
       monthData?: CalendarMonth;
     };

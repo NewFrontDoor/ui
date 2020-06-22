@@ -12,7 +12,7 @@ type MethodToggleProps = {
   location: string;
 };
 
-const MethodToggle: FC<MethodToggleProps> = props => {
+const MethodToggle: FC<MethodToggleProps> = (props) => {
   const dispatch = useCalendarDispatch();
 
   return (
@@ -34,14 +34,15 @@ const MethodToggle: FC<MethodToggleProps> = props => {
             checked={input === props.calendarView}
             sx={{
               ...hideVisually(),
-              [`&:nth-of-type(${index +
-                1}):checked~label:last-of-type:before`]: {
+              [`&:nth-of-type(${
+                index + 1
+              }):checked~label:last-of-type:before`]: {
                 transform: `translate3d(${index * 100}%, 0, 0)`,
                 transition: `all .275s ease-out`,
                 willChange: 'transform, transition'
               }
             }}
-            onChange={event => {
+            onChange={(event) => {
               const view = event.target.value as CalendarView;
               dispatch({type: 'set-view', view});
             }}

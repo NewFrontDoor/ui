@@ -12,7 +12,7 @@ import {
 import {CalendarEvent} from './types';
 
 type DrupalClient = {
-  fetchEvents(date: string): Promise<CalendarEvent[]>;
+  fetchEvents: (date: string) => Promise<CalendarEvent[]>;
 };
 
 type DrupalEvent = {
@@ -52,7 +52,7 @@ export default function createDrupalClient(apiUrl: string): DrupalClient {
         credentials: 'omit'
       }).json<DrupalEvent[]>();
 
-      const normalisedData = result.map(event => {
+      const normalisedData = result.map((event) => {
         const startDate = new Date(event.start_date);
         const endDate = new Date(event.end_date);
         const startTime = format(startDate, "h:mmaaaaa'm'");

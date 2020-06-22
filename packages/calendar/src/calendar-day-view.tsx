@@ -64,10 +64,10 @@ const Day: FC<DayProps> = ({calendarData, handleNav}) => {
       >
         {date}
       </div>
-      {day.events.map(event => {
+      {day.events.map((event) => {
         const startRow =
-          parseInt(format(event.startDate, 'H'), 10) * 2 +
-          (parseInt(format(event.startDate, 'm'), 10) >= 30 ? 1 : 0);
+          Number.parseInt(format(event.startDate, 'H'), 10) * 2 +
+          (Number.parseInt(format(event.startDate, 'm'), 10) >= 30 ? 1 : 0);
 
         const rowspan = differenceInHours(event.endDate, event.startDate) + 2;
 

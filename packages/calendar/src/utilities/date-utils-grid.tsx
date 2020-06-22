@@ -47,7 +47,7 @@ function buildWeek(
 ): CalendarDay[] {
   const start = startOfWeek(date, {weekStartsOn});
   const end = endOfWeek(date, {weekStartsOn});
-  return eachDayOfInterval({start, end}).map(day => buildDay(day, mapDay));
+  return eachDayOfInterval({start, end}).map((day) => buildDay(day, mapDay));
 }
 
 function buildMonth(
@@ -67,7 +67,7 @@ function buildMonth(
   for (weekIndex = 0; weekIndex < numberOfWeeks; weekIndex++) {
     startOfWeekDate = addDays(startDate, weekIndex * 7);
     weekNumber = getWeek(startOfWeekDate);
-    week = buildWeek(startOfWeekDate, mapDay, weekStartsOn).map(day => {
+    week = buildWeek(startOfWeekDate, mapDay, weekStartsOn).map((day) => {
       return {
         ...day,
         isPeripheral: !isSameMonth(date, day.date)
@@ -81,12 +81,12 @@ function buildMonth(
 }
 
 function getEvents(events: CalendarEvent[]) {
-  return function(day: Day): CalendarDay {
-    const todaysEvents = events.filter(event => {
+  return function (day: Day): CalendarDay {
+    const todaysEvents = events.filter((event) => {
       return isSameDay(event.startDate, day.date);
     });
 
-    const eventsOnToday = events.filter(event => {
+    const eventsOnToday = events.filter((event) => {
       const start = startOfDay(event.startDate);
       const end = endOfDay(event.endDate);
       return isWithinInterval(day.date, {start, end});

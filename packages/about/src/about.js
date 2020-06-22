@@ -5,10 +5,10 @@ import ImageView from './image-view';
 import Modal from './modal';
 import PersonModal from './person-modal';
 
-const About = props => {
+const About = (props) => {
   return (
     <div>
-      {props.people.map(person => (
+      {props.people.map((person) => (
         <PortalWithState
           key={person.name + '-portal'}
           closeOnOutsideClick

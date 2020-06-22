@@ -13,7 +13,7 @@ import {
 import {CalendarEvent} from './types';
 
 type ElvantoClient = {
-  fetchEvents(date: string): Promise<CalendarEvent[]>;
+  fetchEvents: (date: string) => Promise<CalendarEvent[]>;
 };
 
 type ElvantoEvent = {
@@ -51,7 +51,7 @@ export default function createElvantoClient(apiUrl: string): ElvantoClient {
         credentials: 'omit'
       }).json<ElvantoEvent[]>();
 
-      const normalisedData = result.map(event => {
+      const normalisedData = result.map((event) => {
         const startDate = addHours(new Date(event.start_date), 10);
         const endDate = addHours(new Date(event.end_date), 10);
         const startTime = format(startDate, "h:mmaaaaa'm'");

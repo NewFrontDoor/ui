@@ -77,10 +77,12 @@ const Week: FC<WeekProps> = ({calendarData, handleNav}) => {
                 gridColumn: `${index + 3} / span 1`
               }}
             >
-              {events.map(event => {
+              {events.map((event) => {
                 const startRow =
-                  parseInt(format(event.startDate, 'H'), 10) * 2 +
-                  (parseInt(format(event.startDate, 'm'), 10) >= 30 ? 1 : 0);
+                  Number.parseInt(format(event.startDate, 'H'), 10) * 2 +
+                  (Number.parseInt(format(event.startDate, 'm'), 10) >= 30
+                    ? 1
+                    : 0);
                 if (event.eventLength > 1) {
                   return null;
                 }
@@ -100,10 +102,9 @@ const Week: FC<WeekProps> = ({calendarData, handleNav}) => {
                       ':hover, :focus': {
                         gridColumn: 'span 10'
                       },
-                      gridRow: `${startRow - 10} / span ${differenceInHours(
-                        event.endDate,
-                        event.startDate
-                      ) + 2}`,
+                      gridRow: `${startRow - 10} / span ${
+                        differenceInHours(event.endDate, event.startDate) + 2
+                      }`,
                       background: event.color || '#fef0db',
                       color: `${
                         event.color

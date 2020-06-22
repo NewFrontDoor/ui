@@ -86,7 +86,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
             />
           </div>
         )}
-        onChange={values => onChange(values[0])}
+        onChange={(values) => onChange(values[0])}
       />
     );
   }

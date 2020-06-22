@@ -69,7 +69,7 @@ export const PlayButton: FC<PlayButtonProps> = ({src, children, ...props}) => {
   );
 };
 
-export const AudioPlayer: FC<StyledPlayerProps> = props => {
+export const AudioPlayer: FC<StyledPlayerProps> = (props) => {
   return <StyledPlayer {...props} />;
 };
 
@@ -81,7 +81,7 @@ PlayButton.propTypes = {
 
 type NativePlayerProps = HTMLProps<HTMLAudioElement>;
 
-export const NativePlayer: FC<NativePlayerProps> = props => {
+export const NativePlayer: FC<NativePlayerProps> = (props) => {
   const {playerProps} = useAudioPlayer();
 
   return <audio {...props} {...playerProps} />;

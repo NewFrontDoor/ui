@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import React from 'react';
 import PropTypes from 'prop-types';
 import {Styled, Flex, jsx} from 'theme-ui';
 import format from 'date-fns/format';
@@ -22,7 +21,7 @@ const PostPage = ({post, dateFormat, link, blockText}) => {
       <small>Posted on {format(new Date(_createdAt), dateFormat)}</small>
       <small sx={{display: ['none', 'block']}}>
         <ul>
-          {categories.map(category => (
+          {categories.map((category) => (
             <li key={category.title + date}>{link(category)}</li>
           ))}
         </ul>

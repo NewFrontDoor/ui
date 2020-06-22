@@ -38,7 +38,7 @@ const modalOverlay = css`
   height: 100%;
 `;
 
-const Modal = props => {
+const Modal = (props) => {
   return [
     <div key="a" className={modalClass}>
       <div className={innerModal}>{props.children}</div>

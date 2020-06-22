@@ -1,5 +1,5 @@
 // Example theme.js
-export default {
+const theme = {
   fonts: {
     body: 'system-ui, sans-serif',
     heading: `"Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
@@ -164,3 +164,5 @@ export default {
     }
   }
 };
+
+export default theme;

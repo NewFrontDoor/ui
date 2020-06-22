@@ -32,8 +32,12 @@ export function useEventListener(
       return;
     }
 
-    const eventListener = (event: Event): void =>
-      savedHandler.current && savedHandler.current(event);
+    const eventListener = (event: Event): void => {
+      if (savedHandler.current) {
+        savedHandler.current(event);
+      }
+    };
+
     element.addEventListener(eventName, eventListener, false);
     return () => element.removeEventListener(eventName, eventListener);
   }, [eventName, element]);

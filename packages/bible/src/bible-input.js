@@ -4,10 +4,10 @@ import {extractAndValidate, fullBookTitle} from './passage-validation';
 function Output({isValid, references}) {
   if (isValid[0] === null) return 'Please enter a passage';
 
-  if (isValid.every(element => element === true)) {
+  if (isValid.every((element) => element === true)) {
     console.log(references);
     return references
-      .map(collection => {
+      .map((collection) => {
         if (collection === null) return null;
         const {book, chapter = null, verse = null} = collection;
         return (
@@ -38,18 +38,20 @@ const BibleInput = () => {
   const [valid, setValid] = useState([]);
   const [references, setReferences] = useState([]);
 
-  function handleInputChange(e) {
-    setInput(e.currentTarget.value);
-    const [references, validated] = extractAndValidate(e.currentTarget.value);
+  function handleInputChange(event) {
+    setInput(event.currentTarget.value);
+    const [references, validated] = extractAndValidate(
+      event.currentTarget.value
+    );
     setValid(validated);
     setReferences(references);
   }
 
-  const isValid = valid.map(object => {
+  const isValid = valid.map((object) => {
     if (Object.values(object).includes('incomplete')) return 'incomplete';
     if (Object.values(object).includes('non-sequential'))
       return 'non-sequential';
-    return Object.values(object).every(e => e === true);
+    return Object.values(object).every((value) => value === true);
   });
 
   return (

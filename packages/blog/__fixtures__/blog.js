@@ -50,7 +50,7 @@ export default (
   <Blog
     {...props}
     Link={Link}
-    blockText={text => <p>{text}</p>}
+    blockText={(text) => <p>{text}</p>}
     overrides={{height: '300px'}}
   />
 );

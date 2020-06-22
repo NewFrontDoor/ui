@@ -5,7 +5,7 @@ import {Bible} from '../src';
 
 const BIBLE = 'https://serverless.newfrontdoor.org/bible';
 
-const Blockquote = props => {
+const Blockquote = (props) => {
   const {passage} = props;
   return (
     <blockquote
@@ -49,9 +49,11 @@ Blockquote.propTypes = {
   passage: PropTypes.string.isRequired
 };
 
-export default {
+const fixtures = {
   Inline: <Bible url={BIBLE} passage="Romans 8:31-39" />,
   Chapter: <Blockquote url={BIBLE} passage="Genesis 1" />,
   Verse: <Blockquote url={BIBLE} passage="Genesis 1:8" />,
   Bible: <Blockquote url={BIBLE} passage="Psalms 100:1-5" />
 };
+
+export default fixtures;

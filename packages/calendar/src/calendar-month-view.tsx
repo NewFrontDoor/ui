@@ -97,7 +97,7 @@ const Month: FC<MonthProps> = ({calendarData, handleNav}) => {
                       see more
                     </div>
                   )}
-                  {events.map(event => {
+                  {events.map((event) => {
                     return (
                       <div
                         key={event.id}

@@ -281,12 +281,12 @@ export function useAudioPlayer(): UseAudioPlayer {
     muted,
     src,
     onPause: () => dispatch({type: 'paused'}),
-    onTimeUpdate: e =>
-      dispatch({type: 'set-time', time: e.currentTarget.currentTime}),
-    onDurationChange: e =>
-      dispatch({type: 'set-duration', duration: e.currentTarget.duration}),
-    onVolumeChange: e =>
-      dispatch({type: 'set-volume', volume: e.currentTarget.volume}),
+    onTimeUpdate: (event) =>
+      dispatch({type: 'set-time', time: event.currentTarget.currentTime}),
+    onDurationChange: (event) =>
+      dispatch({type: 'set-duration', duration: event.currentTarget.duration}),
+    onVolumeChange: (event) =>
+      dispatch({type: 'set-volume', volume: event.currentTarget.volume}),
     onPlaying: () => dispatch({type: 'playing'}),
     onEnded: () => dispatch({type: 'stopped'})
   };

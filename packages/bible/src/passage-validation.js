@@ -7,13 +7,13 @@ function extractAndValidate(value) {
     chapter: undefined,
     verse: undefined
   };
-  const splits = value.match(/(?:-|,+\s|;+\s|\s\s|to|and)/g);
+  const splits = value.match(/-|,+\s|;+\s|\s\s|to|and/g);
   const connections =
     splits &&
-    splits.map(elem => {
-      return elem
-        .replace(/(?:-|to)/g, 'to')
-        .replace(/(?:,+\s|\s\s|;+\s|and)/g, 'and');
+    splits.map((element) => {
+      return element
+        .replace(/-|to/g, 'to')
+        .replace(/,+\s|\s\s|;+\s|and/g, 'and');
     });
   // --- Start manipulation of incoming value
   const references = value
@@ -30,7 +30,7 @@ function extractAndValidate(value) {
     .replace(/\(/g, '9')
     .replace(/\)/g, '0')
     // Split into individual verse references
-    .split(/(?:-|,+\s|;+\s|\s\s|to|and)/)
+    .split(/-|,+\s|;+\s|\s\s|to|and/)
     .map((item, index) => {
       if (!item) return null;
       /* ******************************************* */
@@ -42,7 +42,7 @@ function extractAndValidate(value) {
 
       // If a space was omitted between book number and name, put one in
       if (raw[0].match(/[\d!@#][A-Za-z]/)) {
-        const addspace = raw[0].split(/(\D[A-Za-z0-9]+)/);
+        const addspace = raw[0].split(/(\D[A-Za-z\d]+)/);
         raw[0] = `${addspace[0]} ${addspace[1]}`;
       }
 
@@ -106,7 +106,7 @@ function extractAndValidate(value) {
 function fullBookTitle(book) {
   if (!book || book.length < 2) return 'no book';
 
-  return books.find(item => {
+  return books.find((item) => {
     return item.toLowerCase().startsWith(book.toLowerCase());
   });
 }
@@ -132,10 +132,10 @@ function validate(references, item, index) {
 
   // Check if passages are sequential,
   // and push the outcome to the valid array
-  const prevValue = index > 0 ? references[index - 1] : null;
-  if (index > 0 && connection === 'to' && book === prevValue.book) {
-    const chapMath = Number(chapter) - Number(prevValue.chapter);
-    const verseMath = Number(verse) - Number(prevValue.verse);
+  const previousValue = index > 0 ? references[index - 1] : null;
+  if (index > 0 && connection === 'to' && book === previousValue.book) {
+    const chapMath = Number(chapter) - Number(previousValue.chapter);
+    const verseMath = Number(verse) - Number(previousValue.verse);
     if (chapMath < 0) valid2.meta = 'non-sequential';
     if (chapMath > 0) valid2.meta = true;
     if (chapMath === 0) {
@@ -146,8 +146,8 @@ function validate(references, item, index) {
   } else if (
     index > 0 &&
     connection === 'to' &&
-    books.findIndex(title => title === fullBookTitle(book)) <
-      books.findIndex(title => title === fullBookTitle(prevValue.book))
+    books.findIndex((title) => title === fullBookTitle(book)) <
+      books.findIndex((title) => title === fullBookTitle(previousValue.book))
   ) {
     valid2.meta = 'non-sequential';
   } else {
