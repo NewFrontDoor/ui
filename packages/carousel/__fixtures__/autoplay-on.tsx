@@ -23,7 +23,7 @@ const slide = css`
 `;
 
 export default (
-  <Carousel autoplay={false} delayLength="2000">
+  <Carousel autoplay delayLength={2000}>
     <div key="1" css={slide}>
       <div>1</div>
     </div>
