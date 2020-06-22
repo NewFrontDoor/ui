@@ -21,7 +21,7 @@
     "@emotion/core": "^10.0.10",
     "@emotion/is-prop-valid": "^0.8.3",
     "@emotion/styled": "^10.0.10",
-    "@mdx-js/react": "^1.5.8",
+    "@mdx-js/react": "^1.6.6",
     "@styled-system/css": "^5.1.5",
     "@testing-library/jest-dom": "^5.3.0",
     "@testing-library/react": "^10.0.1",
@@ -35,7 +35,6 @@
     "babel-plugin-inline-react-svg": "^1.1.0",
     "codecov": "^3.5.0",
     "css-loader": "^3.4.2",
-    "eslint": "^6.0.1",
     "eslint-config-xo-react": "^0.23.0",
     "eslint-plugin-jest": "^23.8.1",
     "eslint-plugin-react": "^7.18.3",
@@ -45,8 +44,7 @@
     "jest": "^25.2.3",
     "jest-emotion": "^10.0.32",
     "microbundle": "^0.12.0-next.8",
-    "prettier": "^1.19.1",
-    "prettier-plugin-package": "^0.3.1",
+    "next": "^9.4.4",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
     "react-cosmos": "^5.0.11",
@@ -85,6 +83,7 @@
       "browser"
     ],
     "rules": {
+      "react/jsx-pascal-case": "off",
       "react/boolean-prop-naming": "off",
       "react/jsx-no-useless-fragment": "off",
       "react/jsx-fragments": [
