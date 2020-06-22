@@ -10,24 +10,24 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import {useEmblaCarousel} from 'embla-carousel-react';
-import {jsx, css} from '@emotion/core';
+import {jsx} from 'theme-ui';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
-const dots = css`
-  position: absolute;
-  margin-top: 1rem;
-  display: flex;
-  list-style: none;
-  padding-left: 0;
-  justify-content: center;
-  left: 0;
-  right: 0;
-  top: 90%;
-`;
+const dots = {
+  position: 'absolute',
+  marginTop: '1rem',
+  display: 'flex',
+  listStyle: 'none',
+  paddingLeft: '0',
+  justifyContent: 'center',
+  left: '0',
+  right: '0',
+  top: '90%'
+};
 
-const relative = css`
-  position: relative;
-`;
+const relative = {
+  position: 'relative'
+};
 
 type CallbackFunction = () => void;
 
@@ -98,7 +98,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
   }, [embla]);
 
   return (
-    <div css={relative}>
+    <div sx={relative}>
       <EmblaCarousel htmlTagName="div">
         <div style={{display: 'flex'}}>
           {Children.map(children, (slide, index) => (
@@ -108,7 +108,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
           ))}
         </div>
       </EmblaCarousel>
-      <div id="dots" css={dots}>
+      <div id="dots" sx={dots}>
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}
