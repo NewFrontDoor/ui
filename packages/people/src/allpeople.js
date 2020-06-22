@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ky from 'ky-universal';
+import ky from 'ky';
 import {useQuery} from 'react-query';
 import People from './people';
 

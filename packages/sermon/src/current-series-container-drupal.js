@@ -2,7 +2,7 @@
 import React from 'react';
 import {jsx} from 'theme-ui';
 import {ApiContext} from '@newfrontdoor/api-config';
-import ky from 'ky-universal';
+import ky from 'ky';
 import CurrentSeries from './current-series';
 
 class CurrentSeriesContainerDrupal extends React.PureComponent {
