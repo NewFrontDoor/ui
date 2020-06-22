@@ -1,7 +1,6 @@
 /** @jsx jsx */
-import React from 'react';
 import {Styled, jsx} from 'theme-ui';
-import {StyledPlayer} from '@newfrontdoor/audio-player';
+import {AudioPlayer} from '@newfrontdoor/audio-player';
 import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
@@ -33,7 +32,7 @@ const LatestSermon = ({
             <a href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </p>
           <p>{preacher}</p>
-          <StyledPlayer hasPlaybackSpeed isInvert={false} audio={sermonUrl} />
+          <AudioPlayer hasPlaybackSpeed src={sermonUrl} />
           <a href={sermonUrl}>Download Sermon</a>
         </section>
       )}

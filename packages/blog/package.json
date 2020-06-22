@@ -17,7 +17,7 @@
     "theme-ui": "^0.3.1"
   },
   "dependencies": {
-    "date-fns": "^2.4.0",
+    "date-fns": "^2.11.1",
     "prop-types": "^15.6.2",
     "reading-time": "^1.2.0"
   },

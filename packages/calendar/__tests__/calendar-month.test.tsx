@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, fireEvent, waitFor} from '@testing-library/react';
+import {render, fireEvent, waitFor, RenderResult} from '@testing-library/react';
 import {format, subMonths, subYears, addMonths, addYears} from 'date-fns';
 import {queryCache} from 'react-query';
 import {Calendar} from '../src';
@@ -8,7 +8,7 @@ afterEach(() => {
   queryCache.clear();
 });
 
-async function setup() {
+async function setup(): Promise<RenderResult> {
   const client = {
     fetchEvents() {
       return Promise.resolve([]);
