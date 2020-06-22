@@ -53,6 +53,7 @@ type DotProps = HTMLProps<HTMLButtonElement> & {
 const Dot: FC<DotProps> = (props) => (
   <button
     sx={{
+      backgroundColor: 'transparent',
       cursor: 'pointer',
       position: 'relative',
       padding: '0',
@@ -63,8 +64,12 @@ const Dot: FC<DotProps> = (props) => (
       border: '0',
       display: 'flex',
       alignItems: 'center',
-      backgroundColor: props.selected ? '#1bcacd' : '#efefef',
-      '&:after': {width: '100%', height: '0.4rem', content: "''"}
+      '&:after': {
+        backgroundColor: props.selected ? '#1bcacd' : '#efefef',
+        width: '100%',
+        height: '0.4rem',
+        content: "''"
+      }
     }}
     {...props}
     type="button"
@@ -74,6 +79,7 @@ const Dot: FC<DotProps> = (props) => (
 const Dot2: FC<DotProps> = (props) => (
   <button
     sx={{
+      backgroundColor: 'transparent',
       cursor: 'pointer',
       position: 'relative',
       padding: '0',
@@ -84,8 +90,8 @@ const Dot2: FC<DotProps> = (props) => (
       border: '0',
       display: 'flex',
       alignItems: 'center',
-      backgroundColor: props.selected ? '#1bcacd' : '#efefef',
       '&:after': {
+        backgroundColor: props.selected ? '#1bcacd' : '#efefef',
         width: '100%',
         height: '100%',
         border: '1px solid black',
