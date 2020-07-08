@@ -1,0 +1,20 @@
+{
+    "paths": {
+      "compiled": "./dist",
+      "source": "./src"
+    },
+    "parts": [
+      {
+        "implements": "part:@sanity/base/schema-type",
+        "path": "schemas/form.js"
+      },
+      {
+        "implements": "part:@sanity/base/schema-type",
+        "path": "schemas/arrayfield.js"
+      },
+      {
+        "implements": "part:@sanity/base/schema-type",
+        "path": "schemas/formfield.js"
+      }
+    ]
+  }
