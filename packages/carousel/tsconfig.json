@@ -12,10 +12,6 @@
     "strict": false
   },
   "include": [
-    "__fixtures__/**/*.ts",
-    "__fixtures__/**/*.tsx",
-    "__tests__/**/*.ts",
-    "__tests__/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "../../types"

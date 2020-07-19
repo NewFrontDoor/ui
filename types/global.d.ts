@@ -15,14 +15,10 @@ export interface SxProps {
    * ```
    */
   sx?: SxStyleProp;
+
+  css?: any;
 }
 
 declare module 'react' {
-  interface DOMAttributes<T> extends SxProps {}
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicAttributes extends SxProps {}
-  }
+  interface Attributes extends SxProps {}
 }

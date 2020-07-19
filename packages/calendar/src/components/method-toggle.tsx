@@ -114,5 +114,5 @@ export default MethodToggle;
 MethodToggle.propTypes = {
   location: PropTypes.string.isRequired,
   calendarView: PropTypes.oneOf(calendarViews).isRequired,
-  inputs: PropTypes.arrayOf(PropTypes.string).isRequired
+  inputs: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 };

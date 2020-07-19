@@ -61,20 +61,14 @@ export type CalendarData =
       calendarView: 'day';
       currentDate: Date;
       dayData: CalendarDay;
-      weekData?: undefined;
-      monthData?: undefined;
     }
   | {
       calendarView: 'week';
       currentDate: Date;
-      dayData?: undefined;
-      weekData?: CalendarDay[];
-      monthData?: undefined;
+      weekData: CalendarDay[];
     }
   | {
       calendarView: 'month';
       currentDate: Date;
-      dayData?: undefined;
-      weekData?: undefined;
-      monthData?: CalendarMonth;
+      monthData: CalendarMonth;
     };

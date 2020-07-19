@@ -51,7 +51,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
                 alignSelf: 'center',
                 background: getTrackBackground({
                   values: [value],
-                  colors: [color, '#ccc'],
+                  colors: color ? [color, '#ccc'] : ['#ccc'],
                   min: 0,
                   max
                 })

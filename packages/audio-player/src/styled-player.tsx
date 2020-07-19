@@ -14,7 +14,7 @@ import {useEventListener} from './use-event-listener';
 import {useAudioPlayer} from './use-audio-manager';
 
 type ButtonProps = HTMLProps<HTMLButtonElement> & {
-  background: string;
+  background?: string;
 };
 
 const Button: FC<ButtonProps> = ({background, ...props}) => {
@@ -70,7 +70,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
   hasPlaybackspeed,
   width
 }) => {
-  const volumeBar = useRef<Range>();
+  const volumeBar = useRef<Range>(null);
   const {playerState, playerProps, dispatch} = useAudioPlayer();
 
   const {
@@ -204,7 +204,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
           }}
           onMouseDown={() => dispatch({type: 'start-volume-change'})}
           onTransitionEnd={() => {
-            volumeBar.current.onResize();
+            volumeBar.current?.onResize();
           }}
         >
           <ProgressBar

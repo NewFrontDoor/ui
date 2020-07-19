@@ -31,7 +31,7 @@ const hours = [
 
 type DayProps = {
   calendarData: CalendarDay;
-  handleNav?: (url?: string) => void;
+  handleNav?: (url: string) => void;
 };
 
 const Day: FC<DayProps> = ({calendarData, handleNav}) => {
@@ -65,13 +65,14 @@ const Day: FC<DayProps> = ({calendarData, handleNav}) => {
         {date}
       </div>
       {day.events.map((event) => {
+        const {startDate, endDate, eventLength} = event;
         const startRow =
-          Number.parseInt(format(event.startDate, 'H'), 10) * 2 +
-          (Number.parseInt(format(event.startDate, 'm'), 10) >= 30 ? 1 : 0);
+          Number.parseInt(format(startDate, 'H'), 10) * 2 +
+          (Number.parseInt(format(startDate, 'm'), 10) >= 30 ? 1 : 0);
 
-        const rowspan = differenceInHours(event.endDate, event.startDate) + 2;
+        const rowspan = differenceInHours(endDate, startDate) + 2;
 
-        if (event.eventLength > 1) {
+        if (eventLength && eventLength > 1) {
           return null;
         }
 
@@ -146,7 +147,7 @@ const Day: FC<DayProps> = ({calendarData, handleNav}) => {
 
 Day.propTypes = {
   calendarData: PropTypes.exact({
-    events: PropTypes.array,
+    events: PropTypes.array.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
     isToday: PropTypes.bool.isRequired,
     isWeekend: PropTypes.bool.isRequired,
