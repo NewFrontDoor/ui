@@ -1785,11 +1785,6 @@
   resolved "https://registry.yarnpkg.com/@sanity/timed-out/-/timed-out-4.0.2.tgz#c9f61f9a1609baa1eb3e4235a24ea2a775022cdf"
   integrity sha512-NBDKGj14g9Z+bopIvZcQKWCzJq5JSrdmzRR1CS+iyA3Gm8SnIWBfZa7I3mTg2X6Nu8LQXG0EPKXdOGozLS4i3w==
 
-"@scarf/scarf@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.6.tgz#52011dfb19187b53b75b7b6eac20da0810ddd88f"
-  integrity sha512-y4+DuXrAd1W5UIY3zTcsosi/1GyYT8k5jGnZ/wG7UUHVrU+MHlH4Mp87KK2/lvMW4+H7HVcdB+aJhqywgXksjA==
-
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -10319,12 +10314,11 @@ react-portal@^4.1.5:
   dependencies:
     prop-types "^15.5.8"
 
-react-query@^1.1.7:
-  version "1.5.10"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.10.tgz#9b23af061e8171e95503e1932cc07d0cebe806eb"
-  integrity sha512-Kjgii5rK1g9kpLCUGBeGIqFG0IoAMe/oRKzpIfNQUyegJ/Lh5o9lmbmpTPMBWbP3gZDFfAC3081llqxg7QiqCg==
+react-query@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.5.4.tgz#c456d6122b150e3858a8eb262041a9fb36e6c4d0"
+  integrity sha512-gsg9M7eIYjMqrNM8Gzzo0cdXnkuM2git1hWyp9tA9/B779zZQ+HhL6vWOIlObX3gsKfIKAgJ0SKUUn9NdiF2xQ==
   dependencies:
-    "@scarf/scarf" "^1.0.6"
     ts-toolbelt "^6.9.4"
 
 react-radio-group@^3.0.3:

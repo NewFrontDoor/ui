@@ -20,11 +20,11 @@ const AllPeople = ({groups, apiUrl}) => {
 
   return (
     <div>
-      {groups.map(group => {
+      {groups.map((group) => {
         return (
           <People
             key={group.title}
-            people={data.filter(type => type.roles.includes(group.type))}
+            people={data.filter((type) => type.roles.includes(group.type))}
             email={group.email}
             title={group.title}
           />

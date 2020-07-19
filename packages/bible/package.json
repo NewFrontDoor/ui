@@ -19,7 +19,7 @@
   "dependencies": {
     "ky": "^0.20.0",
     "prop-types": "^15.6.2",
-    "react-query": "^1.1.7"
+    "react-query": "^2.5.4"
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.1"
