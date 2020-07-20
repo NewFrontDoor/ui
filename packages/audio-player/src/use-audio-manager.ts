@@ -11,15 +11,15 @@ type Status = 'play' | 'playing' | 'pause' | 'paused' | 'stop' | 'stopped';
 
 type State = {
   src?: string;
-  status: Status;
+  status?: Status;
   playingTime: number;
-  seekTime?: number;
   duration?: number;
   volume: number;
   speed: number;
-  muted: boolean;
+  muted?: boolean;
   changingVolume: boolean;
   seeking: boolean;
+  seekTime: number;
 };
 
 type Action =
@@ -92,7 +92,7 @@ function toggleSpeed(speed: number): number {
 }
 
 function getTime(time?: number): string {
-  if (!isNaN(time)) {
+  if (time && !Number.isNaN(time)) {
     const minutes = Math.floor(time / 60);
     const seconds = `0${Math.floor(time % 60)}`.slice(-2);
     return `${minutes}:${seconds}`;
@@ -187,6 +187,7 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         seeking: true,
+        seekTime: state.playingTime,
         status: 'pause'
       };
     default:
@@ -194,29 +195,28 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function init({
-  initialSrc,
-  isPlayOnLoad
-}: {
-  initialSrc: string;
-  isPlayOnLoad: boolean;
-}): State {
+type InitState = {
+  initialSrc?: string;
+  isPlayOnLoad?: boolean;
+};
+
+function init({initialSrc, isPlayOnLoad}: InitState): State {
   return {
     src: initialSrc,
     status: isPlayOnLoad ? 'play' : 'stopped',
     speed: 1,
     volume: 1,
     playingTime: 0,
-    muted: false,
+    seeking: false,
     changingVolume: false,
-    seeking: false
+    seekTime: 0
   };
 }
 
 type CurrentState = {
-  playing: boolean;
-  paused: boolean;
-  stopped: boolean;
+  playing?: boolean;
+  paused?: boolean;
+  stopped?: boolean;
   timeAndDuration: string;
 };
 
@@ -227,8 +227,18 @@ export type UsePlayerState = {
   dispatch: Dispatch<Action>;
 };
 
-export const AudioStateContext = createContext<PlayerState>(null);
-export const AudioDispatchContext = createContext<Dispatch<Action>>(null);
+export const AudioStateContext = createContext<PlayerState>({
+  speed: 1,
+  playingTime: 0,
+  seekTime: 0,
+  volume: 1,
+  seeking: false,
+  changingVolume: false,
+  timeAndDuration: '0:00'
+});
+export const AudioDispatchContext = createContext<Dispatch<Action>>(
+  () => undefined
+);
 
 export const useAudioStateContext = (): PlayerState =>
   useContext(AudioStateContext);
@@ -236,9 +246,7 @@ export const useAudioStateContext = (): PlayerState =>
 export const useAudioDispatchContext = (): Dispatch<Action> =>
   useContext(AudioDispatchContext);
 
-type PlayerProps = HTMLProps<HTMLAudioElement> & {
-  ref: (audioPlayer?: HTMLAudioElement) => void;
-};
+type PlayerProps = HTMLProps<HTMLAudioElement>;
 
 type UseAudioPlayer = UsePlayerState & {
   playerProps: PlayerProps;
@@ -251,7 +259,7 @@ export function useAudioPlayer(): UseAudioPlayer {
   const {src, muted, speed, volume, playingTime, seeking, status} = playerState;
 
   const setAudioPlayer = useCallback(
-    (audioPlayer: HTMLAudioElement | undefined) => {
+    (audioPlayer: HTMLAudioElement | null) => {
       if (audioPlayer) {
         if (audioPlayer.src !== src) {
           audioPlayer.load();
@@ -295,7 +303,7 @@ export function useAudioPlayer(): UseAudioPlayer {
 }
 
 export default function useAudioManager(
-  isPlayOnLoad: boolean,
+  isPlayOnLoad?: boolean,
   initialSrc?: string
 ): UsePlayerState {
   const [state, dispatch] = useReducer(

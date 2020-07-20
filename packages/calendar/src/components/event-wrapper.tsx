@@ -11,7 +11,7 @@ import {CalendarEvent} from '../types';
 
 type EventWrapper = {
   event: Partial<CalendarEvent>;
-  handleNav?: (url?: string) => void;
+  handleNav?: (url: string) => void;
 };
 
 const EventWrapper: FC<EventWrapper> = ({event, handleNav}) => {
@@ -19,28 +19,32 @@ const EventWrapper: FC<EventWrapper> = ({event, handleNav}) => {
 
   return (
     <React.Fragment>
-      <div
-        /* eslint-disable-next-line react/no-danger */
-        dangerouslySetInnerHTML={{__html: event.name}}
-        sx={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis'
-        }}
-        onClick={() => setShowDialog(true)}
-      />
+      {event.name && (
+        <div
+          /* eslint-disable-next-line react/no-danger */
+          dangerouslySetInnerHTML={{__html: event.name}}
+          sx={{
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+          }}
+          onClick={() => setShowDialog(true)}
+        />
+      )}
       <Dialog
         aria-label={event.name}
         isOpen={showDialog}
         style={{zIndex: 1000}}
         onDismiss={() => setShowDialog(false)}
       >
-        <header>
-          <h1>
-            {/* eslint-disable-next-line react/no-danger */}
-            <span dangerouslySetInnerHTML={{__html: event.name}} />
-          </h1>
-        </header>
+        {event.name && (
+          <header>
+            <h1>
+              {/* eslint-disable-next-line react/no-danger */}
+              <span dangerouslySetInnerHTML={{__html: event.name}} />
+            </h1>
+          </header>
+        )}
         <h4>
           {event.startTime} - {event.endTime}
         </h4>
@@ -68,7 +72,10 @@ const EventWrapper: FC<EventWrapper> = ({event, handleNav}) => {
             Close
           </Button>
           {event.url && (
-            <Button type="button" onClick={() => handleNav(event.url)}>
+            <Button
+              type="button"
+              onClick={() => handleNav && event.url && handleNav(event.url)}
+            >
               View
             </Button>
           )}
@@ -83,9 +90,9 @@ EventWrapper.propTypes = {
     name: PropTypes.string.isRequired,
     startTime: PropTypes.string.isRequired,
     endTime: PropTypes.string.isRequired,
-    url: PropTypes.string,
-    description: PropTypes.string,
-    location: PropTypes.string
+    url: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired
   }).isRequired,
   handleNav: PropTypes.func
 };

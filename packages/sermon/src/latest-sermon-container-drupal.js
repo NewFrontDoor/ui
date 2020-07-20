@@ -1,13 +1,15 @@
 /** @jsx jsx */
-import React from 'react';
 import {jsx} from 'theme-ui';
 import {useApiConfig} from '@newfrontdoor/api-config';
-import ky from 'ky-universal';
+import ky from 'ky';
 import {useQuery} from 'react-query';
 import LatestSermon from './latest-sermon';
 
-async function getLatestSermon(prefixUrl, path, searchParams) {
-  const [sermon] = await ky(path, {prefixUrl, searchParams}).json();
+async function getLatestSermon(prefixUrl, path, searchParameters) {
+  const [sermon] = await ky(path, {
+    prefixUrl,
+    searchParams: searchParameters
+  }).json();
 
   // This transform could moved out into generic (Drupal => NFD) component structure for sermons
   return {

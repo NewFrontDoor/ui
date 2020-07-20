@@ -1,11 +1,19 @@
 /** @jsx jsx */
 import {jsx, css} from 'theme-ui';
-import React from 'react';
+import {FC, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import ky from 'ky-universal';
+import ky from 'ky';
 import {useQuery} from 'react-query';
 
-async function fetchBible(url, passage) {
+type BibleResult = {
+  bookname: string;
+  chapter: string;
+  text: string;
+  title: string;
+  verse: string;
+};
+
+async function fetchBible(url: string, passage: string) {
   return ky(url, {
     searchParams: {
       passage,
@@ -13,10 +21,15 @@ async function fetchBible(url, passage) {
     },
     mode: 'cors',
     credentials: 'omit'
-  }).json();
+  }).json<BibleResult[]>();
 }
 
-export const Bible = ({url, passage}) => {
+type BibleProps = {
+  url: string;
+  passage: string;
+};
+
+export const Bible: FC<BibleProps> = ({url, passage}) => {
   const {data, status, error} = useQuery([url, passage], fetchBible);
 
   if (error) {
@@ -27,11 +40,11 @@ export const Bible = ({url, passage}) => {
     return <p>Loading...</p>;
   }
 
-  if (data.length > 0) {
+  if (data && data.length > 0) {
     return (
       <div sx={{color: 'text'}}>
         {data.map(({bookname, chapter, text, title, verse}) => (
-          <React.Fragment key={`${bookname}-${chapter}-${verse}`}>
+          <Fragment key={`${bookname}-${chapter}-${verse}`}>
             {title && (
               <h5
                 css={css`
@@ -53,7 +66,7 @@ export const Bible = ({url, passage}) => {
               {/* eslint-disable-next-line react/no-danger */}
               <span dangerouslySetInnerHTML={{__html: text}} />
             </p>
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     );

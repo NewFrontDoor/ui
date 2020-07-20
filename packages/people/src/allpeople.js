@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ky from 'ky-universal';
+import ky from 'ky';
 import {useQuery} from 'react-query';
 import People from './people';
 
@@ -20,11 +20,11 @@ const AllPeople = ({groups, apiUrl}) => {
 
   return (
     <div>
-      {groups.map(group => {
+      {groups.map((group) => {
         return (
           <People
             key={group.title}
-            people={data.filter(type => type.roles.includes(group.type))}
+            people={data.filter((type) => type.roles.includes(group.type))}
             email={group.email}
             title={group.title}
           />

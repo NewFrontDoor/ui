@@ -11,7 +11,7 @@ type CalendarControlsProps = {
   location: string;
   input: string[];
   calendarView: CalendarView;
-  isViewFixed: boolean;
+  isViewFixed?: boolean;
   startOfMonth: Date;
 };
 

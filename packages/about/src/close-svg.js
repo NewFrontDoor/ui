@@ -1,5 +1,5 @@
-import React from 'react';
-import {css} from '@emotion/core';
+/** @jsx jsx */
+import {jsx, css} from 'theme-ui';
 
 const closeIcon = css`
   position: absolute;

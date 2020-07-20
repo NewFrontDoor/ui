@@ -31,7 +31,7 @@ const relative = {
 
 type CallbackFunction = () => void;
 
-function useInterval(callback: CallbackFunction, delay: number): void {
+function useInterval(callback: CallbackFunction, delay?: number): void {
   const savedCallback = useRef<CallbackFunction>();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function useInterval(callback: CallbackFunction, delay: number): void {
 
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      savedCallback.current?.();
     }
 
     if (delay !== null) {
@@ -51,8 +51,8 @@ function useInterval(callback: CallbackFunction, delay: number): void {
 }
 
 type CarouselProps = {
-  autoplay: boolean;
-  delayLength: number;
+  autoplay?: boolean;
+  delayLength?: number;
   children: ReactNode;
 };
 
@@ -65,8 +65,8 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
-  const [delay, setDelay] = useState(delayLength);
-  const [isRunning, setIsRunning] = useState(autoplay);
+  const [delay] = useState(delayLength);
+  const [isRunning] = useState(autoplay);
 
   const scrollTo = useCallback((index) => embla.scrollTo(index), [embla]);
   const scrollPrevious = useCallback(() => embla.scrollPrev(), [embla]);
@@ -80,7 +80,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
         embla.scrollTo(0);
       }
     },
-    isRunning ? delay : null
+    isRunning ? delay : undefined
   );
 
   useEffect(() => {

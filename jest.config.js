@@ -61,6 +61,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsConfig: {
+        target: 'es2018',
         module: 'commonjs',
         esModuleInterop: true,
         resolveJsonModule: true,

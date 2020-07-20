@@ -6,7 +6,7 @@
     "cosmos:export": "cosmos-export --config cosmos/cosmos.config.json",
     "dev": "next",
     "lint": "xo",
-    "prepare": "yarn workspaces run prepare",
+    "prepare": "del packages/*/dist && yarn workspaces run prepare",
     "start": "next start",
     "test": "jest"
   },
@@ -35,6 +35,7 @@
     "babel-plugin-inline-react-svg": "^1.1.0",
     "codecov": "^3.5.0",
     "css-loader": "^3.4.2",
+    "del-cli": "^3.0.1",
     "eslint-config-xo-react": "^0.23.0",
     "eslint-plugin-jest": "^23.8.1",
     "eslint-plugin-react": "^7.18.3",

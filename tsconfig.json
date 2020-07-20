@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "moduleResolution": "node",
-    "noEmit": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "noEmit": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
   }
 }

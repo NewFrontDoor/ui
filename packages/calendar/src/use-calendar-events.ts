@@ -185,7 +185,7 @@ export function useCalendarEvents(
 
   const calendarData = buildCalendarData(
     {calendarView, currentDate},
-    resolvedData || []
+    resolvedData ?? []
   );
 
   return [calendarData, status, error, dispatch];

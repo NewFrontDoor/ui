@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {jsx, css} from '@emotion/core';
+import {jsx, css} from 'theme-ui';
 import Carousel from '../src';
 
 const slide = css`

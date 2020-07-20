@@ -142,15 +142,15 @@ export function buildCalendarData(
   {calendarView, currentDate}: CalendarState,
   events: CalendarEvent[]
 ): CalendarData {
-  if (calendarView === 'day') {
-    return calendarDay(currentDate, events);
-  }
+  switch (calendarView) {
+    case 'day':
+      return calendarDay(currentDate, events);
 
-  if (calendarView === 'week') {
-    return calendarWeek(currentDate, events);
-  }
+    case 'week':
+      return calendarWeek(currentDate, events);
 
-  if (calendarView === 'month') {
-    return calendarMonth(currentDate, events);
+    case 'month':
+    default:
+      return calendarMonth(currentDate, events);
   }
 }
