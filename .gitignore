@@ -2,6 +2,7 @@ node_modules
 dist
 coverage
 *.tgz
+.DS_Store
 
 package-lock.json
 yarn-error.log

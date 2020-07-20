@@ -10,7 +10,9 @@
     "watch": "microbundle watch --no-compress"
   },
   "files": [
-    "dist"
+    "dist",
+    "schema",
+    "sanity.json"
   ],
   "peerDependencies": {
     "react": "^16.0",
