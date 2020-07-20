@@ -1,0 +1,27 @@
+{
+    "name": "@newfrontdoor/serializers",
+    "version": "0.1.0",
+    "license": "MIT",
+    "source": "src/index.js",
+    "main": "dist/index.js",
+    "module": "dist/index.module.js",
+    "scripts": {
+      "prepare": "microbundle --no-compress",
+      "watch": "microbundle watch --no-compress"
+    },
+    "files": [
+      "dist"
+    ],
+    "peerDependencies": {
+      "@emotion/core": "^10.0",
+      "@emotion/styled": "^10.0",
+      "react": "^16.0",
+      "theme-ui": "^0.3.1",
+      "@sanity/block-content-to-react": "^2.0.7"
+    },
+    "dependencies": {
+      "prop-types": "^15.6.0"
+    },
+    "xo": false
+  }
+  
