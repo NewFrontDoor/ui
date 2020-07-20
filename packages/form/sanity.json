@@ -10,7 +10,7 @@
       },
       {
         "implements": "part:@sanity/base/schema-type",
-        "path": "schemas/arrayfield.js"
+        "path": "schemas/formarrayfield.js"
       },
       {
         "implements": "part:@sanity/base/schema-type",

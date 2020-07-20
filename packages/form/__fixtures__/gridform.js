@@ -1,6 +1,12 @@
 import React from 'react';
 import {Form, validation} from '../src';
 
+const Success = () => (
+  <div>
+    <p>Thanks for your submission. We'll get back to you as soon as we can.</p>
+  </div>
+);
+
 const props = {
   title: 'Test Form',
   id: 'test',
@@ -112,5 +118,6 @@ export default (
       console.log('Submitted!');
       console.log(formValues);
     }}
+    success={<Success />}
   />
 );

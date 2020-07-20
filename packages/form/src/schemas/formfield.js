@@ -101,6 +101,27 @@ export default {
             'Input a warning that helpfully describes what your field expects'
         }
       ]
+    },
+    {
+      title: 'Styling',
+      name: 'styling',
+      type: 'object',
+      options: {
+        collapsible: true,
+        collapsed: true
+      },
+      fields: [
+        {
+          title: 'Full width',
+          name: 'fullWidth',
+          type: 'boolean'
+        },
+        {
+          title: 'Group border',
+          name: 'border',
+          type: 'boolean'
+        }
+      ]
     }
   ],
   initialValue: {
