@@ -285,7 +285,18 @@ const FormComponent = ({
       }}
       render={({handleSubmit, form, submitting, pristine, submitSucceeded}) => {
         return submitSucceeded ? (
-          success
+          success ? (
+            success
+          ) : (
+            <Box as="form" id={id}>
+              <fieldset>
+                <Styled.p>
+                  Thankyou for your submission. We will get back to you as soon
+                  as we can.
+                </Styled.p>
+              </fieldset>
+            </Box>
+          )
         ) : (
           <Box as="form" id={id} onSubmit={handleSubmit}>
             <fieldset>

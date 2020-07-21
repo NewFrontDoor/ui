@@ -39,6 +39,13 @@ export default {
       type: 'string',
       description:
         "This is the error message that will show up if a required field is left blank. If not set, the default is to output 'required'"
+    },
+    {
+      name: 'onSuccess',
+      title: 'Successful submission message',
+      type: 'string',
+      description:
+        "This is the message which you would like displayed after the form is successfully submitted. If not set, the default is to output 'Thankyou for your submission. We will get back to you as soon as we can.'"
     }
   ]
 };
