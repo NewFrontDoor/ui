@@ -1,17 +1,17 @@
 {
   "name": "@newfrontdoor/form",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "license": "MIT",
   "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
   "scripts": {
-    "prepare": "microbundle --no-compress",
+    "prepare": "microbundle --no-compress && babel -d dist/schemas src/schemas",
     "watch": "microbundle watch --no-compress"
   },
   "files": [
     "dist",
-    "schema",
+    "schemas",
     "sanity.json"
   ],
   "peerDependencies": {
