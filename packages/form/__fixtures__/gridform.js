@@ -113,8 +113,8 @@ export default (
   <Form
     {...props}
     fields={props.data.fields}
-    validationFn={values => validation(values, props.data)}
-    submitForm={formValues => {
+    validationFn={(values) => validation(values, props.data)}
+    submitForm={(formValues) => {
       console.log('Submitted!');
       console.log(formValues);
     }}

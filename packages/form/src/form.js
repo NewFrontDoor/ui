@@ -35,8 +35,8 @@ Error.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-const handleReset = (e, form) => {
-  e.preventDefault();
+const handleReset = (event, form) => {
+  event.preventDefault();
   form.reset();
 };
 
@@ -49,7 +49,7 @@ const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
             {childLabel} {index + 1}
           </Styled.h4>
         )}
-        {childFields.map(field => {
+        {childFields.map((field) => {
           return getFormField(field, form, name);
         })}
         <Button type="button" onClick={() => fields.remove(index)}>
@@ -143,7 +143,7 @@ const getFormField = (field, form, blockText, name = '') => {
             <div key={field.id + field.label} sx={{gridColumn: width}}>
               <Label htmlFor={field.id}>{field.label}</Label>
               <Select id={field.id} {...input} {...otherProps}>
-                {field.values.map(value => (
+                {field.values.map((value) => (
                   <option key={field.id + value} value={value}>
                     {value}
                   </option>
@@ -158,7 +158,7 @@ const getFormField = (field, form, blockText, name = '') => {
       return (
         <fieldset key={field.id} sx={{gridColumn: width}}>
           <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
-          {field.values.map(value => (
+          {field.values.map((value) => (
             <div key={field.id + value}>
               <label
                 key={value}
@@ -183,11 +183,11 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     case 'checkbox':
       return (
-        <>
+        <React.Fragment>
           {field.label && field.values && field.values.length > 0 ? (
             <fieldset key={field.id} sx={{gridColumn: width}}>
               <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
-              {field.values.map(value => (
+              {field.values.map((value) => (
                 <div key={field.id + value}>
                   <label
                     key={value}
@@ -222,7 +222,7 @@ const getFormField = (field, form, blockText, name = '') => {
               </Label>
             </div>
           )}
-        </>
+        </React.Fragment>
       );
     case 'reset':
       return (
@@ -230,7 +230,7 @@ const getFormField = (field, form, blockText, name = '') => {
           sx={{gridColumn: width}}
           type={field.input}
           id={field.id}
-          onClick={e => handleReset(e, form)}
+          onClick={(event) => handleReset(event, form)}
         >
           {field.label}
         </Button>
@@ -269,26 +269,31 @@ const FormComponent = ({
   fields,
   blockText,
   submitForm,
-  validationFn
+  validationFn,
+  success
 }) => {
+  const defaultTextHandler = (content) => {
+    return <Styled.p>{content}</Styled.p>;
+  };
+
+  const block = blockText || defaultTextHandler;
+
   return (
     <Form
       mutators={{
         ...arrayMutators
       }}
-      render={({handleSubmit, form, submitting, pristine}) => {
-        return (
+      render={({handleSubmit, form, submitting, pristine, submitSucceeded}) => {
+        return submitSucceeded ? (
+          success
+        ) : (
           <Box as="form" id={id} onSubmit={handleSubmit}>
             <fieldset>
               {title && <Styled.h2>{title}</Styled.h2>}
-              {description && blockText ? (
-                blockText(description)
-              ) : (
-                <Styled.p>{description}</Styled.p>
-              )}
+              {description && block(description)}
               <Grid gap={20} columns={['1fr 1fr']}>
-                {fields.map(field => {
-                  return getFormField(field, form, blockText);
+                {fields.map((field) => {
+                  return getFormField(field, form, block);
                 })}
                 <Button
                   sx={{gridColumn: '1/3'}}
@@ -303,9 +308,9 @@ const FormComponent = ({
         );
       }}
       validate={validationFn}
-      initialValues={fields.reduce((obj, field) => {
-        if (field.initialValue) obj[field.id] = field.initialValue;
-        return obj;
+      initialValues={fields.reduce((object, field) => {
+        if (field.initialValue) object[field.id] = field.initialValue;
+        return object;
       }, {})}
       onSubmit={submitForm}
     />
@@ -319,7 +324,8 @@ FormComponent.propTypes = {
   fields: PropTypes.array.isRequired,
   blockText: PropTypes.func,
   submitForm: PropTypes.func.isRequired,
-  validationFn: PropTypes.func
+  validationFn: PropTypes.func,
+  success: PropTypes.node
 };
 
 export default FormComponent;
