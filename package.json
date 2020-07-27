@@ -58,7 +58,7 @@
     "ts-loader": "^7.0.0",
     "typescript": "^3.8.3",
     "webpack": "^4.7.0",
-    "xo": "^0.32.0"
+    "xo": "^0.32.1"
   },
   "eslint": {
     "settings": {
