@@ -10,7 +10,6 @@ import {
 } from 'react-icons/md';
 import {Range} from 'react-range';
 import ProgressBar from './progress-bar';
-import {useEventListener} from './use-event-listener';
 import {useAudioPlayer} from './use-audio-manager';
 
 type ButtonProps = HTMLProps<HTMLButtonElement> & {
@@ -86,12 +85,6 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
     seeking,
     changingVolume
   } = playerState;
-
-  useEventListener(
-    'mouseup',
-    () => dispatch({type: 'stop-interaction'}),
-    document
-  );
 
   function togglePlay(): void {
     if (playing) {
