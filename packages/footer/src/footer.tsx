@@ -48,11 +48,17 @@ const Footer: FC = () => {
         <Flex
           p={2}
           sx={{
-            justifyContent: ['center', 'flex-start'],
+            justifyContent: ['center', 'flex-start']
           }}
         >
           <Box sx={{width: '200px'}}>
-            <LogoSVG />
+            <Link
+              color="white"
+              title="New Front Door"
+              href="https://newfrontdoor.org"
+            >
+              <LogoSVG />
+            </Link>
           </Box>
         </Flex>
         <Flex
@@ -112,8 +118,19 @@ const Footer: FC = () => {
         </Flex>
       </Flex>
       <Box>
-        <Flex sx={{justifyContent: 'center', fontSize:'12px'}}>
-          <Box>Website built and maintained by <a href="https://newfrontdoor.org">New Front Door</a> © {new Date().getFullYear()}</Box>
+        <Flex sx={{justifyContent: 'center', fontSize: '12px'}}>
+          <Box>
+            Website built and maintained by{' '}
+            <Link
+              sx={{textDecoration: 'none'}}
+              color="white"
+              title="New Front Door"
+              href="https://newfrontdoor.org"
+            >
+              New Front Door
+            </Link>{' '}
+            © {new Date().getFullYear()}
+          </Box>
         </Flex>
       </Box>
     </Box>
