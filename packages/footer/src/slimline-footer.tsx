@@ -42,7 +42,9 @@ const SlimlineFooter: FC = () => {
         bg: 'black'
       }}
     >
-      <Box sx={{width: '130px', flex: '0 1 auto'}}>
+      <Box
+        sx={{width: '130px', flex: '0 1 auto', alignSelf: ['center', 'left']}}
+      >
         <Link
           color="white"
           title="New Front Door"
@@ -51,7 +53,15 @@ const SlimlineFooter: FC = () => {
           <LogoSVG />
         </Link>
       </Box>
-      <Box sx={{fontSize: '12px', flex: '0 1 auto'}}>
+      <Box
+        sx={{
+          fontSize: '12px',
+          flex: '0 1 auto',
+          alignSelf: ['center', 'left'],
+          textAlign: 'center',
+          order: ['3', '2']
+        }}
+      >
         Website built and maintained by{' '}
         <Link
           sx={{textDecoration: 'none'}}
@@ -66,7 +76,9 @@ const SlimlineFooter: FC = () => {
 
       <Box
         sx={{
-          flex: '0 1 auto'
+          flex: '0 1 auto',
+          order: ['2', '3'],
+          alignSelf: ['center', 'left']
         }}
       >
         <Link
