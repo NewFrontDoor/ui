@@ -31,93 +31,95 @@ const LogoSVG: FC = () => {
   );
 };
 
-const Footer: FC = () => {
+const SlimlineFooter: FC = () => {
   return (
-    <Box
+    <Flex
       p={2}
       sx={{
+        flexDirection: ['column', 'row'],
+        justifyContent: ['center', 'space-between'],
         color: 'white',
         bg: 'black'
       }}
     >
-      <Flex
+      <Box sx={{width: '130px', flex: '0 1 auto'}}>
+        <Link
+          color="white"
+          title="New Front Door"
+          href="https://newfrontdoor.org"
+        >
+          <LogoSVG />
+        </Link>
+      </Box>
+      <Box sx={{fontSize: '12px', flex: '0 1 auto'}}>
+        Website built and maintained by{' '}
+        <Link
+          sx={{textDecoration: 'none'}}
+          color="white"
+          title="New Front Door"
+          href="https://newfrontdoor.org"
+        >
+          New Front Door
+        </Link>{' '}
+        © {new Date().getFullYear()}
+      </Box>
+
+      <Box
         sx={{
-          flexDirection: ['column', 'row']
+          flex: '0 1 auto'
         }}
       >
-        <Flex
+        <Link
           p={2}
-          sx={{
-            justifyContent: ['center', 'flex-start'],
-          }}
+          color="white"
+          title="Facebook"
+          href="https://www.facebook.com/NewFrontDoorIT/"
         >
-          <Box sx={{width: '200px'}}>
-            <LogoSVG />
-          </Box>
-        </Flex>
-        <Flex
-          sx={{
-            flex: 1,
-            justifyContent: ['center', 'flex-end']
-          }}
+          <FontAwesomeIcon icon={faFacebook} size="sm" />
+        </Link>
+        <Link
+          p={2}
+          color="white"
+          title="Vimeo"
+          href="https://vimeo.com/user114967320"
         >
-          <Link
-            p={2}
-            color="white"
-            title="Facebook"
-            href="https://www.facebook.com/NewFrontDoorIT/"
-          >
-            <FontAwesomeIcon icon={faFacebook} size="lg" />
-          </Link>
-          <Link
-            p={2}
-            color="white"
-            title="Vimeo"
-            href="https://vimeo.com/user114967320"
-          >
-            <FontAwesomeIcon icon={faVimeo} size="lg" />
-          </Link>
-          <Link
-            p={2}
-            color="white"
-            title="Contact us"
-            href="contactus@newfrontdoor.org"
-          >
-            <FontAwesomeIcon icon={faEnvelope} size="lg" />
-          </Link>
-          <Link
-            p={2}
-            color="white"
-            title="Twitter"
-            href="https://twitter.com/NewFrontDoorIT"
-          >
-            <FontAwesomeIcon icon={faTwitter} size="lg" />
-          </Link>
-          <Link
-            p={2}
-            color="white"
-            title="Github"
-            href="https://github.com/NewFrontDoor"
-          >
-            <FontAwesomeIcon icon={faGithub} size="lg" />
-          </Link>
-          <Link
-            p={2}
-            color="white"
-            title="Podcast"
-            href="https://podcasts.apple.com/au/podcast/new-front-door-the-church-it-guild/id1477414931"
-          >
-            <FontAwesomeIcon icon={faPodcast} size="lg" />
-          </Link>
-        </Flex>
-      </Flex>
-      <Box>
-        <Flex sx={{justifyContent: 'center', fontSize:'12px'}}>
-          <Box>Website built and maintained by <a href="https://newfrontdoor.org">New Front Door</a> © {new Date().getFullYear()}</Box>
-        </Flex>
+          <FontAwesomeIcon icon={faVimeo} size="sm" />
+        </Link>
+        <Link
+          p={2}
+          color="white"
+          title="Contact us"
+          href="contactus@newfrontdoor.org"
+        >
+          <FontAwesomeIcon icon={faEnvelope} size="sm" />
+        </Link>
+        <Link
+          p={2}
+          color="white"
+          title="Twitter"
+          href="https://twitter.com/NewFrontDoorIT"
+        >
+          <FontAwesomeIcon icon={faTwitter} size="sm" />
+        </Link>
+        <Link
+          p={2}
+          color="white"
+          title="Github"
+          href="https://github.com/NewFrontDoor"
+        >
+          <FontAwesomeIcon icon={faGithub} size="sm" />
+        </Link>
+        <Link
+          p={2}
+          color="white"
+          title="Podcast"
+          href="https://podcasts.apple.com/au/podcast/new-front-door-the-church-it-guild/id1477414931"
+        >
+          <FontAwesomeIcon icon={faPodcast} size="sm" />
+        </Link>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 
-export default Footer;
+export default SlimlineFooter;
