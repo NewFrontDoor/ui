@@ -4,7 +4,8 @@
   "description": "Common footer for all NFD sites",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
   },
   "author": "Andrew Gibb",
   "license": "MIT",
