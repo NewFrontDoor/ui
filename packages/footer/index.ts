@@ -1,2 +1,2 @@
+export {default as Slimline} from './src/slimline-footer';
 export * from './src/footer';
-export {slimline} from './src/slimline-footer';
