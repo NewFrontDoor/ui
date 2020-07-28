@@ -1,14 +1,14 @@
 /** @jsx jsx */
 import {jsx, Flex, Box, Image, Link} from 'theme-ui';
 import {FC} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEnvelope, faPodcast} from '@fortawesome/free-solid-svg-icons';
 import {
-  faFacebook,
-  faVimeo,
-  faTwitter,
-  faGithub
-} from '@fortawesome/free-brands-svg-icons';
+  FaEnvelope,
+  FaPodcast,
+  FaFacebook,
+  FaVimeo,
+  FaTwitter,
+  FaGithub
+} from 'react-icons/fa';
 
 const LogoSVG: FC = () => {
   return (
@@ -73,7 +73,7 @@ const Footer: FC = () => {
             title="Facebook"
             href="https://www.facebook.com/NewFrontDoorIT/"
           >
-            <FontAwesomeIcon icon={faFacebook} size="lg" />
+            <FaFacebook />
           </Link>
           <Link
             p={2}
@@ -81,7 +81,7 @@ const Footer: FC = () => {
             title="Vimeo"
             href="https://vimeo.com/user114967320"
           >
-            <FontAwesomeIcon icon={faVimeo} size="lg" />
+            <FaVimeo />
           </Link>
           <Link
             p={2}
@@ -89,7 +89,7 @@ const Footer: FC = () => {
             title="Contact us"
             href="contactus@newfrontdoor.org"
           >
-            <FontAwesomeIcon icon={faEnvelope} size="lg" />
+            <FaEnvelope />
           </Link>
           <Link
             p={2}
@@ -97,7 +97,7 @@ const Footer: FC = () => {
             title="Twitter"
             href="https://twitter.com/NewFrontDoorIT"
           >
-            <FontAwesomeIcon icon={faTwitter} size="lg" />
+            <FaTwitter />
           </Link>
           <Link
             p={2}
@@ -105,7 +105,7 @@ const Footer: FC = () => {
             title="Github"
             href="https://github.com/NewFrontDoor"
           >
-            <FontAwesomeIcon icon={faGithub} size="lg" />
+            <FaGithub />
           </Link>
           <Link
             p={2}
@@ -113,7 +113,7 @@ const Footer: FC = () => {
             title="Podcast"
             href="https://podcasts.apple.com/au/podcast/new-front-door-the-church-it-guild/id1477414931"
           >
-            <FontAwesomeIcon icon={faPodcast} size="lg" />
+            <FaPodcast />
           </Link>
         </Flex>
       </Flex>

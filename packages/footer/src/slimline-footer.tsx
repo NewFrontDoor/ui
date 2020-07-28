@@ -1,14 +1,14 @@
 /** @jsx jsx */
 import {jsx, Flex, Box, Image, Link} from 'theme-ui';
 import {FC} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEnvelope, faPodcast} from '@fortawesome/free-solid-svg-icons';
 import {
-  faFacebook,
-  faVimeo,
-  faTwitter,
-  faGithub
-} from '@fortawesome/free-brands-svg-icons';
+  FaEnvelope,
+  FaPodcast,
+  FaFacebook,
+  FaVimeo,
+  FaTwitter,
+  FaGithub
+} from 'react-icons/fa';
 
 const LogoSVG: FC = () => {
   return (
@@ -87,7 +87,7 @@ const SlimlineFooter: FC = () => {
           title="Facebook"
           href="https://www.facebook.com/NewFrontDoorIT/"
         >
-          <FontAwesomeIcon icon={faFacebook} size="sm" />
+          <FaFacebook />
         </Link>
         <Link
           p={2}
@@ -95,7 +95,7 @@ const SlimlineFooter: FC = () => {
           title="Vimeo"
           href="https://vimeo.com/user114967320"
         >
-          <FontAwesomeIcon icon={faVimeo} size="sm" />
+          <FaVimeo />
         </Link>
         <Link
           p={2}
@@ -103,7 +103,7 @@ const SlimlineFooter: FC = () => {
           title="Contact us"
           href="contactus@newfrontdoor.org"
         >
-          <FontAwesomeIcon icon={faEnvelope} size="sm" />
+          <FaEnvelope />
         </Link>
         <Link
           p={2}
@@ -111,7 +111,7 @@ const SlimlineFooter: FC = () => {
           title="Twitter"
           href="https://twitter.com/NewFrontDoorIT"
         >
-          <FontAwesomeIcon icon={faTwitter} size="sm" />
+          <FaTwitter />
         </Link>
         <Link
           p={2}
@@ -119,7 +119,7 @@ const SlimlineFooter: FC = () => {
           title="Github"
           href="https://github.com/NewFrontDoor"
         >
-          <FontAwesomeIcon icon={faGithub} size="sm" />
+          <FaGithub />
         </Link>
         <Link
           p={2}
@@ -127,7 +127,7 @@ const SlimlineFooter: FC = () => {
           title="Podcast"
           href="https://podcasts.apple.com/au/podcast/new-front-door-the-church-it-guild/id1477414931"
         >
-          <FontAwesomeIcon icon={faPodcast} size="sm" />
+          <FaPodcast />
         </Link>
       </Box>
     </Flex>

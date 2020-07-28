@@ -1,5 +1,5 @@
 import React, {FC, Fragment} from 'react';
-import Footer from '../src/footer';
+import {Footer} from '../src/footer';
 
 const FooterFixture: FC = () => {
   return (
