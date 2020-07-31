@@ -106,6 +106,7 @@ function getTimeAndDuration({playingTime, duration}: State): string {
 }
 
 function reducer(state: State, action: Action): State {
+  let src = state.src;
   let playingTime = state.playingTime;
 
   switch (action.type) {
@@ -120,13 +121,14 @@ function reducer(state: State, action: Action): State {
         status: 'paused'
       };
     case 'play':
-      if (action.src && action.src !== state.src) {
+      if (action.src && action.src !== src) {
         playingTime = 0;
+        src = encodeURI(action.src);
       }
 
       return {
         ...state,
-        src: action.src ?? state.src,
+        src,
         playingTime,
         status: 'play'
       };
@@ -201,9 +203,12 @@ type InitState = {
 };
 
 function init({initialSrc, isPlayOnLoad}: InitState): State {
+  const src = initialSrc ? encodeURI(initialSrc) : initialSrc;
+  const status = isPlayOnLoad ? 'play' : 'stopped';
+
   return {
-    src: initialSrc,
-    status: isPlayOnLoad ? 'play' : 'stopped',
+    src,
+    status,
     speed: 1,
     volume: 1,
     playingTime: 0,
