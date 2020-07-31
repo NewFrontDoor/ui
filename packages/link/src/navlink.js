@@ -1,6 +1,6 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx, Styled} from 'theme-ui';
 import PropTypes from 'prop-types';
-import {Styled} from 'theme-ui';
 import Link from './link';
 
 /** Navlink **/
