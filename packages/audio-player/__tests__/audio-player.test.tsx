@@ -15,3 +15,15 @@ test('Loads native audio player', async () => {
 
   expect(baseElement).toHaveTextContent(actual);
 });
+
+test('Encode src url once', async () => {
+  const srcWithSpace = 'https://www.exampe.com/examples/audio with spaces.mp3';
+
+  const {baseElement} = render(<AudioPlayer src={srcWithSpace} />);
+
+  const actual = encodeURI(srcWithSpace);
+
+  const audioElement = baseElement.querySelector('audio');
+
+  expect(audioElement).toHaveAttribute('src', actual);
+});
