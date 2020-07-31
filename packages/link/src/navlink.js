@@ -5,10 +5,10 @@ import Link from './link';
 
 /** Navlink **/
 // Basically just highlights on route and has a 'nav' variant prop
-const Navlink = ({href, active, children}) => {
+const Navlink = ({as, href, active, children}) => {
   return (
     <Styled.li>
-      <Link href={href} variant="nav" color={active ? 'active' : ''}>
+      <Link as={as} href={href} variant="nav" color={active ? 'active' : ''}>
         {children}
       </Link>
     </Styled.li>
