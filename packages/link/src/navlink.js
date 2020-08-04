@@ -16,12 +16,14 @@ const Navlink = ({as, href, active, children}) => {
 };
 
 Navlink.propTypes = {
+  as: PropTypes.string,
   active: PropTypes.bool,
   href: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired
 };
 
 Navlink.defaulProps = {
+  as: undefined,
   active: false
 };
 

@@ -4,7 +4,9 @@ import {render} from '@testing-library/react';
 import {Link} from '../src';
 
 function renderWithContext(children) {
-  const components = {a: props => <fake-link role="link" {...props} />};
+  const components = {
+    a: (props) => <fake-link role="link" {...props} />
+  };
   return render(
     <ThemeProvider components={components}>{children}</ThemeProvider>
   );
@@ -16,6 +18,7 @@ test('href is applied to the link', () => {
   const link = getByRole('link');
 
   expect(link).toHaveAttribute('href', href);
+  expect(link).not.toHaveAttribute('as');
 });
 
 test('children is applied to the link', () => {
@@ -25,6 +28,7 @@ test('children is applied to the link', () => {
   const link = getByRole('link');
 
   expect(link).toHaveTextContent('Welcome');
+  expect(link).not.toHaveAttribute('as');
 });
 
 test('isTargetBlank adds target and rel attributes to the link', () => {
@@ -35,20 +39,20 @@ test('isTargetBlank adds target and rel attributes to the link', () => {
 
   expect(link).toHaveAttribute('target', '_blank');
   expect(link).toHaveAttribute('rel', 'noreferrer noopener');
+  expect(link).not.toHaveAttribute('as');
 });
 
 test('it uses the Link component from ThemeProvider to render internal links', () => {
-  const {getByRole} = renderWithContext(
-    <Link isInternal href="/example/page" />
-  );
+  const {getByRole} = renderWithContext(<Link href="/example/page" />);
   const link = getByRole('link');
 
   expect(link).toHaveAttribute('href', '/example/page');
+  expect(link).not.toHaveAttribute('as');
 });
 
 test('href and as props are applied to internal links', () => {
   const {getByRole} = renderWithContext(
-    <Link isInternal href="/example/[slug]" as="/example/id" />
+    <Link href="/example/[slug]" as="/example/id" />
   );
   const link = getByRole('link');
 
@@ -57,9 +61,10 @@ test('href and as props are applied to internal links', () => {
 });
 
 test('does not render api urls as internal links', () => {
-  const {getByRole} = renderWithContext(<Link isInternal href="/api/user/1" />);
+  const {getByRole} = renderWithContext(<Link href="/api/user/1" />);
   const link = getByRole('link');
 
   expect(link).toHaveAttribute('href', '/api/user/1');
   expect(link).not.toHaveAttribute('isInternal');
+  expect(link).not.toHaveAttribute('as');
 });
