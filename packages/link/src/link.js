@@ -5,14 +5,16 @@ import PropTypes from 'prop-types';
 
 // TODO: const regex = /^(?!www\.|(?:http|ftp)s?:\/\/|[A-Za-z]:\\|\/\/|api|\/api).*/;
 
-const Link = props => {
+const Link = (props) => {
   const components = useMDXComponents();
   const AppLink = components.a;
 
-  const {as, href, isInternal, isTargetBlank, ...rest} = props;
+  const {as, href, isTargetBlank, ...rest} = props;
   const isNotApi = href && !href.startsWith('/api/');
+  const startsWithSlash = href?.startsWith('/');
+  const useAppLink = startsWithSlash && isNotApi;
 
-  if (href && isInternal && isNotApi) {
+  if (useAppLink) {
     return (
       <AppLink as={as} href={href} {...rest}>
         <ThemeUiLink {...rest} />
@@ -31,15 +33,13 @@ const Link = props => {
 Link.propTypes = {
   as: PropTypes.string,
   variant: PropTypes.string,
-  href: PropTypes.string,
-  isInternal: PropTypes.bool,
+  href: PropTypes.string.isRequired,
   isTargetBlank: PropTypes.bool,
   hasNoAnchor: PropTypes.bool
 };
 
 Link.defaultProps = {
-  as: undefined,
-  href: undefined
+  as: undefined
 };
 
 export default Link;

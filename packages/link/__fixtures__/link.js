@@ -5,11 +5,9 @@ const props = {
   href: 'https://www.newfrontdoor.org'
 };
 
-export default {
+const fixtures = {
   external: <Link {...props}>NEw FRont DOor</Link>,
-  internal: (
-    <Link isInternal href="sermons">
-      Link to /sermons
-    </Link>
-  )
+  internal: <Link href="sermons">Link to /sermons</Link>
 };
+
+export default fixtures;
