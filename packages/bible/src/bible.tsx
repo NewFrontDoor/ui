@@ -33,7 +33,7 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
   const {data, status, error} = useQuery([url, passage], fetchBible);
 
   if (error) {
-    return <p>{error}</p>;
+    return <p>Whoops! Could not find passage {passage}...</p>;
   }
 
   if (status === 'loading') {

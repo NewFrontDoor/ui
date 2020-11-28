@@ -7,7 +7,7 @@ import {CalendarEvent} from '../src/types';
 const client = {
   async fetchEvents(_date: string): Promise<CalendarEvent[]> {
     return Promise.resolve(
-      events.map(event => {
+      events.map((event) => {
         const startDate = new Date(event.start_date);
         const endDate = new Date(event.end_date);
         const startDateFormat = format(startDate, 'yyyy-MM-dd');

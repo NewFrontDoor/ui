@@ -1,5 +1,5 @@
 import React, {useContext, useReducer, Dispatch} from 'react';
-import {usePaginatedQuery} from 'react-query';
+import {usePaginatedQuery, QueryStatus} from 'react-query';
 import {
   addMonths,
   subMonths,
@@ -161,9 +161,7 @@ function init(calendarView: CalendarView): CalendarState {
   };
 }
 
-type Status = 'loading' | 'error' | 'success';
-
-type UseCalendarEvents = [CalendarData, Status, unknown, Dispatch<Action>];
+type UseCalendarEvents = [CalendarData, QueryStatus, unknown, Dispatch<Action>];
 
 export function useCalendarEvents(
   initialView: CalendarView,

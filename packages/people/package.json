@@ -19,7 +19,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "ky": "^0.20.0",
+    "ky": "^0.25.0",
     "prop-types": "^15.6.0",
     "react-global-configuration": "^1.3.0",
     "react-query": "^2.5.4"

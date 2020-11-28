@@ -18,7 +18,7 @@
     "theme-ui": "^0.3.1"
   },
   "dependencies": {
-    "ky": "^0.20.0",
+    "ky": "^0.25.0",
     "prop-types": "^15.6.2",
     "react-query": "^2.5.4"
   },

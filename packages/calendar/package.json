@@ -21,7 +21,7 @@
     "@reach/dialog": "^0.9.1",
     "@reach/visually-hidden": "^0.9.0",
     "date-fns": "^2.11.1",
-    "ky": "^0.20.0",
+    "ky": "^0.25.0",
     "lodash": "^4.17.19",
     "polished": "^3.3.0",
     "prop-types": "^15.6.0",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.1",
-    "faker": "^4.1.0"
+    "faker": "^5.1.0"
   },
   "xo": false
 }
