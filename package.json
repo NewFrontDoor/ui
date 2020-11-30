@@ -94,6 +94,7 @@
         "error",
         "element"
       ],
+      "@typescript-eslint/no-implicit-any-catch": "off",
       "import/no-unassigned-import": [
         "error",
         {
