@@ -4,7 +4,7 @@ module.exports = {
     '@babel/preset-react',
     '@babel/preset-typescript'
   ],
-  plugins: ['inline-react-svg'],
+  plugins: ['@babel/plugin-proposal-class-properties', 'inline-react-svg'],
   env: {
     test: {
       plugins: ['@babel/plugin-transform-runtime']
