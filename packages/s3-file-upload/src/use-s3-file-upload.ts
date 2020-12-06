@@ -19,7 +19,7 @@ async function getPresignedPostData(
   return ky.post(uploadUrl, {json}).json<PresignedPost>();
 }
 
-async function uploadFileToS3(
+async function uploadFileWithPresignedPostData(
   presignedPostData: PresignedPost,
   file: File
 ): Promise<unknown> {
@@ -39,26 +39,31 @@ async function checkS3(host: string, fileName: string): Promise<void> {
   return ky.head(fileName, {prefixUrl: host}).then(() => undefined);
 }
 
-async function uploadFile({
-  uploadUrl,
-  file
-}: {
+type UploadFileOptions = {
   uploadUrl: string;
   file: File;
-}): Promise<string> {
+};
+
+async function uploadFileToS3({
+  uploadUrl,
+  file
+}: UploadFileOptions): Promise<string> {
   const presignedPostData = await getPresignedPostData(uploadUrl, file);
-  await uploadFileToS3(presignedPostData, file);
+  await uploadFileWithPresignedPostData(presignedPostData, file);
   return presignedPostData.fields.key;
 }
 
-export function useS3FileUpload({
-  host,
-  initialFileName
-}: {
+type S3FileUploadOptions = {
   host: string;
   uploadUrl: string;
   initialFileName?: string;
-}) {
+};
+
+export function useS3FileUpload({
+  host,
+  uploadUrl,
+  initialFileName
+}: S3FileUploadOptions) {
   /**
    * Stores the file name of the uploaded file
    * Initialise with the current file name, if there is one
@@ -78,7 +83,7 @@ export function useS3FileUpload({
   /**
    * Start the upload process for a new file
    */
-  const [startFileUpload, fileUploadStatus] = useMutation(uploadFile, {
+  const [uploadFile, fileUploadStatus] = useMutation(uploadFileToS3, {
     /**
      * On success, store the file name of the new uploaded file
      */
@@ -92,13 +97,14 @@ export function useS3FileUpload({
   return {
     fileUrl,
     fileName,
-    startFileUpload,
+    async startFileUpload(file: File) {
+      return uploadFile({file, uploadUrl});
+    },
     checkS3Status,
     fileUploadStatus,
     isSuccess: checkS3Status.isSuccess,
     isLoading: checkS3Status.isLoading || fileUploadStatus.isLoading,
     isError: checkS3Status.isError || fileUploadStatus.isError,
-    isIdle: checkS3Status.isIdle && fileUploadStatus.isIdle,
-    uploadFile
+    isIdle: checkS3Status.isIdle && fileUploadStatus.isIdle
   };
 }
