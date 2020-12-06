@@ -55,10 +55,7 @@ export const S3Dropzone: FC<DropzoneProps> = ({
       accept: 'audio/*',
       onDrop(acceptedFiles) {
         const [firstFile] = acceptedFiles;
-        void startFileUpload({
-          uploadUrl,
-          file: firstFile
-        });
+        void startFileUpload(firstFile);
       }
     }
   );
