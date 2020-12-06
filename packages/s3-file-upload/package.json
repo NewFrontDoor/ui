@@ -18,7 +18,6 @@
     "theme-ui": "^0.3.1"
   },
   "dependencies": {
-    "@newfrontdoor/audio-player": "^0.3.1",
     "ky": "^0.25.0",
     "prop-types": "^15.6.2",
     "react-dropzone": "^11.2.4",

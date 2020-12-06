@@ -1,43 +1,8 @@
-import React, {useState, FC} from 'react';
+import React, {FC} from 'react';
 import PropTypes from 'prop-types';
-import ky from 'ky';
-import {useQuery, useMutation} from 'react-query';
-import {AudioPlayer} from '@newfrontdoor/audio-player';
 import {useDropzone} from 'react-dropzone';
 import {ScaleLoader} from 'react-spinners';
-
-type PresignedPost = {
-  url: string;
-  fields: {
-    [key: string]: string;
-    Policy: string;
-    'X-Amz-Signature': string;
-  };
-};
-
-async function getPresignedPostData(
-  uploadUrl: string,
-  {name, type}: File
-): Promise<PresignedPost> {
-  const json = {name, type};
-  return ky.post(uploadUrl, {json}).json<PresignedPost>();
-}
-
-async function uploadFileToS3(
-  presignedPostData: PresignedPost,
-  file: File
-): Promise<unknown> {
-  const formData = new FormData();
-
-  Object.keys(presignedPostData.fields).forEach((key) => {
-    formData.append(key, presignedPostData.fields[key]);
-  });
-
-  // Actual file has to be appended last.
-  formData.append('file', file);
-
-  return ky.post(presignedPostData.url, {body: formData});
-}
+import {useS3FileUpload} from './use-s3-file-upload';
 
 const baseStyle = {
   borderWidth: 2,
@@ -56,85 +21,23 @@ const rejectStyle = {
   backgroundColor: '#eee'
 };
 
-async function checkS3(host: string, fileName: string): Promise<void> {
-  return ky.head(fileName, {prefixUrl: host}).then(() => undefined);
-}
-
-async function uploadFile({
-  uploadUrl,
-  file
-}: {
-  uploadUrl: string;
-  file: File;
-}): Promise<string> {
-  const presignedPostData = await getPresignedPostData(uploadUrl, file);
-  await uploadFileToS3(presignedPostData, file);
-  return presignedPostData.fields.key;
-}
-
 type DropzoneProps = {
+  children: React.ReactElement;
   host: string;
   uploadUrl: string;
   title?: string;
   initialFileName?: string;
 };
 
-function useS3FileUpload({
-  host,
-  initialFileName
-}: {
-  host: string;
-  uploadUrl: string;
-  initialFileName?: string;
-}) {
-  /**
-   * Stores the file name of the uploaded file
-   * Initialise with the current file name, if there is one
-   */
-  const [fileName, setFile] = useState(initialFileName);
-
-  /**
-   * If there is a current file, check if it exists in S3
-   */
-  const checkS3Status = useQuery([host, fileName], checkS3, {
-    enabled: fileName,
-    retry: 4,
-    retryDelay: 4000,
-    refetchOnWindowFocus: false
-  });
-
-  /**
-   * Start the upload process for a new file
-   */
-  const [startFileUpload, fileUploadStatus] = useMutation(uploadFile, {
-    /**
-     * On success, store the file name of the new uploaded file
-     */
-    onSuccess(data) {
-      setFile(data);
-    }
-  });
-
-  return {
-    fileName,
-    startFileUpload,
-    checkS3Status,
-    fileUploadStatus,
-    isSuccess: checkS3Status.isSuccess,
-    isLoading: checkS3Status.isLoading || fileUploadStatus.isLoading,
-    isError: checkS3Status.isError || fileUploadStatus.isError,
-    isIdle: checkS3Status.isIdle && fileUploadStatus.isIdle,
-    uploadFile
-  };
-}
-
 export const S3Dropzone: FC<DropzoneProps> = ({
+  children,
   host,
   title,
   uploadUrl,
   initialFileName
 }) => {
   const {
+    fileUrl,
     fileName,
     isLoading,
     isError,
@@ -159,8 +62,6 @@ export const S3Dropzone: FC<DropzoneProps> = ({
       }
     }
   );
-
-  const fileUrl = fileName ? new URL(fileName, host) : null;
 
   let styles = {...baseStyle};
   styles = isDragActive ? {...styles, ...activeStyle} : styles;
@@ -196,16 +97,12 @@ export const S3Dropzone: FC<DropzoneProps> = ({
           </p>
         </div>
       )}
-      {isSuccess && fileUrl && (
-        <AudioPlayer
-          hasPlaybackspeed
-          hasBorder
-          isInvert={false}
-          highlight="#548BF4"
-          base="#ddd"
-          src={fileUrl.href}
-        />
-      )}
+      {isSuccess &&
+        fileUrl &&
+        React.cloneElement(children, {
+          title,
+          src: fileUrl.href
+        })}
       {isIdle && (
         <div style={styles} {...getRootProps()}>
           <input {...getInputProps()} />
@@ -234,6 +131,7 @@ export const S3Dropzone: FC<DropzoneProps> = ({
 };
 
 S3Dropzone.propTypes = {
+  children: PropTypes.element.isRequired,
   host: PropTypes.string.isRequired,
   title: PropTypes.string,
   uploadUrl: PropTypes.string.isRequired,
