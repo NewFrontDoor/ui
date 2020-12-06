@@ -32,8 +32,10 @@ make sure you run `yarn prepare` to ensure the changes have been bundled
 
 ### Publishing a package
 
-1. `cd packages/${package}`
-1. `npm version {patch/minor/major}`
-1. commit and push version change to master
-1. `yarn prepare`
-1. `npm publish`
+1. Create a branch with your changes
+1. From the root of the monorepo, run `yarn changeset` and follow the prompts
+1. Create a Pull Request with the generated changeset, and your changes
+1. Merge your Pull Request once the tests pass
+1. Once merged, the release workflow will start
+1. A "Version Packages" PR will be created from any unreleased changesets
+1. Once you're ready to release your changes, merge the "Version Packages" PR
