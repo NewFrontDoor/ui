@@ -100,7 +100,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
   return (
     <div sx={relative}>
       <EmblaCarousel htmlTagName="div">
-        <div style={{display: 'flex'}}>
+        <div data-testid="carousel-slides" style={{display: 'flex'}}>
           {Children.map(children, (slide, index) => (
             <div key={index} style={{position: 'relative', flex: '0 0 100%'}}>
               <div style={{position: 'relative'}}>{slide}</div>

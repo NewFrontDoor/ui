@@ -104,6 +104,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
 
   return (
     <div
+      data-testid="audio-player"
       tabIndex={0}
       sx={{
         padding: '0 10px',
@@ -119,7 +120,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
       onMouseUp={() => dispatch({type: 'stop-interaction'})}
       onKeyUp={() => dispatch({type: 'stop-interaction'})}
     >
-      <audio {...playerProps} />
+      <audio data-testid="audio" {...playerProps} />
       <Button
         disabled={typeof src === 'undefined'}
         background={isInvert ? '#222' : base}

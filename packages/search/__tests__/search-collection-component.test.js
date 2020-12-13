@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, fireEvent} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import {SearchCollection} from '../src';
 
 const headers = [
@@ -31,7 +31,7 @@ function setup() {
   const passSearchArray = jest.fn();
   const setSubset = jest.fn();
 
-  const utils = render(
+  render(
     <SearchCollection
       dataCollection={sermonData}
       headers={headers}
@@ -45,11 +45,10 @@ function setup() {
   );
 
   return {
-    ...utils,
     passSearchArray,
     setSubset,
-    searchbox: utils.getByLabelText('Filter talks:'),
-    checkbox: utils.getByLabelText('use inclusive mode')
+    searchbox: screen.getByLabelText('Filter talks:'),
+    checkbox: screen.getByLabelText('use inclusive mode')
   };
 }
 

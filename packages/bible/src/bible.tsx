@@ -41,7 +41,7 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
   }
 
   return (
-    <div sx={{color: 'text'}}>
+    <div data-testid="bible-text" sx={{color: 'text'}}>
       {(data ?? []).map(({bookname, chapter, text, title, verse}) => (
         <Fragment key={`${bookname}-${chapter}-${verse}`}>
           {title && (
