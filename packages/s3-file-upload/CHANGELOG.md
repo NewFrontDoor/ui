@@ -1,5 +1,11 @@
 # @newfrontdoor/s3-file-upload
 
+## 0.4.0
+
+### Minor Changes
+
+- 7180034: Use `ky/umd` to fix issues when building for sanity
+
 ## 0.3.0
 
 ### Minor Changes
