@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import PropTypes from 'prop-types';
 import {useDropzone} from 'react-dropzone';
 import {ScaleLoader} from 'react-spinners';
-import {useS3FileUpload} from './use-s3-file-upload';
+import {useS3FileUpload, UploadFileResult} from './use-s3-file-upload';
 
 const baseStyle = {
   borderWidth: 2,
@@ -21,20 +21,22 @@ const rejectStyle = {
   backgroundColor: '#eee'
 };
 
-type DropzoneProps = {
+type S3DropzoneProps = {
   children: React.ReactElement;
   host: string;
   uploadUrl: string;
   title?: string;
   initialFileName?: string;
+  onChange(result?: UploadFileResult): void;
 };
 
-export const S3Dropzone: FC<DropzoneProps> = ({
+export const S3Dropzone: FC<S3DropzoneProps> = ({
   children,
   host,
   title,
   uploadUrl,
-  initialFileName
+  initialFileName,
+  onChange
 }) => {
   const {
     fileUrl,
@@ -55,7 +57,7 @@ export const S3Dropzone: FC<DropzoneProps> = ({
       accept: 'audio/*',
       onDrop(acceptedFiles) {
         const [firstFile] = acceptedFiles;
-        void startFileUpload(firstFile);
+        void startFileUpload(firstFile).then((result) => onChange(result));
       }
     }
   );
@@ -65,7 +67,7 @@ export const S3Dropzone: FC<DropzoneProps> = ({
   styles = isDragReject ? {...styles, ...rejectStyle} : styles;
 
   return (
-    <div>
+    <div data-testid="s3-dropzone">
       <h2>{fileUrl ? title : 'Upload Audio'}</h2>
       {isError && (
         <div>
@@ -102,7 +104,7 @@ export const S3Dropzone: FC<DropzoneProps> = ({
         })}
       {isIdle && (
         <div style={styles} {...getRootProps()}>
-          <input {...getInputProps()} />
+          <input data-testid="drop-input" {...getInputProps()} />
           {isDragActive ? (
             <p>Drop the files here ...</p>
           ) : (
@@ -132,5 +134,6 @@ S3Dropzone.propTypes = {
   host: PropTypes.string.isRequired,
   title: PropTypes.string,
   uploadUrl: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   initialFileName: PropTypes.string
 };

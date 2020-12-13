@@ -27,13 +27,21 @@ The title of the uploaded file
 
 The name of the already uploaded file (`${host}/${initialFileName}`)
 
+#### `onChange`
+
+Called when a file is uploaded. Called with the result of the S3 file upload
+
+```
+type UploadFileResult = { key: string }
+```
+
 ### Usage
 
 ```js
 import {S3Dropzone} from '@newfrontdoor/s3-file-upload';
 import {AudioPlayer} from '@newfrontdoor/audio-player';
 
-<S3Dropzone host={host} uploadUrl={uploadUrl}>
+<S3Dropzone host={host} uploadUrl={uploadUrl} onChange={onChange}>
   <AudioPlayer />
 </S3Dropzone>
 ```
