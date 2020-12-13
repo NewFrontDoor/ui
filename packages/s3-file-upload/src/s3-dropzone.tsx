@@ -1,4 +1,6 @@
-import React, {FC} from 'react';
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
+import {cloneElement, FC} from 'react';
 import PropTypes from 'prop-types';
 import {useDropzone} from 'react-dropzone';
 import {ScaleLoader} from 'react-spinners';
@@ -98,7 +100,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
       )}
       {isSuccess &&
         fileUrl &&
-        React.cloneElement(children, {
+        cloneElement(children, {
           title,
           src: fileUrl.href
         })}
