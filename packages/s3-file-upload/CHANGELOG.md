@@ -1,5 +1,11 @@
 # @newfrontdoor/s3-file-upload
 
+## 0.4.1
+
+### Patch Changes
+
+- b55bf2f: Use theme-ui jsx
+
 ## 0.4.0
 
 ### Minor Changes
