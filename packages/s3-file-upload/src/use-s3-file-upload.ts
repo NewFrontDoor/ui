@@ -44,13 +44,18 @@ type UploadFileOptions = {
   file: File;
 };
 
+export type UploadFileResult = {
+  key: string;
+};
+
 async function uploadFileToS3({
   uploadUrl,
   file
-}: UploadFileOptions): Promise<string> {
+}: UploadFileOptions): Promise<UploadFileResult> {
   const presignedPostData = await getPresignedPostData(uploadUrl, file);
+  const {key} = presignedPostData.fields;
   await uploadFileWithPresignedPostData(presignedPostData, file);
-  return presignedPostData.fields.key;
+  return {key};
 }
 
 type S3FileUploadOptions = {
@@ -87,8 +92,8 @@ export function useS3FileUpload({
     /**
      * On success, store the file name of the new uploaded file
      */
-    onSuccess(data) {
-      setFile(data);
+    onSuccess({key}) {
+      setFile(key);
     }
   });
 

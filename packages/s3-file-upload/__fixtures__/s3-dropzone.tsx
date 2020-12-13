@@ -6,7 +6,11 @@ const uploadUrl = 'http://localhost:3000/api/sermon-upload';
 
 const fixtures = {
   EmptyDropzone: (
-    <S3Dropzone host={host} uploadUrl={uploadUrl}>
+    <S3Dropzone
+      host={host}
+      uploadUrl={uploadUrl}
+      onChange={(fileName) => console.log(fileName)}
+    >
       <audio controls />
     </S3Dropzone>
   ),
@@ -16,6 +20,7 @@ const fixtures = {
       uploadUrl={uploadUrl}
       title="Some Title"
       initialFileName="TKOk.b3v1T03IVQi-crossroads-july-22.mp3"
+      onChange={(fileName) => console.log(fileName)}
     >
       <audio controls />
     </S3Dropzone>
