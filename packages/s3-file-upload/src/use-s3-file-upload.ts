@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import ky from 'ky';
+import ky from 'ky/umd';
 import {useQuery, useMutation} from 'react-query';
 
 type PresignedPost = {

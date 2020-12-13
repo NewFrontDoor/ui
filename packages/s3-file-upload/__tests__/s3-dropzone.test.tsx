@@ -1,9 +1,9 @@
 import React from 'react';
-import ky from 'ky';
+import ky from 'ky/umd';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import {S3Dropzone} from '../src/s3-dropzone';
 
-jest.mock('ky', () => {
+jest.mock('ky/umd', () => {
   const fakeKy: Partial<typeof ky> = {};
 
   const fakePresignedPost = {
