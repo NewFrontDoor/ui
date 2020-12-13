@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 test('Loads and displays the passage', async () => {
-  const {baseElement, getByText, debug} = render(
+  const {baseElement, getByText} = render(
     <Bible url="https://labs.bible.org/api/" passage="Genesis 1:1" />
   );
 
