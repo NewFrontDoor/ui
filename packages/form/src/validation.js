@@ -11,7 +11,7 @@ const validation = (values, data, regexs) => {
   const errors = {};
 
   // Begin testing each field for errors
-  data.fields.forEach(field => {
+  data.fields.forEach((field) => {
     /* ***** */
     /* Setup */
     /* ***** */

@@ -30,49 +30,45 @@ type BibleProps = {
 };
 
 export const Bible: FC<BibleProps> = ({url, passage}) => {
-  const {data, status, error} = useQuery([url, passage], fetchBible);
+  const {data, isError, isLoading} = useQuery([url, passage], fetchBible);
 
-  if (error) {
+  if (isError) {
     return <p>Whoops! Could not find passage {passage}...</p>;
   }
 
-  if (status === 'loading') {
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  if (data && data.length > 0) {
-    return (
-      <div sx={{color: 'text'}}>
-        {data.map(({bookname, chapter, text, title, verse}) => (
-          <Fragment key={`${bookname}-${chapter}-${verse}`}>
-            {title && (
-              <h5
-                css={css`
-                  display: block;
-                `}
-              >
-                {/* eslint-disable-next-line react/no-danger */}
-                <span dangerouslySetInnerHTML={{__html: title}} />
-              </h5>
-            )}
-            <p>
-              <sup
-                css={css`
-                  vertical-align: top;
-                `}
-              >
-                {verse}{' '}
-              </sup>
+  return (
+    <div sx={{color: 'text'}}>
+      {(data ?? []).map(({bookname, chapter, text, title, verse}) => (
+        <Fragment key={`${bookname}-${chapter}-${verse}`}>
+          {title && (
+            <h5
+              css={css`
+                display: block;
+              `}
+            >
               {/* eslint-disable-next-line react/no-danger */}
-              <span dangerouslySetInnerHTML={{__html: text}} />
-            </p>
-          </Fragment>
-        ))}
-      </div>
-    );
-  }
-
-  return null;
+              <span dangerouslySetInnerHTML={{__html: title}} />
+            </h5>
+          )}
+          <p>
+            <sup
+              css={css`
+                vertical-align: top;
+              `}
+            >
+              {verse}{' '}
+            </sup>
+            {/* eslint-disable-next-line react/no-danger */}
+            <span dangerouslySetInnerHTML={{__html: text}} />
+          </p>
+        </Fragment>
+      ))}
+    </div>
+  );
 };
 
 Bible.propTypes = {

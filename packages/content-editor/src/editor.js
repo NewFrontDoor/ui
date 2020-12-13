@@ -16,20 +16,24 @@ const HOTKEYS = {
   'mod+`': 'code'
 };
 
-const LIST_TYPES = ['numbered-list', 'bulleted-list'];
+const LIST_TYPES = new Set(['numbered-list', 'bulleted-list']);
 
-export const PTEditor = props => {
+export const PTEditor = (props) => {
   const [value, setValue] = useState(props.initialValue);
-  const renderElement = useCallback(props => <Element {...props} />, []);
-  const renderLeaf = useCallback(props => <Leaf {...props} />, []);
+  const renderElement = useCallback((props) => <Element {...props} />, []);
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
     () => withLinks(withHistory(withReact(createEditor()))),
     []
   );
 
   return (
-    <>
-      <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+    <React.Fragment>
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={(value) => setValue(value)}
+      >
         <Toolbar>
           <LinkButton />
           <MarkButton format="bold" icon="format_bold" />
@@ -47,7 +51,7 @@ export const PTEditor = props => {
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           placeholder="Enter some rich text…"
-          onKeyDown={event => {
+          onKeyDown={(event) => {
             for (const hotkey in HOTKEYS) {
               if (isHotkey(hotkey, event)) {
                 event.preventDefault();
@@ -63,18 +67,18 @@ export const PTEditor = props => {
         <summary>Slate Doc</summary>
         <pre>{JSON.stringify(value, null, 2)}</pre>
       </details>
-    </>
+    </React.Fragment>
   );
 };
 
-const withLinks = editor => {
+const withLinks = (editor) => {
   const {insertData, insertText, isInline} = editor;
 
-  editor.isInline = element => {
+  editor.isInline = (element) => {
     return element.type === 'link' ? true : isInline(element);
   };
 
-  editor.insertText = text => {
+  editor.insertText = (text) => {
     if (text && isUrl(text)) {
       wrapLink(editor, text);
     } else {
@@ -82,7 +86,7 @@ const withLinks = editor => {
     }
   };
 
-  editor.insertData = data => {
+  editor.insertData = (data) => {
     const text = data.getData('text/plain');
 
     if (text && isUrl(text)) {
@@ -106,7 +110,7 @@ const LinkButton = () => {
   return (
     <Button
       active={isLinkActive(editor)}
-      onMouseDown={event => {
+      onMouseDown={(event) => {
         event.preventDefault();
         const url = window.prompt('Enter the URL of the link:');
         if (!url) return;
@@ -118,13 +122,13 @@ const LinkButton = () => {
   );
 };
 
-const isLinkActive = editor => {
-  const [link] = Editor.nodes(editor, {match: n => n.type === 'link'});
+const isLinkActive = (editor) => {
+  const [link] = Editor.nodes(editor, {match: (n) => n.type === 'link'});
   return Boolean(link);
 };
 
-const unwrapLink = editor => {
-  Transforms.unwrapNodes(editor, {match: n => n.type === 'link'});
+const unwrapLink = (editor) => {
+  Transforms.unwrapNodes(editor, {match: (n) => n.type === 'link'});
 };
 
 const wrapLink = (editor, url) => {
@@ -150,10 +154,10 @@ const wrapLink = (editor, url) => {
 
 const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(editor, format);
-  const isList = LIST_TYPES.includes(format);
+  const isList = LIST_TYPES.has(format);
 
   Transforms.unwrapNodes(editor, {
-    match: n => LIST_TYPES.includes(n.type),
+    match: (n) => LIST_TYPES.has(n.type),
     split: true
   });
 
@@ -179,7 +183,7 @@ const toggleMark = (editor, format) => {
 
 const isBlockActive = (editor, format) => {
   const [match] = Editor.nodes(editor, {
-    match: n => n.type === format
+    match: (n) => n.type === format
   });
 
   return Boolean(match);
@@ -246,7 +250,7 @@ const BlockButton = ({format, icon}) => {
   return (
     <Button
       active={isBlockActive(editor, format)}
-      onMouseDown={event => {
+      onMouseDown={(event) => {
         event.preventDefault();
         toggleBlock(editor, format);
       }}
@@ -261,7 +265,7 @@ const MarkButton = ({format, icon}) => {
   return (
     <Button
       active={isMarkActive(editor, format)}
-      onMouseDown={event => {
+      onMouseDown={(event) => {
         event.preventDefault();
         toggleMark(editor, format);
       }}

@@ -29,7 +29,7 @@ const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
             {childLabel} {index + 1}
           </h2>
         )}
-        {childFields.map(field => {
+        {childFields.map((field) => {
           return getVanillaFormField(field, form, name);
         })}
         <button type="button" onClick={() => fields.remove(index)}>
@@ -104,7 +104,7 @@ const getVanillaFormField = (field, form, name = '') => {
             <div key={field.id + field.label}>
               <label htmlFor={field.id}>{field.label}</label>
               <select id={field.id} {...input} {...otherProps}>
-                {field.values.map(value => (
+                {field.values.map((value) => (
                   <option key={value} value={value}>
                     {value}
                   </option>
@@ -119,7 +119,7 @@ const getVanillaFormField = (field, form, name = '') => {
       return (
         <fieldset key={field.id}>
           <legend>{field.label}</legend>
-          {field.values.map(value => (
+          {field.values.map((value) => (
             <div key={field.id + value}>
               <label key={value}>
                 <Field
@@ -159,7 +159,7 @@ const getVanillaFormField = (field, form, name = '') => {
           type="button"
           value="reset"
           id={field.id}
-          onClick={e => handleReset(e, form)}
+          onClick={(e) => handleReset(e, form)}
         >
           {field.label}
         </button>
@@ -211,7 +211,7 @@ const VanillaFormComponent = ({
               <p>{description}</p>
             )}
             <div>
-              {fields.map(field => {
+              {fields.map((field) => {
                 return getVanillaFormField(field, form);
               })}
               <button type="submit" disabled={submitting || pristine}>
@@ -222,9 +222,9 @@ const VanillaFormComponent = ({
         </form>
       )}
       validate={validationFn}
-      initialValues={fields.reduce((obj, field) => {
-        if (field.initialValue) obj[field.id] = field.initialValue;
-        return obj;
+      initialValues={fields.reduce((object, field) => {
+        if (field.initialValue) object[field.id] = field.initialValue;
+        return object;
       }, {})}
       onSubmit={submitForm}
     />

@@ -23,14 +23,12 @@
     "@mdx-js/react": "^1.6.6",
     "@styled-system/css": "^5.1.5",
     "@testing-library/jest-dom": "^5.3.0",
-    "@testing-library/react": "^10.0.1",
+    "@testing-library/react": "^11.2.2",
     "@types/faker": "^5.1.4",
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.149",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.27",
-    "@typescript-eslint/eslint-plugin": "^4.9.0",
-    "@typescript-eslint/parser": "^4.9.0",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.0.6",
     "babel-plugin-inline-react-svg": "^1.1.0",
@@ -39,15 +37,16 @@
     "del-cli": "^3.0.1",
     "eslint": "^7.14.0",
     "eslint-config-xo-react": "^0.23.0",
-    "eslint-config-xo-typescript": "^0.36.0",
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.0.4",
+    "eslint-plugin-testing-library": "^3.10.1",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.0.3",
     "jest": "^26.0.1",
     "jest-emotion": "^10.0.32",
     "microbundle": "^0.12.0",
+    "prettier": "^2.2.1",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
     "react-cosmos": "^5.0.11",
@@ -55,12 +54,12 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "style-loader": "^1.1.3",
-    "theme-ui": "^0.3.1",
+    "theme-ui": "0.3.1",
     "ts-jest": "^26.1.1",
     "ts-loader": "^8.0.0",
     "typescript": "^4.1.2",
     "webpack": "^4.7.0",
-    "xo": "^0.35.0"
+    "xo": "^0.36.1"
   },
   "eslint": {
     "settings": {
@@ -75,12 +74,14 @@
   "xo": {
     "extends": [
       "xo-react",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:testing-library/react"
     ],
     "prettier": true,
     "space": true,
     "plugins": [
-      "jest"
+      "jest",
+      "testing-library"
     ],
     "env": [
       "browser"
@@ -93,15 +94,7 @@
         "error",
         "element"
       ],
-      "@typescript-eslint/no-implicit-any-catch": "off",
-      "import/no-unassigned-import": [
-        "error",
-        {
-          "allow": [
-            "@reach/**/*.css"
-          ]
-        }
-      ]
+      "@typescript-eslint/no-implicit-any-catch": "off"
     }
   }
 }

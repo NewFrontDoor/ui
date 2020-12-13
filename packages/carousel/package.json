@@ -22,7 +22,7 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.0.1"
+    "@testing-library/react": "^11.2.2"
   },
   "xo": false
 }

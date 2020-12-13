@@ -10,7 +10,7 @@ afterEach(() => {
 
 async function setup(): Promise<RenderResult> {
   const client = {
-    fetchEvents() {
+    async fetchEvents() {
       return Promise.resolve([]);
     }
   };

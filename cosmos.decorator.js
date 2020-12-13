@@ -36,6 +36,6 @@ Link.propTypes = {
 
 const components = {a: Link};
 
-export default props => {
+export default (props) => {
   return <ThemeProvider theme={theme} components={components} {...props} />;
 };

@@ -95,7 +95,7 @@ export default function Form({title, description, contents}) {
       .addSlide('TITLE_SLIDE')
       .addText('A Charge To Keep I Have', {placeholder: 'title'})
       .addText('Rejoice 464', {placeholder: 'hymnNumber'});
-    contents.map(para =>
+    contents.map((para) =>
       pptx.addSlide('LYRIC_SLIDE').addText(para.body, {placeholder: 'body'})
     );
     pptx.writeFile('react-demo.pptx');

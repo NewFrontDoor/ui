@@ -9,7 +9,7 @@ const Blog = (props) => {
     <div>
       {posts
         .filter((post) => {
-          if (category && Object.keys(category).length !== 0) {
+          if (category && Object.keys(category).length > 0) {
             return post.categories.map((a) => a.title).includes(category);
           }
 

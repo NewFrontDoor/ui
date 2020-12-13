@@ -39,7 +39,7 @@ export function buildEvent(currentDate: Date): CalendarEvent {
 }
 
 const client = {
-  fetchEvents(date: string) {
+  async fetchEvents(date: string) {
     const currentDate = parseISO(date);
 
     const events = Array.from({length: 50})

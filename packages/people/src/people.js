@@ -13,7 +13,7 @@ const People = ({people, title, email}) => {
           </strong>
         </p>
         <br />
-        {people.map(person => {
+        {people.map((person) => {
           return (
             <Person
               key={person.name + title}

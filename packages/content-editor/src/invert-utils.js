@@ -1,10 +1,16 @@
 export function toSlate(content) {
-  const standardMarks = ['strong', 'code', 'em', 'underline', 'strike-through'];
+  const standardMarks = new Set([
+    'strong',
+    'code',
+    'em',
+    'underline',
+    'strike-through'
+  ]);
 
-  return content.map(block => {
+  return content.map((block) => {
     let defsKey;
     if (block.markDefs) {
-      defsKey = block.markDefs.map(def => def._key);
+      defsKey = block.markDefs.map((def) => def._key);
     }
 
     return {
@@ -18,13 +24,13 @@ export function toSlate(content) {
       ...(block.listItem === 'number' && {type: 'numbered-list'}),
       ...(block.listItem === 'bullet' && {type: 'bulleted-list'}),
       ...(block.markDefs ? '' : ''),
-      children: block.children.map(item => {
-        if (item.marks.some(r => defsKey.includes(r))) {
+      children: block.children.map((item) => {
+        if (item.marks.some((r) => defsKey.includes(r))) {
           const customMarks = item.marks.filter(
-            item => !standardMarks.includes(item)
+            (item) => !standardMarks.has(item)
           );
-          const inherentMarks = item.marks.filter(item =>
-            standardMarks.includes(item)
+          const inherentMarks = item.marks.filter((item) =>
+            standardMarks.has(item)
           );
           // Const definition = block.markDefs.filter(r => r._key === )
           return {
@@ -44,18 +50,18 @@ export function toSlate(content) {
 }
 
 function spreadMarks(marks) {
-  const obj = {};
+  const object = {};
   if (marks.includes('strong')) {
-    obj.bold = true;
+    object.bold = true;
   }
 
   if (marks.includes('code')) {
-    obj.code = true;
+    object.code = true;
   }
 
   if (marks.includes('em')) {
-    obj.italic = true;
+    object.italic = true;
   }
 
-  return obj;
+  return object;
 }

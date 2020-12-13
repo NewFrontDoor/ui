@@ -1,7 +1,7 @@
 import {Node} from 'slate';
 export function toPortableText(nodes) {
   return nodes
-    .map(node => ({
+    .map((node) => ({
       _type: 'block',
       markDefs: findMarkDefs(node),
       ...(node.type === 'block-quote' && {style: 'blockquote'}),
@@ -12,7 +12,7 @@ export function toPortableText(nodes) {
       ...(node.type === 'heading-three' && {style: 'h3'}),
       ...(node.type === 'heading-four' && {style: 'h4'}),
       ...(node.type === 'heading-five' && {style: 'h5'}),
-      children: node.children.map(span => ({
+      children: node.children.map((span) => ({
         _type: 'span',
         text: Node.string(span),
         marks: findMark(span)

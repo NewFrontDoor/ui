@@ -10,7 +10,7 @@ const Root = styled('td')(({theme}) => ({
   padding: theme.space_stack_sm + ' ' + theme.space_inline_md
 }));
 
-const CustomCell = React.memo(props => {
+const CustomCell = React.memo((props) => {
   return (
     <Root {...props}>
       <a href={props.children} target="_blank" rel="noopener noreferrer">
@@ -44,9 +44,9 @@ const Table = ({data}) => {
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
           </tr>
@@ -57,7 +57,7 @@ const Table = ({data}) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
+              {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
               })}
             </tr>

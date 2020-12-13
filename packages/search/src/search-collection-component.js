@@ -19,7 +19,7 @@ const SearchCollection = ({
   const [isInclusive, setIsInclusive] = useState(false);
   const [debouncedCallback] = useDebouncedCallback(
     // Function
-    value => {
+    (value) => {
       setSearchString(value);
     },
     // Delay in ms
@@ -27,13 +27,13 @@ const SearchCollection = ({
   );
 
   useEffect(() => {
-    const searchParams = {
+    const searchParameters = {
       searchString,
       isInclusive
     };
-    passSearchArray(searchArray(searchParams));
+    passSearchArray(searchArray(searchParameters));
     const subset = searchData(
-      searchParams,
+      searchParameters,
       dataCollection,
       fields,
       returnEmptySubset
@@ -57,7 +57,7 @@ const SearchCollection = ({
         id="searchBox"
         name="searchBox"
         disabled={!dataCollection}
-        onChange={e => debouncedCallback(e.target.value)}
+        onChange={(e) => debouncedCallback(e.target.value)}
       />
       <Label htmlFor="isInclusive">{labels.checkbox} </Label>
       <input
@@ -66,7 +66,7 @@ const SearchCollection = ({
         name="isInclusive"
         checked={isInclusive}
         disabled={!dataCollection}
-        onChange={e => {
+        onChange={(e) => {
           setIsInclusive(e.target.checked);
         }}
       />

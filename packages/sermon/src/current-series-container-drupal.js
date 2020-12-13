@@ -17,7 +17,7 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
 
   componentDidMount() {
     this.getCurrentSeries()
-      .then(response => {
+      .then((response) => {
         // This transform could moved out into generic (Drupal => NFD) component structure for sermon series
         const series = response[0];
         this.setState({
@@ -30,7 +30,7 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
           loading: false
         });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           error
         });
@@ -53,7 +53,7 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
   }
 }
 
-export default function() {
+export default function () {
   return (
     <ApiContext.Consumer>
       {({baseUrl}) => <CurrentSeriesContainerDrupal baseUrl={baseUrl} />}

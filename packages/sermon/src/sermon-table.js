@@ -13,13 +13,13 @@ const SermonTable = ({
   passedSx
 }) => {
   const desiredColumns = headers
-    .map(item => item.key)
-    .filter(word => word !== titleKey);
+    .map((item) => item.key)
+    .filter((word) => word !== titleKey);
   return (
     <Styled.table sx={passedSx}>
       <thead>
         <Styled.tr>
-          {headers.map(column => (
+          {headers.map((column) => (
             <Styled.th
               key={column.key}
               sx={{
@@ -33,12 +33,12 @@ const SermonTable = ({
         </Styled.tr>
       </thead>
       <tbody>
-        {sermons.map(sermon => (
+        {sermons.map((sermon) => (
           <Styled.tr key={sermon.nid}>
             <Styled.td>
               {renderLink(sermonDirectory, sermon.slug, sermon[titleKey])}
             </Styled.td>
-            {desiredColumns.map(item => (
+            {desiredColumns.map((item) => (
               <Styled.td
                 key={sermon.nid + item}
                 sx={{

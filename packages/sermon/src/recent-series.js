@@ -11,7 +11,9 @@ const RecentSeries = ({loading, seriesData, style}) => {
       <Styled.h2>Recent Series</Styled.h2>
       <PulseLoader loading={loading} size={20} />
       {loading ||
-        seriesData.map(item => <RenderSeriesComponent key={item} {...item} />)}
+        seriesData.map((item) => (
+          <RenderSeriesComponent key={item} {...item} />
+        ))}
     </section>
   );
 };

@@ -23,7 +23,7 @@
   "xo": false,
   "devDependencies": {
     "@mdx-js/react": "^1.6.6",
-    "@testing-library/react": "^10.0.1",
+    "@testing-library/react": "^11.2.2",
     "jest-emotion": "^10.0.32"
   }
 }

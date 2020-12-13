@@ -30,7 +30,7 @@ export const Button = React.forwardRef(
 export const EditorValue = React.forwardRef(
   ({className, value, ...props}, ref) => {
     const textLines = value.document.nodes
-      .map(node => node.text)
+      .map((node) => node.text)
       .toArray()
       .join('\n');
     return (
