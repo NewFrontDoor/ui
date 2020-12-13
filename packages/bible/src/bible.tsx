@@ -2,7 +2,7 @@
 import {jsx, css} from 'theme-ui';
 import {FC, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import ky from 'ky';
+import ky from 'ky/umd';
 import {useQuery} from 'react-query';
 
 type BibleResult = {

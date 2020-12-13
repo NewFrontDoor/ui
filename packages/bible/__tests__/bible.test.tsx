@@ -7,7 +7,7 @@ import {
 import {queryCache} from 'react-query';
 import {Bible} from '../src';
 
-jest.mock('ky', () => {
+jest.mock('ky/umd', () => {
   return {
     __esModule: true,
     default: jest.fn().mockImplementation(() => ({
