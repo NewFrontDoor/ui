@@ -1,5 +1,11 @@
 # @newfrontdoor/s3-file-upload
 
+## 0.4.2
+
+### Patch Changes
+
+- f8bc4d1: Decode fileUrl when adding it as a prop to children
+
 ## 0.4.1
 
 ### Patch Changes
