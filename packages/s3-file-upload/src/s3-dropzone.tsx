@@ -102,7 +102,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
         fileUrl &&
         cloneElement(children, {
           title,
-          src: fileUrl.href
+          src: decodeURI(fileUrl.href)
         })}
       {isIdle && (
         <div style={styles} {...getRootProps()}>
