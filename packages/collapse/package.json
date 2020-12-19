@@ -1,0 +1,27 @@
+{
+  "name": "@newfrontdoor/collapse",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.2"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.2.2",
+    "@types/resize-observer-browser": "^0.1.4"
+  },
+  "xo": false
+}
