@@ -1,5 +1,11 @@
 # @newfrontdoor/collapse
 
+## 0.2.1
+
+### Patch Changes
+
+- 2428c6c: Unset styles when isDisabled
+
 ## 0.2.0
 
 ### Minor Changes
