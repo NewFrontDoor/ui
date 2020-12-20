@@ -42,11 +42,11 @@ type PanelProps = {
 };
 
 export const Panel = ({children}: PanelProps) => {
-  const {getContentProps, getCollapseProps} = useCollapseContext();
+  const {contentRef, getCollapseProps} = useCollapseContext();
 
   return (
     <div {...getCollapseProps()}>
-      <div {...getContentProps()}>{children}</div>
+      <div ref={contentRef}>{children}</div>
     </div>
   );
 };

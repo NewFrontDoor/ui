@@ -31,7 +31,7 @@ import {useRef} from 'react';
 import {useCollapse} from '@newfrontdoor/collapse';
 
 const contentRef = useRef(null);
-const {getToggleProps, getContentProps, getCollapseProps} = useCollapse({
+const {getToggleProps, getCollapseProps} = useCollapse({
   contentRef
 });
 
@@ -41,7 +41,7 @@ return (
       Toggle Me
     </button>
     <div {...getCollapseProps()}>
-      <div {...getContentProps()}>
+      <div ref={contentRef}>
         Collapse Content
       </div>
     </div>

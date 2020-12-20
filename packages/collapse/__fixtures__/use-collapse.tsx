@@ -1,9 +1,14 @@
 import React, {useRef} from 'react';
 import {useCollapse} from '../src';
 
-const CollapseFixture = () => {
+type CollapseFixtureProps = {
+  initiallyExpanded?: boolean;
+};
+
+const CollapseFixture = ({initiallyExpanded}: CollapseFixtureProps) => {
   const contentRef = useRef(null);
-  const {getToggleProps, getContentProps, getCollapseProps} = useCollapse({
+  const {getToggleProps, getCollapseProps} = useCollapse({
+    initiallyExpanded,
     contentRef
   });
 
@@ -13,7 +18,7 @@ const CollapseFixture = () => {
         Toggle Me
       </button>
       <div {...getCollapseProps()}>
-        <div {...getContentProps()}>
+        <div ref={contentRef}>
           {Array.from({length: 10}, (_, key) => (
             <div
               key={key}
@@ -29,7 +34,8 @@ const CollapseFixture = () => {
 };
 
 const fixtures = {
-  useCollapse: <CollapseFixture />
+  useCollapse: <CollapseFixture />,
+  defaultExpanded: <CollapseFixture initiallyExpanded />
 };
 
 export default fixtures;

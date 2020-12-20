@@ -56,14 +56,11 @@ function calculateStyles({
   };
 }
 
-export type CollapseState<T> = {
+export type CollapseState<T extends Element> = {
+  contentRef: RefObject<T>;
   getCollapseProps: () => {
     style: CSSProperties;
     onTransitionEnd(event: TransitionEvent): void;
-  };
-  getContentProps: () => {
-    style: CSSProperties;
-    ref: RefObject<T>;
   };
   getToggleProps: () => {
     type: string;
@@ -79,13 +76,15 @@ export type UseCollapseOptions<T> = {
   easing?: string;
   initiallyExpanded?: boolean;
   contentRef: RefObject<T>;
+  isDisabled?: boolean;
 };
 
 export function useCollapse<T extends Element>({
   duration = 250,
   easing = 'ease-out',
   initiallyExpanded,
-  contentRef
+  contentRef,
+  isDisabled
 }: UseCollapseOptions<T>): CollapseState<T> {
   const [isExpanded, setExpanded] = useState(initiallyExpanded ?? false);
   const [styles, setStyles] = useState<CSSProperties>({
@@ -108,6 +107,7 @@ export function useCollapse<T extends Element>({
             duration,
             easing,
             isExpanded,
+            isDisabled,
             contentHeight: height
           })
         );
@@ -124,10 +124,7 @@ export function useCollapse<T extends Element>({
   }, [contentRef, duration, easing, isExpanded]);
 
   function handleTransitionEnd(event: TransitionEvent) {
-    if (
-      event.target === contentRef.current &&
-      event.propertyName === 'height'
-    ) {
+    if (event.propertyName === 'max-height') {
       setStyles((oldStyles) => ({
         ...oldStyles,
         overflow: isExpanded ? 'visible' : 'hidden'
@@ -142,30 +139,23 @@ export function useCollapse<T extends Element>({
     };
   }
 
-  function getContentProps() {
-    const flexGrow = isExpanded ? 1 : 0;
-    return {
-      ref: contentRef,
-      style: {
-        flexGrow,
-        transition: `flex-grow ${duration}ms ${easing}`
-      }
-    };
-  }
-
   function getToggleProps() {
     return {
       type: 'button',
       role: 'button',
       onClick() {
         setExpanded((expanded) => !expanded);
+        setStyles((oldStyles) => ({
+          ...oldStyles,
+          overflow: 'hidden'
+        }));
       }
     };
   }
 
   return {
+    contentRef,
     getCollapseProps,
-    getContentProps,
     getToggleProps,
     isExpanded,
     setExpanded
