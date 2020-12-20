@@ -79,6 +79,8 @@ export type UseCollapseOptions<T> = {
   isDisabled?: boolean;
 };
 
+const disabledStyles = {overflow: 'unset', maxHeight: 'unset'};
+
 export function useCollapse<T extends Element>({
   duration = 250,
   easing = 'ease-out',
@@ -121,20 +123,38 @@ export function useCollapse<T extends Element>({
     return () => {
       resizeObserver.disconnect();
     };
-  }, [contentRef, duration, easing, isExpanded]);
+  }, [contentRef, duration, easing, isExpanded, isDisabled]);
 
   function handleTransitionEnd(event: TransitionEvent) {
     if (event.propertyName === 'max-height') {
+      setStyles((oldStyles) => {
+        if (isDisabled) {
+          return {...oldStyles, ...disabledStyles};
+        }
+
+        return {
+          ...oldStyles,
+          overflow: isExpanded ? 'visible' : 'hidden'
+        };
+      });
+    }
+  }
+
+  function handleClick() {
+    if (!isDisabled) {
+      setExpanded((expanded) => !expanded);
       setStyles((oldStyles) => ({
         ...oldStyles,
-        overflow: isExpanded ? 'visible' : 'hidden'
+        overflow: 'hidden'
       }));
     }
   }
 
   function getCollapseProps() {
+    const collapseStyles = isDisabled ? {...styles, ...disabledStyles} : styles;
+
     return {
-      style: styles,
+      style: collapseStyles,
       onTransitionEnd: handleTransitionEnd
     };
   }
@@ -143,13 +163,7 @@ export function useCollapse<T extends Element>({
     return {
       type: 'button',
       role: 'button',
-      onClick() {
-        setExpanded((expanded) => !expanded);
-        setStyles((oldStyles) => ({
-          ...oldStyles,
-          overflow: 'hidden'
-        }));
-      }
+      onClick: handleClick
     };
   }
 

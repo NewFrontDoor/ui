@@ -25,7 +25,7 @@ const CollapseFixture = () => {
 
 type CollapseDisabledFixtureProps = Pick<
   UseCollapseOptions<HTMLDivElement>,
-  'isDisabled' | 'initiallyExpanded'
+  'isDisabled'
 >;
 
 const CollapseDisabledFixture = (props: CollapseDisabledFixtureProps) => {
@@ -67,7 +67,7 @@ const NestedCollapse = () => {
 
 const fixtures = {
   collapse: <CollapseFixture />,
-  disabled: <CollapseDisabledFixture isDisabled initiallyExpanded />,
+  disabled: <CollapseDisabledFixture isDisabled />,
   nestedCollapse: <NestedCollapse />,
   manyCollapseFixture: (
     <React.Fragment>
