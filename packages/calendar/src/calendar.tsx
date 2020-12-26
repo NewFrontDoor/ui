@@ -52,7 +52,7 @@ const Calendar: FC<CalendarProps> = ({
                 display: 'grid',
                 gridTemplateColumns: '50px repeat(7, 1fr)',
                 gridTemplateRows: '1fr',
-                gridGap: '0rem',
+                gap: '0rem',
                 alignItems: 'center',
                 textAlign: 'center',
                 fontWeight: '500',
@@ -95,7 +95,7 @@ const Calendar: FC<CalendarProps> = ({
 
 Calendar.propTypes = {
   initialView: PropTypes.oneOf(calendarViews).isRequired,
-  client: PropTypes.exact({fetchEvents: PropTypes.func.isRequired}).isRequired,
+  client: PropTypes.shape({fetchEvents: PropTypes.func.isRequired}).isRequired,
   isViewFixed: PropTypes.bool,
   handleNav: PropTypes.func
 };

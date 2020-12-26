@@ -1,4 +1,6 @@
-import React, {
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
+import {
   cloneElement,
   createContext,
   useContext,

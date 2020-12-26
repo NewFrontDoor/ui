@@ -13,22 +13,6 @@ import {useEmblaCarousel} from 'embla-carousel-react';
 import {jsx} from 'theme-ui';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
-const dots = {
-  position: 'absolute',
-  marginTop: '1rem',
-  display: 'flex',
-  listStyle: 'none',
-  paddingLeft: '0',
-  justifyContent: 'center',
-  left: '0',
-  right: '0',
-  top: '90%'
-};
-
-const relative = {
-  position: 'relative'
-};
-
 type CallbackFunction = () => void;
 
 function useInterval(callback: CallbackFunction, delay?: number): void {
@@ -98,7 +82,11 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
   }, [embla]);
 
   return (
-    <div sx={relative}>
+    <div
+      sx={{
+        position: 'relative'
+      }}
+    >
       <EmblaCarousel htmlTagName="div">
         <div data-testid="carousel-slides" style={{display: 'flex'}}>
           {Children.map(children, (slide, index) => (
@@ -108,7 +96,20 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
           ))}
         </div>
       </EmblaCarousel>
-      <div id="dots" sx={dots}>
+      <div
+        id="dots"
+        sx={{
+          position: 'absolute',
+          marginTop: '1rem',
+          display: 'flex',
+          listStyle: 'none',
+          paddingLeft: '0',
+          justifyContent: 'center',
+          left: '0',
+          right: '0',
+          top: '90%'
+        }}
+      >
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}

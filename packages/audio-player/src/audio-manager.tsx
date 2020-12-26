@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {jsx, Button} from 'theme-ui';
+import {jsx, Button, ButtonProps} from 'theme-ui';
 import PropTypes from 'prop-types';
 import {FC, HTMLProps, ReactNode} from 'react';
 import {MdPlayArrow as Play, MdPause as Pause} from 'react-icons/md';
@@ -40,10 +40,8 @@ AudioManager.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-type PlayButtonProps = HTMLProps<HTMLButtonElement> & {
+type PlayButtonProps = ButtonProps & {
   src: string;
-  variant?: string;
-  children?: ReactNode;
 };
 
 export const PlayButton: FC<PlayButtonProps> = ({src, children, ...props}) => {

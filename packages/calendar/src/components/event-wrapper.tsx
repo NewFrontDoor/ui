@@ -61,7 +61,7 @@ const EventWrapper: FC<EventWrapper> = ({event, handleNav}) => {
             display: 'grid',
             gridTemplateColumns: '1fr 100px 100px',
             gridTemplateRows: 'auto',
-            gridGap: '20px'
+            gap: '20px'
           }}
         >
           <Button

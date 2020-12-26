@@ -14,7 +14,8 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "theme-ui": "^0.3.1"
   },
   "dependencies": {
     "prop-types": "^15.6.2"

@@ -1,3 +1,4 @@
+import {css} from 'theme-ui';
 import {
   useState,
   useEffect,
@@ -9,7 +10,7 @@ import {
   TransitionEvent
 } from 'react';
 
-type CalculateStyleOptions = Pick<CSSProperties, 'overflow'> & {
+type CalculateStyleOptions = Required<Pick<CSSProperties, 'overflow'>> & {
   duration: number;
   easing: string;
   isExpanded?: boolean;
@@ -19,6 +20,10 @@ type CalculateStyleOptions = Pick<CSSProperties, 'overflow'> & {
   initiallyExpanded?: boolean;
 };
 
+type CalculatedStyles = Required<
+  Pick<CSSProperties, 'overflow' | 'transition' | 'maxHeight'>
+>;
+
 function calculateStyles({
   duration,
   easing,
@@ -27,7 +32,7 @@ function calculateStyles({
   expandedHeight,
   isDisabled,
   overflow
-}: CalculateStyleOptions): CSSProperties {
+}: CalculateStyleOptions): CalculatedStyles {
   let maxHeight;
 
   if (isExpanded) {
@@ -43,10 +48,7 @@ function calculateStyles({
     maxHeight = '0';
   }
 
-  if (typeof maxHeight !== 'undefined') {
-    // Use the pixel value when maxHeight is defined
-    maxHeight = `${maxHeight}px`;
-  }
+  maxHeight = typeof maxHeight === 'undefined' ? 'unset' : `${maxHeight}px`;
 
   return {
     overflow,
@@ -59,7 +61,7 @@ function calculateStyles({
 export type CollapseState<T extends Element> = {
   contentRef: RefObject<T>;
   getCollapseProps: () => {
-    style: CSSProperties;
+    css: ReturnType<typeof css>;
     onTransitionEnd(event: TransitionEvent): void;
   };
   getToggleProps: () => {
@@ -76,22 +78,24 @@ export type UseCollapseOptions<T> = {
   easing?: string;
   initiallyExpanded?: boolean;
   contentRef: RefObject<T>;
-  isDisabled?: boolean;
+  isDisabled?: boolean | boolean[];
 };
-
-const disabledStyles = {overflow: 'unset', maxHeight: 'unset'};
 
 export function useCollapse<T extends Element>({
   duration = 250,
   easing = 'ease-out',
   initiallyExpanded,
   contentRef,
-  isDisabled
+  ...props
 }: UseCollapseOptions<T>): CollapseState<T> {
+  const isDisabled = Array.isArray(props.isDisabled)
+    ? props.isDisabled
+    : [props.isDisabled ?? false];
   const [isExpanded, setExpanded] = useState(initiallyExpanded ?? false);
-  const [styles, setStyles] = useState<CSSProperties>({
+  const [styles, setStyles] = useState<CalculatedStyles>({
+    transition: `max-height ${duration}ms ${easing}`,
     overflow: isExpanded ? 'visible' : 'hidden',
-    maxHeight: isExpanded ? undefined : '0px'
+    maxHeight: isExpanded ? 'unset' : '0px'
   });
 
   useEffect(() => {
@@ -109,7 +113,6 @@ export function useCollapse<T extends Element>({
             duration,
             easing,
             isExpanded,
-            isDisabled,
             contentHeight: height
           })
         );
@@ -123,38 +126,38 @@ export function useCollapse<T extends Element>({
     return () => {
       resizeObserver.disconnect();
     };
-  }, [contentRef, duration, easing, isExpanded, isDisabled]);
+  }, [contentRef, duration, easing, isExpanded]);
 
   function handleTransitionEnd(event: TransitionEvent) {
     if (event.propertyName === 'max-height') {
-      setStyles((oldStyles) => {
-        if (isDisabled) {
-          return {...oldStyles, ...disabledStyles};
-        }
-
-        return {
-          ...oldStyles,
-          overflow: isExpanded ? 'visible' : 'hidden'
-        };
-      });
-    }
-  }
-
-  function handleClick() {
-    if (!isDisabled) {
-      setExpanded((expanded) => !expanded);
       setStyles((oldStyles) => ({
         ...oldStyles,
-        overflow: 'hidden'
+        overflow: isExpanded ? 'visible' : 'hidden'
       }));
     }
   }
 
+  function handleClick() {
+    setExpanded((expanded) => !expanded);
+    setStyles((oldStyles) => ({
+      ...oldStyles,
+      overflow: 'hidden'
+    }));
+  }
+
   function getCollapseProps() {
-    const collapseStyles = isDisabled ? {...styles, ...disabledStyles} : styles;
+    const collapseStyles = {
+      ...styles,
+      overflow: isDisabled.map((expand) =>
+        expand ? 'unset' : styles.overflow
+      ),
+      maxHeight: isDisabled.map((expand) =>
+        expand ? 'unset' : styles.maxHeight
+      )
+    };
 
     return {
-      style: collapseStyles,
+      css: css(collapseStyles),
       onTransitionEnd: handleTransitionEnd
     };
   }

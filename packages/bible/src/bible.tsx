@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {jsx, css} from 'theme-ui';
+import {jsx} from 'theme-ui';
 import {FC, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import ky from 'ky/umd';
@@ -46,9 +46,9 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
         <Fragment key={`${bookname}-${chapter}-${verse}`}>
           {title && (
             <h5
-              css={css`
-                display: block;
-              `}
+              sx={{
+                display: 'block'
+              }}
             >
               {/* eslint-disable-next-line react/no-danger */}
               <span dangerouslySetInnerHTML={{__html: title}} />
@@ -56,9 +56,9 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
           )}
           <p>
             <sup
-              css={css`
-                vertical-align: top;
-              `}
+              sx={{
+                verticalAlign: 'top'
+              }}
             >
               {verse}{' '}
             </sup>
