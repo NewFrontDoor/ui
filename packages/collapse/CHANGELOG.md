@@ -1,5 +1,11 @@
 # @newfrontdoor/collapse
 
+## 0.2.2
+
+### Patch Changes
+
+- ce7324c: Use theme-ui jsx
+
 ## 0.2.1
 
 ### Patch Changes
