@@ -1,5 +1,11 @@
 # @newfrontdoor/s3-file-upload
 
+## 0.4.3
+
+### Patch Changes
+
+- 82e0a10: Disable default timeout for file uploads
+
 ## 0.4.2
 
 ### Patch Changes
