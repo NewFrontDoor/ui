@@ -32,7 +32,7 @@ async function uploadFileWithPresignedPostData(
   // Actual file has to be appended last.
   formData.append('file', file);
 
-  return ky.post(presignedPostData.url, {body: formData});
+  return ky.post(presignedPostData.url, {timeout: false, body: formData});
 }
 
 async function checkS3(host: string, fileName: string): Promise<void> {
