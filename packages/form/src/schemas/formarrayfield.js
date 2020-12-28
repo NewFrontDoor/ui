@@ -1,4 +1,4 @@
-export default {
+const formarrayfield = {
   name: 'formarrayfield',
   title: 'Sub-form Object',
   type: 'document',
@@ -57,3 +57,5 @@ export default {
     input: 'field-array'
   }
 };
+
+export default formarrayfield;
