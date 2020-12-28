@@ -1,4 +1,4 @@
-export default {
+const formfield = {
   name: 'formfield',
   title: 'Field',
   type: 'document',
@@ -131,3 +131,5 @@ export default {
     }
   }
 };
+
+export default formfield;

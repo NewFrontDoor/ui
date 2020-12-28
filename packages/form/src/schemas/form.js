@@ -1,4 +1,4 @@
-export default {
+const form = {
   name: 'form',
   title: 'Form',
   type: 'document',
@@ -49,3 +49,5 @@ export default {
     }
   ]
 };
+
+export default form;

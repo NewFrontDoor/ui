@@ -1,10 +1,11 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Form, Field, useField} from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import {FieldArray} from 'react-final-form-arrays';
-import PropTypes from 'prop-types';
+import {useId} from '@reach/auto-id';
 import {
   Label,
   Textarea,
@@ -24,6 +25,7 @@ const Error = ({name}) => {
   const {
     meta: {touched, error}
   } = useField(name, {subscription: {touched: true, error: true}});
+
   return touched && error ? (
     <Text variant="warning" mb={2}>
       {error}
@@ -40,18 +42,33 @@ const handleReset = (event, form) => {
   form.reset();
 };
 
-const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
+const NestedForm = ({
+  id,
+  childFields,
+  form,
+  childLabel,
+  name,
+  fields,
+  index
+}) => {
   return (
-    <div key={name} sx={{gridColumn: '1/3'}}>
+    <div sx={{gridColumn: '1/3'}}>
       <fieldset sx={{display: 'contents'}}>
         {childLabel && (
-          <Styled.h4>
-            {childLabel} {index + 1}
-          </Styled.h4>
+          <legend>
+            <Styled.h4>
+              {childLabel} {index + 1}
+            </Styled.h4>
+          </legend>
         )}
-        {childFields.map((field) => {
-          return getFormField(field, form, name);
-        })}
+        {childFields?.map((field) => (
+          <FormField
+            key={`${id}-${field.id}`}
+            field={field}
+            form={form}
+            name={name}
+          />
+        ))}
         <Button type="button" onClick={() => fields.remove(index)}>
           Remove
         </Button>
@@ -61,33 +78,32 @@ const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
 };
 
 NestedForm.propTypes = {
+  id: PropTypes.string.isRequired,
   childFields: PropTypes.array.isRequired,
   form: PropTypes.any,
   name: PropTypes.string.isRequired,
   childLabel: PropTypes.string,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired
 };
 
-const getFormField = (field, form, blockText, name = '') => {
+const FormField = ({field, form, blockText, name = ''}) => {
+  const fieldId = useId();
+  const fieldName = name + field.id;
   const {push, pop} = form.mutators;
-  const width = field.styling && field.styling.fullWidth ? '1/3' : null;
+  const width = field.styling?.fullWidth ? '1/3' : null;
   // This is a hack while Sanity doesn't enable initial values on array-level items
   if (field.childFields) field.input = 'field-array';
 
   switch (field.input) {
     case 'textarea':
       return (
-        <Field
-          key={field.id}
-          name={name + field.id}
-          placeholder={field.placeholder}
-        >
+        <Field name={fieldName} placeholder={field.placeholder}>
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label} sx={{gridColumn: '1/3'}}>
-              <Label htmlFor={field.id}>{field.label}</Label>
-              <Textarea id={field.id} {...input} {...otherProps} rows="8" />
-              <Error name={name + field.id} />
+            <div sx={{gridColumn: '1/3'}}>
+              <Label htmlFor={fieldId}>{field.label}</Label>
+              <Textarea id={fieldId} {...input} {...otherProps} rows={8} />
+              <Error name={fieldName} />
             </div>
           )}
         </Field>
@@ -106,23 +122,24 @@ const getFormField = (field, form, blockText, name = '') => {
               <Button
                 type="button"
                 sx={{width: '35%'}}
-                onClick={() => push(name + field.id, undefined)}
+                onClick={() => push(fieldName, undefined)}
               >
                 Add
               </Button>
               <Button
                 type="button"
                 sx={{width: '35%'}}
-                onClick={() => pop(name + field.id, undefined)}
+                onClick={() => pop(fieldName, undefined)}
               >
                 Remove
               </Button>
             </div>
-            <FieldArray name={name + field.id}>
+            <FieldArray name={fieldName}>
               {({fields}) =>
                 fields.map((name, index) => (
                   <NestedForm
-                    key={name + field.id}
+                    key={name}
+                    id={fieldId}
                     childLabel={field.childLabel}
                     name={name}
                     form={form}
@@ -138,30 +155,29 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     case 'select':
       return (
-        <Field key={field.id} name={name + field.id}>
+        <Field name={fieldName}>
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label} sx={{gridColumn: width}}>
-              <Label htmlFor={field.id}>{field.label}</Label>
-              <Select id={field.id} {...input} {...otherProps}>
-                {field.values.map((value) => (
-                  <option key={field.id + value} value={value}>
+            <div sx={{gridColumn: width}}>
+              <Label htmlFor={fieldId}>{field.label}</Label>
+              <Select id={fieldId} {...input} {...otherProps}>
+                {field.values?.map((value) => (
+                  <option key={`${fieldName}-${value}`} value={value}>
                     {value}
                   </option>
                 ))}
               </Select>
-              <Error name={name + field.id} />
+              <Error name={fieldName} />
             </div>
           )}
         </Field>
       );
     case 'radio':
       return (
-        <fieldset key={field.id} sx={{gridColumn: width}}>
+        <fieldset sx={{gridColumn: width}}>
           <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
-          {field.values.map((value) => (
-            <div key={field.id + value}>
+          {field.values?.map((value) => (
+            <div key={`${fieldName}-${value}`}>
               <label
-                key={value}
                 sx={{
                   boxSizing: 'border-box',
                   minWidth: '0px',
@@ -170,7 +186,7 @@ const getFormField = (field, form, blockText, name = '') => {
                   margin: '0px'
                 }}
               >
-                <Field name={name + field.id} type="radio" value={value}>
+                <Field name={fieldName} type="radio" value={value}>
                   {({input, ...otherProps}) => (
                     <Radio {...input} {...otherProps} />
                   )}
@@ -185,12 +201,11 @@ const getFormField = (field, form, blockText, name = '') => {
       return (
         <React.Fragment>
           {field.label && field.values && field.values.length > 0 ? (
-            <fieldset key={field.id} sx={{gridColumn: width}}>
+            <fieldset sx={{gridColumn: width}}>
               <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
               {field.values.map((value) => (
-                <div key={field.id + value}>
+                <div key={`${fieldName}-${value}`}>
                   <label
-                    key={value}
                     sx={{
                       boxSizing: 'border-box',
                       minWidth: '0px',
@@ -199,7 +214,7 @@ const getFormField = (field, form, blockText, name = '') => {
                       margin: '0px'
                     }}
                   >
-                    <Field name={name + field.id} value={value}>
+                    <Field name={fieldName} value={value} type="checkbox">
                       {({input, ...otherProps}) => (
                         <Checkbox {...input} {...otherProps} />
                       )}
@@ -210,15 +225,15 @@ const getFormField = (field, form, blockText, name = '') => {
               ))}
             </fieldset>
           ) : (
-            <div key={field.id + field.label} sx={{gridColumn: width}}>
+            <div sx={{gridColumn: width}}>
               <Label sx={{display: 'inline-block'}}>
-                <Field key={field.id} name={name + field.id}>
+                <Field name={fieldName} type="checkbox">
                   {({input, ...otherProps}) => (
                     <Checkbox {...input} {...otherProps} />
                   )}
                 </Field>
                 {field.label}
-                <Error name={name + field.id} />
+                <Error name={fieldName} />
               </Label>
             </div>
           )}
@@ -229,7 +244,7 @@ const getFormField = (field, form, blockText, name = '') => {
         <Button
           sx={{gridColumn: width}}
           type={field.input}
-          id={field.id}
+          id={fieldId}
           onClick={(event) => handleReset(event, form)}
         >
           {field.label}
@@ -237,29 +252,32 @@ const getFormField = (field, form, blockText, name = '') => {
       );
     default:
       return (
-        <Field
-          key={name + field.id}
-          name={name + field.id}
-          placeholder={field.placeholder}
-        >
+        <Field name={fieldName} placeholder={field.placeholder}>
           {({input, ...otherProps}) => (
-            <div key={field.id + field.label} sx={{gridColumn: width}}>
-              <Label htmlFor={field.id} required={field.required}>
+            <div sx={{gridColumn: width}}>
+              <Label htmlFor={fieldId}>
                 {field.label}
                 {field.required && <strong>*</strong>}
               </Label>
               <Input
                 type={field.input}
-                id={field.id}
+                id={fieldId}
                 {...input}
                 {...otherProps}
               />
-              <Error name={name + field.id} />
+              <Error name={fieldName} />
             </div>
           )}
         </Field>
       );
   }
+};
+
+FormField.propTypes = {
+  field: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  blockText: PropTypes.node,
+  name: PropTypes.string
 };
 
 const FormComponent = ({
@@ -276,7 +294,7 @@ const FormComponent = ({
     return <Styled.p>{content}</Styled.p>;
   };
 
-  const block = blockText || defaultTextHandler;
+  const block = blockText ?? defaultTextHandler;
 
   return (
     <Form
@@ -303,9 +321,14 @@ const FormComponent = ({
               {title && <Styled.h2>{title}</Styled.h2>}
               {description && block(description)}
               <Grid gap={20} columns={['1fr 1fr']}>
-                {fields.map((field) => {
-                  return getFormField(field, form, block);
-                })}
+                {fields.map((field) => (
+                  <FormField
+                    key={`${field.id}-${id}`}
+                    field={field}
+                    form={form}
+                    blockText={blockText}
+                  />
+                ))}
                 <Button
                   sx={{gridColumn: '1/3'}}
                   type="submit"
@@ -340,4 +363,3 @@ FormComponent.propTypes = {
 };
 
 export default FormComponent;
-export {getFormField};

@@ -3,7 +3,9 @@ import {Form, validation} from '../src';
 
 const Success = () => (
   <div>
-    <p>Thanks for your submission. We'll get back to you as soon as we can.</p>
+    <p>
+      Thanks for your submission. We&apos;ll get back to you as soon as we can.
+    </p>
   </div>
 );
 
@@ -32,7 +34,7 @@ const props = {
         placeholder: '04********'
       },
       {
-        id: 'opt',
+        id: 'opt-1',
         input: 'radio',
         label: 'Options',
         required: false,
@@ -41,14 +43,14 @@ const props = {
         initialValue: 'second'
       },
       {
-        id: 'opt2',
+        id: 'opt-2',
         input: 'select',
         label: 'More options',
         required: false,
         values: ['Select1', 'Select2', 'Select3']
       },
       {
-        id: 'opt3',
+        id: 'opt-3',
         input: 'checkbox',
         label: 'Options',
         required: false,
@@ -56,7 +58,7 @@ const props = {
         length: 3
       },
       {
-        id: 'opt4',
+        id: 'opt-4',
         input: 'checkbox',
         label: 'Single choice',
         required: false
@@ -69,12 +71,12 @@ const props = {
         placeholder: 'Do you find it well?'
       },
       {
-        id: 'reset',
+        id: 'reset-1',
         input: 'reset',
         label: 'Reset me!'
       },
       {
-        id: 'reset',
+        id: 'reset-2',
         input: 'reset',
         label: 'Reset me again!'
       },
