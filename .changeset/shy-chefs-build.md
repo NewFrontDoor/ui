@@ -1,0 +1,12 @@
+---
+"@newfrontdoor/bible": major
+"@newfrontdoor/calendar": major
+"@newfrontdoor/people": major
+"@newfrontdoor/s3-file-upload": major
+"@newfrontdoor/sermon": major
+---
+
+Update dependencies
+
+- [`ky@0.26.0`](https://github.com/sindresorhus/ky/releases/tag/v0.26.0)
+- [`react-query@3.0.0`](https://react-query.tanstack.com/guides/migrating-to-react-query-3)

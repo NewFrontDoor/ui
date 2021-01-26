@@ -4,10 +4,10 @@ import {
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import {queryCache} from 'react-query';
+import {QueryClient, QueryClientProvider} from 'react-query';
 import {Bible} from '../src';
 
-jest.mock('ky/umd', () => {
+jest.mock('ky', () => {
   return {
     __esModule: true,
     default: jest.fn().mockImplementation(() => ({
@@ -25,12 +25,14 @@ jest.mock('ky/umd', () => {
   };
 });
 
-afterEach(() => {
-  queryCache.clear();
-});
-
 test('Loads and displays the passage', async () => {
-  render(<Bible url="https://labs.bible.org/api/" passage="Genesis 1:1" />);
+  const queryClient = new QueryClient();
+
+  render(
+    <QueryClientProvider client={queryClient}>
+      <Bible url="https://labs.bible.org/api/" passage="Genesis 1:1" />
+    </QueryClientProvider>
+  );
 
   const actual =
     'The Creation of the World1 In the beginning God created the heavens and the earth.';

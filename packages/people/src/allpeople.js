@@ -4,12 +4,12 @@ import ky from 'ky';
 import {useQuery} from 'react-query';
 import People from './people';
 
-async function fetchPeople(apiUrl) {
-  return ky(apiUrl).json();
+function usePeople(url) {
+  return useQuery(url, () => ky(url).json());
 }
 
 const AllPeople = ({groups, apiUrl}) => {
-  const {status, data, error} = useQuery(apiUrl, fetchPeople);
+  const {status, data, error} = usePeople(apiUrl);
   if (error) {
     return <div>Error: {error.message}</div>;
   }

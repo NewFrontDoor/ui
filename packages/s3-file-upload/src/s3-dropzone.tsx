@@ -23,7 +23,7 @@ const rejectStyle = {
   backgroundColor: '#eee'
 };
 
-type S3DropzoneProps = {
+export type S3DropzoneProps = {
   children: React.ReactElement;
   host: string;
   uploadUrl: string;
@@ -59,7 +59,9 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
       accept: 'audio/*',
       onDrop(acceptedFiles) {
         const [firstFile] = acceptedFiles;
-        void startFileUpload(firstFile).then((result) => onChange(result));
+        void startFileUpload(firstFile).then((result) => {
+          onChange(result);
+        });
       }
     }
   );

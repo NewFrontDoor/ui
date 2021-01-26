@@ -1,9 +1,11 @@
 import React from 'react';
-import ky from 'ky/umd';
+import {Except} from 'type-fest';
+import ky from 'ky';
+import {QueryClient, QueryClientProvider} from 'react-query';
 import {act, fireEvent, render, screen} from '@testing-library/react';
-import {S3Dropzone} from '../src/s3-dropzone';
+import {S3Dropzone, S3DropzoneProps} from '../src/s3-dropzone';
 
-jest.mock('ky/umd', () => {
+jest.mock('ky', () => {
   const fakeKy: Partial<typeof ky> = {};
 
   const fakePresignedPost = {
@@ -28,20 +30,39 @@ jest.mock('ky/umd', () => {
   };
 });
 
-const FakeChild = (props: unknown) => (
-  <span data-testid="fake-child" {...props} />
-);
+function setup({
+  host,
+  uploadUrl,
+  title,
+  initialFileName,
+  onChange
+}: Except<S3DropzoneProps, 'children'>) {
+  const queryClient = new QueryClient();
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <S3Dropzone
+        host={host}
+        uploadUrl={uploadUrl}
+        title={title}
+        initialFileName={initialFileName}
+        onChange={onChange}
+      >
+        <span data-testid="fake-child" />
+      </S3Dropzone>
+    </QueryClientProvider>
+  );
+}
 
 test('it renders a dropzone', async () => {
   const host = 'https://sermons.examplechurch.org';
   const uploadUrl = 'https://www.examplechurch.org/api/sermon-upload';
   const onChange = jest.fn();
 
-  render(
-    <S3Dropzone host={host} uploadUrl={uploadUrl} onChange={onChange}>
-      <FakeChild />
-    </S3Dropzone>
-  );
+  setup({
+    host,
+    uploadUrl,
+    onChange
+  });
 
   expect(screen.getByTestId('s3-dropzone')).toHaveTextContent(
     [
@@ -60,11 +81,11 @@ test('it upload files to S3', async () => {
   const onChange = jest.fn();
   const fileName = 'abc-123-some-sermon.mp3';
 
-  render(
-    <S3Dropzone host={host} uploadUrl={uploadUrl} onChange={onChange}>
-      <FakeChild />
-    </S3Dropzone>
-  );
+  setup({
+    host,
+    uploadUrl,
+    onChange
+  });
 
   const inputElement = screen.getByTestId('drop-input');
 
@@ -99,17 +120,13 @@ test('it renders children with the src of the initial file', async () => {
   const title = 'Some Sermon';
   const initialFileName = 'abc-123-some-sermon.mp3';
 
-  render(
-    <S3Dropzone
-      host={host}
-      uploadUrl={uploadUrl}
-      title={title}
-      initialFileName={initialFileName}
-      onChange={onChange}
-    >
-      <FakeChild />
-    </S3Dropzone>
-  );
+  setup({
+    host,
+    uploadUrl,
+    title,
+    initialFileName,
+    onChange
+  });
 
   const fakeChild = await screen.findByTestId('fake-child');
 

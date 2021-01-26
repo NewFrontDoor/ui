@@ -1,12 +1,8 @@
 import React from 'react';
+import {QueryClient, QueryClientProvider} from 'react-query';
 import {render, fireEvent, screen, RenderResult} from '@testing-library/react';
 import {format, subMonths, subYears, addMonths, addYears} from 'date-fns';
-import {queryCache} from 'react-query';
 import {Calendar} from '../src';
-
-afterEach(() => {
-  queryCache.clear();
-});
 
 jest.mock('ky', () => {
   return {
@@ -15,26 +11,35 @@ jest.mock('ky', () => {
   };
 });
 
-async function setup(): Promise<RenderResult> {
+function setup(queryClient: QueryClient): RenderResult {
   const client = {
     async fetchEvents() {
       return Promise.resolve([]);
     }
   };
 
-  return render(<Calendar initialView="month" client={client} />);
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <Calendar initialView="month" client={client} />
+    </QueryClientProvider>
+  );
 }
 
 test('Loads and displays todays date', async () => {
-  await setup();
+  const queryClient = new QueryClient();
+
+  setup(queryClient);
 
   const actual = format(new Date(), 'MMMM - yyyy');
   const title = await screen.findByTestId('calendar-title');
   expect(title).toHaveTextContent(actual);
+
+  queryClient.clear();
 });
 
 test('Can navigate to the previous month and year', async () => {
-  await setup();
+  const queryClient = new QueryClient();
+  setup(queryClient);
 
   const previousMonthButton = await screen.findByLabelText('previous month');
   expect(previousMonthButton).toBeInTheDocument();
@@ -52,10 +57,13 @@ test('Can navigate to the previous month and year', async () => {
   const previousYear = subYears(previousMonth, 1);
 
   expect(title).toHaveTextContent(format(previousYear, 'MMMM - yyyy'));
+
+  queryClient.clear();
 });
 
 test('Can navigate to the next month and year', async () => {
-  await setup();
+  const queryClient = new QueryClient();
+  setup(queryClient);
 
   const nextMonthButton = await screen.findByLabelText('next month');
   expect(nextMonthButton).toBeInTheDocument();
@@ -73,4 +81,6 @@ test('Can navigate to the next month and year', async () => {
   const nextYear = addYears(nextMonth, 1);
 
   expect(title).toHaveTextContent(format(nextYear, 'MMMM - yyyy'));
+
+  queryClient.clear();
 });

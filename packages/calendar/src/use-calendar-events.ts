@@ -1,5 +1,5 @@
 import React, {useContext, useReducer, Dispatch} from 'react';
-import {usePaginatedQuery, QueryStatus} from 'react-query';
+import {useQuery, QueryStatus} from 'react-query';
 import {
   addMonths,
   subMonths,
@@ -173,17 +173,19 @@ export function useCalendarEvents(
     init
   );
 
-  const {
-    resolvedData,
-    status,
-    error
-  } = usePaginatedQuery(currentDate.toISOString(), async (date: string) =>
-    client.fetchEvents(date)
+  const currentISODate = currentDate.toISOString();
+
+  const {data, status, error} = useQuery(
+    currentISODate,
+    async () => client.fetchEvents(currentISODate),
+    {
+      keepPreviousData: true
+    }
   );
 
   const calendarData = buildCalendarData(
     {calendarView, currentDate},
-    resolvedData ?? []
+    data ?? []
   );
 
   return [calendarData, status, error, dispatch];

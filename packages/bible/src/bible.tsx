@@ -2,7 +2,7 @@
 import {jsx} from 'theme-ui';
 import {FC, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import ky from 'ky/umd';
+import ky from 'ky';
 import {useQuery} from 'react-query';
 
 type BibleResult = {
@@ -13,24 +13,26 @@ type BibleResult = {
   verse: string;
 };
 
-async function fetchBible(url: string, passage: string) {
-  return ky(url, {
-    searchParams: {
-      passage,
-      type: 'json'
-    },
-    mode: 'cors',
-    credentials: 'omit'
-  }).json<BibleResult[]>();
-}
-
 type BibleProps = {
   url: string;
   passage: string;
 };
 
+function useBible(url: string, passage: string) {
+  return useQuery([url, passage], async () =>
+    ky(url, {
+      searchParams: {
+        passage,
+        type: 'json'
+      },
+      mode: 'cors',
+      credentials: 'omit'
+    }).json<BibleResult[]>()
+  );
+}
+
 export const Bible: FC<BibleProps> = ({url, passage}) => {
-  const {data, isError, isLoading} = useQuery([url, passage], fetchBible);
+  const {data, isError, isLoading} = useBible(url, passage);
 
   if (isError) {
     return <p>Whoops! Could not find passage {passage}...</p>;

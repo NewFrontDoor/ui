@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import ky from 'ky/umd';
+import ky from 'ky';
 import {useQuery, useMutation} from 'react-query';
 
 type PresignedPost = {
@@ -35,8 +35,18 @@ async function uploadFileWithPresignedPostData(
   return ky.post(presignedPostData.url, {timeout: false, body: formData});
 }
 
-async function checkS3(host: string, fileName: string): Promise<void> {
-  return ky.head(fileName, {prefixUrl: host}).then(() => undefined);
+function useS3Check(host: string, fileName?: string) {
+  return useQuery(
+    [host, fileName],
+    async () =>
+      ky.head(String(fileName), {prefixUrl: host}).then(() => undefined),
+    {
+      enabled: Boolean(fileName),
+      retry: 4,
+      retryDelay: 4000,
+      refetchOnWindowFocus: false
+    }
+  );
 }
 
 type UploadFileOptions = {
@@ -78,17 +88,12 @@ export function useS3FileUpload({
   /**
    * If there is a current file, check if it exists in S3
    */
-  const checkS3Status = useQuery([host, fileName], checkS3, {
-    enabled: fileName,
-    retry: 4,
-    retryDelay: 4000,
-    refetchOnWindowFocus: false
-  });
+  const checkS3Status = useS3Check(host, fileName);
 
   /**
    * Start the upload process for a new file
    */
-  const [uploadFile, fileUploadStatus] = useMutation(uploadFileToS3, {
+  const uploadFileResult = useMutation(uploadFileToS3, {
     /**
      * On success, store the file name of the new uploaded file
      */
@@ -103,13 +108,13 @@ export function useS3FileUpload({
     fileUrl,
     fileName,
     async startFileUpload(file: File) {
-      return uploadFile({file, uploadUrl});
+      return uploadFileResult.mutateAsync({file, uploadUrl});
     },
     checkS3Status,
-    fileUploadStatus,
+    fileUploadStatus: uploadFileResult,
     isSuccess: checkS3Status.isSuccess,
-    isLoading: checkS3Status.isLoading || fileUploadStatus.isLoading,
-    isError: checkS3Status.isError || fileUploadStatus.isError,
-    isIdle: checkS3Status.isIdle && fileUploadStatus.isIdle
+    isLoading: checkS3Status.isLoading || uploadFileResult.isLoading,
+    isError: checkS3Status.isError || uploadFileResult.isError,
+    isIdle: checkS3Status.isIdle && uploadFileResult.isIdle
   };
 }
