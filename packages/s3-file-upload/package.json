@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/s3-file-upload",
-  "version": "0.4.3",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
