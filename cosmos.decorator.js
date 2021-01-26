@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ThemeProvider} from 'theme-ui';
+import {QueryClient, QueryClientProvider} from 'react-query';
 import theme from './cosmos/theme';
 
 function pageLookup(href) {
@@ -36,6 +37,13 @@ Link.propTypes = {
 
 const components = {a: Link};
 
-export default (props) => {
-  return <ThemeProvider theme={theme} components={components} {...props} />;
+const decorator = (props) => {
+  const client = new QueryClient();
+  return (
+    <QueryClientProvider client={client}>
+      <ThemeProvider theme={theme} components={components} {...props} />
+    </QueryClientProvider>
+  );
 };
+
+export default decorator;

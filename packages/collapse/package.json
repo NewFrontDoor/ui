@@ -21,8 +21,8 @@
     "prop-types": "^15.6.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.2",
-    "@types/resize-observer-browser": "^0.1.4"
+    "@testing-library/react": "^11.2.3",
+    "@types/resize-observer-browser": "^0.1.5"
   },
   "xo": false
 }
