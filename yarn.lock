@@ -1589,25 +1589,25 @@
     "@reach/utils" "0.12.1"
     tslib "^2.0.0"
 
-"@reach/dialog@^0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@reach/dialog/-/dialog-0.9.1.tgz#683daf9be621d8a4e7cde2bc0ca545cf6935224c"
-  integrity sha512-UR959q6d5LEeB2OSRhPwRtIW3C7UVXdgxayP1F5+IUW4YlcpC25/FQm86dj8CC1fR7Sgs6z14nF2sIY5l05HxQ==
+"@reach/dialog@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@reach/dialog/-/dialog-0.12.1.tgz#1fe67d7d09eccac57292a06a9388b5ef7d529d06"
+  integrity sha512-PBAzBXrChxeufhROhRuYkZmJhZeZVXGU6fa9/EVZs+Prsv40MgPdrSR6CBDAxLaYJfeZIbOwy7xoAawtlWlmpw==
   dependencies:
-    "@reach/portal" "^0.9.0"
-    "@reach/utils" "^0.9.0"
+    "@reach/portal" "0.12.1"
+    "@reach/utils" "0.12.1"
     prop-types "^15.7.2"
-    react-focus-lock "^2.2.1"
-    react-remove-scroll "^2.2.0"
-    tslib "^1.10.0"
+    react-focus-lock "^2.3.1"
+    react-remove-scroll "^2.3.0"
+    tslib "^2.0.0"
 
-"@reach/portal@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@reach/portal/-/portal-0.9.0.tgz#8346c4403aba071b36ff0bd5137b1363f70ade15"
-  integrity sha512-V3xmdKCWLyKwAdSvvF4EvO8wKPGInQsJXmCuo9c7RU5ZCDnErCQmiD/jqyD78UzGF0snXATiGHuQV0h/Ppjt0w==
+"@reach/portal@0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@reach/portal/-/portal-0.12.1.tgz#995858a6e758d9446870937b60b8707a2efa11cb"
+  integrity sha512-Lhmtd2Qw1DzNZ2m0GHNzCu+2TYUf6kBREPSQJf44AP6kThRs02p1clntbJcmW/rrpYFYgFNbgf5Lso7NyW9ZXg==
   dependencies:
-    "@reach/utils" "^0.9.0"
-    tslib "^1.10.0"
+    "@reach/utils" "0.12.1"
+    tslib "^2.0.0"
 
 "@reach/utils@0.12.1":
   version "0.12.1"
@@ -1616,14 +1616,6 @@
   dependencies:
     "@types/warning" "^3.0.0"
     tslib "^2.0.0"
-    warning "^4.0.3"
-
-"@reach/utils@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.9.0.tgz#ee47c25c79eb2f98e6c0e728a2672075cc9991d5"
-  integrity sha512-cmiykRaxuCysVTsSY3PgrLjySnEIt1PLiSYKh5rAH8nYyEmaOCtw0vaNItFAiqQIjfrxkixmcUE8dyD8kqVuJA==
-  dependencies:
-    tslib "^1.10.0"
     warning "^4.0.3"
 
 "@reach/visually-hidden@^0.9.0":
@@ -10296,7 +10288,7 @@ react-final-form@^6.3.5:
   dependencies:
     "@babel/runtime" "^7.12.1"
 
-react-focus-lock@^2.2.1:
+react-focus-lock@^2.3.1:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-2.5.0.tgz#12e3a3940e897c26e2c2a0408cd25ea3c99b3709"
   integrity sha512-XLxj6uTXgz0US8TmqNU2jMfnXwZG0mH2r/afQqvPEaX6nyEll5LHVcEXk2XDUQ34RVeLPkO/xK5x6c/qiuSq/A==
@@ -10368,7 +10360,7 @@ react-remove-scroll-bar@^2.1.0:
     react-style-singleton "^2.1.0"
     tslib "^1.0.0"
 
-react-remove-scroll@^2.2.0:
+react-remove-scroll@^2.3.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.4.1.tgz#e0af6126621083a5064591d367291a81b2d107f5"
   integrity sha512-K7XZySEzOHMTq7dDwcHsZA6Y7/1uX5RsWhRXVYv8rdh+y9Qz2nMwl9RX/Mwnj/j7JstCGmxyfyC0zbVGXYh3mA==
