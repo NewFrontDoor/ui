@@ -1,5 +1,11 @@
 # @newfrontdoor/collapse
 
+## 0.2.3
+
+### Patch Changes
+
+- deef870: Adjust types for getToggleProps
+
 ## 0.2.2
 
 ### Patch Changes
