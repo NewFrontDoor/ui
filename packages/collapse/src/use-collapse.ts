@@ -7,7 +7,8 @@ import {
   MouseEvent,
   RefObject,
   CSSProperties,
-  TransitionEvent
+  TransitionEvent,
+  ButtonHTMLAttributes
 } from 'react';
 
 type CalculateStyleOptions = Required<Pick<CSSProperties, 'overflow'>> & {
@@ -23,6 +24,9 @@ type CalculateStyleOptions = Required<Pick<CSSProperties, 'overflow'>> & {
 type CalculatedStyles = Required<
   Pick<CSSProperties, 'overflow' | 'transition' | 'maxHeight'>
 >;
+
+const TOGGLE_TYPE = 'button' as const;
+const TOGGLE_ROLE = 'button' as const;
 
 function calculateStyles({
   duration,
@@ -60,17 +64,17 @@ function calculateStyles({
 
 export type CollapseState<T extends Element> = {
   contentRef: RefObject<T>;
-  getCollapseProps: () => {
+  isExpanded: boolean;
+  setExpanded: Dispatch<SetStateAction<boolean>>;
+  getCollapseProps(): {
     css: ReturnType<typeof css>;
     onTransitionEnd(event: TransitionEvent): void;
   };
-  getToggleProps: () => {
-    type: string;
+  getToggleProps(): {
+    type: ButtonHTMLAttributes<HTMLButtonElement>['type'];
     role: string;
     onClick(event: MouseEvent): void;
   };
-  isExpanded: boolean;
-  setExpanded: Dispatch<SetStateAction<boolean>>;
 };
 
 export type UseCollapseOptions<T> = {
@@ -164,8 +168,8 @@ export function useCollapse<T extends Element>({
 
   function getToggleProps() {
     return {
-      type: 'button',
-      role: 'button',
+      type: TOGGLE_TYPE,
+      role: TOGGLE_ROLE,
       onClick: handleClick
     };
   }
