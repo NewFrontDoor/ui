@@ -9,7 +9,7 @@ import {
   useRef
 } from 'react';
 import PropTypes from 'prop-types';
-import {useEmblaCarousel} from 'embla-carousel-react';
+import {useEmblaCarousel} from 'embla-carousel/react';
 import {jsx} from 'theme-ui';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
@@ -56,8 +56,14 @@ type CarouselProps = {
   children: ReactNode;
 };
 
-const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
-  const [EmblaCarousel, embla] = useEmblaCarousel({
+const Carousel: FC<CarouselProps> = ({
+  autoplay,
+  delayLength,
+  children,
+  hidearrows,
+  dotStyling
+}) => {
+  const [viewportRef, embla] = useEmblaCarousel({
     loop: true
   });
 
@@ -99,7 +105,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
 
   return (
     <div sx={relative}>
-      <EmblaCarousel htmlTagName="div">
+      <div ref={viewportRef}>
         <div style={{display: 'flex'}}>
           {Children.map(children, (slide, index) => (
             <div key={index} style={{position: 'relative', flex: '0 0 100%'}}>
@@ -107,18 +113,23 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
             </div>
           ))}
         </div>
-      </EmblaCarousel>
+      </div>
       <div id="dots" sx={dots}>
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}
+            dotStyling={dotStyling}
             selected={index === selectedIndex}
             onClick={() => scrollTo(index)}
           />
         ))}
       </div>
-      <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} />
-      <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />
+      {!hidearrows && (
+          <PreviousButton
+            enabled={previousBtnEnabled}
+            onClick={scrollPrevious}
+          />
+        ) && <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />}
     </div>
   );
 };

@@ -97,7 +97,8 @@ const Dot2: FC<DotProps> = (props) => (
         border: '1px solid black',
         borderRadius: '50%',
         content: "''"
-      }
+      },
+      ...props.dotStyling
     }}
     {...props}
     type="button"
@@ -109,9 +110,11 @@ type DotButtonProps = {
   onClick: () => void;
 };
 
-export const DotButton: FC<DotButtonProps> = ({selected, onClick}) => (
-  <Dot2 selected={selected} onClick={onClick} />
-);
+export const DotButton: FC<DotButtonProps> = ({
+  selected,
+  onClick,
+  dotStyling
+}) => <Dot2 selected={selected} dotStyling={dotStyling} onClick={onClick} />;
 
 type PreviousButtonProps = {
   enabled: boolean;
