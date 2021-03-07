@@ -54,6 +54,8 @@ type CarouselProps = {
   autoplay?: boolean;
   delayLength?: number;
   children: ReactNode;
+  hidearrows?: boolean;
+  dotStyling?: unknown;
 };
 
 const Carousel: FC<CarouselProps> = ({
@@ -137,7 +139,9 @@ const Carousel: FC<CarouselProps> = ({
 Carousel.propTypes = {
   autoplay: PropTypes.bool,
   delayLength: PropTypes.number,
-  children: PropTypes.node
+  children: PropTypes.node,
+  hidearrows: PropTypes.bool,
+  dotStyling: PropTypes.object
 };
 
 export default Carousel;
