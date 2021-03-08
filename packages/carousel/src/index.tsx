@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import {
-  FC,
   ReactNode,
   Children,
+  ReactElement,
+  cloneElement,
   useState,
   useEffect,
   useCallback,
@@ -27,9 +28,11 @@ function useInterval(callback: CallbackFunction, delay?: number): void {
       savedCallback.current?.();
     }
 
-    if (delay !== null) {
+    if (typeof delay === 'number') {
       const id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      return () => {
+        clearInterval(id);
+      };
     }
   }, [delay]);
 }
@@ -38,12 +41,19 @@ type CarouselProps = {
   autoplay?: boolean;
   delayLength?: number;
   children: ReactNode;
-  customdot?: ReactNode;
+  customdot?: ReactElement;
   showNav?: boolean;
   showDots?: boolean;
 };
 
-const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children, customdot, showNav = true, showDots = true}) => {
+const Carousel = ({
+  autoplay,
+  delayLength,
+  children,
+  customdot,
+  showNav = true,
+  showDots = true
+}: CarouselProps) => {
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true
   });
@@ -51,39 +61,48 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children, customdot
   const [previousBtnEnabled, setPreviousBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState([]);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [delay] = useState(delayLength);
   const [isRunning] = useState(autoplay);
 
-  const scrollTo = useCallback((index) => embla.scrollTo(index), [embla]);
-  const scrollPrevious = useCallback(() => embla.scrollPrev(), [embla]);
-  const scrollNext = useCallback(() => embla.scrollNext(), [embla]);
+  const scrollTo = useCallback(
+    (index) => {
+      embla?.scrollTo(index);
+    },
+    [embla]
+  );
+  const scrollPrevious = useCallback(() => {
+    embla?.scrollPrev();
+  }, [embla]);
+  const scrollNext = useCallback(() => {
+    embla?.scrollNext();
+  }, [embla]);
 
   useInterval(
     () => {
-      if (embla.canScrollNext()) {
+      if (embla?.canScrollNext()) {
         embla.scrollNext();
       } else {
-        embla.scrollTo(0);
+        embla?.scrollTo(0);
       }
     },
-    isRunning ? delay : null
+    isRunning ? delay : undefined
   );
-
-  useEffect(() => {
-    if (!embla) return;
-    const onSelect = () => {
+  const onSelect = useCallback(() => {
+    if (embla) {
       setSelectedIndex(embla.selectedScrollSnap());
       setPreviousBtnEnabled(embla.canScrollPrev());
       setNextBtnEnabled(embla.canScrollNext());
-    };
+    }
+  }, [embla]);
 
+  useEffect(() => {
     if (embla) {
       setScrollSnaps(embla.scrollSnapList());
       embla.on('select', onSelect);
       onSelect();
     }
-  }, [embla]);
+  }, [embla, onSelect]);
 
   return (
     <div
@@ -100,7 +119,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children, customdot
           ))}
         </div>
       </div>
-      {showDots &&
+      {showDots && (
         <div
           id="dots"
           sx={{
@@ -116,18 +135,32 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children, customdot
           }}
         >
           {scrollSnaps.map((_, index) => {
-            return <DotButton
-                key={index}
-                selected={index === selectedIndex}
-                onClick={() => scrollTo(index)}
-              />
+            if (typeof customdot === 'undefined') {
+              return (
+                <DotButton
+                  key={index}
+                  selected={index === selectedIndex}
+                  onClick={() => {
+                    scrollTo(index);
+                  }}
+                />
+              );
+            }
+
+            return cloneElement(customdot, {
+              key: index,
+              selected: index === selectedIndex,
+              onClick: () => {
+                scrollTo(index);
+              }
+            });
           })}
         </div>
-      }
-      {showNav &&
-        <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} /> &&
-        <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />
-      }
+      )}
+      {showNav && (
+        <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} />
+      )}
+      {showNav && <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />}
     </div>
   );
 };

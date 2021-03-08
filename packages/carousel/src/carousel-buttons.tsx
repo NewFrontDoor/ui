@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import {FC, HTMLProps} from 'react';
+import {HTMLProps} from 'react';
 import {jsx} from 'theme-ui';
 
-const Next: FC<HTMLProps<HTMLButtonElement>> = (props) => (
+const Next = (props: HTMLProps<HTMLButtonElement>) => (
   <button
     sx={{
       backgroundColor: 'transparent',
@@ -24,7 +24,7 @@ const Next: FC<HTMLProps<HTMLButtonElement>> = (props) => (
   />
 );
 
-const Previous: FC<HTMLProps<HTMLButtonElement>> = (props) => (
+const Previous = (props: HTMLProps<HTMLButtonElement>) => (
   <button
     sx={{
       backgroundColor: 'transparent',
@@ -50,7 +50,7 @@ type DotProps = HTMLProps<HTMLButtonElement> & {
   selected: boolean;
 };
 
-const Dot: FC<DotProps> = (props) => (
+const Dot = (props: DotProps) => (
   <button
     sx={{
       backgroundColor: 'transparent',
@@ -76,7 +76,7 @@ const Dot: FC<DotProps> = (props) => (
   />
 );
 
-const Dot2: FC<DotProps> = (props) => (
+const Dot2 = (props: DotProps) => (
   <button
     sx={{
       backgroundColor: 'transparent',
@@ -109,7 +109,7 @@ type DotButtonProps = {
   onClick: () => void;
 };
 
-export const DotButton: FC<DotButtonProps> = ({selected, onClick}) => (
+export const DotButton = ({selected, onClick}: DotButtonProps) => (
   <Dot2 selected={selected} onClick={onClick} />
 );
 
@@ -118,7 +118,7 @@ type PreviousButtonProps = {
   onClick: () => void;
 };
 
-export const PreviousButton: FC<PreviousButtonProps> = ({enabled, onClick}) => (
+export const PreviousButton = ({enabled, onClick}: PreviousButtonProps) => (
   <Previous
     className="embla__button embla__button--prev"
     disabled={!enabled}
@@ -135,7 +135,7 @@ type NextButtonProps = {
   onClick: () => void;
 };
 
-export const NextButton: FC<NextButtonProps> = ({enabled, onClick}) => (
+export const NextButton = ({enabled, onClick}: NextButtonProps) => (
   <Next
     className="embla__button embla__button--next"
     disabled={!enabled}
