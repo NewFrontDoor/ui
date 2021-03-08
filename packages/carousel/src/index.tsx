@@ -9,7 +9,7 @@ import {
   useRef
 } from 'react';
 import PropTypes from 'prop-types';
-import {useEmblaCarousel} from 'embla-carousel-react';
+import {useEmblaCarousel} from 'embla-carousel/react';
 import {jsx} from 'theme-ui';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
@@ -38,10 +38,13 @@ type CarouselProps = {
   autoplay?: boolean;
   delayLength?: number;
   children: ReactNode;
+  customdot?: ReactNode;
+  showNav?: boolean;
+  showDots?: boolean;
 };
 
-const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
-  const [EmblaCarousel, embla] = useEmblaCarousel({
+const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children, customdot, showNav = true, showDots = true}) => {
+  const [viewportRef, embla] = useEmblaCarousel({
     loop: true
   });
 
@@ -64,10 +67,11 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
         embla.scrollTo(0);
       }
     },
-    isRunning ? delay : undefined
+    isRunning ? delay : null
   );
 
   useEffect(() => {
+    if (!embla) return;
     const onSelect = () => {
       setSelectedIndex(embla.selectedScrollSnap());
       setPreviousBtnEnabled(embla.canScrollPrev());
@@ -87,7 +91,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
         position: 'relative'
       }}
     >
-      <EmblaCarousel htmlTagName="div">
+      <div ref={viewportRef}>
         <div data-testid="carousel-slides" style={{display: 'flex'}}>
           {Children.map(children, (slide, index) => (
             <div key={index} style={{position: 'relative', flex: '0 0 100%'}}>
@@ -95,31 +99,35 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
             </div>
           ))}
         </div>
-      </EmblaCarousel>
-      <div
-        id="dots"
-        sx={{
-          position: 'absolute',
-          marginTop: '1rem',
-          display: 'flex',
-          listStyle: 'none',
-          paddingLeft: '0',
-          justifyContent: 'center',
-          left: '0',
-          right: '0',
-          top: '90%'
-        }}
-      >
-        {scrollSnaps.map((_, index) => (
-          <DotButton
-            key={index}
-            selected={index === selectedIndex}
-            onClick={() => scrollTo(index)}
-          />
-        ))}
       </div>
-      <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} />
-      <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />
+      {showDots &&
+        <div
+          id="dots"
+          sx={{
+            position: 'absolute',
+            marginTop: '1rem',
+            display: 'flex',
+            listStyle: 'none',
+            paddingLeft: '0',
+            justifyContent: 'center',
+            left: '0',
+            right: '0',
+            top: '90%'
+          }}
+        >
+          {scrollSnaps.map((_, index) => {
+            return <DotButton
+                key={index}
+                selected={index === selectedIndex}
+                onClick={() => scrollTo(index)}
+              />
+          })}
+        </div>
+      }
+      {showNav &&
+        <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} /> &&
+        <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />
+      }
     </div>
   );
 };
