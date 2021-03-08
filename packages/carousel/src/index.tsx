@@ -36,7 +36,7 @@ function useInterval(callback: CallbackFunction, delay?: number): void {
 
   useEffect(() => {
     savedCallback.current = callback;
-  });
+  }, [callback]);
 
   useEffect(() => {
     function tick() {
@@ -54,20 +54,18 @@ type CarouselProps = {
   autoplay?: boolean;
   delayLength?: number;
   children: ReactNode;
-  hidearrows?: boolean;
-  dotStyling?: unknown;
 };
 
 const Carousel: FC<CarouselProps> = ({
   autoplay,
   delayLength,
-  children,
-  hidearrows,
-  dotStyling
+  children
 }) => {
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true
   });
+
+  console.log(autoplay);
 
   const [previousBtnEnabled, setPreviousBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
@@ -76,16 +74,16 @@ const Carousel: FC<CarouselProps> = ({
   const [delay] = useState(delayLength);
   const [isRunning] = useState(autoplay);
 
-  const scrollTo = useCallback((index) => embla.scrollTo(index), [embla]);
-  const scrollPrevious = useCallback(() => embla.scrollPrev(), [embla]);
-  const scrollNext = useCallback(() => embla.scrollNext(), [embla]);
+  const scrollTo = useCallback((index) => embla?.scrollTo(index), [embla]);
+  const scrollPrevious = useCallback(() => embla?.scrollPrev(), [embla]);
+  const scrollNext = useCallback(() => embla?.scrollNext(), [embla]);
 
   useInterval(
     () => {
-      if (embla.canScrollNext()) {
-        embla.scrollNext();
+      if (embla?.canScrollNext()) {
+        embla?.scrollNext();
       } else {
-        embla.scrollTo(0);
+        embla?.scrollTo(0);
       }
     },
     isRunning ? delay : undefined
@@ -93,6 +91,7 @@ const Carousel: FC<CarouselProps> = ({
 
   useEffect(() => {
     const onSelect = () => {
+      if (!embla) return;
       setSelectedIndex(embla.selectedScrollSnap());
       setPreviousBtnEnabled(embla.canScrollPrev());
       setNextBtnEnabled(embla.canScrollNext());
@@ -120,18 +119,14 @@ const Carousel: FC<CarouselProps> = ({
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}
-            dotStyling={dotStyling}
             selected={index === selectedIndex}
             onClick={() => scrollTo(index)}
           />
         ))}
       </div>
-      {!hidearrows && (
-          <PreviousButton
-            enabled={previousBtnEnabled}
-            onClick={scrollPrevious}
-          />
-        ) && <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />}
+
+      <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} />
+      <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />
     </div>
   );
 };
@@ -139,9 +134,7 @@ const Carousel: FC<CarouselProps> = ({
 Carousel.propTypes = {
   autoplay: PropTypes.bool,
   delayLength: PropTypes.number,
-  children: PropTypes.node,
-  hidearrows: PropTypes.bool,
-  dotStyling: PropTypes.object
+  children: PropTypes.node
 };
 
 export default Carousel;

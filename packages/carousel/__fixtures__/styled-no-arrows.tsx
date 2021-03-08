@@ -25,9 +25,7 @@ const slide = css`
 export default (
   <Carousel
     autoplay
-    hidearrows
     delayLength={2000}
-    dotStyling={{width: '1rem', height: '1rem'}}
   >
     <div key="1" css={slide}>
       <div>1</div>

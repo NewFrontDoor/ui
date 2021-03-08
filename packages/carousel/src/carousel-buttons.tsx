@@ -48,7 +48,6 @@ const Previous: FC<HTMLProps<HTMLButtonElement>> = (props) => (
 
 type DotProps = HTMLProps<HTMLButtonElement> & {
   selected: boolean;
-  dotStyling: unknown;
 };
 
 const Dot: FC<DotProps> = (props) => (
@@ -98,8 +97,7 @@ const Dot2: FC<DotProps> = (props) => (
         border: '1px solid black',
         borderRadius: '50%',
         content: "''"
-      },
-      ...props.dotStyling
+      }
     }}
     {...props}
     type="button"
@@ -109,14 +107,12 @@ const Dot2: FC<DotProps> = (props) => (
 type DotButtonProps = {
   selected: boolean;
   onClick: () => void;
-  dotStyling: unknown;
 };
 
 export const DotButton: FC<DotButtonProps> = ({
   selected,
   onClick,
-  dotStyling
-}) => <Dot2 selected={selected} dotStyling={dotStyling} onClick={onClick} />;
+}) => <Dot2 selected={selected} onClick={onClick} />;
 
 type PreviousButtonProps = {
   enabled: boolean;
