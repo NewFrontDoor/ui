@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import {jsx} from 'theme-ui';
 import {
   ReactNode,
   Children,
@@ -11,7 +12,6 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import {useEmblaCarousel} from 'embla-carousel/react';
-import {jsx} from 'theme-ui';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
 type CallbackFunction = () => void;
