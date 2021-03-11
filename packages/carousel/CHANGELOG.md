@@ -1,5 +1,11 @@
 # @newfrontdoor/carousel
 
+## 3.1.0
+
+### Minor Changes
+
+- 986b382: Bumping embla version
+
 ## 3.0.0
 
 ### Major Changes
