@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx, css} from 'theme-ui';
-import Carousel from '../src';
+import {Carousel} from '../src';
 
 const slide = css({
   flex: '0 0 auto',
