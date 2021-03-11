@@ -1,15 +1,16 @@
 /** @jsx jsx */
 import {
-  FC,
   ReactNode,
   Children,
+  ReactElement,
+  cloneElement,
   useState,
   useEffect,
   useCallback,
   useRef
 } from 'react';
 import PropTypes from 'prop-types';
-import {useEmblaCarousel} from 'embla-carousel-react';
+import {useEmblaCarousel} from 'embla-carousel/react';
 import {jsx} from 'theme-ui';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
@@ -27,9 +28,11 @@ function useInterval(callback: CallbackFunction, delay?: number): void {
       savedCallback.current?.();
     }
 
-    if (delay !== null) {
+    if (typeof delay === 'number') {
       const id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      return () => {
+        clearInterval(id);
+      };
     }
   }, [delay]);
 }
@@ -38,48 +41,68 @@ type CarouselProps = {
   autoplay?: boolean;
   delayLength?: number;
   children: ReactNode;
+  customdot?: ReactElement;
+  showNav?: boolean;
+  showDots?: boolean;
 };
 
-const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
-  const [EmblaCarousel, embla] = useEmblaCarousel({
+const Carousel = ({
+  autoplay,
+  delayLength,
+  children,
+  customdot,
+  showNav = true,
+  showDots = true
+}: CarouselProps) => {
+  const [viewportRef, embla] = useEmblaCarousel({
     loop: true
   });
 
   const [previousBtnEnabled, setPreviousBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState([]);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [delay] = useState(delayLength);
   const [isRunning] = useState(autoplay);
 
-  const scrollTo = useCallback((index) => embla.scrollTo(index), [embla]);
-  const scrollPrevious = useCallback(() => embla.scrollPrev(), [embla]);
-  const scrollNext = useCallback(() => embla.scrollNext(), [embla]);
+  const scrollTo = useCallback(
+    (index) => {
+      embla?.scrollTo(index);
+    },
+    [embla]
+  );
+  const scrollPrevious = useCallback(() => {
+    embla?.scrollPrev();
+  }, [embla]);
+  const scrollNext = useCallback(() => {
+    embla?.scrollNext();
+  }, [embla]);
 
   useInterval(
     () => {
-      if (embla.canScrollNext()) {
+      if (embla?.canScrollNext()) {
         embla.scrollNext();
       } else {
-        embla.scrollTo(0);
+        embla?.scrollTo(0);
       }
     },
     isRunning ? delay : undefined
   );
-
-  useEffect(() => {
-    const onSelect = () => {
+  const onSelect = useCallback(() => {
+    if (embla) {
       setSelectedIndex(embla.selectedScrollSnap());
       setPreviousBtnEnabled(embla.canScrollPrev());
       setNextBtnEnabled(embla.canScrollNext());
-    };
+    }
+  }, [embla]);
 
+  useEffect(() => {
     if (embla) {
       setScrollSnaps(embla.scrollSnapList());
       embla.on('select', onSelect);
       onSelect();
     }
-  }, [embla]);
+  }, [embla, onSelect]);
 
   return (
     <div
@@ -87,7 +110,7 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
         position: 'relative'
       }}
     >
-      <EmblaCarousel htmlTagName="div">
+      <div ref={viewportRef}>
         <div data-testid="carousel-slides" style={{display: 'flex'}}>
           {Children.map(children, (slide, index) => (
             <div key={index} style={{position: 'relative', flex: '0 0 100%'}}>
@@ -95,31 +118,49 @@ const Carousel: FC<CarouselProps> = ({autoplay, delayLength, children}) => {
             </div>
           ))}
         </div>
-      </EmblaCarousel>
-      <div
-        id="dots"
-        sx={{
-          position: 'absolute',
-          marginTop: '1rem',
-          display: 'flex',
-          listStyle: 'none',
-          paddingLeft: '0',
-          justifyContent: 'center',
-          left: '0',
-          right: '0',
-          top: '90%'
-        }}
-      >
-        {scrollSnaps.map((_, index) => (
-          <DotButton
-            key={index}
-            selected={index === selectedIndex}
-            onClick={() => scrollTo(index)}
-          />
-        ))}
       </div>
-      <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} />
-      <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />
+      {showDots && (
+        <div
+          id="dots"
+          sx={{
+            position: 'absolute',
+            marginTop: '1rem',
+            display: 'flex',
+            listStyle: 'none',
+            paddingLeft: '0',
+            justifyContent: 'center',
+            left: '0',
+            right: '0',
+            top: '90%'
+          }}
+        >
+          {scrollSnaps.map((_, index) => {
+            if (typeof customdot === 'undefined') {
+              return (
+                <DotButton
+                  key={index}
+                  selected={index === selectedIndex}
+                  onClick={() => {
+                    scrollTo(index);
+                  }}
+                />
+              );
+            }
+
+            return cloneElement(customdot, {
+              key: index,
+              selected: index === selectedIndex,
+              onClick: () => {
+                scrollTo(index);
+              }
+            });
+          })}
+        </div>
+      )}
+      {showNav && (
+        <PreviousButton enabled={previousBtnEnabled} onClick={scrollPrevious} />
+      )}
+      {showNav && <NextButton enabled={nextBtnEnabled} onClick={scrollNext} />}
     </div>
   );
 };
