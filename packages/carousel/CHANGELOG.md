@@ -1,5 +1,11 @@
 # @newfrontdoor/carousel
 
+## 3.2.0
+
+### Minor Changes
+
+- 51be64e: Including extra options for control of carousel
+
 ## 3.1.0
 
 ### Minor Changes
