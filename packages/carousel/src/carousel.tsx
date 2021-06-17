@@ -44,6 +44,8 @@ type CarouselProps = {
   customdot?: ReactElement;
   showNav?: boolean;
   showDots?: boolean;
+  startIndex?: number;
+  draggable?: boolean;
 };
 
 const Carousel = ({
@@ -51,11 +53,15 @@ const Carousel = ({
   delayLength,
   children,
   customdot,
+  startIndex = 0,
+  draggable = true,
   showNav = true,
   showDots = true
 }: CarouselProps) => {
   const [viewportRef, embla] = useEmblaCarousel({
-    loop: true
+    loop: true,
+    startIndex,
+    draggable
   });
 
   const [previousBtnEnabled, setPreviousBtnEnabled] = useState(false);
