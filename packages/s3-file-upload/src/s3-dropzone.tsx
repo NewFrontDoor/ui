@@ -29,6 +29,10 @@ export type S3DropzoneProps = {
   uploadUrl: string;
   title?: string;
   initialFileName?: string;
+  errorJSX?: React.ReactElement;
+  loadingJSX?: React.ReactElement;
+  acceptFileTypes?: string;
+  customElementTitle?: string;
   onChange(result?: UploadFileResult): void;
 };
 
@@ -38,6 +42,10 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
   title,
   uploadUrl,
   initialFileName,
+  errorJSX,
+  loadingJSX,
+  acceptFileTypes,
+  customElementTitle,
   onChange
 }) => {
   const {
@@ -56,7 +64,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
 
   const {getRootProps, getInputProps, isDragActive, isDragReject} = useDropzone(
     {
-      accept: 'audio/*',
+      accept: acceptFileTypes ? acceptFileTypes : 'audio/*',
       onDrop(acceptedFiles) {
         const [firstFile] = acceptedFiles;
         void startFileUpload(firstFile).then((result) => {
@@ -72,8 +80,8 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
 
   return (
     <div data-testid="s3-dropzone">
-      <h2>{fileUrl ? title : 'Upload Audio'}</h2>
-      {isError && (
+      <h2>{fileUrl ? title : (customElementTitle ? customElementTitle : 'Upload Audio')}</h2>
+      {isError && (errorJSX ? errorJSX : (
         <div>
           <p>
             Audio could not load due to an error. Please contact{' '}
@@ -83,8 +91,8 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
             .
           </p>
         </div>
-      )}
-      {isLoading && (
+      ))}
+      {isLoading && (loadingJSX ? loadingJSX : (
         <div>
           <ScaleLoader
             height={30}
@@ -99,7 +107,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
             while file is loading.
           </p>
         </div>
-      )}
+      ))}
       {isSuccess &&
         fileUrl &&
         cloneElement(children, {
@@ -123,7 +131,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
             <p>Unsupported file type...</p>
           ) : (
             <p>
-              Try dropping an audio file here, or click to select file for
+              Try dropping a file here, or click to select file for
               upload.
             </p>
           )}
