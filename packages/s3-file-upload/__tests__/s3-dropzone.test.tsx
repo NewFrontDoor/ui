@@ -68,7 +68,7 @@ test('it renders a dropzone', async () => {
     [
       'Upload Audio',
       'Drag ‘n’ drop some files here, or click to select files',
-      'Try dropping an audio file here, or click to select file for upload.'
+      'Try dropping a file here, or click to select file for upload.'
     ].join('')
   );
 

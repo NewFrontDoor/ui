@@ -2,9 +2,8 @@
 import {jsx} from 'theme-ui';
 import {cloneElement, FC} from 'react';
 import PropTypes from 'prop-types';
-import {useDropzone} from 'react-dropzone';
 import {ScaleLoader} from 'react-spinners';
-import {useS3FileUpload, UploadFileResult} from './use-s3-file-upload';
+import {useS3Dropzone, UploadFileResult} from './use-s3-dropzone';
 
 const baseStyle = {
   borderWidth: 2,
@@ -47,24 +46,17 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
     isError,
     isSuccess,
     isIdle,
-    startFileUpload
-  } = useS3FileUpload({
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject
+  } = useS3Dropzone({
     host,
     uploadUrl,
-    initialFileName
+    initialFileName,
+    accept: 'audio/*',
+    onChange,
   });
-
-  const {getRootProps, getInputProps, isDragActive, isDragReject} = useDropzone(
-    {
-      accept: 'audio/*',
-      onDrop(acceptedFiles) {
-        const [firstFile] = acceptedFiles;
-        void startFileUpload(firstFile).then((result) => {
-          onChange(result);
-        });
-      }
-    }
-  );
 
   let styles = {...baseStyle};
   styles = isDragActive ? {...styles, ...activeStyle} : styles;
@@ -123,7 +115,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
             <p>Unsupported file type...</p>
           ) : (
             <p>
-              Try dropping an audio file here, or click to select file for
+              Try dropping a file here, or click to select file for
               upload.
             </p>
           )}
