@@ -5,12 +5,8 @@ export type {UploadFileResult} from './use-s3-file-upload';
 export type S3DropzoneOptions = {
   host: string;
   uploadUrl: string;
-  title?: string;
   initialFileName?: string;
-  errorJSX?: React.ReactElement;
-  loadingJSX?: React.ReactElement;
   accept?: string | string[];
-  customElementTitle?: string;
   onChange(result?: UploadFileResult): void;
 };
 

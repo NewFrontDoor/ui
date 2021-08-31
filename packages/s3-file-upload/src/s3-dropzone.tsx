@@ -28,10 +28,6 @@ export type S3DropzoneProps = {
   uploadUrl: string;
   title?: string;
   initialFileName?: string;
-  errorJSX?: React.ReactElement;
-  loadingJSX?: React.ReactElement;
-  accept?: string | string[];
-  customElementTitle?: string;
   onChange(result?: UploadFileResult): void;
 };
 
