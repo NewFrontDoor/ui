@@ -2,9 +2,8 @@
 import {jsx} from 'theme-ui';
 import {cloneElement, FC} from 'react';
 import PropTypes from 'prop-types';
-import {useDropzone} from 'react-dropzone';
 import {ScaleLoader} from 'react-spinners';
-import {useS3FileUpload, UploadFileResult} from './use-s3-file-upload';
+import {useS3Dropzone, UploadFileResult} from './use-s3-dropzone';
 
 const baseStyle = {
   borderWidth: 2,
@@ -31,7 +30,7 @@ export type S3DropzoneProps = {
   initialFileName?: string;
   errorJSX?: React.ReactElement;
   loadingJSX?: React.ReactElement;
-  acceptFileTypes?: string;
+  accept?: string | string[];
   customElementTitle?: string;
   onChange(result?: UploadFileResult): void;
 };
@@ -42,10 +41,6 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
   title,
   uploadUrl,
   initialFileName,
-  errorJSX,
-  loadingJSX,
-  acceptFileTypes,
-  customElementTitle,
   onChange
 }) => {
   const {
@@ -55,24 +50,17 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
     isError,
     isSuccess,
     isIdle,
-    startFileUpload
-  } = useS3FileUpload({
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject
+  } = useS3Dropzone({
     host,
     uploadUrl,
-    initialFileName
+    initialFileName,
+    accept: 'audio/*',
+    onChange,
   });
-
-  const {getRootProps, getInputProps, isDragActive, isDragReject} = useDropzone(
-    {
-      accept: acceptFileTypes ? acceptFileTypes : 'audio/*',
-      onDrop(acceptedFiles) {
-        const [firstFile] = acceptedFiles;
-        void startFileUpload(firstFile).then((result) => {
-          onChange(result);
-        });
-      }
-    }
-  );
 
   let styles = {...baseStyle};
   styles = isDragActive ? {...styles, ...activeStyle} : styles;
@@ -80,8 +68,8 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
 
   return (
     <div data-testid="s3-dropzone">
-      <h2>{fileUrl ? title : (customElementTitle ? customElementTitle : 'Upload Audio')}</h2>
-      {isError && (errorJSX ? errorJSX : (
+      <h2>{fileUrl ? title : 'Upload Audio'}</h2>
+      {isError && (
         <div>
           <p>
             Audio could not load due to an error. Please contact{' '}
@@ -91,8 +79,8 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
             .
           </p>
         </div>
-      ))}
-      {isLoading && (loadingJSX ? loadingJSX : (
+      )}
+      {isLoading && (
         <div>
           <ScaleLoader
             height={30}
@@ -107,7 +95,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
             while file is loading.
           </p>
         </div>
-      ))}
+      )}
       {isSuccess &&
         fileUrl &&
         cloneElement(children, {

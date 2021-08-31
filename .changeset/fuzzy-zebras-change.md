@@ -1,5 +1,5 @@
 ---
-"@newfrontdoor/s3-file-upload": major
+"@newfrontdoor/s3-file-upload": minor
 ---
 
-Adding options to allow for customised file uploads
+Add `use-s3-dropzone` hook for S3 file uploads
