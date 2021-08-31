@@ -2,7 +2,7 @@ import React from 'react';
 import {S3Dropzone} from '../src';
 
 const host = 'https://resources.churchandnation.org';
-const uploadUrl = 'https://new.churchandnation.org/api/sermon-upload';
+const uploadUrl = 'http://localhost:3000/api/sermon-upload';
 
 const fixtures = {
   EmptyDropzone: (
