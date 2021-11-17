@@ -1,0 +1,36 @@
+{
+  "name": "@newfrontdoor/sanity-block-components",
+  "version": "0.1.1",
+  "description": "A collection of components for rendering custom blocks from Sanity portable text",
+  "license": "MIT",
+  "author": "Alan Reader",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "sanity",
+    "portable",
+    "text"
+  ],
+  "peerDependencies": {
+    "react": "^16.0",
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "@mdx-js/react": "^1.5.1",
+    "theme-ui": "^0.2.49"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^9.2.0"
+  },
+  "xo": false
+}
