@@ -5,7 +5,7 @@
     "cosmos": "cosmos --config cosmos/cosmos.config.json",
     "cosmos:export": "cosmos-export --config cosmos/cosmos.config.json",
     "lint": "xo",
-    "prepare": "del packages/*/dist && yarn workspaces run prepare",
+    "prepare": "del \"./packages/*/dist\" && yarn workspaces run prepare",
     "test": "jest"
   },
   "devDependencies": {
