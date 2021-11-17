@@ -1,5 +1,11 @@
 # @newfrontdoor/sermon
 
+## 2.1.0
+
+### Minor Changes
+
+- e070eb4: added sanity json
+
 ## 2.0.0
 
 ### Major Changes
