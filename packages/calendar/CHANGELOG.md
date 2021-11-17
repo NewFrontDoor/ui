@@ -1,5 +1,11 @@
 # @newfrontdoor/calendar
 
+## 4.1.0
+
+### Minor Changes
+
+- e070eb4: added sanity json
+
 ## 4.0.0
 
 ### Major Changes
