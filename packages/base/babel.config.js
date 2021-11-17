@@ -1,1 +1,1 @@
-module.exports = require('@newfrontdoor/tools/babel.config');
+module.exports = require('../../babel.config');

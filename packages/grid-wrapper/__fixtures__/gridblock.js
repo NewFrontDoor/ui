@@ -36,17 +36,17 @@ const Action = styled('a')`
   }
 `;
 
-function GridItem({title, imgSrc, action, slug}) {
+const GridItem = ({title, imgSrc, action, slug}) => {
   return (
-    <>
+    <React.Fragment>
       <img src={imgSrc} alt={title} style={{width: '100%'}} />
       <Header>{title}</Header>
       <Actions>
         <Action href={slug}>{action ? action : 'VIEW PAGE'}</Action>
       </Actions>
-    </>
+    </React.Fragment>
   );
-}
+};
 
 const props = {
   items: [
@@ -81,6 +81,6 @@ export default (
     columns={props.columns}
     gap="10%"
     marginBottom="50px;"
-    renderProp={data => <GridItem {...data} />}
+    renderProp={(data) => <GridItem {...data} />}
   />
 );

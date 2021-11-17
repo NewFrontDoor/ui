@@ -1,10 +1,13 @@
 {
   "name": "@newfrontdoor/sermon",
-  "version": "0.2.13",
+  "version": "2.0.0",
   "license": "MIT",
+  "source": "src/index.js",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
   "scripts": {
-    "babel": "babel src -d dist"
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
   },
   "files": [
     "dist"
@@ -12,20 +15,19 @@
   "peerDependencies": {
     "@emotion/core": "^10.0",
     "@emotion/styled": "^10.0",
-    "mineral-ui": "^0.58.0",
     "react": "^16.0",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2"
+    "theme-ui": "^0.3.1"
   },
   "dependencies": {
-    "@newfrontdoor/api-config": "0.1.0",
-    "@newfrontdoor/audio-player": "0.1.2",
-    "@newfrontdoor/base": "^0.1.2",
-    "isomorphic-fetch": "^2.2.1",
+    "@newfrontdoor/api-config": "^0.1.0",
+    "@newfrontdoor/audio-player": "^0.3.1",
+    "ky": "^0.26.0",
     "prop-types": "^15.6.0",
     "react-global-configuration": "^1.3.0",
     "react-icons": "^3.7.0",
-    "react-spinners": "^0.6.1"
+    "react-query": "^3.6.0",
+    "react-spinners": "^0.6.1",
+    "react-table": "^7.6.3"
   },
   "xo": false
 }

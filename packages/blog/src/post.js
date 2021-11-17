@@ -1,102 +1,49 @@
 /** @jsx jsx */
 import PropTypes from 'prop-types';
-import {css, jsx} from '@emotion/core';
-import styled from '@emotion/styled';
-import format from 'date-fns/format';
-import {readingTime} from 'reading-time-estimator';
-import Link from './link';
+import {Flex, jsx} from 'theme-ui';
+import readingTime from 'reading-time';
+import DefaultSidebar from './sidebar';
 
-const ContentWrapper = styled('div')`
-  display: flex;
-  flex-flow: row wrap;
-  margin: auto;
-  width: 100vw;
-  max-width: 920px;
-  padding-top: 40px;
-  @media (min-width: 420px) {
-    min-height: 600px;
-  }
-`;
+const Post = (props) => {
+  const {body, blockText, bodyTransform, Sidebar} = props;
+  const readingLength = readingTime(bodyTransform(body));
 
-const Meta = styled('div')`
-  flex: 1 0 auto;
-  height: auto;
-  overflow: hidden;
-  width: 250px;
-  padding: 20px;
-  position: sticky;
-  top: 40px;
-  height: 50px;
-  background: inherit;
-  @media (min-width: 420px) {
-    top: 110px;
-    height: 150px;
-  }
-`;
-
-const Content = styled('div')`
-  flex: 1 0 auto;
-  width: auto;
-  max-width: 24em;
-  @media (min-width: 420px) {
-    max-width: 32em;
-    padding-top: 23.5px;
-  }
-`;
-
-function Post({body, title, date, dateFormat, categories}) {
-  function createMarkup() {
-    return {__html: body};
-  }
-
-  const readingLength = readingTime(body.toString());
-
-  return (
-    <ContentWrapper display="flex">
-      <Meta>
-        <h2>{title}</h2>
-        <br />
-        <small>{format(new Date(date), dateFormat)}</small>
-        <br />
-        <small>{readingLength.text}</small>
-        <br />
-        <small
-          css={css`
-            display: none;
-            @media (min-width: 420px) {
-              display: block;
-            }
-          `}
-        >
-          <ul>
-            {categories.map(category => (
-              <li key={category.title + date}>
-                <Link {...category} />
-              </li>
-            ))}
-          </ul>
-        </small>
-      </Meta>
-      <Content>
-        <div dangerouslySetInnerHTML={createMarkup()} />
-      </Content>
-    </ContentWrapper>
-  );
-}
-
-export default Post;
+  return body ? (
+    <Flex
+      sx={{
+        flexFlow: 'row wrap',
+        margin: 'auto',
+        width: '100vw',
+        maxWidth: '920px',
+        paddingTop: '40px',
+        minHeight: [null, '600px']
+      }}
+    >
+      <Sidebar {...props} readingLength={readingLength} />
+      <div
+        sx={{
+          flex: '1 0 auto',
+          width: 'auto',
+          maxWidth: ['24em', '32em'],
+          paddingTop: [null, '23.5px']
+        }}
+      >
+        {blockText(body)}
+      </div>
+    </Flex>
+  ) : null;
+};
 
 Post.propTypes = {
-  title: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
-  dateFormat: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  renderContent: PropTypes.func.isRequired,
-  linkComponent: PropTypes.func.isRequired
+  body: PropTypes.oneOf([PropTypes.array, PropTypes.string]).isRequired,
+  blockText: PropTypes.func.isRequired,
+  Sidebar: PropTypes.elementType,
+  bodyTransform: PropTypes.func
 };
+
+Post.defaultProps = {
+  bodyTransform: (props) => props,
+  Sidebar: DefaultSidebar
+};
+
+export default Post;

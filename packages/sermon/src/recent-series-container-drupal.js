@@ -1,5 +1,6 @@
+/** @jsx jsx */
 import React from 'react';
-import 'isomorphic-fetch';
+import {jsx} from 'theme-ui';
 import {ApiContext} from '@newfrontdoor/api-config';
 import RecentSeries from './recent-series';
 

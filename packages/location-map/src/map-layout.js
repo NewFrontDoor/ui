@@ -29,13 +29,7 @@ const HomeMapInner = styled('div')`
   }
 `;
 
-export default function MapLayout({
-  heading,
-  actions,
-  details,
-  location,
-  mapsKey
-}) {
+const MapLayout = ({heading, actions, details, location, mapsKey}) => {
   return (
     <HomeSection>
       <HomeMapInner>
@@ -79,14 +73,14 @@ export default function MapLayout({
       />
     </HomeSection>
   );
-}
+};
 
 MapLayout.propTypes = {
   heading: PropTypes.string.isRequired,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
-      text: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired
+      text: PropTypes.string,
+      url: PropTypes.string
     })
   ).isRequired,
   details: PropTypes.arrayOf(
@@ -105,3 +99,5 @@ MapLayout.propTypes = {
   }).isRequired,
   mapsKey: PropTypes.string.isRequired
 };
+
+export default MapLayout;

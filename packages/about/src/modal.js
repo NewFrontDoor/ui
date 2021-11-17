@@ -1,5 +1,5 @@
-import React from 'react';
-import {css} from '@emotion/core';
+/** @jsx jsx */
+import {jsx, css} from 'theme-ui';
 import CloseSvg from './close-svg';
 
 const modalClass = css`
@@ -38,7 +38,7 @@ const modalOverlay = css`
   height: 100%;
 `;
 
-const Modal = props => {
+const Modal = (props) => {
   return [
     <div key="a" className={modalClass}>
       <div className={innerModal}>{props.children}</div>

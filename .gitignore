@@ -2,8 +2,12 @@ node_modules
 dist
 coverage
 *.tgz
+.DS_Store
 
 package-lock.json
 yarn-error.log
 
-.DS_Store
+.rpt2_cache
+.rts2_cache_cjs
+.rts2_cache_es
+.rts2_cache_umd

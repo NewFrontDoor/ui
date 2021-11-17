@@ -1,90 +1,86 @@
+/** @jsx jsx */
 import React from 'react';
-import styled from '@emotion/styled';
+import {jsx, Styled} from 'theme-ui';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {FaDownload} from 'react-icons/fa';
 
-const Table = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  th {
-    text-align: left;
-    padding: 0 5px;
-  }
-  @media (max-width: 505px) {
-    ${props =>
-      props.columnHide.map(
-        column => `th:nth-child(${column}) { display: none;}`
-      )}
-  }
-`;
-
-const Tr = styled.tr`
-  background-color: ${props => (props.num % 2 ? '#eee' : '#fff')};
-  border-bottom: 1px solid #ccc;
-  td {
-    padding: 0 5px;
-  }
-  @media (max-width: 505px) {
-    ${props =>
-      props.columnHide.map(
-        column => `td:nth-child(${column}) { display: none;}`
-      )}
-  }
-`;
-
-export default function SermonTable({sermons, headers, columnHide, titleKey, sermonDirectory}) {
+const SermonTable = ({
+  sermons,
+  headers,
+  titleKey,
+  sermonDirectory,
+  renderLink,
+  passedSx
+}) => {
   const desiredColumns = headers
-    .map(item => item.key)
-    .filter(word => word !== 'title');
+    .map((item) => item.key)
+    .filter((word) => word !== titleKey);
   return (
-    <Table columnHide={columnHide}>
+    <Styled.table sx={passedSx}>
       <thead>
-        <tr>
-          {headers.map(column => (
-            <th key={column.key}>{column.heading}</th>
+        <Styled.tr>
+          {headers.map((column) => (
+            <Styled.th
+              key={column.key}
+              sx={{
+                display: [column.hideable ? 'none' : 'table-cell', 'table-cell']
+              }}
+            >
+              {column.heading}
+            </Styled.th>
           ))}
-          <tr />
-        </tr>
+          <th /> {/* This is for the download column */}
+        </Styled.tr>
       </thead>
       <tbody>
-        {sermons.map((sermon, index) => (
-          <Tr key={sermon.nid} num={index} columnHide={columnHide}>
-            <td>
-              <Link
-                to={`/${sermonDirectory}/${sermon.slug}`}
-                dangerouslySetInnerHTML={{
-                  __html: sermon[titleKey] ? sermon[titleKey] : 'untitled'
+        {sermons.map((sermon) => (
+          <Styled.tr key={sermon.nid}>
+            <Styled.td>
+              {renderLink(sermonDirectory, sermon.slug, sermon[titleKey])}
+            </Styled.td>
+            {desiredColumns.map((item) => (
+              <Styled.td
+                key={sermon.nid + item}
+                sx={{
+                  display: [item.hideable ? 'none' : 'table-cell', 'table-cell']
                 }}
-              />
-            </td>
-            {desiredColumns.map(item => (
-              <td key={sermon.nid + item}>
-                {sermon.hasOwnProperty(item) ? sermon[item] : ''}
-              </td>
+              >
+                {Object.prototype.hasOwnProperty.call(sermon, item) &&
+                  sermon[item]}
+              </Styled.td>
             ))}
-            <td>
-              <a href={sermon.url} target="_blank" rel="noopener noreferrer">
+            <Styled.td>
+              <Styled.a
+                href={sermon.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaDownload />
-              </a>
-            </td>
-          </Tr>
+              </Styled.a>
+            </Styled.td>
+          </Styled.tr>
         ))}
       </tbody>
-    </Table>
+    </Styled.table>
   );
-}
+};
 
 SermonTable.defaultProps = {
-  columnHide: [],
+  sermons: [],
+  headers: [],
   titleKey: 'title',
-  sermonDirectory: 'sermons'
+  sermonDirectory: 'sermons',
+  renderLink: () => {},
+  passedSx: {}
 };
 
 SermonTable.propTypes = {
-  columnHide: PropTypes.array,
-  headers: PropTypes.array.isRequired,
-  sermons: PropTypes.array.isRequired,
+  headers: PropTypes.array,
+  sermons: PropTypes.array,
   titleKey: PropTypes.string,
-  sermonDirectory: PropTypes.string
+  sermonDirectory: PropTypes.string,
+  renderLink: PropTypes.func,
+  passedSx: PropTypes.object
 };
+
+export default SermonTable;

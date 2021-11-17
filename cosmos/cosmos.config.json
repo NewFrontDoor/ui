@@ -1,5 +1,4 @@
 {
-  "proxiesPath": "./cosmos/cosmos.proxies",
   "staticPath": "static",
   "publicUrl": "/static/",
   "rootDir": "..",
@@ -14,5 +13,8 @@
         { "label": "1080p", "width": 1920, "height": 1080 }
       ]
     }
+  },
+  "webpack": {
+    "overridePath": "./cosmos/webpack.override.js"
   }
 }

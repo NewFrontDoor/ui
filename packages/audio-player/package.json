@@ -1,12 +1,16 @@
 {
   "name": "@newfrontdoor/audio-player",
-  "version": "0.1.6",
+  "version": "0.3.2",
   "description": "An audio element wrapper written in React with hooks",
   "license": "MIT",
   "author": "Alan Reader",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "source": "index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "babel": "babel src -d dist"
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
   },
   "files": [
     "dist"
@@ -18,18 +22,16 @@
     "hooks"
   ],
   "peerDependencies": {
-    "react": "^16.0"
+    "react": "^16.0",
+    "theme-ui": "^0.3.1"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.21",
-    "@emotion/styled": "^10.0.17",
     "prop-types": "^15.7.2",
     "react-icons": "^3.7.0",
-    "react-range": "^1.4.1"
+    "react-range": "^1.8.6"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^9.2.0"
+    "@testing-library/react": "^11.2.3"
   },
   "xo": false
 }

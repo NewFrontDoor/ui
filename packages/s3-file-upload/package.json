@@ -1,0 +1,31 @@
+{
+  "name": "@newfrontdoor/s3-file-upload",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "theme-ui": "^0.3.1"
+  },
+  "dependencies": {
+    "ky": "^0.26.0",
+    "prop-types": "^15.6.2",
+    "react-dropzone": "^11.2.4",
+    "react-query": "^3.6.0",
+    "react-spinners": "^0.6.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.2.3"
+  },
+  "xo": false
+}

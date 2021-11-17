@@ -1,0 +1,1 @@
+A Link component which wraps NextJs Link with theme-ui Link component, and also exports a navlink which takes a theme-ui variant of 'nav' for customising navigation links.

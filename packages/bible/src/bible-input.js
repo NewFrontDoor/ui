@@ -1,25 +1,29 @@
 import React, {useState} from 'react';
 import {extractAndValidate, fullBookTitle} from './passage-validation';
 
-function Output({isValid, arrays}) {
+function Output({isValid, references}) {
   if (isValid[0] === null) return 'Please enter a passage';
 
-  if (isValid.every(element => element === true)) {
-    return arrays
-      .map(collection => {
+  if (isValid.every((element) => element === true)) {
+    console.log(references);
+    return references
+      .map((collection) => {
+        if (collection === null) return null;
+        const {book, chapter = null, verse = null} = collection;
         return (
           collection &&
-          `${fullBookTitle(collection[0])} ${
-            collection[1] ? collection[1] : ''
-          }${collection[2] ? ':' + collection[2] : ''}`
+          `${fullBookTitle(book)} ${chapter ? chapter : ''}${
+            verse ? ':' + verse : ''
+          }`
         );
       })
       .map((string, index) => {
+        if (string === null) return null;
         if (index === 0) {
           return string;
         }
 
-        return (arrays[index][3] === 'to' ? ' - ' : '; ') + string;
+        return (references[index].connection === 'to' ? ' - ' : '; ') + string;
       });
   }
 
@@ -29,23 +33,25 @@ function Output({isValid, arrays}) {
   });
 }
 
-export default function BibleInput() {
+const BibleInput = () => {
   const [input, setInput] = useState('');
   const [valid, setValid] = useState([]);
-  const [arrays, setArrays] = useState([]);
+  const [references, setReferences] = useState([]);
 
-  function handleInputChange(e) {
-    setInput(e.currentTarget.value);
-    const [arrays, validated] = extractAndValidate(e.currentTarget.value);
+  function handleInputChange(event) {
+    setInput(event.currentTarget.value);
+    const [references, validated] = extractAndValidate(
+      event.currentTarget.value
+    );
     setValid(validated);
-    setArrays(arrays);
+    setReferences(references);
   }
 
-  const isValid = valid.map(array => {
-    if (Array.isArray(array) === false) return null;
-    if (array.some(e => e === 'incomplete')) return 'incomplete';
-    if (array.some(e => e === 'non-sequential')) return 'non-sequential';
-    return array.every(e => e === true);
+  const isValid = valid.map((object) => {
+    if (Object.values(object).includes('incomplete')) return 'incomplete';
+    if (Object.values(object).includes('non-sequential'))
+      return 'non-sequential';
+    return Object.values(object).every((value) => value === true);
   });
 
   return (
@@ -53,8 +59,10 @@ export default function BibleInput() {
       <h2>Passage</h2>
       <input value={input} onChange={handleInputChange} />
       <p>
-        <Output isValid={isValid} arrays={arrays} />
+        <Output isValid={isValid} references={references} />
       </p>
     </div>
   );
-}
+};
+
+export default BibleInput;

@@ -1,21 +1,22 @@
-import bible from './bible.json';
+import bible from './bible-data.json';
 const books = Object.keys(bible);
 
 function extractAndValidate(value) {
-  const book = [];
-  const chapter = [];
-  const verse = [];
-  const splits = value.match(/(?:-|,+\s|;+\s|\s\s|to|and)/g);
+  let storedRef = {
+    book: undefined,
+    chapter: undefined,
+    verse: undefined
+  };
+  const splits = value.match(/-|,+\s|;+\s|\s\s|to|and/g);
   const connections =
     splits &&
-    splits.map(elem => {
-      return elem
-        .replace(/(?:-|to)/g, 'to')
-        .replace(/(?:,+\s|\s\s|;+\s|and)/g, 'and');
+    splits.map((element) => {
+      return element
+        .replace(/-|to/g, 'to')
+        .replace(/,+\s|\s\s|;+\s|and/g, 'and');
     });
-  console.log(connections);
   // --- Start manipulation of incoming value
-  const arrays = value
+  const references = value
     .toLowerCase()
     // Fix any numerical mistypes or variants
     .replace(/!|one|first|1st/g, '1')
@@ -29,15 +30,19 @@ function extractAndValidate(value) {
     .replace(/\(/g, '9')
     .replace(/\)/g, '0')
     // Split into individual verse references
-    .split(/(?:-|,+\s|;+\s|\s\s|to|and)/)
+    .split(/-|,+\s|;+\s|\s\s|to|and/)
     .map((item, index) => {
       if (!item) return null;
+      /* ******************************************* */
+      /* This is the reference-level splitting stuff */
+      /* ******************************************* */
+
       // Remove leading/trailing spaces and split chapter and verse to separate array elements
       const raw = item.trim().split(/[\s:.,;'"/]+/);
 
       // If a space was omitted between book number and name, put one in
       if (raw[0].match(/[\d!@#][A-Za-z]/)) {
-        const addspace = raw[0].split(/(\D[A-Za-z0-9]+)/);
+        const addspace = raw[0].split(/(\D[A-Za-z\d]+)/);
         raw[0] = `${addspace[0]} ${addspace[1]}`;
       }
 
@@ -54,86 +59,102 @@ function extractAndValidate(value) {
         raw.splice(0, 1, splitString[0], splitString[1]);
       }
 
-      // If the chapter is omitted from this array member
-      // Grab the one from the previous array member
-      // Same with the book
+      /* ************************************* */
+      /* This is the adding missing info stuff */
+      /* ************************************* */
+
+      // If the chapter or book is omitted from this
+      // array member grab the one from storedRef
       if (
         raw[1] === undefined &&
-        book[index - 1] !== undefined &&
-        chapter[index - 1] !== undefined &&
-        verse[index - 1] !== undefined &&
+        storedRef.book !== undefined &&
+        storedRef.chapter !== undefined &&
+        storedRef.verse !== undefined &&
         index !== 0
       ) {
-        raw.unshift(chapter[index - 1]);
+        raw.unshift(storedRef.chapter); // Chapter
       }
 
-      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(book[index - 1]);
+      if (raw[0].match(/^[^a-zA-Z]+$/)) raw.unshift(storedRef.book); // Book
 
-      // Save the book in an array so that the it can be retrieved as above
-      book.push(raw[0]);
-      chapter.push(raw[1]);
-      verse.push(raw[2]);
-      // Return this transformed element of the array
-      raw[3] = index === 0 ? 'init' : connections[index - 1];
-      return raw;
+      // Set the relation/connection to previous element
+      const connection = index === 0 ? 'init' : connections[index - 1];
+
+      const bibleRef = {
+        connection,
+        book: raw[0],
+        chapter: raw[1],
+        verse: raw[2]
+      };
+
+      // Duplicate the final object into storedRef so
+      // that it can be retrieved in next array item
+      storedRef = bibleRef; // Defined line 5
+
+      return bibleRef;
     });
   // --- End manipulation of incoming value
 
-  const validation = arrays.map((item, index) => {
+  const validation = references.map((item, index) => {
     if (!item) return false;
-    return validate(arrays, item, index);
+    return validate(references, item, index);
   });
 
-  return [arrays, validation];
+  return [references, validation];
 }
 
 function fullBookTitle(book) {
   if (!book || book.length < 2) return 'no book';
 
-  return books.find(item => {
+  return books.find((item) => {
     return item.toLowerCase().startsWith(book.toLowerCase());
   });
 }
 
-function validate(arrays, item, index) {
-  const [book, chapter, verse, connection] = item;
+function validate(references, item, index) {
+  const {connection, book, chapter, verse} = item;
   const fullTitle = fullBookTitle(book);
-  const valid = [false, false, false];
+  const valid2 = {
+    book: false,
+    chapter: false,
+    verse: false,
+    meta: null
+  };
 
   // Check if the item is actually a valid text
-  valid[0] = book && Object.hasOwnProperty.call(bible, fullTitle);
-  valid[1] = chapter
-    ? valid[0] && Object.hasOwnProperty.call(bible[fullTitle], chapter)
+  valid2.book = book && books.includes(fullTitle);
+  valid2.chapter = chapter
+    ? valid2.book && Object.hasOwnProperty.call(bible[fullTitle], chapter)
     : true;
-  valid[2] = verse
-    ? valid[1] && bible[fullTitle][chapter] >= verse && verse !== '0'
+  valid2.verse = verse
+    ? valid2.chapter && bible[fullTitle][chapter] >= verse && verse !== '0'
     : true;
 
   // Check if passages are sequential,
   // and push the outcome to the valid array
-  const prevValue = index > 0 ? arrays[index - 1] : null;
-  if (index > 0 && connection === 'to' && book === prevValue[0]) {
-    const chapMath = Number(chapter) - Number(prevValue[1]);
-    const verseMath = Number(verse) - Number(prevValue[2]);
-    if (chapMath < 0) valid.push('non-sequential');
-    if (chapMath > 0) valid.push(true);
+  const previousValue = index > 0 ? references[index - 1] : null;
+  if (index > 0 && connection === 'to' && book === previousValue.book) {
+    const chapMath = Number(chapter) - Number(previousValue.chapter);
+    const verseMath = Number(verse) - Number(previousValue.verse);
+    if (chapMath < 0) valid2.meta = 'non-sequential';
+    if (chapMath > 0) valid2.meta = true;
     if (chapMath === 0) {
-      if (Number.isNaN(verseMath)) valid.push('incomplete');
-      if (verseMath <= 0) valid.push('non-sequential');
-      if (verseMath > 0) valid.push(true);
+      if (Number.isNaN(verseMath)) valid2.meta = 'incomplete';
+      if (verseMath <= 0) valid2.meta = 'non-sequential';
+      if (verseMath > 0) valid2.meta = true;
     }
   } else if (
     index > 0 &&
     connection === 'to' &&
-    books.findIndex(title => title === fullBookTitle(book)) <
-      books.findIndex(title => title === fullBookTitle(prevValue[0]))
+    books.findIndex((title) => title === fullBookTitle(book)) <
+      books.findIndex((title) => title === fullBookTitle(previousValue.book))
   ) {
-    valid.push('non-sequential');
+    valid2.meta = 'non-sequential';
   } else {
-    valid.push(true);
+    valid2.meta = true;
   }
 
-  return valid;
+  return valid2;
 }
 
 export {extractAndValidate, fullBookTitle};

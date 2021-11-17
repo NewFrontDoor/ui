@@ -1,6 +1,8 @@
+/** @jsx jsx */
 import React from 'react';
-import fetch from 'isomorphic-fetch';
+import {jsx} from 'theme-ui';
 import {ApiContext} from '@newfrontdoor/api-config';
+import ky from 'ky';
 import CurrentSeries from './current-series';
 
 class CurrentSeriesContainerDrupal extends React.PureComponent {
@@ -15,7 +17,7 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
 
   componentDidMount() {
     this.getCurrentSeries()
-      .then(response => {
+      .then((response) => {
         // This transform could moved out into generic (Drupal => NFD) component structure for sermon series
         const series = response[0];
         this.setState({
@@ -28,18 +30,18 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
           loading: false
         });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           error
         });
       });
   }
 
-  getCurrentSeries = () => {
-    return fetch(
-      `${this.props.baseUrl}current_series_api?display_id=services_1`
-    ).then(resp => resp.json());
-  };
+  getCurrentSeries() {
+    return ky
+      .get(`${this.props.baseUrl}current_series_api?display_id=services_1`)
+      .json();
+  }
 
   render() {
     return (
@@ -51,7 +53,7 @@ class CurrentSeriesContainerDrupal extends React.PureComponent {
   }
 }
 
-export default function() {
+export default function () {
   return (
     <ApiContext.Consumer>
       {({baseUrl}) => <CurrentSeriesContainerDrupal baseUrl={baseUrl} />}

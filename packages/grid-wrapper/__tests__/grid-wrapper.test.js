@@ -1,19 +1,10 @@
-import React from 'react';
-import {render, cleanup, wait} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import fixtures from '../__fixtures__/gridblock';
-
-const [gridBlock] = fixtures;
-
-afterEach(cleanup);
+import {render} from '@testing-library/react';
+import gridblock from '../__fixtures__/gridblock';
 
 test('Displays a grid with grid items', async () => {
-  const {component: GridBlock, props} = gridBlock;
-  const {baseElement} = render(<GridBlock {...props} />);
+  const {baseElement} = render(gridblock);
 
   const actual = 'firstVIEW PAGEsecondVIEW PAGEthirdVIEW PAGE';
 
-  await wait(() => {
-    expect(baseElement).toHaveTextContent(actual);
-  });
+  expect(baseElement).toHaveTextContent(actual);
 });

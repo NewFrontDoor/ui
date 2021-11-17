@@ -1,63 +1,58 @@
 /** @jsx jsx */
-import {css, jsx} from '@emotion/core';
-import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import {Styled, Flex, jsx} from 'theme-ui';
 import format from 'date-fns/format';
-import Link from './link';
 
-const ContentWrapper = styled('div')`
-  display: flex;
-  flex-flow: column;
-  margin: auto;
-  width: 100vw;
-  max-width: 920px;
-  padding-top: 40px;
-  @media (min-width: 420px) {
-    min-height: 600px;
-  }
-`;
-
-const Content = styled('div')`
-  flex: 1 0 auto;
-  width: auto;
-  @media (min-width: 420px) {
-    padding-top: 23.5px;
-  }
-`;
-
-function PostPage({post, dateFormat}) {
-  function createMarkup() {
-    return {__html: post.body};
-  }
-
+const PostPage = ({post, dateFormat, link, blockText}) => {
+  const {title, author, _createdAt, categories, date, body} = post;
   return (
-    <ContentWrapper>
-      <h2>{post.title}</h2>
-      <small>by {post.author}</small>
-      <small>
-        Posted on {format(new Date(post._createdAt), dateFormat)}
-      </small>
-      <small
-        css={css`
-          display: none;
-          @media (min-width: 420px) {
-            display: block;
-          }
-        `}
-      >
+    <Flex
+      sx={{
+        flexFlow: 'row wrap',
+        margin: 'auto',
+        width: '100vw',
+        maxWidth: '920px',
+        paddingTop: '40px',
+        minHeight: [null, '600px']
+      }}
+    >
+      <Styled.h2>{title}</Styled.h2>
+      <small>by {author}</small>
+      <small>Posted on {format(new Date(_createdAt), dateFormat)}</small>
+      <small sx={{display: ['none', 'block']}}>
         <ul>
-          {post.categories.map(category => (
-            <li key={category.title + post.date}>
-              <Link {...category} />
-            </li>
+          {categories.map((category) => (
+            <li key={category.title + date}>{link(category)}</li>
           ))}
         </ul>
       </small>
-      <Content>
-        <div dangerouslySetInnerHTML={createMarkup()} />
-      </Content>
-    </ContentWrapper>
+      <div
+        sx={{
+          flex: '1 0 auto',
+          width: 'auto',
+          maxWidth: ['24em', '32em'],
+          paddingTop: [null, '23.5px']
+        }}
+      >
+        {blockText(body)}
+      </div>
+    </Flex>
   );
-}
+};
+
+PostPage.propTypes = {
+  dateFormat: PropTypes.string,
+  link: PropTypes.func.isRequired,
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    author: PropTypes.string,
+    _createdAt: PropTypes.string,
+    categories: PropTypes.array,
+    date: PropTypes.string,
+    body: PropTypes.any
+  }).isRequired,
+  blockText: PropTypes.func.isRequired
+};
 
 PostPage.defaultProps = {
   dateFormat: 'dddd, MMMM do yyyy'

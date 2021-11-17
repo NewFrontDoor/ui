@@ -9,7 +9,7 @@ const Container = styled('div')`
   display: grid;
   grid-gap: 0.5rem;
   @media (min-width: 420px) {
-    grid-template-columns: ${props => props.columns};
+    grid-template-columns: ${(props) => props.columns};
     grid-template-rows: 1fr;
     grid-gap: 20px;
   }
@@ -26,7 +26,7 @@ const Action = styled('a')`
   text-align: center;
   border-color: #444446;
   border-radius: 40px;
-  grid-column-start: ${props => props.column + 1};
+  grid-column-start: ${(props) => props.column + 1};
   color: #444446;
   :hover {
     background-color: #444446;
@@ -34,7 +34,7 @@ const Action = styled('a')`
     cursor: pointer;
   }
   @media (min-width: 420px) {
-    grid-column-start: ${props => props.column + 2};
+    grid-column-start: ${(props) => props.column + 2};
   }
 `;
 
@@ -49,7 +49,7 @@ const Direction = styled('a')`
   text-align: center;
   border-color: #444446;
   border-radius: 40px;
-  grid-column-start: ${props => props.column + 1};
+  grid-column-start: ${(props) => props.column + 1};
   color: #444446;
   :hover {
     background-color: #444446;
@@ -57,7 +57,7 @@ const Direction = styled('a')`
     cursor: pointer;
   }
   @media (min-width: 420px) {
-    grid-column-start: ${props => props.column + 2};
+    grid-column-start: ${(props) => props.column + 2};
   }
 `;
 
@@ -108,7 +108,7 @@ export default function MapOverlay({heading, details, actions, lat, long}) {
     <Overlay>
       {heading ? <HeadingH2>{heading}</HeadingH2> : ''}
       {details.length > 0
-        ? details.map(detail => {
+        ? details.map((detail) => {
             return (
               <DetailWrapper key={detail.value}>
                 {types[detail.type]}

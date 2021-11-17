@@ -1,6 +1,6 @@
 {
   "name": "@newfrontdoor/search",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "An collection of search components",
   "keywords": [
     "react",
@@ -10,22 +10,26 @@
   ],
   "author": "Alan Reader",
   "license": "MIT",
-  "scripts": {
-    "babel": "babel src -d dist"
-  },
+  "source": "src/index.js",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "scripts": {
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
+  },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "use-debounce": "^3.4.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^9.2.0"
+    "@testing-library/react": "^11.2.3"
   },
   "peerDependencies": {
-    "react": "^16.0"
+    "react": "^16.0",
+    "theme-ui": "^0.3.1"
   },
   "xo": false
 }

@@ -8,7 +8,7 @@ function runFilter(searchArray, dataset, fields, inclusive) {
     if (inclusive) return [...new Set(collection.flat())];
 
     // Return intersecting array (exclusive)
-    return collection.reduce((a, c) => a.filter(i => c.includes(i)));
+    return collection.reduce((a, c) => a.filter((i) => c.includes(i)));
   }
 
   // If collection has no values, return empty array
@@ -18,28 +18,29 @@ function runFilter(searchArray, dataset, fields, inclusive) {
 function searchFieldSet(searchArray, data, fields) {
   // Creates array of searchable fields based on value of field.searchable
   const requiredFields = fields
-    .filter(field => field.searchable === true)
-    .map(field => field.key);
+    .filter((field) => field.searchable === true)
+    .map((field) => field.key);
 
   // Searches those fields for each string in searchArray
-  return searchArray.map(value => {
-    return data.filter(item => {
+  return searchArray.map((value) => {
+    return data.filter((item) => {
       // Returns item if the string is found in one of the fields
+      // optional chaining allows for field to be empty on item
       return requiredFields
-        .map(field => item[field].toLowerCase().includes(value))
-        .some(val => val === true);
+        .map((field) => item[field]?.toLowerCase().includes(value))
+        .some((value_) => value_ === true);
     });
   });
 }
 
 export const searchData = (
-  searchParams,
+  searchParameters,
   dataCollection,
   fields,
   returnEmptySubset
 ) => {
   // Destructure searchParams into the search string, and filter method
-  const {searchString, isInclusive} = searchParams;
+  const {searchString, isInclusive} = searchParameters;
 
   // Display all data by default if there is no search string.
   if (dataCollection && searchString === '') {
@@ -50,7 +51,7 @@ export const searchData = (
   if (dataCollection && searchString !== '') {
     // Separate out an array of quoted strings from the searchString
     const quotedValues = [
-      ...[...searchString.matchAll(/"([^"]+)"/g)].map(i => i[1].toLowerCase())
+      ...[...searchString.matchAll(/"([^"]+)"/g)].map((i) => i[1].toLowerCase())
     ];
 
     // Create an array from searchString without these inquoted values
@@ -62,7 +63,7 @@ export const searchData = (
       .toLowerCase()
       .split(' ')
       // Remove any empty items, otherwise all will match once filtered
-      .filter(item => item !== '');
+      .filter((item) => item !== '');
 
     // Filter dataCollection and intersect returned arrays according to isInclusive value.
     const initialFilteredValues = runFilter(
@@ -96,10 +97,10 @@ export const searchData = (
   return [];
 };
 
-export const searchArray = searchParams => {
-  const {searchString} = searchParams;
+export const searchArray = (searchParameters) => {
+  const {searchString} = searchParameters;
   const quotedValues = [
-    ...[...searchString.matchAll(/"([^"]+)"/g)].map(i => i[1].toLowerCase())
+    ...[...searchString.matchAll(/"([^"]+)"/g)].map((i) => i[1].toLowerCase())
   ];
 
   // Create an array from searchString without these inquoted values
@@ -111,7 +112,7 @@ export const searchArray = searchParams => {
     .toLowerCase()
     .split(' ')
     // Remove any empty items, otherwise all will match once filtered
-    .filter(item => item !== '');
+    .filter((item) => item !== '');
 
   return searchArrayWithoutQuotedValues.concat(quotedValues);
 };

@@ -1,26 +1,28 @@
 {
   "name": "@newfrontdoor/carousel",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "babel": "babel src -d dist"
+    "prepare": "microbundle --no-compress",
+    "watch": "microbundle watch --no-compress"
   },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "@emotion/core": "^10.0",
-    "@emotion/styled": "^10.0",
-    "mineral-ui": "^0.58.0",
-    "react": "^16.0"
+    "react": "^16.8.6",
+    "theme-ui": "^0.3.1"
   },
   "dependencies": {
-    "embla-carousel-react": "^1.0.3"
+    "embla-carousel": "^4.1.5",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^9.2.0"
+    "@testing-library/react": "^11.2.3"
   },
   "xo": false
 }

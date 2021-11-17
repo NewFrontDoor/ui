@@ -1,16 +1,16 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from 'theme-ui';
 import PropTypes from 'prop-types';
 import Post from './post';
-import DateFilter from './date-filter';
 
-export default function Blog({posts, category, dateFormat}) {
+const Blog = (props) => {
+  const {posts, category} = props;
   return (
     <div>
-      <DateFilter />
       {posts
-        .filter(post => {
-          if (category && Object.keys(category).length !== 0) {
-            return post.categories.map(a => a.title).includes(category);
+        .filter((post) => {
+          if (category && Object.keys(category).length > 0) {
+            return post.categories.map((a) => a.title).includes(category);
           }
 
           return post;
@@ -20,33 +20,27 @@ export default function Blog({posts, category, dateFormat}) {
             new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()
           );
         })
-        .map(post => (
-          <Post
-            key={post.title}
-            title={post.title}
-            date={post._createdAt}
-            dateFormat={dateFormat}
-            categories={post.categories}
-            body={post.body}
-          />
+        .map((post) => (
+          <Post key={post.title} {...post} {...props} />
         ))}
     </div>
   );
-}
+};
 
 Blog.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       _createdAt: PropTypes.string.isRequired,
-      body: PropTypes.string,
-      categories: PropTypes.string.isRequired
+      body: PropTypes.oneOf([PropTypes.array, PropTypes.string]).isRequired,
+      categories: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string
+        })
+      ).isRequired
     })
   ).isRequired,
-  category: PropTypes.objectOf(PropTypes.string).isRequired,
-  dateFormat: PropTypes.string
+  category: PropTypes.objectOf(PropTypes.string)
 };
 
-Blog.defaultProps = {
-  dateFormat: 'dddd, MMMM do yyyy'
-};
+export default Blog;

@@ -1,59 +1,78 @@
-import React, {useState} from 'react';
+/** @jsx jsx */
+import {jsx, Label, Input} from 'theme-ui';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {searchData, searchArray} from './filter-utility';
+import {useDebouncedCallback} from 'use-debounce';
 
-export default function SearchCollection({
+const SearchCollection = ({
   dataCollection,
   setSubset,
   fields,
   labels,
   passSearchArray,
-  returnEmptySubset
-}) {
+  returnEmptySubset,
+  passedSx,
+  debounceTime
+}) => {
   const [searchString, setSearchString] = useState('');
   const [isInclusive, setIsInclusive] = useState(false);
+  const [debouncedCallback] = useDebouncedCallback(
+    // Function
+    (value) => {
+      setSearchString(value);
+    },
+    // Delay in ms
+    debounceTime
+  );
 
-  function updateSubset(value) {
-    setSearchString(value);
-    const searchParams = {
-      searchString: value,
+  useEffect(() => {
+    const searchParameters = {
+      searchString,
       isInclusive
     };
-    passSearchArray(searchArray(searchParams));
+    passSearchArray(searchArray(searchParameters));
     const subset = searchData(
-      searchParams,
+      searchParameters,
       dataCollection,
       fields,
       returnEmptySubset
     );
     setSubset(subset);
-  }
+  }, [
+    searchString,
+    isInclusive,
+    dataCollection,
+    fields,
+    returnEmptySubset,
+    passSearchArray,
+    setSubset
+  ]);
 
   return (
-    <div>
-      <label htmlFor="searchbox">{labels.searchbox} </label>
-      <input
+    <div sx={passedSx}>
+      <Label htmlFor="searchBox">{labels.searchbox} </Label>
+      <Input
         type="text"
         id="searchBox"
         name="searchBox"
         disabled={!dataCollection}
-        value={searchString}
-        onChange={e => updateSubset(e.target.value || '')}
+        onChange={(e) => debouncedCallback(e.target.value)}
       />
-      <label htmlFor="searchbox">{labels.checkbox} </label>
+      <Label htmlFor="isInclusive">{labels.checkbox} </Label>
       <input
         type="checkbox"
         id="isInclusive"
         name="isInclusive"
         checked={isInclusive}
         disabled={!dataCollection}
-        onChange={e => {
+        onChange={(e) => {
           setIsInclusive(e.target.checked);
         }}
       />
     </div>
   );
-}
+};
 
 SearchCollection.defaultProps = {
   dataCollection: null,
@@ -62,14 +81,20 @@ SearchCollection.defaultProps = {
     checkbox: 'Use inclusive mode:'
   },
   passSearchArray: () => {},
-  returnEmptySubset: false
+  returnEmptySubset: false,
+  passedSx: {},
+  debounceTime: 1000
 };
 
 SearchCollection.propTypes = {
   dataCollection: PropTypes.array,
   setSubset: PropTypes.func.isRequired,
-  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object),
   labels: PropTypes.objectOf(PropTypes.string),
   passSearchArray: PropTypes.func,
-  returnEmptySubset: PropTypes.bool
+  returnEmptySubset: PropTypes.bool,
+  passedSx: PropTypes.object,
+  debounceTime: PropTypes.number
 };
+
+export default SearchCollection;
