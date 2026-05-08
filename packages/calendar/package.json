@@ -23,10 +23,8 @@
     "@tanstack/react-query": "^5.100.9",
     "date-fns": "^2.11.1",
     "ky": "^0.26.0",
-    "lodash": "^4.17.19",
     "polished": "^4.1.0"
   },
-  
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
