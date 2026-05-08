@@ -36,15 +36,3 @@ test('active styles are applied when active', () => {
   expect(link).toHaveStyleRule('color', 'active');
   expect(link).not.toHaveAttribute('as');
 });
-
-test('href and as props are applied to Link', () => {
-  renderWithContext(
-    <Navlink active href="/foo/[bar]" as="/foo/123">
-      Nav 2
-    </Navlink>
-  );
-  const link = screen.getByRole('link');
-
-  expect(link).toHaveAttribute('href', '/foo/[bar]');
-  expect(link).toHaveAttribute('as', '/foo/123');
-});

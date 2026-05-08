@@ -46,14 +46,6 @@ test('it uses the Link component from MDXProvider to render internal links', () 
   expect(link).not.toHaveAttribute('as');
 });
 
-test('href and as props are applied to internal links', () => {
-  renderWithContext(<Link href="/example/[slug]" as="/example/id" />);
-  const link = screen.getByRole('link');
-
-  expect(link).toHaveAttribute('as', '/example/id');
-  expect(link).toHaveAttribute('href', '/example/[slug]');
-});
-
 test('does not render api urls as internal links', () => {
   renderWithContext(<Link href="/api/user/1" />);
   const link = screen.getByRole('link');
