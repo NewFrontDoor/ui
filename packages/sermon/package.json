@@ -3,31 +3,34 @@
   "version": "2.1.0",
   "license": "MIT",
   "source": "src/index.js",
-  "main": "dist/index.js",
-  "module": "dist/index.module.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "scripts": {
-    "prepare": "microbundle --no-compress",
-    "watch": "microbundle watch --no-compress"
+    "build": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --watch"
   },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "@emotion/core": "^10.0",
-    "@emotion/styled": "^10.0",
-    "react": "^16.0",
-    "theme-ui": "^0.3.1"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "react": "^19.2.0",
+    "theme-ui": "^0.17.4"
   },
   "dependencies": {
-    "@newfrontdoor/api-config": "^0.1.0",
-    "@newfrontdoor/audio-player": "^0.3.1",
+    "@newfrontdoor/api-config": "workspace:*",
+    "@newfrontdoor/audio-player": "workspace:*",
+    "@tanstack/react-query": "^5.100.9",
     "ky": "^0.26.0",
-    "prop-types": "^15.6.0",
-    "react-global-configuration": "^1.3.0",
-    "react-icons": "^3.7.0",
-    "react-query": "^3.6.0",
-    "react-spinners": "^0.6.1",
-    "react-table": "^7.6.3"
+    "react-icons": "^5.6.0",
+    "react-spinners": "^0.17.0"
   },
-  "xo": false
+  
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  }
 }

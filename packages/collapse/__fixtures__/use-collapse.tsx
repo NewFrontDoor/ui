@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {Fragment, useRef} from 'react';
+import {useRef} from 'react';
 import {useCollapse} from '../src';
 
 type CollapseFixtureProps = {
@@ -8,17 +6,19 @@ type CollapseFixtureProps = {
 };
 
 const CollapseFixture = ({initiallyExpanded}: CollapseFixtureProps) => {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null!);
+
   const {getToggleProps, getCollapseProps} = useCollapse({
     initiallyExpanded,
     contentRef
   });
 
   return (
-    <Fragment>
+    <>
       <button {...getToggleProps()} type="button">
         Toggle Me
       </button>
+
       <div {...getCollapseProps()}>
         <div ref={contentRef}>
           {Array.from({length: 10}, (_, key) => (
@@ -31,7 +31,7 @@ const CollapseFixture = ({initiallyExpanded}: CollapseFixtureProps) => {
           ))}
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

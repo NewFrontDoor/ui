@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {S3Dropzone} from '../src';
 
 const host = 'https://sermons.crossroadshobart.org';

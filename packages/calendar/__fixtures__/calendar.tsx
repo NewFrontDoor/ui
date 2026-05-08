@@ -1,8 +1,8 @@
-import React from 'react';
+
 import {format, differenceInDays} from 'date-fns';
 import {Calendar} from '../src';
 import events from './events.json';
-import {CalendarEvent} from '../src/types';
+import type {CalendarEvent} from '../src/types';
 
 const client = {
   async fetchEvents(_date: string): Promise<CalendarEvent[]> {
@@ -32,7 +32,7 @@ const client = {
 };
 
 function handleNav(url: string): void {
-  alert(url); // eslint-disable-line no-alert
+  alert(url);  
 }
 
 export default (

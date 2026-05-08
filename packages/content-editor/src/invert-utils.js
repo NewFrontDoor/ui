@@ -26,9 +26,9 @@ export function toSlate(content) {
       ...(block.markDefs ? '' : ''),
       children: block.children.map((item) => {
         if (item.marks.some((r) => defsKey.includes(r))) {
-          const customMarks = item.marks.filter(
+          /* const customMarks = item.marks.filter(
             (item) => !standardMarks.has(item)
-          );
+          ); */
           const inherentMarks = item.marks.filter((item) =>
             standardMarks.has(item)
           );

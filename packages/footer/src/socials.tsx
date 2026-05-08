@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import {Fragment, FC} from 'react';
-import {jsx, Link} from 'theme-ui';
+import type { FC} from 'react';
+import {Link} from 'theme-ui';
 import {
   FaEnvelope,
   FaPodcast,
@@ -12,7 +11,7 @@ import {
 
 const Socials: FC = () => {
   return (
-    <Fragment>
+    <>
       <Link
         sx={{
           color: 'white',
@@ -79,7 +78,7 @@ const Socials: FC = () => {
       >
         <FaPodcast />
       </Link>
-    </Fragment>
+    </>
   );
 };
 

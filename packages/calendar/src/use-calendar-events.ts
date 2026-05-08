@@ -1,5 +1,7 @@
-import React, {useContext, useReducer, Dispatch} from 'react';
-import {useQuery, QueryStatus} from 'react-query';
+import type { Dispatch} from 'react';
+import {createContext, useContext, useReducer} from 'react';
+import type { QueryStatus} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {
   addMonths,
   subMonths,
@@ -8,19 +10,18 @@ import {
   subDays,
   subWeeks
 } from 'date-fns/fp';
-import {update} from 'lodash/fp';
 
 import {buildCalendarData} from './utilities/date-utils-grid';
 
-import {
+import type {
   CalendarData,
   CalendarClient,
   CalendarView,
   CalendarState
 } from './types';
 
-export const CalendarDispatch = React.createContext<Dispatch<Action>>(
-  (_: Action) => undefined
+export const CalendarDispatch = createContext<Dispatch<Action>>(
+  () => undefined
 );
 
 export const useCalendarDispatch = (): Dispatch<Action> =>
@@ -45,14 +46,31 @@ type Action =
   | {type: 'decrement-jump'}
   | {type: 'increment-jump'};
 
-const previousYear = update('currentDate', subMonths(12));
-const previousMonth = update('currentDate', subMonths(1));
-const previousWeek = update('currentDate', subWeeks(1));
-const previousDay = update('currentDate', subDays(1));
-const nextDay = update('currentDate', addDays(1));
-const nextWeek = update('currentDate', addWeeks(1));
-const nextMonth = update('currentDate', addMonths(1));
-const nextYear = update('currentDate', addMonths(12));
+function updateCurrentDate(
+  state: CalendarState,
+  updateDate: (date: Date) => Date
+): CalendarState {
+  return {
+    ...state,
+    currentDate: updateDate(state.currentDate)
+  };
+}
+
+const previousYear = (state: CalendarState) =>
+  updateCurrentDate(state, subMonths(12));
+const previousMonth = (state: CalendarState) =>
+  updateCurrentDate(state, subMonths(1));
+const previousWeek = (state: CalendarState) =>
+  updateCurrentDate(state, subWeeks(1));
+const previousDay = (state: CalendarState) =>
+  updateCurrentDate(state, subDays(1));
+const nextDay = (state: CalendarState) => updateCurrentDate(state, addDays(1));
+const nextWeek = (state: CalendarState) =>
+  updateCurrentDate(state, addWeeks(1));
+const nextMonth = (state: CalendarState) =>
+  updateCurrentDate(state, addMonths(1));
+const nextYear = (state: CalendarState) =>
+  updateCurrentDate(state, addMonths(12));
 
 function decrementStep(state: CalendarState): CalendarState {
   switch (state.calendarView) {
@@ -175,13 +193,11 @@ export function useCalendarEvents(
 
   const currentISODate = currentDate.toISOString();
 
-  const {data, status, error} = useQuery(
-    currentISODate,
-    async () => client.fetchEvents(currentISODate),
-    {
-      keepPreviousData: true
-    }
-  );
+  const {data, status, error} = useQuery({
+    queryKey: [currentISODate],
+    queryFn: async () => client.fetchEvents(currentISODate),
+    placeholderData: (previousData) => previousData
+  });
 
   const calendarData = buildCalendarData(
     {calendarView, currentDate},

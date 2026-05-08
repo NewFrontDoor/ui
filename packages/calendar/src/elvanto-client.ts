@@ -10,7 +10,7 @@ import {
   differenceInDays
 } from 'date-fns';
 
-import {CalendarEvent} from './types';
+import type {CalendarEvent} from './types';
 
 type ElvantoClient = {
   fetchEvents: (date: string) => Promise<CalendarEvent[]>;

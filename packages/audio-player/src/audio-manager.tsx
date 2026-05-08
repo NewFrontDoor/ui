@@ -1,7 +1,6 @@
-/** @jsx jsx */
-import {jsx, Button, ButtonProps} from 'theme-ui';
-import PropTypes from 'prop-types';
-import {FC, HTMLProps, ReactNode} from 'react';
+import type { ButtonProps} from 'theme-ui';
+import {Button} from 'theme-ui';
+import type {FC, HTMLProps, ReactNode} from 'react';
 import {MdPlayArrow as Play, MdPause as Pause} from 'react-icons/md';
 import useAudioManager, {
   useAudioPlayer,
@@ -10,7 +9,8 @@ import useAudioManager, {
   AudioStateContext,
   AudioDispatchContext
 } from './use-audio-manager';
-import StyledPlayer, {StyledPlayerProps} from './styled-player';
+import type {StyledPlayerProps} from './styled-player';
+import StyledPlayer from './styled-player';
 
 type AudioManagerProps = {
   initialSrc?: string;
@@ -34,11 +34,11 @@ export const AudioManager: FC<AudioManagerProps> = ({
   );
 };
 
-AudioManager.propTypes = {
+/* AudioManager.propTypes = {
   initialSrc: PropTypes.string,
   isPlayOnLoad: PropTypes.bool,
   children: PropTypes.node.isRequired
-};
+}; */
 
 type PlayButtonProps = ButtonProps & {
   src: string;
@@ -71,11 +71,11 @@ export const AudioPlayer: FC<StyledPlayerProps> = (props) => {
   return <StyledPlayer {...props} />;
 };
 
-PlayButton.propTypes = {
+/* PlayButton.propTypes = {
   src: PropTypes.string.isRequired,
   variant: PropTypes.string,
   children: PropTypes.node
-};
+}; */
 
 type NativePlayerProps = HTMLProps<HTMLAudioElement>;
 

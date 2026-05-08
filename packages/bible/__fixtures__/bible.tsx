@@ -1,11 +1,8 @@
-/** @jsx jsx */
-import {jsx, Text} from 'theme-ui';
-import PropTypes from 'prop-types';
 import {Bible} from '../src';
 
 const BIBLE = 'https://serverless.newfrontdoor.org/bible';
 
-const Blockquote = (props) => {
+const Blockquote = (props: any) => {
   const {passage} = props;
   return (
     <blockquote
@@ -29,25 +26,22 @@ const Blockquote = (props) => {
       }}
     >
       <Bible {...props} />
-      <Text
-        appearance="prose"
-        align="end"
-        as="i"
-        sx={{
+      <i sx={{
+          alignContent: 'end',
           marginTop: '1rem',
           display: 'block'
         }}
       >
         {' '}
         – {passage}
-      </Text>
+      </i>
     </blockquote>
   );
 };
 
-Blockquote.propTypes = {
+/* Blockquote.propTypes = {
   passage: PropTypes.string.isRequired
-};
+}; */
 
 const fixtures = {
   Inline: <Bible url={BIBLE} passage="Romans 8:31-39" />,

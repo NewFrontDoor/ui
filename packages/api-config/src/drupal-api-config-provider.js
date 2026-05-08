@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
+import {createContext, useContext} from 'react';
 
-export const ApiContext = React.createContext({
+export const ApiContext = createContext({
   baseUrl: 'https://cornerstoneapi.newfrontdoor.org/api/views/'
 });
 

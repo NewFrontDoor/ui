@@ -1,8 +1,15 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
+import type {ComponentProps, ForwardedRef, ReactNode} from 'react';
 import {forwardRef} from 'react';
-import PropTypes from 'prop-types';
 import {Range, getTrackBackground} from 'react-range';
+
+type RangeProps = ComponentProps<typeof Range>;
+type RangeAdapterProps = Partial<RangeProps> &
+  Pick<RangeProps, 'values' | 'onChange' | 'renderTrack' | 'renderThumb'> & {
+  ref?: ForwardedRef<Range>;
+};
+const AnyRange = Range as unknown as (props: RangeAdapterProps) => ReactNode;
+type TrackRenderProps = Parameters<NonNullable<RangeProps['renderTrack']>>[0];
+type ThumbRenderProps = Parameters<NonNullable<RangeProps['renderThumb']>>[0];
 
 type ProgressBarProps = {
   value: number;
@@ -15,9 +22,12 @@ type ProgressBarProps = {
 };
 
 const ProgressBar = forwardRef<Range, ProgressBarProps>(
-  ({value, max, onChange, step, isInteracting, color, isInvert}, rangeRef) => {
+  (
+    {value, max, onChange, step = 1, isInteracting, color, isInvert = false},
+    rangeRef
+  ) => {
     return (
-      <Range
+      <AnyRange
         ref={rangeRef}
         step={step}
         min={0}
@@ -26,7 +36,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
         renderTrack={({
           props: {style, onMouseDown, onTouchStart, ref},
           children
-        }) => (
+        }: TrackRenderProps) => (
           <div
             sx={{
               ...style,
@@ -61,7 +71,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
             </div>
           </div>
         )}
-        renderThumb={({props: {style, ...props}}) => (
+        renderThumb={({props: {style, ...props}}: ThumbRenderProps) => (
           <div
             {...props}
             sx={{
@@ -86,15 +96,17 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
             />
           </div>
         )}
-        onChange={(values) => onChange(values[0])}
+        onChange={(values: number[]) => onChange(values[0])}
       />
     );
   }
 );
 
+ProgressBar.displayName = 'ProgressBar';
+
 export default ProgressBar;
 
-ProgressBar.defaultProps = {
+/* ProgressBar.defaultProps = {
   step: 1,
   isInvert: false
 };
@@ -107,4 +119,4 @@ ProgressBar.propTypes = {
   isInteracting: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
   isInvert: PropTypes.bool
-};
+}; */

@@ -1,13 +1,12 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {Fragment, FC} from 'react';
-import PropTypes from 'prop-types';
+
+import type { FC} from 'react';
 import Month from './calendar-month-view';
 import Week from './calendar-week-view';
 import Day from './calendar-day-view';
 import CalendarControls from './components/calendar-controls';
 import {startOfMonth} from 'date-fns';
-import {calendarViews, CalendarClient, CalendarView} from './types';
+import type { CalendarClient, CalendarView} from './types';
+import {calendarViews} from './types';
 import {useCalendarEvents, CalendarDispatch} from './use-calendar-events';
 
 type CalendarProps = {
@@ -20,7 +19,7 @@ type CalendarProps = {
 const Calendar: FC<CalendarProps> = ({
   client,
   initialView,
-  isViewFixed,
+  isViewFixed = false,
   handleNav
 }) => {
   const [
@@ -33,10 +32,10 @@ const Calendar: FC<CalendarProps> = ({
 
   return (
     <CalendarDispatch.Provider value={dispatch}>
-      {status === 'loading' ? (
+      {status === 'pending' ? (
         <div>loading...</div>
       ) : (
-        <Fragment>
+        <>
           <CalendarControls
             location="top"
             startOfMonth={startOfMonth(data.currentDate)}
@@ -87,13 +86,13 @@ const Calendar: FC<CalendarProps> = ({
           {data.calendarView === 'month' && (
             <Month calendarData={data.monthData} />
           )}
-        </Fragment>
+        </>
       )}
     </CalendarDispatch.Provider>
   );
 };
 
-Calendar.propTypes = {
+/* Calendar.propTypes = {
   initialView: PropTypes.oneOf(calendarViews).isRequired,
   client: PropTypes.shape({fetchEvents: PropTypes.func.isRequired}).isRequired,
   isViewFixed: PropTypes.bool,
@@ -102,6 +101,6 @@ Calendar.propTypes = {
 
 Calendar.defaultProps = {
   isViewFixed: false
-};
+}; */
 
 export default Calendar;

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {Calendar, drupalClient} from '../src';
 
 const apiUrl =

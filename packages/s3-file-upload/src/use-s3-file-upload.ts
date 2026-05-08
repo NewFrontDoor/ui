@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import ky from 'ky';
-import {useQuery, useMutation} from 'react-query';
+import {useQuery, useMutation} from '@tanstack/react-query';
 
 type PresignedPost = {
   url: string;
@@ -36,17 +36,15 @@ async function uploadFileWithPresignedPostData(
 }
 
 function useS3Check(host: string, fileName?: string) {
-  return useQuery(
-    [host, fileName],
-    async () =>
-      ky.head(String(fileName), {prefixUrl: host}).then(() => undefined),
-    {
-      enabled: Boolean(fileName),
-      retry: 4,
-      retryDelay: 4000,
-      refetchOnWindowFocus: false
-    }
-  );
+  return useQuery({
+    queryKey: [host, fileName],
+    queryFn: async () =>
+      ky.head(String(fileName), {prefixUrl: host}).then(() => true),
+    enabled: Boolean(fileName),
+    retry: 4,
+    retryDelay: 4000,
+    refetchOnWindowFocus: false
+  });
 }
 
 type UploadFileOptions = {
@@ -93,7 +91,8 @@ export function useS3FileUpload({
   /**
    * Start the upload process for a new file
    */
-  const uploadFileResult = useMutation(uploadFileToS3, {
+  const uploadFileResult = useMutation({
+    mutationFn: uploadFileToS3,
     /**
      * On success, store the file name of the new uploaded file
      */
@@ -113,8 +112,10 @@ export function useS3FileUpload({
     checkS3Status,
     fileUploadStatus: uploadFileResult,
     isSuccess: checkS3Status.isSuccess,
-    isLoading: checkS3Status.isLoading || uploadFileResult.isLoading,
+    isLoading:
+      (Boolean(fileName) && checkS3Status.isLoading) ||
+      uploadFileResult.isPending,
     isError: checkS3Status.isError || uploadFileResult.isError,
-    isIdle: checkS3Status.isIdle && uploadFileResult.isIdle
+    isIdle: !fileName && uploadFileResult.isIdle
   };
 }

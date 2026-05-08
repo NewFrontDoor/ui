@@ -1,14 +1,13 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {FC, HTMLProps, useRef} from 'react';
-import PropTypes from 'prop-types';
+
+import type {FC, HTMLProps} from 'react';
+import { useRef} from 'react';
 import {
   MdPlayArrow as Play,
   MdPause as Pause,
   MdVolumeUp,
   MdVolumeOff
 } from 'react-icons/md';
-import {Range} from 'react-range';
+import type {Range} from 'react-range';
 import ProgressBar from './progress-bar';
 import {useAudioPlayer} from './use-audio-manager';
 
@@ -16,7 +15,7 @@ type ButtonProps = HTMLProps<HTMLButtonElement> & {
   background?: string;
 };
 
-const Button: FC<ButtonProps> = ({background, ...props}) => {
+const Button: FC<ButtonProps> = ({background = '#ddd', ...props}) => {
   return (
     <button
       {...props}
@@ -46,9 +45,9 @@ const Button: FC<ButtonProps> = ({background, ...props}) => {
   );
 };
 
-Button.propTypes = {
+/* Button.propTypes = {
   background: PropTypes.string.isRequired
-};
+}; */
 
 export type StyledPlayerProps = {
   highlight?: string;
@@ -61,13 +60,13 @@ export type StyledPlayerProps = {
 };
 
 const StyledPlayer: FC<StyledPlayerProps> = ({
-  highlight,
-  base,
-  hasBorder,
-  background,
-  isInvert,
-  hasPlaybackspeed,
-  width
+  highlight = '#548BF4',
+  base = '#ddd',
+  hasBorder = true,
+  background = 'unset',
+  isInvert = false,
+  hasPlaybackspeed = true,
+  width = '280px'
 }) => {
   const volumeBar = useRef<Range>(null);
   const {playerState, playerProps, dispatch} = useAudioPlayer();
@@ -241,7 +240,7 @@ const StyledPlayer: FC<StyledPlayerProps> = ({
   );
 };
 
-StyledPlayer.defaultProps = {
+/* StyledPlayer.defaultProps = {
   highlight: '#548BF4',
   base: '#ddd',
   hasBorder: true,
@@ -259,6 +258,6 @@ StyledPlayer.propTypes = {
   isInvert: PropTypes.bool,
   hasPlaybackspeed: PropTypes.bool,
   width: PropTypes.string
-};
+}; */
 
 export default StyledPlayer;

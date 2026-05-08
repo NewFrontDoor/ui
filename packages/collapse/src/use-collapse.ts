@@ -1,7 +1,5 @@
 import {css} from 'theme-ui';
-import {
-  useState,
-  useEffect,
+import type {
   Dispatch,
   SetStateAction,
   MouseEvent,
@@ -9,6 +7,10 @@ import {
   CSSProperties,
   TransitionEvent,
   ButtonHTMLAttributes
+} from 'react';
+import {
+  useState,
+  useEffect
 } from 'react';
 
 type CalculateStyleOptions = Required<Pick<CSSProperties, 'overflow'>> & {

@@ -3,11 +3,34 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "paths": {
+      "@newfrontdoor/api-config": [
+        "./packages/api-config/src/index.js"
+      ],
+      "@newfrontdoor/radio-group": [
+        "./packages/radio-group/src/index.tsx"
+      ]
+    },
+    "moduleResolution": "bundler",
     "strict": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "theme-ui",
     "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": true
-  }
+  },
+  "include": [
+    "packages/*/src/**/*",
+    "packages/*/index.ts",
+    "types/**/*.d.ts"
+  ],
+  "exclude": [
+    "packages/**/__tests__/**",
+    "packages/**/__fixtures__/**",
+    "packages/**/dist/**",
+    "cosmos/**",
+    "cosmos.imports.ts",
+    "cosmos-export/**",
+    "vitest.setup.ts"
+  ]
 }

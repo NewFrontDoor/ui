@@ -1,9 +1,8 @@
-/** @jsx jsx */
-import {jsx, Label} from 'theme-ui';
-import {FC, Fragment} from 'react';
-import PropTypes from 'prop-types';
+import {Label} from 'theme-ui';
+import type {FC} from 'react';
+import { Fragment} from 'react';
 import {hideVisually} from 'polished';
-import {calendarViews, CalendarView} from '../types';
+import type { CalendarView} from '../types';
 import {useCalendarDispatch} from '../use-calendar-events';
 
 type MethodToggleProps = {
@@ -111,8 +110,8 @@ const MethodToggle: FC<MethodToggleProps> = (props) => {
 
 export default MethodToggle;
 
-MethodToggle.propTypes = {
+/* MethodToggle.propTypes = {
   location: PropTypes.string.isRequired,
   calendarView: PropTypes.oneOf(calendarViews).isRequired,
   inputs: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-};
+}; */

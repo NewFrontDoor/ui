@@ -3,23 +3,30 @@
   "version": "0.5.0",
   "license": "MIT",
   "source": "src/index.js",
-  "main": "dist/index.js",
-  "module": "dist/index.module.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "scripts": {
-    "prepare": "microbundle --no-compress",
-    "watch": "microbundle watch --no-compress"
+    "build": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --watch"
   },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "react": "^16.0",
-    "theme-ui": "^0.3.1"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "react": "^19.2.0",
+    "theme-ui": "^0.17.4"
   },
   "dependencies": {
-    "date-fns": "^2.11.1",
-    "prop-types": "^15.6.2",
-    "reading-time": "^1.2.0"
+    "date-fns": "^4.1.0",
+    "reading-time": "^1.5.0"
   },
-  "xo": false
+  
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  }
 }

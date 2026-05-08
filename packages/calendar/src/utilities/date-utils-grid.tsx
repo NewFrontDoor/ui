@@ -17,7 +17,7 @@ import {
   startOfWeek
 } from 'date-fns';
 
-import {
+import type {
   CalendarState,
   CalendarData,
   CalendarEvent,

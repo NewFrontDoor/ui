@@ -1,23 +1,21 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {
+import type {
   ReactNode,
+  ReactElement} from 'react';
+import {
   Children,
-  ReactElement,
   cloneElement,
   useState,
   useEffect,
   useCallback,
   useRef
 } from 'react';
-import PropTypes from 'prop-types';
 import {useEmblaCarousel} from 'embla-carousel/react';
 import {DotButton, PreviousButton, NextButton} from './carousel-buttons';
 
 type CallbackFunction = () => void;
 
 function useInterval(callback: CallbackFunction, delay?: number): void {
-  const savedCallback = useRef<CallbackFunction>();
+  const savedCallback = useRef<CallbackFunction | undefined>(undefined);
 
   useEffect(() => {
     savedCallback.current = callback;
@@ -67,12 +65,12 @@ const Carousel = ({
   const [previousBtnEnabled, setPreviousBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [delay] = useState(delayLength);
   const [isRunning] = useState(autoplay);
+  const scrollSnaps = embla?.scrollSnapList() ?? [];
 
   const scrollTo = useCallback(
-    (index) => {
+    (index: number) => {
       embla?.scrollTo(index);
     },
     [embla]
@@ -104,9 +102,7 @@ const Carousel = ({
 
   useEffect(() => {
     if (embla) {
-      setScrollSnaps(embla.scrollSnapList());
       embla.on('select', onSelect);
-      onSelect();
     }
   }, [embla, onSelect]);
 
@@ -159,7 +155,7 @@ const Carousel = ({
               onClick: () => {
                 scrollTo(index);
               }
-            });
+            } as Partial<unknown> & React.Attributes);
           })}
         </div>
       )}
@@ -171,10 +167,10 @@ const Carousel = ({
   );
 };
 
-Carousel.propTypes = {
+/* Carousel.propTypes = {
   autoplay: PropTypes.bool,
   delayLength: PropTypes.number,
   children: PropTypes.node
-};
+}; */
 
 export default Carousel;

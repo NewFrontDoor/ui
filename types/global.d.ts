@@ -1,4 +1,5 @@
-import {SystemStyleObject} from '@styled-system/css';
+import type {SystemStyleObject} from '@styled-system/css';
+import type {Interpolation, Theme} from '@emotion/react';
 
 export type SxStyleProp = SystemStyleObject;
 
@@ -16,9 +17,12 @@ export interface SxProps {
    */
   sx?: SxStyleProp;
 
-  css?: any;
+  css?: Interpolation<Theme>;
 }
 
 declare module 'react' {
-  interface Attributes extends SxProps {}
+  interface Attributes {
+    sx?: SxStyleProp;
+    css?: Interpolation<Theme>;
+  }
 }

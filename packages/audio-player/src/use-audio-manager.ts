@@ -1,6 +1,7 @@
-import {
+import type {
   HTMLProps,
-  Dispatch,
+  Dispatch} from 'react';
+import {
   createContext,
   useReducer,
   useContext,

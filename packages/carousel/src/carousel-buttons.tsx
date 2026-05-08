@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {HTMLProps} from 'react';
+
+import type {HTMLProps} from 'react';
 
 const Next = (props: HTMLProps<HTMLButtonElement>) => (
   <button
@@ -50,7 +49,7 @@ type DotProps = HTMLProps<HTMLButtonElement> & {
   selected: boolean;
 };
 
-const Dot = (props: DotProps) => (
+/* const Dot = (props: DotProps) => (
   <button
     sx={{
       backgroundColor: 'transparent',
@@ -74,7 +73,7 @@ const Dot = (props: DotProps) => (
     {...props}
     type="button"
   />
-);
+); */
 
 const Dot2 = (props: DotProps) => (
   <button

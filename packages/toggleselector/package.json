@@ -3,23 +3,29 @@
   "version": "0.1.1",
   "license": "MIT",
   "source": "src/index.js",
-  "main": "dist/index.js",
-  "module": "dist/index.module.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "scripts": {
-    "prepare": "microbundle --no-compress",
-    "watch": "microbundle watch --no-compress"
+    "build": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --watch"
   },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "@emotion/core": "^10.0",
-    "@emotion/styled": "^10.0",
-    "react": "^16.0"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "react": "^19.2.0",
+    "theme-ui": "^0.17.4"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "react-radio-group": "^3.0.3"
+    "@newfrontdoor/radio-group": "workspace:*"
   },
-  "xo": false
+  
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  }
 }
