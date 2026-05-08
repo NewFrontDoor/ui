@@ -1,7 +1,4 @@
-/* eslint-env browser */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
 import MapOverlay from './map-overlay';
@@ -30,6 +27,18 @@ const HomeMapInner = styled('div')`
 `;
 
 const MapLayout = ({heading, actions, details, location, mapsKey}) => {
+  const isNarrowViewport =
+    typeof window !== 'undefined' && window.innerWidth < 600;
+  const center = isNarrowViewport
+    ? {
+        lat: location.location.lat,
+        lng: location.location.lng
+      }
+    : {
+        lat: location.latcentrepoint,
+        lng: location.lngcentrepoint
+      };
+
   return (
     <HomeSection>
       <HomeMapInner>
@@ -40,17 +49,7 @@ const MapLayout = ({heading, actions, details, location, mapsKey}) => {
               width: '100%'
             }}
             zoom={16}
-            center={
-              window.innerWidth < 600
-                ? {
-                    lat: location.location.lat,
-                    lng: location.location.lng
-                  }
-                : {
-                    lat: location.latcentrepoint,
-                    lng: location.lngcentrepoint
-                  }
-            }
+            center={center}
             options={{
               disableDefaultUI: true
             }}
@@ -75,7 +74,7 @@ const MapLayout = ({heading, actions, details, location, mapsKey}) => {
   );
 };
 
-MapLayout.propTypes = {
+/* MapLayout.propTypes = {
   heading: PropTypes.string.isRequired,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -98,6 +97,6 @@ MapLayout.propTypes = {
     })
   }).isRequired,
   mapsKey: PropTypes.string.isRequired
-};
+}; */
 
 export default MapLayout;

@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import PropTypes from 'prop-types';
+
 import Post from './post';
 
 const Blog = (props) => {
@@ -27,7 +25,7 @@ const Blog = (props) => {
   );
 };
 
-Blog.propTypes = {
+/* Blog.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -41,6 +39,6 @@ Blog.propTypes = {
     })
   ).isRequired,
   category: PropTypes.objectOf(PropTypes.string)
-};
+}; */
 
 export default Blog;

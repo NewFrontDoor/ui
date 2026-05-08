@@ -1,10 +1,10 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {cloneElement, FC} from 'react';
-import PropTypes from 'prop-types';
+
+import type { FC} from 'react';
+import {cloneElement} from 'react';
 import {useDropzone} from 'react-dropzone';
 import {ScaleLoader} from 'react-spinners';
-import {useS3FileUpload, UploadFileResult} from './use-s3-file-upload';
+import type { UploadFileResult} from './use-s3-file-upload';
+import {useS3FileUpload} from './use-s3-file-upload';
 
 const baseStyle = {
   borderWidth: 2,
@@ -105,7 +105,7 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
         cloneElement(children, {
           title,
           src: decodeURI(fileUrl.href)
-        })}
+        } as Partial<unknown> & React.Attributes)}
       {isIdle && (
         <div style={styles} {...getRootProps()}>
           <input data-testid="drop-input" {...getInputProps()} />
@@ -133,11 +133,11 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
   );
 };
 
-S3Dropzone.propTypes = {
+/* S3Dropzone.propTypes = {
   children: PropTypes.element.isRequired,
   host: PropTypes.string.isRequired,
   title: PropTypes.string,
   uploadUrl: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   initialFileName: PropTypes.string
-};
+}; */

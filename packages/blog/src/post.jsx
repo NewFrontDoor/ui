@@ -1,11 +1,14 @@
-/** @jsx jsx */
-import PropTypes from 'prop-types';
-import {Flex, jsx} from 'theme-ui';
-import readingTime from 'reading-time';
+import {Flex} from 'theme-ui';
+import readingTime from "reading-time/lib/reading-time";
 import DefaultSidebar from './sidebar';
 
 const Post = (props) => {
-  const {body, blockText, bodyTransform, Sidebar} = props;
+  const {
+    body,
+    blockText,
+    bodyTransform = (props) => props,
+    Sidebar = DefaultSidebar
+  } = props;
   const readingLength = readingTime(bodyTransform(body));
 
   return body ? (
@@ -34,7 +37,7 @@ const Post = (props) => {
   ) : null;
 };
 
-Post.propTypes = {
+/* Post.propTypes = {
   body: PropTypes.oneOf([PropTypes.array, PropTypes.string]).isRequired,
   blockText: PropTypes.func.isRequired,
   Sidebar: PropTypes.elementType,
@@ -44,6 +47,6 @@ Post.propTypes = {
 Post.defaultProps = {
   bodyTransform: (props) => props,
   Sidebar: DefaultSidebar
-};
+}; */
 
 export default Post;

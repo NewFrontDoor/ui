@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const Grid = styled('div')`
@@ -35,10 +33,10 @@ export default function GridBlock({
   );
 }
 
-GridBlock.propTypes = {
+/* GridBlock.propTypes = {
   items: PropTypes.array.isRequired,
   columns: PropTypes.string.isRequired,
   renderProp: PropTypes.func.isRequired,
   gap: PropTypes.string,
   marginBottom: PropTypes.string
-};
+}; */

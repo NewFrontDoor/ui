@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+
 
 const ImageView = (props) => (
   <div>
@@ -8,9 +7,9 @@ const ImageView = (props) => (
   </div>
 );
 
-ImageView.propTypes = {
+/* ImageView.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired
-};
+}; */
 
 export default ImageView;

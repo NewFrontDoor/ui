@@ -1,8 +1,7 @@
-import React from 'react';
+
 import {Form, Field, useField} from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import {FieldArray} from 'react-final-form-arrays';
-import PropTypes from 'prop-types';
 
 const Error = ({name}) => {
   const {
@@ -11,9 +10,9 @@ const Error = ({name}) => {
   return touched && error ? <p>{error}</p> : null;
 };
 
-Error.propTypes = {
+/* Error.propTypes = {
   name: PropTypes.string.isRequired
-};
+}; */
 
 const handleReset = (e, form) => {
   e.preventDefault();
@@ -40,14 +39,14 @@ const NestedForm = ({childFields, form, childLabel, name, fields, index}) => {
   );
 };
 
-NestedForm.propTypes = {
+/* NestedForm.propTypes = {
   childFields: PropTypes.array.isRequired,
   form: PropTypes.any,
   name: PropTypes.string.isRequired,
   childLabel: PropTypes.string,
   fields: PropTypes.array.isRequired,
   index: PropTypes.number.isRequired
-};
+}; */
 
 const getVanillaFormField = (field, form, name = '') => {
   const {push, pop} = form.mutators;
@@ -231,7 +230,7 @@ const VanillaFormComponent = ({
   );
 };
 
-VanillaFormComponent.propTypes = {
+/* VanillaFormComponent.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -239,7 +238,7 @@ VanillaFormComponent.propTypes = {
   blockText: PropTypes.func,
   submitForm: PropTypes.func.isRequired,
   validationFn: PropTypes.func
-};
+}; */
 
 export default VanillaFormComponent;
 export {getVanillaFormField};

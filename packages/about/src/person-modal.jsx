@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 
-const PersonModal = (props) => (
+
+const PersonModal = ({name, image, body, email = '', phone = ''}) => (
   <div>
-    <h2>{props.name}</h2>
-    <img src={props.image} />
-    <p>{props.body}</p>
+    <h2>{name}</h2>
+    <img src={image} />
+    <p>{body}</p>
     <h3>Contact</h3>
-    <p>{props.email}</p>
-    <p>{props.phone}</p>
+    <p>{email}</p>
+    <p>{phone}</p>
   </div>
 );
 
-PersonModal.propTypes = {
+/* PersonModal.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
@@ -23,6 +22,6 @@ PersonModal.propTypes = {
 PersonModal.defaultProps = {
   email: '',
   phone: ''
-};
+}; */
 
 export default PersonModal;

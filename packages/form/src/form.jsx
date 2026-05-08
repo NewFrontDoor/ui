@@ -1,25 +1,8 @@
-/** @jsx jsx */
-/** @jsxFrag React.Fragment */
-import React from 'react';
-import PropTypes from 'prop-types';
+import {useId} from 'react';
 import {Form, Field, useField} from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import {FieldArray} from 'react-final-form-arrays';
-import {useId} from '@reach/auto-id';
-import {
-  Label,
-  Textarea,
-  Input,
-  Checkbox,
-  Button,
-  Radio,
-  Select,
-  Grid,
-  Box,
-  Styled,
-  Text,
-  jsx
-} from 'theme-ui';
+import {Label, Textarea, Input, Checkbox, Button, Radio, Select, Grid, Box, Text} from 'theme-ui';
 
 const Error = ({name}) => {
   const {
@@ -33,9 +16,9 @@ const Error = ({name}) => {
   ) : null;
 };
 
-Error.propTypes = {
+/* Error.propTypes = {
   name: PropTypes.string.isRequired
-};
+}; */
 
 const handleReset = (event, form) => {
   event.preventDefault();
@@ -56,9 +39,9 @@ const NestedForm = ({
       <fieldset sx={{display: 'contents'}}>
         {childLabel && (
           <legend>
-            <Styled.h4>
+            <h4>
               {childLabel} {index + 1}
-            </Styled.h4>
+            </h4>
           </legend>
         )}
         {childFields?.map((field) => (
@@ -77,7 +60,7 @@ const NestedForm = ({
   );
 };
 
-NestedForm.propTypes = {
+/* NestedForm.propTypes = {
   id: PropTypes.string.isRequired,
   childFields: PropTypes.array.isRequired,
   form: PropTypes.any,
@@ -85,7 +68,7 @@ NestedForm.propTypes = {
   childLabel: PropTypes.string,
   fields: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired
-};
+}; */
 
 const FormField = ({field, form, blockText, name = ''}) => {
   const fieldId = useId();
@@ -111,11 +94,11 @@ const FormField = ({field, form, blockText, name = ''}) => {
     case 'field-array':
       return (
         <Box sx={{gridColumn: '1/3'}}>
-          {field.label && <Styled.h2>{field.label}</Styled.h2>}
+          {field.label && <h2>{field.label}</h2>}
           {field.description && blockText ? (
             blockText(field.description)
           ) : (
-            <Styled.p>{field.description}</Styled.p>
+            <p>{field.description}</p>
           )}
           <Grid gap={20} columns={['1fr 1fr']}>
             <div sx={{display: 'flex', justifyContent: 'space-evenly'}}>
@@ -199,7 +182,7 @@ const FormField = ({field, form, blockText, name = ''}) => {
       );
     case 'checkbox':
       return (
-        <React.Fragment>
+        <>
           {field.label && field.values && field.values.length > 0 ? (
             <fieldset sx={{gridColumn: width}}>
               <legend sx={{gridColumn: '1/3'}}>{field.label}</legend>
@@ -237,7 +220,7 @@ const FormField = ({field, form, blockText, name = ''}) => {
               </Label>
             </div>
           )}
-        </React.Fragment>
+        </>
       );
     case 'reset':
       return (
@@ -273,12 +256,12 @@ const FormField = ({field, form, blockText, name = ''}) => {
   }
 };
 
-FormField.propTypes = {
+/* FormField.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
   blockText: PropTypes.node,
   name: PropTypes.string
-};
+}; */
 
 const FormComponent = ({
   title,
@@ -291,7 +274,7 @@ const FormComponent = ({
   success
 }) => {
   const defaultTextHandler = (content) => {
-    return <Styled.p>{content}</Styled.p>;
+    return <p>{content}</p>;
   };
 
   const block = blockText ?? defaultTextHandler;
@@ -308,17 +291,17 @@ const FormComponent = ({
           ) : (
             <Box as="form" id={id}>
               <fieldset>
-                <Styled.p>
+                <p>
                   Thankyou for your submission. We will get back to you as soon
                   as we can.
-                </Styled.p>
+                </p>
               </fieldset>
             </Box>
           )
         ) : (
           <Box as="form" id={id} onSubmit={handleSubmit}>
             <fieldset>
-              {title && <Styled.h2>{title}</Styled.h2>}
+              {title && <h2>{title}</h2>}
               {description && block(description)}
               <Grid gap={20} columns={['1fr 1fr']}>
                 {fields.map((field) => (
@@ -351,7 +334,7 @@ const FormComponent = ({
   );
 };
 
-FormComponent.propTypes = {
+/* FormComponent.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -360,6 +343,6 @@ FormComponent.propTypes = {
   submitForm: PropTypes.func.isRequired,
   validationFn: PropTypes.func,
   success: PropTypes.node
-};
+}; */
 
 export default FormComponent;

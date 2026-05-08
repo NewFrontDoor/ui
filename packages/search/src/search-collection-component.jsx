@@ -1,19 +1,20 @@
-/** @jsx jsx */
-import {jsx, Label, Input} from 'theme-ui';
-import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
+import {Label, Input} from 'theme-ui';
+import {useState, useEffect} from 'react';
 import {searchData, searchArray} from './filter-utility';
 import {useDebouncedCallback} from 'use-debounce';
 
 const SearchCollection = ({
-  dataCollection,
+  dataCollection = null,
   setSubset,
   fields,
-  labels,
-  passSearchArray,
-  returnEmptySubset,
-  passedSx,
-  debounceTime
+  labels = {
+    searchbox: 'Filter sermons:',
+    checkbox: 'Use inclusive mode:'
+  },
+  passSearchArray = () => {},
+  returnEmptySubset = false,
+  passedSx = {},
+  debounceTime = 1000
 }) => {
   const [searchString, setSearchString] = useState('');
   const [isInclusive, setIsInclusive] = useState(false);
@@ -74,7 +75,7 @@ const SearchCollection = ({
   );
 };
 
-SearchCollection.defaultProps = {
+/* SearchCollection.defaultProps = {
   dataCollection: null,
   labels: {
     searchbox: 'Filter sermons:',
@@ -95,6 +96,6 @@ SearchCollection.propTypes = {
   returnEmptySubset: PropTypes.bool,
   passedSx: PropTypes.object,
   debounceTime: PropTypes.number
-};
+}; */
 
 export default SearchCollection;

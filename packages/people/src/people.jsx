@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+
 import Person from './person';
 
 const People = ({people, title, email}) => {
@@ -28,7 +27,7 @@ const People = ({people, title, email}) => {
   );
 };
 
-People.propTypes = {
+/* People.propTypes = {
   email: PropTypes.string,
   title: PropTypes.string,
   people: PropTypes.arrayOf(
@@ -41,6 +40,6 @@ People.propTypes = {
       avatar_url: PropTypes.string
     })
   )
-};
+}; */
 
 export default People;
