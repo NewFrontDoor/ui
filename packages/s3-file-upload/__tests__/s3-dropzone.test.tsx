@@ -1,15 +1,15 @@
-import React from 'react';
+import {test, expect, vi} from 'vitest';
 import {Except} from 'type-fest';
 import ky from 'ky';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import {S3Dropzone, S3DropzoneProps} from '../src/s3-dropzone';
 
-jest.mock('ky', () => {
+vi.mock('ky', () => {
   const fakeKy: Partial<typeof ky> = {};
 
   const fakePresignedPost = {
-    json: jest.fn().mockResolvedValue({
+    json: vi.fn().mockResolvedValue({
       url: 'url',
       fields: {
         key: 'abc-123-some-sermon.mp3'
@@ -17,9 +17,9 @@ jest.mock('ky', () => {
     })
   };
 
-  fakeKy.head = jest.fn().mockResolvedValue({});
+  fakeKy.head = vi.fn().mockResolvedValue({});
 
-  fakeKy.post = jest
+  fakeKy.post = vi
     .fn()
     .mockReturnValueOnce(fakePresignedPost)
     .mockReturnValueOnce({});
@@ -56,7 +56,7 @@ function setup({
 test('it renders a dropzone', async () => {
   const host = 'https://sermons.examplechurch.org';
   const uploadUrl = 'https://www.examplechurch.org/api/sermon-upload';
-  const onChange = jest.fn();
+  const onChange = vi.fn();
 
   setup({
     host,
@@ -78,7 +78,7 @@ test('it renders a dropzone', async () => {
 test('it upload files to S3', async () => {
   const host = 'https://sermons.examplechurch.org';
   const uploadUrl = 'https://www.examplechurch.org/api/sermon-upload';
-  const onChange = jest.fn();
+  const onChange = vi.fn();
   const fileName = 'abc-123-some-sermon.mp3';
 
   setup({
@@ -116,7 +116,7 @@ test('it upload files to S3', async () => {
 test('it renders children with the src of the initial file', async () => {
   const host = 'https://sermons.examplechurch.org';
   const uploadUrl = 'https://www.examplechurch.org/api/sermon-upload';
-  const onChange = jest.fn();
+  const onChange = vi.fn();
   const title = 'Some Sermon';
   const initialFileName = 'abc-123-some-sermon.mp3';
 

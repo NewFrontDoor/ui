@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {RecentSeries} from '../src';
 
 const props = {

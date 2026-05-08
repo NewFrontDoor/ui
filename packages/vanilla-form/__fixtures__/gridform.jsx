@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {VanillaForm, validation} from '../src';
 
 const props = {

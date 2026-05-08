@@ -1,17 +1,18 @@
-import React from 'react';
+
+import {vi} from 'vitest';
 import {
   render,
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Bible} from '../src';
 
-jest.mock('ky', () => {
+vi.mock('ky', () => {
   return {
     __esModule: true,
-    default: jest.fn().mockImplementation(() => ({
-      json: jest.fn().mockResolvedValue([
+    default: vi.fn().mockImplementation(() => ({
+      json: vi.fn().mockResolvedValue([
         {
           bookname: 'Genesis',
           chapter: '1',

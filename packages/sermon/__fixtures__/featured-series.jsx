@@ -1,11 +1,11 @@
-import React from 'react';
-import {CurrentSeries} from '../src';
+
+import {FeaturedSeries} from '../src';
 
 const props = {
-  header: 'Current Series',
+  header: 'Featured Series',
   loading: false,
   seriesData: {
-    id: 'current-series',
+    id: 'featured-series',
     title: 'Series Title',
     link: 'http://localhost/series_url',
     image:
@@ -13,4 +13,4 @@ const props = {
   }
 };
 
-export default <CurrentSeries {...props} />;
+export default <FeaturedSeries {...props} />;

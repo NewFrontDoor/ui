@@ -1,4 +1,4 @@
-import React, {FC, Fragment} from 'react';
+import type {FC} from 'react';
 import {useThemeUI} from 'theme-ui';
 import {AudioManager, PlayButton, AudioPlayer} from '../src/audio-manager';
 
@@ -16,7 +16,7 @@ const AudioManagerFixture: FC = () => {
   const {theme} = useThemeUI();
 
   return (
-    <Fragment>
+    <>
       <AudioManager isPlayOnLoad initialSrc={track1}>
         <AudioPlayer
           {...props}
@@ -28,7 +28,7 @@ const AudioManagerFixture: FC = () => {
           Track 2
         </PlayButton>
       </AudioManager>
-    </Fragment>
+    </>
   );
 };
 

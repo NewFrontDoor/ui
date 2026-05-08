@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
+
 import {Navlink} from '../src';
 
 const props = {

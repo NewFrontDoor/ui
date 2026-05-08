@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {extractAndValidate, fullBookTitle} from './passage-validation';
 
 function Output({isValid, references}) {

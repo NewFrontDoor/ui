@@ -1,6 +1,6 @@
-/** @jsx jsx */
-import {jsx, Text} from 'theme-ui';
-import {FC, Fragment} from 'react';
+import {Text} from 'theme-ui';
+import type {FC} from 'react';
+import { Fragment} from 'react';
 import AudioPlayer from '../src/audio-player';
 
 const props = {

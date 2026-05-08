@@ -1,4 +1,4 @@
-import React from 'react';
+
 import About from '../src';
 
 const people = [

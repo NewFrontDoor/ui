@@ -1,13 +1,15 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {
-  cloneElement,
-  createContext,
-  useContext,
+
+import type {
   ReactNode,
   ReactElement
 } from 'react';
-import {useCollapse, UseCollapseOptions, CollapseState} from './use-collapse';
+import {
+  cloneElement,
+  createContext,
+  useContext
+} from 'react';
+import type { UseCollapseOptions, CollapseState} from './use-collapse';
+import {useCollapse} from './use-collapse';
 
 export const CollapseContext = createContext<CollapseState<HTMLDivElement>>(
   {} as CollapseState<HTMLDivElement>

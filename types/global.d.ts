@@ -1,4 +1,4 @@
-import {SystemStyleObject} from '@styled-system/css';
+import type {SystemStyleObject} from '@styled-system/css';
 
 export type SxStyleProp = SystemStyleObject;
 

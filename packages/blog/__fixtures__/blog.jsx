@@ -1,4 +1,3 @@
-import React from 'react';
 import {Blog} from '../src';
 
 const Link = ({link, children}) => <a href={link}>{children}</a>;

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {PostPage} from '../src';
 
 const props = {

@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import {jsx, css} from 'theme-ui';
+import {css} from 'theme-ui';
 
 const closeIcon = css`
   position: absolute;

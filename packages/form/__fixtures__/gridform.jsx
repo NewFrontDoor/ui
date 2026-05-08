@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {Form, validation} from '../src';
 
 const Success = () => (

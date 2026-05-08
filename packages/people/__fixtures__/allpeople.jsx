@@ -1,4 +1,4 @@
-import React from 'react';
+
 import AllPeople from '../src/allpeople';
 
 const props = {

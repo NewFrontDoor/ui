@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {PTEditor, toSlate} from '../src';
 
 const initialPT = [

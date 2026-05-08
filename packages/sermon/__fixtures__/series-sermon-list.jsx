@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {SermonSeriesList} from '../src';
 import data from './sermons';
 

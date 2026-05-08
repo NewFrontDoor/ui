@@ -1,9 +1,11 @@
-import React from 'react';
+
 import styled from '@emotion/styled';
-import {ReactComponent as ClockIcon} from './clock.svg';
-import {ReactComponent as EmailIcon} from './email.svg';
-import {ReactComponent as LocIcon} from './location.svg';
-import {ReactComponent as PhoneIcon} from './phone.svg';
+import {
+  ClockIcon,
+  EmailIcon,
+  LocationIcon,
+  PhoneIcon
+} from './map-icons';
 
 const Container = styled('div')`
   display: grid;
@@ -98,7 +100,7 @@ const Overlay = styled('div')`
 
 const types = {
   telephone: <PhoneIcon width="25px" />,
-  location: <LocIcon width="25px" />,
+  location: <LocationIcon width="25px" />,
   time: <ClockIcon width="25px" />,
   email: <EmailIcon width="25px" />
 };

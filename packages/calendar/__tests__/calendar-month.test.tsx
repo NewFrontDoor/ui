@@ -1,10 +1,11 @@
-import React from 'react';
-import {QueryClient, QueryClientProvider} from 'react-query';
+
+import {vi} from 'vitest';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {render, fireEvent, screen, RenderResult} from '@testing-library/react';
 import {format, subMonths, subYears, addMonths, addYears} from 'date-fns';
 import {Calendar} from '../src';
 
-jest.mock('ky', () => {
+vi.mock('ky', () => {
   return {
     __esModule: true,
     default: {}

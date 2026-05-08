@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import {jsx, Flex, Box, Link} from 'theme-ui';
-import {FC} from 'react';
+import {Flex, Box, Link} from 'theme-ui';
+import type {FC} from 'react';
 import LogoSVG from './logo';
 import Socials from './socials';
 

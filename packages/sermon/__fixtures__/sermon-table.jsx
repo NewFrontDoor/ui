@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {SermonTable} from '../src';
 import data from './sermons';
 

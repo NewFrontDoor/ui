@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import isUrl from 'is-url';
 
 import isHotkey from 'is-hotkey';
@@ -28,7 +28,7 @@ export const PTEditor = (props) => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <Slate
         editor={editor}
         value={value}
@@ -67,7 +67,7 @@ export const PTEditor = (props) => {
         <summary>Slate Doc</summary>
         <pre>{JSON.stringify(value, null, 2)}</pre>
       </details>
-    </React.Fragment>
+    </>
   );
 };
 
@@ -112,7 +112,10 @@ const LinkButton = () => {
       active={isLinkActive(editor)}
       onMouseDown={(event) => {
         event.preventDefault();
-        const url = window.prompt('Enter the URL of the link:');
+        const url =
+          typeof window === 'undefined'
+            ? null
+            : window.prompt('Enter the URL of the link:');
         if (!url) return;
         insertLink(editor, url);
       }}

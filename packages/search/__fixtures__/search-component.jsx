@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {SearchCollection} from '../src';
 
 const sermonData = [

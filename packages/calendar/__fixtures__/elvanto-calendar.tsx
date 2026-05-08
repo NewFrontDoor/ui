@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {Calendar, elvantoClient} from '../src';
 
 const apiUrl =

@@ -1,14 +1,16 @@
-import React, {useRef} from 'react';
-import {Collapse, UseCollapseOptions} from '../src';
+import {useRef} from 'react';
+import type {UseCollapseOptions} from '../src';
+import {Collapse} from '../src';
 
 const CollapseFixture = () => {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null!);
 
   return (
     <Collapse.Manager contentRef={contentRef}>
       <Collapse.Toggle>
         <button type="button">Toggle Me</button>
       </Collapse.Toggle>
+
       <Collapse.Panel>
         {Array.from({length: 10}, (_, key) => (
           <div
@@ -29,13 +31,14 @@ type CollapseDisabledFixtureProps = Pick<
 >;
 
 const CollapseDisabledFixture = (props: CollapseDisabledFixtureProps) => {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null!);
 
   return (
     <Collapse.Manager {...props} contentRef={contentRef}>
       <Collapse.Toggle>
         <button type="button">Toggle Me</button>
       </Collapse.Toggle>
+
       <Collapse.Panel>
         {Array.from({length: 10}, (_, key) => (
           <div
@@ -51,13 +54,14 @@ const CollapseDisabledFixture = (props: CollapseDisabledFixtureProps) => {
 };
 
 const NestedCollapse = () => {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null!);
 
   return (
     <Collapse.Manager contentRef={contentRef}>
       <Collapse.Toggle>
         <button type="button">Toggle Me</button>
       </Collapse.Toggle>
+
       <Collapse.Panel>
         <CollapseFixture />
       </Collapse.Panel>
@@ -70,7 +74,7 @@ const fixtures = {
   disabled: <CollapseDisabledFixture isDisabled />,
   nestedCollapse: <NestedCollapse />,
   manyCollapseFixture: (
-    <React.Fragment>
+    <>
       <CollapseFixture />
       <CollapseFixture />
       <CollapseFixture />
@@ -80,7 +84,7 @@ const fixtures = {
       <CollapseFixture />
       <CollapseFixture />
       <CollapseFixture />
-    </React.Fragment>
+    </>
   )
 };
 

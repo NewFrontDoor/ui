@@ -1,6 +1,7 @@
-import React from 'react';
+
 import {render, screen, fireEvent} from '@testing-library/react';
 import {SearchCollection} from '../src';
+import { vi } from 'vitest';
 
 const headers = [
   {heading: 'Title', key: 'title', searchable: true},
@@ -28,8 +29,8 @@ const sermonData = [
 ];
 
 function setup() {
-  const passSearchArray = jest.fn();
-  const setSubset = jest.fn();
+  const passSearchArray = vi.fn();
+  const setSubset = vi.fn();
 
   render(
     <SearchCollection

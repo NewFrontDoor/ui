@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {HTMLProps} from 'react';
+
+import type {HTMLProps} from 'react';
 
 const Next = (props: HTMLProps<HTMLButtonElement>) => (
   <button

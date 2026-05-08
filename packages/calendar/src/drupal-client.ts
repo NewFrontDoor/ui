@@ -9,7 +9,7 @@ import {
   differenceInDays
 } from 'date-fns';
 
-import {CalendarEvent} from './types';
+import type {CalendarEvent} from './types';
 
 type DrupalClient = {
   fetchEvents: (date: string) => Promise<CalendarEvent[]>;

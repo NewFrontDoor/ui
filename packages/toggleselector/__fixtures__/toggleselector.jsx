@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ToggleSelector from '../src';
 
 export default (
