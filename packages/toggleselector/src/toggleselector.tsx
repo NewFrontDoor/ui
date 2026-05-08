@@ -1,27 +1,35 @@
 import {Fragment} from 'react';
-import {RadioGroup, Radio} from 'react-radio-group';
+import {RadioGroup, Radio} from '@newfrontdoor/radio-group';
+import type {RadioValue} from '@newfrontdoor/radio-group';
 import styled from '@emotion/styled';
 
 type Style = {
-  height?: string,
-    color?: string,
-    fontSize?: string,
-    textAlign?: string,
-    textTransform?: string,
-    verticalAlign?: string,
-    selectedColor?: string,
-    highlightColor?: string
-}
-
-type ToggleSelector = {
-  location: string,
-  handleChange: (option: string) => void,
-  valueMethod: string,
-  inputs: string[],
-  styles: Style
+  backgroundColor?: string;
+  borderRadius?: string;
+  color?: string;
+  fontSize?: number;
+  height?: string;
+  highlightColor?: string;
+  selectedColor?: string;
+  textAlign?: string;
+  textTransform?: string;
+  verticalAlign?: string;
 };
 
-const StyledRadioGroup = styled(RadioGroup)`
+type ToggleSelector = {
+  location: string;
+  handleChange: (option: string) => void;
+  valueMethod: string;
+  inputs: string[];
+  styles: Style;
+};
+
+type StyledRadioGroupProps = {
+  inputs: string[];
+  styles: Style;
+};
+
+const StyledRadioGroup = styled(RadioGroup)<StyledRadioGroupProps>`
   height: ${(props) =>
     props.styles.fontSize
       ? props.styles.fontSize * 2 + props.styles.fontSize / 2
@@ -122,7 +130,7 @@ const StyledRadioGroup = styled(RadioGroup)`
 
   ${(props) =>
     props.inputs.map(
-      (_: any, index: number) =>
+      (_input: string, index: number) =>
         `input[type="radio"]:nth-of-type(${
           index + 1
         }):checked~label:last-of-type:before {
@@ -139,7 +147,7 @@ const ToggleSelector = ({
   styles = {},
   valueMethod,
   handleChange
-} : ToggleSelector) => {
+}: ToggleSelector) => {
   return (
     <StyledRadioGroup
       id="methodField"
@@ -147,7 +155,11 @@ const ToggleSelector = ({
       inputs={inputs}
       styles={styles}
       selectedValue={valueMethod}
-      onChange={(option: string) => {
+      onChange={(option: RadioValue) => {
+        if (typeof option !== 'string') {
+          return;
+        }
+
         handleChange(option);
       }}
     >

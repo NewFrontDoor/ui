@@ -251,9 +251,6 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.6(react@19.2.6)
-      react-radio-group:
-        specifier: ^3.0.3
-        version: 3.0.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       theme-ui:
         specifier: ^0.17.4
         version: 0.17.4(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.6))(react@19.2.6)
@@ -472,6 +469,12 @@ importers:
         specifier: ^0.17.4
         version: 0.17.4(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.6))(react@19.2.6)
 
+  packages/radio-group:
+    dependencies:
+      react:
+        specifier: ^19.2.0
+        version: 19.2.6
+
   packages/s3-file-upload:
     dependencies:
       '@emotion/react':
@@ -576,12 +579,12 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.6))(@types/react@19.2.14)(react@19.2.6)
+      '@newfrontdoor/radio-group':
+        specifier: workspace:*
+        version: link:../radio-group
       react:
         specifier: ^19.2.0
         version: 19.2.6
-      react-radio-group:
-        specifier: ^3.0.3
-        version: 3.0.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       theme-ui:
         specifier: ^0.17.4
         version: 0.17.4(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.6))(react@19.2.6)
@@ -3511,12 +3514,6 @@ packages:
 
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
-
-  react-radio-group@3.0.3:
-    resolution: {integrity: sha512-MUNRRjZqQ2y+1K6rBuH0zO+gLVmCnWIcc5GnNwr9WNoUwZ9FUAKJ1UfsKXwYS93whR6/qrZKoVgiOltRkbzezw==}
-    peerDependencies:
-      react: '>=0.14.0'
-      react-dom: '>=15.5.4'
 
   react-range@1.10.0:
     resolution: {integrity: sha512-kDo0LiBUHIQIP8menx0UoxTnHr7UXBYpIYl/DR9jCaO1o29VwvCLpkP/qOTNQz5hkJadPg1uEM07XJcJ1XGoKw==}
@@ -7513,12 +7510,6 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
-
-  react-radio-group@3.0.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
-    dependencies:
-      prop-types: 15.8.1
-      react: 19.2.6
-      react-dom: 19.2.6(react@19.2.6)
 
   react-range@1.10.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
     dependencies:
