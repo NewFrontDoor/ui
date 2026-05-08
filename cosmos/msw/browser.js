@@ -9,7 +9,7 @@ if (typeof window !== 'undefined' && !window.__COSMOS_MSW_STARTED__) {
   worker.start({
     onUnhandledRequest: 'bypass',
     serviceWorker: {
-      url: '/static/mockServiceWorker.js'
+      url: '/mockServiceWorker.js'
     }
   });
 }

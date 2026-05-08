@@ -1,16 +1,20 @@
 {
-  "staticPath": "static",
+  "$schema": "../node_modules/react-cosmos/config.schema.json",
   "rootDir": "..",
   "plugins": ["react-cosmos-plugin-vite"],
   "globalImports": ["./cosmos/msw/browser.js"],
-  "watchDirs": ["packages", "cosmos", "."],
-  "ignore": ["**/dist/**", "**/coverage/**", "**/cosmos-export/**"],
+  "watchDirs": ["packages", "cosmos"],
+  "ignore": [
+    "**/dist/**",
+    "**/coverage/**",
+    "**/cosmos-export/**",
+    "**/cosmos.imports.ts",
+    "**/public/**"
+  ],
+  "lazy": true,
   "vite": {
     "configPath": "./cosmos/vite.config.ts",
-    "indexPath": "./cosmos/index.html"
-  },
-  "fixtures": {
-    "lazy": true
+    "mainScriptUrl": "/cosmos/main.tsx"
   },
   "ui": {
     "responsivePreview": {
