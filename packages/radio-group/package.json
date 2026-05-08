@@ -1,0 +1,26 @@
+{
+  "name": "@newfrontdoor/radio-group",
+  "version": "0.1.0",
+  "license": "MIT",
+  "source": "src/index.tsx",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "scripts": {
+    "build": "tsdown src/index.tsx --format esm --format cjs --dts --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.tsx --format esm --format cjs --dts --deps.skip-node-modules-bundle --watch"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^19.2.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  }
+}
