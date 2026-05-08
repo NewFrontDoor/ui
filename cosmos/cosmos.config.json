@@ -1,7 +1,17 @@
 {
   "staticPath": "static",
-  "publicUrl": "/static/",
   "rootDir": "..",
+  "plugins": ["react-cosmos-plugin-vite"],
+  "globalImports": ["./cosmos/msw/browser.js"],
+  "watchDirs": ["packages", "cosmos", "."],
+  "ignore": ["**/dist/**", "**/coverage/**", "**/cosmos-export/**"],
+  "vite": {
+    "configPath": "./cosmos/vite.config.ts",
+    "indexPath": "./cosmos/index.html"
+  },
+  "fixtures": {
+    "lazy": true
+  },
   "ui": {
     "responsivePreview": {
       "devices": [
@@ -13,8 +23,5 @@
         { "label": "1080p", "width": 1920, "height": 1080 }
       ]
     }
-  },
-  "webpack": {
-    "overridePath": "./cosmos/webpack.override.js"
   }
 }

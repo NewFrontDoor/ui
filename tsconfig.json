@@ -3,11 +3,19 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "theme-ui",
     "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": true
-  }
+  },
+  "exclude": [
+    "packages/**/__tests__/**",
+    "packages/**/__fixtures__/**",
+    "packages/**/dist/**",
+    "cosmos-export/**",
+    "vitest.setup.ts"
+  ]
 }
