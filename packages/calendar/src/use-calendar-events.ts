@@ -1,5 +1,7 @@
-import React, {useContext, useReducer, Dispatch} from 'react';
-import {useQuery, QueryStatus} from 'react-query';
+import type { Dispatch} from 'react';
+import {createContext, useContext, useReducer} from 'react';
+import type { QueryStatus} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {
   addMonths,
   subMonths,
@@ -12,14 +14,14 @@ import {update} from 'lodash/fp';
 
 import {buildCalendarData} from './utilities/date-utils-grid';
 
-import {
+import type {
   CalendarData,
   CalendarClient,
   CalendarView,
   CalendarState
 } from './types';
 
-export const CalendarDispatch = React.createContext<Dispatch<Action>>(
+export const CalendarDispatch = createContext<Dispatch<Action>>(
   (_: Action) => undefined
 );
 
@@ -175,13 +177,11 @@ export function useCalendarEvents(
 
   const currentISODate = currentDate.toISOString();
 
-  const {data, status, error} = useQuery(
-    currentISODate,
-    async () => client.fetchEvents(currentISODate),
-    {
-      keepPreviousData: true
-    }
-  );
+  const {data, status, error} = useQuery({
+    queryKey: [currentISODate],
+    queryFn: async () => client.fetchEvents(currentISODate),
+    placeholderData: (previousData) => previousData
+  });
 
   const calendarData = buildCalendarData(
     {calendarView, currentDate},

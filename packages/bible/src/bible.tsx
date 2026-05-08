@@ -1,9 +1,8 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {FC, Fragment} from 'react';
-import PropTypes from 'prop-types';
+
+import type {FC} from 'react';
+import { Fragment} from 'react';
 import ky from 'ky';
-import {useQuery} from 'react-query';
+import {useQuery} from '@tanstack/react-query';
 
 type BibleResult = {
   bookname: string;
@@ -19,16 +18,18 @@ type BibleProps = {
 };
 
 function useBible(url: string, passage: string) {
-  return useQuery([url, passage], async () =>
-    ky(url, {
-      searchParams: {
-        passage,
-        type: 'json'
-      },
-      mode: 'cors',
-      credentials: 'omit'
-    }).json<BibleResult[]>()
-  );
+  return useQuery({
+    queryKey: [url, passage],
+    queryFn: async () =>
+      ky(url, {
+        searchParams: {
+          passage,
+          type: 'json'
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      }).json<BibleResult[]>()
+  });
 }
 
 export const Bible: FC<BibleProps> = ({url, passage}) => {
@@ -52,7 +53,7 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
                 display: 'block'
               }}
             >
-              {/* eslint-disable-next-line react/no-danger */}
+              { }
               <span dangerouslySetInnerHTML={{__html: title}} />
             </h5>
           )}
@@ -64,7 +65,7 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
             >
               {verse}{' '}
             </sup>
-            {/* eslint-disable-next-line react/no-danger */}
+            { }
             <span dangerouslySetInnerHTML={{__html: text}} />
           </p>
         </Fragment>
@@ -73,7 +74,7 @@ export const Bible: FC<BibleProps> = ({url, passage}) => {
   );
 };
 
-Bible.propTypes = {
+/* Bible.propTypes = {
   url: PropTypes.string.isRequired,
   passage: PropTypes.string.isRequired
-};
+}; */

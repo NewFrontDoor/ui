@@ -1,11 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+
 import ky from 'ky';
-import {useQuery} from 'react-query';
+import {useQuery} from '@tanstack/react-query';
 import People from './people';
 
 function usePeople(url) {
-  return useQuery(url, () => ky(url).json());
+  return useQuery({
+    queryKey: [url],
+    queryFn: () => ky(url).json()
+  });
 }
 
 const AllPeople = ({groups, apiUrl}) => {
@@ -14,7 +16,7 @@ const AllPeople = ({groups, apiUrl}) => {
     return <div>Error: {error.message}</div>;
   }
 
-  if (status === 'loading') {
+  if (status === 'pending') {
     return <div>Loading...</div>;
   }
 
@@ -34,9 +36,9 @@ const AllPeople = ({groups, apiUrl}) => {
   );
 };
 
-AllPeople.propTypes = {
+/* AllPeople.propTypes = {
   groups: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired
-};
+}; */
 
 export default AllPeople;
