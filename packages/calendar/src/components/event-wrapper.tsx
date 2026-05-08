@@ -1,6 +1,6 @@
 
 import {Button} from 'theme-ui';
-import type { FC} from 'react';
+import type {FC, ReactNode} from 'react';
 import {useState} from 'react';
 import {createPortal} from 'react-dom';
 
@@ -9,6 +9,7 @@ import type {CalendarEvent} from '../types';
 type EventWrapper = {
   event: Partial<CalendarEvent>;
   handleNav?: (url: string) => void;
+  children?: ReactNode;
 };
 
 const EventWrapper: FC<EventWrapper> = ({event, handleNav}) => {
