@@ -1,7 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {Fragment} from 'react';
 import {RadioGroup, Radio} from 'react-radio-group';
 import styled from '@emotion/styled';
+
+type Style = {
+  height?: string,
+    color?: string,
+    fontSize?: string,
+    textAlign?: string,
+    textTransform?: string,
+    verticalAlign?: string,
+    selectedColor?: string,
+    highlightColor?: string
+}
+
+type ToggleSelector = {
+  location: string,
+  handleChange: (option: string) => void,
+  valueMethod: string,
+  inputs: string[],
+  styles: Style
+};
 
 const StyledRadioGroup = styled(RadioGroup)`
   height: ${(props) =>
@@ -104,7 +122,7 @@ const StyledRadioGroup = styled(RadioGroup)`
 
   ${(props) =>
     props.inputs.map(
-      (input, index) =>
+      (_: any, index: number) =>
         `input[type="radio"]:nth-of-type(${
           index + 1
         }):checked~label:last-of-type:before {
@@ -115,51 +133,36 @@ const StyledRadioGroup = styled(RadioGroup)`
     )}
 `;
 
-const ToggleSelector = (props) => {
+const ToggleSelector = ({
+  location = '',
+  inputs,
+  styles = {},
+  valueMethod,
+  handleChange
+} : ToggleSelector) => {
   return (
     <StyledRadioGroup
       id="methodField"
       name="method"
-      inputs={props.inputs}
-      styles={props.styles}
-      selectedValue={props.valueMethod}
-      onChange={(option) => {
-        props.handleChange(option);
+      inputs={inputs}
+      styles={styles}
+      selectedValue={valueMethod}
+      onChange={(option: string) => {
+        handleChange(option);
       }}
     >
-      {props.inputs.map((input) => {
-        const id = props.location + input;
+      {inputs.map((input) => {
+        const id = location + input;
 
         return (
-          <React.Fragment key={id}>
+          <Fragment key={id}>
             <Radio value={input} id={id} />
-            <label htmlFor={props.location + input}>{input}</label>
-          </React.Fragment>
+            <label htmlFor={location + input}>{input}</label>
+          </Fragment>
         );
       })}
     </StyledRadioGroup>
   );
-};
-
-ToggleSelector.propTypes = {
-  location: PropTypes.string,
-  handleChange: PropTypes.func.isRequired,
-  valueMethod: PropTypes.string.isRequired,
-  inputs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  styles: PropTypes.shape({
-    height: PropTypes.string,
-    color: PropTypes.string,
-    fontSize: PropTypes.string,
-    textAlign: PropTypes.string,
-    textTransform: PropTypes.string,
-    verticalAlign: PropTypes.string,
-    selectedColor: PropTypes.string,
-    highlightColor: PropTypes.string
-  })
-};
-
-ToggleSelector.defaultProps = {
-  location: ''
 };
 
 export default ToggleSelector;

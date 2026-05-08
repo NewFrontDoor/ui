@@ -1,5 +1,5 @@
-import React from 'react';
-import {ThemeProvider} from 'theme-ui';
+
+import {ThemeUIProvider} from 'theme-ui';
 import {render, screen} from '@testing-library/react';
 import {Link} from '../src';
 
@@ -8,7 +8,7 @@ function renderWithContext(children) {
     a: (props) => <fake-link role="link" {...props} />
   };
   return render(
-    <ThemeProvider components={components}>{children}</ThemeProvider>
+    <ThemeUIProvider components={components}>{children}</ThemeUIProvider>
   );
 }
 
@@ -38,7 +38,7 @@ test('isTargetBlank adds target and rel attributes to the link', () => {
   expect(link).not.toHaveAttribute('as');
 });
 
-test('it uses the Link component from ThemeProvider to render internal links', () => {
+test('it uses the Link component from MDXProvider to render internal links', () => {
   renderWithContext(<Link href="/example/page" />);
   const link = screen.getByRole('link');
 

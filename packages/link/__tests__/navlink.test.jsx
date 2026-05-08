@@ -1,6 +1,6 @@
-import React from 'react';
-import {ThemeProvider} from 'theme-ui';
-import {matchers} from 'jest-emotion';
+
+import {ThemeUIProvider} from 'theme-ui';
+import {matchers} from '@emotion/jest';
 import {render, screen} from '@testing-library/react';
 import {Navlink} from '../src';
 
@@ -11,7 +11,7 @@ function renderWithContext(children) {
     a: (props) => <fake-link role="link" {...props} />
   };
   return render(
-    <ThemeProvider components={components}>{children}</ThemeProvider>
+    <ThemeUIProvider components={components}>{children}</ThemeUIProvider>
   );
 }
 
