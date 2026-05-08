@@ -23,7 +23,7 @@ test("it cannot submit form with required fields", () => {
   const submitForm = vi.fn();
   render(React.cloneElement(gridform, { submitForm }));
 
-  expect(screen.getByText("Submit")).toHaveAttribute("disabled");
+  expect(screen.getByText("Submit")).toBeDisabled();
 
   fireEvent.change(screen.getByLabelText("Mobile"), {
     target: {
@@ -31,7 +31,7 @@ test("it cannot submit form with required fields", () => {
     }
   });
 
-  expect(screen.getByText("Submit")).not.toHaveAttribute("disabled");
+  expect(screen.getByText("Submit")).toBeEnabled();
 
   fireEvent.click(screen.getByText("Submit"));
 
@@ -42,7 +42,7 @@ test("it can submit form after completing required fields", () => {
   const submitForm = vi.fn();
   render(React.cloneElement(gridform, { submitForm }));
 
-  expect(screen.getByText("Submit")).toHaveAttribute("disabled");
+  expect(screen.getByText("Submit")).toBeDisabled();
 
   fireEvent.change(screen.getByLabelText("Name*"), {
     target: {
@@ -50,7 +50,7 @@ test("it can submit form after completing required fields", () => {
     }
   });
 
-  expect(screen.getByText("Submit")).not.toHaveAttribute("disabled");
+  expect(screen.getByText("Submit")).toBeEnabled();
 
   fireEvent.click(screen.getByText("Submit"));
 
