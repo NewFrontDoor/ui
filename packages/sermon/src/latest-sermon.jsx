@@ -1,7 +1,5 @@
-/** @jsx jsx */
-import {Styled, jsx} from 'theme-ui';
+
 import {AudioPlayer} from '@newfrontdoor/audio-player';
-import PropTypes from 'prop-types';
 import {PulseLoader} from 'react-spinners';
 
 const LatestSermon = ({
@@ -10,16 +8,16 @@ const LatestSermon = ({
   sermonUrl,
   sermonImg,
   seriesImg,
-  loading,
+  loading = false,
   error
 }) => {
   return (
     <section>
-      <Styled.h2>Latest Sermon</Styled.h2>
+      <h2 sx={{variant: "styles.h2"}}>Latest Sermon</h2>
       {loading ? (
         <PulseLoader loading={loading} size={10} />
       ) : error && !loading ? (
-        <Styled.p>Unable to find latest sermon</Styled.p>
+        <p sx={{variant: "styles.p"}}>Unable to find latest sermon</p>
       ) : (
         <section>
           {(sermonImg || seriesImg) && (
@@ -28,7 +26,7 @@ const LatestSermon = ({
             </div>
           )}
           <p>
-            {/* eslint-disable-next-line react/no-danger */}
+            { }
             <a href={sermonUrl} dangerouslySetInnerHTML={{__html: title}} />
           </p>
           <p>{preacher}</p>
@@ -40,7 +38,7 @@ const LatestSermon = ({
   );
 };
 
-LatestSermon.propTypes = {
+/* LatestSermon.propTypes = {
   title: PropTypes.string,
   preacher: PropTypes.string,
   sermonUrl: PropTypes.string,
@@ -52,6 +50,6 @@ LatestSermon.propTypes = {
 
 LatestSermon.defaultProps = {
   loading: false
-};
+}; */
 
 export default LatestSermon;

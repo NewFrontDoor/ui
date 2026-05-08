@@ -1,17 +1,15 @@
-/** @jsx jsx */
-import PropTypes from 'prop-types';
-import {jsx, Styled} from 'theme-ui';
+
 import format from 'date-fns/format';
 
 const Sidebar = ({
   title,
   author,
   _createdAt,
-  dateFormat,
+  dateFormat = 'EEEE, MMMM do yyyy',
   readingLength,
   categories,
   Link,
-  overrides
+  overrides = {}
 }) => {
   return (
     <aside
@@ -28,7 +26,7 @@ const Sidebar = ({
         ...overrides
       }}
     >
-      <Styled.h2>{title}</Styled.h2>
+      <h2 sx={{variant: "styles.h2"}}>{title}</h2>
       <div>
         {author && (
           <Link link={author._id} data={author}>
@@ -53,7 +51,7 @@ const Sidebar = ({
   );
 };
 
-Sidebar.propTypes = {
+/* Sidebar.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.object.isRequired,
   _createdAt: PropTypes.string.isRequired,
@@ -72,6 +70,6 @@ Sidebar.propTypes = {
 Sidebar.defaultProps = {
   overrides: {},
   dateFormat: 'EEEE, MMMM do yyyy'
-};
+}; */
 
 export default Sidebar;

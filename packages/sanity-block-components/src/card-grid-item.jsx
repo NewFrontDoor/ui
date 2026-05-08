@@ -1,7 +1,5 @@
-/** @jsx jsx */
 import styled from '@emotion/styled';
-import {Styled, jsx} from 'theme-ui';
-import PropTypes from 'prop-types';
+
 
 const Actions = styled('section')`
   grid-column: 1/1;
@@ -39,7 +37,7 @@ const actLink = props => ({
   }
 });
 
-const Header = styled(Styled.h3)`
+const Header = styled('h3')`
   grid-column: 1/1;
   max-width: 100%;
   text-align: center;
@@ -71,24 +69,24 @@ export default function Card({
     </div>
   ) : (
     <div>
-      <Styled.a href={link.url}>
+      <a href={link.url} sx={{variant: "styles.a"}}>
         <img sx={{gridColumn: '1/1', width: '100%'}} src={image} alt={title} />
         <Header>{title}</Header>
         {description}
         <Actions>
-          <Styled.a sx={actLink} href={link.url}>
+          <a href={link.url} sx={{variant: "styles.a", ...actLink}}>
             {action ? action : 'VIEW PAGE'}
-          </Styled.a>
+          </a>
         </Actions>
-      </Styled.a>
+      </a>
     </div>
   );
 }
 
-Card.propTypes = {
+/* Card.propTypes = {
   action: PropTypes.string.isRequired,
   description: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired
-};
+}; */

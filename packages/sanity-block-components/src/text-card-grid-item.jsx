@@ -1,17 +1,16 @@
-import React from 'react';
-import {Styled} from 'theme-ui';
-import PropTypes from 'prop-types';
+
+
 
 export default function TextCard({title, description}) {
   return (
     <div>
-      <Styled.h3>{title}</Styled.h3>
+      <h3 sx={{variant: "styles.h3"}}>{title}</h3>
       {description}
     </div>
   );
 }
 
-TextCard.propTypes = {
+/* TextCard.propTypes = {
   description: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired
-};
+}; */

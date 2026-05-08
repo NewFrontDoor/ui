@@ -1,8 +1,6 @@
-/** @jsx jsx */
-/** @jsxFrag React.Fragment */
-import React from 'react';
+
 import BlockContent from '@sanity/block-content-to-react';
-import {jsx, Styled} from 'theme-ui';
+
 const serializers = {
   types: {
     block: (props) => {
@@ -30,13 +28,13 @@ const serializers = {
 
 export const PortableText = (props) => {
   return (
-    <jsx.Fragment>
-      <Styled.h2>PortableText to React</Styled.h2>
+    <>
+      <h2 sx={{variant: "styles.h2"}}>PortableText to React</h2>
       <BlockContent serializers={serializers} {...props} />
       <details>
         <summary>PortableText Doc</summary>
         <pre>{JSON.stringify(props.blocks, null, 2)}</pre>
       </details>
-    </jsx.Fragment>
+    </>
   );
 };

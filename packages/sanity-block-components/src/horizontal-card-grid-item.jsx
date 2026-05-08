@@ -1,7 +1,6 @@
-import React from 'react';
+
 import styled from '@emotion/styled';
-import {Styled} from 'theme-ui';
-import PropTypes from 'prop-types';
+
 
 const Wrapper = styled('section')`
   display: grid;
@@ -35,7 +34,7 @@ export default function HorizontalCard({
       </LinkComponent>
       <LinkComponent url={link}>
         <div>
-          <Styled.h3>{title}</Styled.h3>
+          <h3 sx={{variant: "styles.h3"}}>{title}</h3>
           {description}
         </div>
       </LinkComponent>
@@ -47,7 +46,7 @@ export default function HorizontalCard({
       </a>
       <a href={link}>
         <div>
-          <Styled.h3>{title}</Styled.h3>
+          <h3 sx={{variant: "styles.h3"}}>{title}</h3>
           {description}
         </div>
       </a>
@@ -56,17 +55,17 @@ export default function HorizontalCard({
     <Wrapper>
       <div>
         <Img src={image} alt={title} />
-        <Styled.h3>{title}</Styled.h3>
+        <h3 sx={{variant: "styles.h3"}}>{title}</h3>
         {description}
       </div>
     </Wrapper>
   );
 }
 
-HorizontalCard.propTypes = {
+/* HorizontalCard.propTypes = {
   description: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   link: PropTypes.string,
   LinkComponent: PropTypes.element
-};
+}; */

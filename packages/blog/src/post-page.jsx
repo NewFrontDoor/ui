@@ -1,9 +1,7 @@
-/** @jsx jsx */
-import PropTypes from 'prop-types';
-import {Styled, Flex, jsx} from 'theme-ui';
+import {Flex} from 'theme-ui';
 import format from 'date-fns/format';
 
-const PostPage = ({post, dateFormat, link, blockText}) => {
+const PostPage = ({post, dateFormat = 'dddd, MMMM do yyyy', link, blockText}) => {
   const {title, author, _createdAt, categories, date, body} = post;
   return (
     <Flex
@@ -16,7 +14,7 @@ const PostPage = ({post, dateFormat, link, blockText}) => {
         minHeight: [null, '600px']
       }}
     >
-      <Styled.h2>{title}</Styled.h2>
+      <h2  sx={{variant: "styles.h2"}}>{title}</h2>
       <small>by {author}</small>
       <small>Posted on {format(new Date(_createdAt), dateFormat)}</small>
       <small sx={{display: ['none', 'block']}}>
@@ -40,7 +38,7 @@ const PostPage = ({post, dateFormat, link, blockText}) => {
   );
 };
 
-PostPage.propTypes = {
+/* PostPage.propTypes = {
   dateFormat: PropTypes.string,
   link: PropTypes.func.isRequired,
   post: PropTypes.shape({
@@ -56,6 +54,6 @@ PostPage.propTypes = {
 
 PostPage.defaultProps = {
   dateFormat: 'dddd, MMMM do yyyy'
-};
+}; */
 
 export default PostPage;

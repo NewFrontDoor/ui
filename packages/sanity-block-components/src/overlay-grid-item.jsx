@@ -1,9 +1,8 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import {Styled} from 'theme-ui';
-import PropTypes from 'prop-types';
 
-const Header = styled(Styled.h5)`
+import styled from '@emotion/styled';
+
+
+const Header = styled('h5')`
   grid-column: 1/1;
   grid-row: 1/1;
   text-align: left;
@@ -32,14 +31,14 @@ export default function Overlay({title, image, link, LinkComponent}) {
     <LinkComponent url={link}>
       <Image src={image} alt={title} />
       <ShadedOverlay />
-      <Header>{title}</Header>
+      <Header sx={{variant: "styles.h5"}}>{title}</Header>
     </LinkComponent>
   );
 }
 
-Overlay.propTypes = {
+/* Overlay.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   LinkComponent: PropTypes.element.isRequired
-};
+}; */

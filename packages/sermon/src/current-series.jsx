@@ -1,21 +1,19 @@
-/** @jsx jsx */
-import React from 'react';
-import PropTypes from 'prop-types';
+
 import {PulseLoader} from 'react-spinners';
-import {Styled, jsx} from 'theme-ui';
+
 import RenderSeriesComponent from './render-series-content';
 
-const CurrentSeries = ({loading, seriesData, style}) => {
+const CurrentSeries = ({loading, seriesData, style = {}}) => {
   return (
     <section sx={style}>
-      <Styled.h2>Current Series</Styled.h2>
+      <h2 sx={{variant: "styles.h2"}}>Current Series</h2>
       <PulseLoader loading={loading} size={20} />
       {loading || <RenderSeriesComponent {...seriesData} />}
     </section>
   );
 };
 
-CurrentSeries.propTypes = {
+/* CurrentSeries.propTypes = {
   loading: PropTypes.bool.isRequired,
   seriesData: PropTypes.array.isRequired,
   style: PropTypes.object
@@ -23,6 +21,6 @@ CurrentSeries.propTypes = {
 
 CurrentSeries.defaultProps = {
   style: {}
-};
+}; */
 
 export default CurrentSeries;

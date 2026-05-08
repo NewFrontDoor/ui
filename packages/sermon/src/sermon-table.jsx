@@ -1,71 +1,71 @@
-/** @jsx jsx */
-import React from 'react';
-import {jsx, Styled} from 'theme-ui';
-import PropTypes from 'prop-types';
+
+
 import {FaDownload} from 'react-icons/fa';
 
 const SermonTable = ({
-  sermons,
-  headers,
-  titleKey,
-  sermonDirectory,
-  renderLink,
-  passedSx
+  sermons = [],
+  headers = [],
+  titleKey = 'title',
+  sermonDirectory = 'sermons',
+  renderLink = () => {},
+  passedSx = {}
 }) => {
   const desiredColumns = headers
     .map((item) => item.key)
     .filter((word) => word !== titleKey);
   return (
-    <Styled.table sx={passedSx}>
+    <table sx={{variant: "styles.h2", ...passedSx}}>
       <thead>
-        <Styled.tr>
+        <tr sx={{variant: "styles.tr"}}>
           {headers.map((column) => (
-            <Styled.th
+            <th
               key={column.key}
               sx={{
+                variant: "styles.th",
                 display: [column.hideable ? 'none' : 'table-cell', 'table-cell']
               }}
             >
               {column.heading}
-            </Styled.th>
+            </th>
           ))}
           <th /> {/* This is for the download column */}
-        </Styled.tr>
+        </tr>
       </thead>
       <tbody>
         {sermons.map((sermon) => (
-          <Styled.tr key={sermon.nid}>
-            <Styled.td>
+          <tr sx={{variant: "styles.tr"}} key={sermon.nid}>
+            <td sx={{variant: "styles.td"}}>
               {renderLink(sermonDirectory, sermon.slug, sermon[titleKey])}
-            </Styled.td>
+            </td>
             {desiredColumns.map((item) => (
-              <Styled.td
+              <td
                 key={sermon.nid + item}
                 sx={{
+                  variant: "styles.td",
                   display: [item.hideable ? 'none' : 'table-cell', 'table-cell']
                 }}
               >
                 {Object.prototype.hasOwnProperty.call(sermon, item) &&
                   sermon[item]}
-              </Styled.td>
+              </td>
             ))}
-            <Styled.td>
-              <Styled.a
+            <td sx={{variant: "styles.td"}}>
+              <a sx={{variant: "styles.a"}}
                 href={sermon.url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaDownload />
-              </Styled.a>
-            </Styled.td>
-          </Styled.tr>
+              </a>
+            </td>
+          </tr>
         ))}
       </tbody>
-    </Styled.table>
+    </table>
   );
 };
 
-SermonTable.defaultProps = {
+/* SermonTable.defaultProps = {
   sermons: [],
   headers: [],
   titleKey: 'title',
@@ -81,6 +81,6 @@ SermonTable.propTypes = {
   sermonDirectory: PropTypes.string,
   renderLink: PropTypes.func,
   passedSx: PropTypes.object
-};
+}; */
 
 export default SermonTable;

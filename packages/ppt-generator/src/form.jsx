@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Styled} from 'theme-ui';
-import {Button} from '@theme-ui/components';
+
+import {Button} from 'theme-ui';
 import pptxgen from 'pptxgenjs';
 
 export default function Form({title, description, contents}) {
@@ -103,14 +101,14 @@ export default function Form({title, description, contents}) {
 
   return (
     <div>
-      <Styled.h2>{title}</Styled.h2>
-      <Styled.p>{description}</Styled.p>
+      <h2 sx={{variant: "styles.h2"}}>{title}</h2>
+      <p sx={{variant: "styles.p"}}>{description}</p>
       <Button onClick={produceSlide}>Click Me</Button>
     </div>
   );
 }
 
-Form.propTypes = {
+/* Form.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired
-};
+}; */
