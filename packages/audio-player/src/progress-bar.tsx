@@ -1,8 +1,15 @@
-
+import type {ComponentProps, ForwardedRef, ReactNode} from 'react';
 import {forwardRef} from 'react';
 import {Range, getTrackBackground} from 'react-range';
 
-const AnyRange = Range as any;
+type RangeProps = ComponentProps<typeof Range>;
+type RangeAdapterProps = Partial<RangeProps> &
+  Pick<RangeProps, 'values' | 'onChange' | 'renderTrack' | 'renderThumb'> & {
+  ref?: ForwardedRef<Range>;
+};
+const AnyRange = Range as unknown as (props: RangeAdapterProps) => ReactNode;
+type TrackRenderProps = Parameters<NonNullable<RangeProps['renderTrack']>>[0];
+type ThumbRenderProps = Parameters<NonNullable<RangeProps['renderThumb']>>[0];
 
 type ProgressBarProps = {
   value: number;
@@ -21,7 +28,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
   ) => {
     return (
       <AnyRange
-        ref={rangeRef as any}
+        ref={rangeRef}
         step={step}
         min={0}
         max={max}
@@ -29,7 +36,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
         renderTrack={({
           props: {style, onMouseDown, onTouchStart, ref},
           children
-        }: any) => (
+        }: TrackRenderProps) => (
           <div
             sx={{
               ...style,
@@ -64,7 +71,7 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
             </div>
           </div>
         )}
-        renderThumb={({props: {style, ...props}}: any) => (
+        renderThumb={({props: {style, ...props}}: ThumbRenderProps) => (
           <div
             {...props}
             sx={{
@@ -94,6 +101,8 @@ const ProgressBar = forwardRef<Range, ProgressBarProps>(
     );
   }
 );
+
+ProgressBar.displayName = 'ProgressBar';
 
 export default ProgressBar;
 
