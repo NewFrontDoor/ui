@@ -23,7 +23,13 @@ export default defineConfig(
     "**/.pnpm/**",
     "**/.turbo/**",
     "**/.vite/**",
-    "**/cosmos-export/**"
+    "**/cosmos-export/**",
+    "cosmos.imports.ts",
+    "cosmos/**",
+    "**/__fixtures__/**",
+    "**/__tests__/**",
+    "vitest.config.ts",
+    "vitest.setup.ts"
   ]),
 
   {
@@ -33,6 +39,16 @@ export default defineConfig(
       globals: {
         ...globals.browser,
         ...globals.es2024
+      }
+    }
+  },
+
+  {
+    files: ["browserlist.config.js", "__mocks__/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.commonjs
       }
     }
   },
@@ -76,17 +92,19 @@ export default defineConfig(
     rules: {
       ...reactHooks.configs.recommended.rules,
 
+      "react/prop-types": "off",
+      "react/require-default-props": "off",
+      "react/default-props-match-prop-types": "off",
       "react/no-unknown-property": [
         "error",
         {
           ignore: ["sx"]
         }
       ],
-
       "react/jsx-pascal-case": "off",
       "react/boolean-prop-naming": "off",
       "react/jsx-no-useless-fragment": "off",
-      "react/jsx-fragments": ["error", "element"]
+      "react/jsx-fragments": ["error", "syntax"]
     }
   },
 

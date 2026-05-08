@@ -49,7 +49,7 @@ type DotProps = HTMLProps<HTMLButtonElement> & {
   selected: boolean;
 };
 
-const Dot = (props: DotProps) => (
+/* const Dot = (props: DotProps) => (
   <button
     sx={{
       backgroundColor: 'transparent',
@@ -73,7 +73,7 @@ const Dot = (props: DotProps) => (
     {...props}
     type="button"
   />
-);
+); */
 
 const Dot2 = (props: DotProps) => (
   <button

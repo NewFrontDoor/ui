@@ -1,5 +1,4 @@
 import {memo} from 'react';
-import styled from '@emotion/styled';
 import {PulseLoader} from 'react-spinners';
 import {FaDownload} from 'react-icons/fa';
 
@@ -23,10 +22,6 @@ type Column = {
   isDownload?: boolean;
 };
 
-const Root = styled('td')(({theme}) => ({
-  padding: '0.5em 1em' // Formerly `${theme.space_stack_sm} ${theme.space_inline_md}` but these aren't on theme, look like mineral-ui hangover
-}));
-
 const columns: Column[] = [
   {header: 'Title', accessor: 'node_title'},
   {header: 'Preacher', accessor: 'preacher'},
@@ -40,13 +35,13 @@ type DownloadCellProps = {
 
 const DownloadCell = memo(function DownloadCell({href}: DownloadCellProps) {
   return (
-    <Root>
+    <td sx={{p: "0.5em 1em"}}>
       {href ? (
         <a href={href} target="_blank" rel="noopener noreferrer">
           <FaDownload aria-label="Download sermon" />
         </a>
       ) : null}
-    </Root>
+    </td>
   );
 });
 
@@ -87,7 +82,7 @@ function Table({data}: TableProps) {
 
 export default function SermonSeriesList({
   loading,
-  series: _series,
+  // series: _series,
   seriesSermonList
 }: SermonSeriesListProps) {
   return (

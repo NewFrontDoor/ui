@@ -2,7 +2,6 @@ import {Heading, Button, Box} from 'theme-ui';
 import type {FC} from 'react';
 import {format} from 'date-fns';
 import type { CalendarView} from '../types';
-import {calendarViews} from '../types';
 import {useCalendarDispatch} from '../use-calendar-events';
 import MethodToggle from './method-toggle';
 

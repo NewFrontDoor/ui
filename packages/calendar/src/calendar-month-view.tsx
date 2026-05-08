@@ -17,7 +17,7 @@ const Month: FC<MonthProps> = ({calendarData, handleNav}) => {
   const dispatch = useCalendarDispatch();
 
   return (
-    <Fragment>
+    <>
       {calendarData.map(({week, weekNumber}) => (
         <div
           key={weekNumber}
@@ -137,7 +137,7 @@ const Month: FC<MonthProps> = ({calendarData, handleNav}) => {
           )}
         </div>
       ))}
-    </Fragment>
+    </>
   );
 };
 

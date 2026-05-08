@@ -29,7 +29,7 @@ export type S3DropzoneProps = {
   uploadUrl: string;
   title?: string;
   initialFileName?: string;
-  onChange(result?: UploadFileResult): void;
+  onChange: (result?: UploadFileResult) => void;
 };
 
 export const S3Dropzone: FC<S3DropzoneProps> = ({
@@ -38,33 +38,34 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
   title,
   uploadUrl,
   initialFileName,
-  onChange
+  onChange: handleChange
 }) => {
+  const upload = useS3FileUpload({
+    host,
+    uploadUrl,
+    initialFileName
+  });
+
   const {
     fileUrl,
     fileName,
     isLoading,
     isError,
     isSuccess,
-    isIdle,
-    startFileUpload
-  } = useS3FileUpload({
-    host,
-    uploadUrl,
-    initialFileName
+    isIdle
+  } = upload;
+
+  const dropzone = useDropzone({
+    accept: 'audio/*',
+    onDrop(acceptedFiles) {
+      const [firstFile] = acceptedFiles;
+      void upload.startFileUpload(firstFile).then((result) => {
+        handleChange(result);
+      });
+    }
   });
 
-  const {getRootProps, getInputProps, isDragActive, isDragReject} = useDropzone(
-    {
-      accept: 'audio/*',
-      onDrop(acceptedFiles) {
-        const [firstFile] = acceptedFiles;
-        void startFileUpload(firstFile).then((result) => {
-          onChange(result);
-        });
-      }
-    }
-  );
+  const {isDragActive, isDragReject} = dropzone;
 
   let styles = {...baseStyle};
   styles = isDragActive ? {...styles, ...activeStyle} : styles;
@@ -107,8 +108,8 @@ export const S3Dropzone: FC<S3DropzoneProps> = ({
           src: decodeURI(fileUrl.href)
         } as Partial<unknown> & React.Attributes)}
       {isIdle && (
-        <div style={styles} {...getRootProps()}>
-          <input data-testid="drop-input" {...getInputProps()} />
+        <div style={styles} {...dropzone.getRootProps()}>
+          <input data-testid="drop-input" {...dropzone.getInputProps()} />
           {isDragActive ? (
             <p>Drop the files here ...</p>
           ) : (

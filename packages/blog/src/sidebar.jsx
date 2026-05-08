@@ -15,12 +15,12 @@ const Sidebar = ({
     <aside
       sx={{
         flex: '1 0 auto',
-        height: ['150px' || '300px'],
+        height: ['150px', '300px'],
         overflow: 'hidden',
         width: '250px',
         padding: '20px',
         position: 'sticky',
-        top: ['40px' || '110px'],
+        top: ['40px', '110px'],
         background: 'inherit',
         marginRight: '30px',
         ...overrides

@@ -84,8 +84,6 @@ export default function SeriesSermonListContainerDrupal(
     const controller = new AbortController();
     const {signal} = controller;
 
-    setState(initialState);
-
     const getSeries = () =>
       fetch(
         `${baseUrl}all_sermon_series_api?display_id=services_1&nid=${

@@ -51,8 +51,6 @@ export default function CurrentSeriesContainerDrupal() {
   useEffect(() => {
     const controller = new AbortController();
 
-    setState(initialState);
-
     ky.get(`${baseUrl}current_series_api?display_id=services_1`, {
       signal: controller.signal
     })

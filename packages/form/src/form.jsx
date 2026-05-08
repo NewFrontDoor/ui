@@ -75,10 +75,10 @@ const FormField = ({field, form, blockText, name = ''}) => {
   const fieldName = name + field.id;
   const {push, pop} = form.mutators;
   const width = field.styling?.fullWidth ? '1/3' : null;
+  const input = field.childFields ? 'field-array' : field.input;
   // This is a hack while Sanity doesn't enable initial values on array-level items
-  if (field.childFields) field.input = 'field-array';
 
-  switch (field.input) {
+  switch (input) {
     case 'textarea':
       return (
         <Field name={fieldName} placeholder={field.placeholder}>

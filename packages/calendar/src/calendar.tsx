@@ -1,6 +1,5 @@
 
 import type { FC} from 'react';
-import {Fragment} from 'react';
 import Month from './calendar-month-view';
 import Week from './calendar-week-view';
 import Day from './calendar-day-view';
@@ -36,7 +35,7 @@ const Calendar: FC<CalendarProps> = ({
       {status === 'pending' ? (
         <div>loading...</div>
       ) : (
-        <Fragment>
+        <>
           <CalendarControls
             location="top"
             startOfMonth={startOfMonth(data.currentDate)}
@@ -87,7 +86,7 @@ const Calendar: FC<CalendarProps> = ({
           {data.calendarView === 'month' && (
             <Month calendarData={data.monthData} />
           )}
-        </Fragment>
+        </>
       )}
     </CalendarDispatch.Provider>
   );

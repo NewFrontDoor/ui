@@ -3,7 +3,6 @@ import type {FC} from 'react';
 import { Fragment} from 'react';
 import {hideVisually} from 'polished';
 import type { CalendarView} from '../types';
-import {calendarViews} from '../types';
 import {useCalendarDispatch} from '../use-calendar-events';
 
 type MethodToggleProps = {

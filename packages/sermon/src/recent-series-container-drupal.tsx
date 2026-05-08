@@ -45,7 +45,7 @@ async function getMostRecentSeries(
     throw new Error(`Failed to fetch recent series: ${response.status}`);
   }
 
-  return response.json();
+  return response.json() as Promise<DrupalSeriesResponse[]>;
 }
 
 export default function RecentSeriesContainerDrupal() {
@@ -59,12 +59,6 @@ export default function RecentSeriesContainerDrupal() {
 
   useEffect(() => {
     const controller = new AbortController();
-
-    setState({
-      loading: true,
-      error: null,
-      seriesData: []
-    });
 
     getMostRecentSeries(baseUrl, controller.signal)
       .then(response => {
