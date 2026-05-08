@@ -65,9 +65,9 @@ const Carousel = ({
   const [previousBtnEnabled, setPreviousBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [delay] = useState(delayLength);
   const [isRunning] = useState(autoplay);
+  const scrollSnaps = embla?.scrollSnapList() ?? [];
 
   const scrollTo = useCallback(
     (index: number) => {
@@ -102,9 +102,7 @@ const Carousel = ({
 
   useEffect(() => {
     if (embla) {
-      setScrollSnaps(embla.scrollSnapList());
       embla.on('select', onSelect);
-      onSelect();
     }
   }, [embla, onSelect]);
 
