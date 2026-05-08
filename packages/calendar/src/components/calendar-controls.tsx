@@ -1,9 +1,8 @@
-/** @jsx jsx */
-import {jsx, Heading, Button, Box} from 'theme-ui';
-import {FC} from 'react';
-import PropTypes from 'prop-types';
+import {Heading, Button, Box} from 'theme-ui';
+import type {FC} from 'react';
 import {format} from 'date-fns';
-import {calendarViews, CalendarView} from '../types';
+import type { CalendarView} from '../types';
+import {calendarViews} from '../types';
 import {useCalendarDispatch} from '../use-calendar-events';
 import MethodToggle from './method-toggle';
 
@@ -19,7 +18,7 @@ const CalendarControls: FC<CalendarControlsProps> = ({
   location,
   calendarView,
   input,
-  isViewFixed,
+  isViewFixed = false,
   startOfMonth
 }) => {
   const dispatch = useCalendarDispatch();
@@ -118,7 +117,7 @@ const CalendarControls: FC<CalendarControlsProps> = ({
   );
 };
 
-CalendarControls.propTypes = {
+/* CalendarControls.propTypes = {
   calendarView: PropTypes.oneOf(calendarViews).isRequired,
   location: PropTypes.string.isRequired,
   input: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -128,6 +127,6 @@ CalendarControls.propTypes = {
 
 CalendarControls.defaultProps = {
   isViewFixed: false
-};
+}; */
 
 export default CalendarControls;

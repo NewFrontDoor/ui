@@ -1,12 +1,11 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {FC, Fragment} from 'react';
-import PropTypes from 'prop-types';
+
+import type {FC} from 'react';
+import { Fragment} from 'react';
 import {shade, readableColor} from 'polished';
 import {format, differenceInHours} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
-import {CalendarDay} from './types';
+import type {CalendarDay} from './types';
 
 const hours = [
   '6am',
@@ -163,9 +162,9 @@ const Week: FC<WeekProps> = ({calendarData, handleNav}) => {
   );
 };
 
-Week.propTypes = {
+/* Week.propTypes = {
   calendarData: PropTypes.arrayOf(PropTypes.any).isRequired,
   handleNav: PropTypes.func
-};
+}; */
 
 export default Week;

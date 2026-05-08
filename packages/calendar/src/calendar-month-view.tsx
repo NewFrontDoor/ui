@@ -1,13 +1,12 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {FC, Fragment} from 'react';
-import PropTypes from 'prop-types';
+
+import type {FC} from 'react';
+import { Fragment} from 'react';
 import {shade, lighten, readableColor} from 'polished';
 import {format} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 import {useCalendarDispatch} from './use-calendar-events';
 
-import {CalendarMonth} from './types';
+import type {CalendarMonth} from './types';
 
 type MonthProps = {
   calendarData: CalendarMonth;
@@ -142,7 +141,7 @@ const Month: FC<MonthProps> = ({calendarData, handleNav}) => {
   );
 };
 
-Month.propTypes = {
+/* Month.propTypes = {
   calendarData: PropTypes.arrayOf(
     PropTypes.exact({
       week: PropTypes.arrayOf(PropTypes.any).isRequired,
@@ -150,6 +149,6 @@ Month.propTypes = {
     }).isRequired
   ).isRequired,
   handleNav: PropTypes.func
-};
+}; */
 
 export default Month;

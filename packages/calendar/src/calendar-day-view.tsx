@@ -1,12 +1,11 @@
-/** @jsx jsx */
-import {jsx} from 'theme-ui';
-import {FC, Fragment} from 'react';
-import PropTypes from 'prop-types';
+
+import type {FC} from 'react';
+import { Fragment} from 'react';
 import {shade, readableColor} from 'polished';
 import {format, differenceInHours} from 'date-fns';
 import EventWrapper from './components/event-wrapper';
 
-import {CalendarDay} from './types';
+import type {CalendarDay} from './types';
 
 const hours = [
   '6am',
@@ -145,7 +144,7 @@ const Day: FC<DayProps> = ({calendarData, handleNav}) => {
   );
 };
 
-Day.propTypes = {
+/* Day.propTypes = {
   calendarData: PropTypes.exact({
     events: PropTypes.array.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
@@ -157,6 +156,6 @@ Day.propTypes = {
     numberOfEventsToday: PropTypes.number.isRequired
   }).isRequired,
   handleNav: PropTypes.func
-};
+}; */
 
 export default Day;
