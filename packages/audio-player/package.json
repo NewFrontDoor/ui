@@ -4,13 +4,12 @@
   "description": "An audio element wrapper written in React with hooks",
   "license": "MIT",
   "author": "Alan Reader",
-  "main": "dist/index.js",
-  "module": "dist/index.module.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "source": "index.ts",
-  "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "microbundle --no-compress",
-    "watch": "microbundle watch --no-compress"
+    "build": "tsdown src/index.ts --format esm --format cjs --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.ts --format esm --format cjs --deps.skip-node-modules-bundle --watch"
   },
   "files": [
     "dist"
@@ -22,16 +21,20 @@
     "hooks"
   ],
   "peerDependencies": {
-    "react": "^16.0",
-    "theme-ui": "^0.3.1"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "react": "^19.2.0",
+    "theme-ui": "^0.17.4"
   },
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react-icons": "^3.7.0",
+    "react-icons": "^5.6.0",
     "react-range": "^1.8.6"
   },
-  "devDependencies": {
-    "@testing-library/react": "^11.2.3"
-  },
-  "xo": false
+  
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  }
 }

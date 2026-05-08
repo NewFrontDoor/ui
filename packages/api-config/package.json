@@ -2,15 +2,23 @@
   "name": "@newfrontdoor/api-config",
   "version": "0.1.0",
   "private": false,
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "scripts": {
-    "prepare": "babel src -d dist"
+    "build": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --watch"
   },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "react": "^16.0"
+    "react": "^19.2.0"
   },
-  "xo": false
+  
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "module": "dist/index.mjs"
 }

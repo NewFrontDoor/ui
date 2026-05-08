@@ -4,10 +4,10 @@
   "description": "A collection of components for rendering custom blocks from Sanity portable text",
   "license": "MIT",
   "author": "Alan Reader",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "scripts": {
-    "prepare": "microbundle --no-compress",
-    "watch": "microbundle watch --no-compress"
+    "build": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --clean",
+    "watch": "tsdown src/index.js --format esm --format cjs --deps.skip-node-modules-bundle --watch"
   },
   "files": [
     "dist"
@@ -19,18 +19,18 @@
     "text"
   ],
   "peerDependencies": {
-    "react": "^16.0",
-    "@emotion/core": "^10.0.21",
-    "@emotion/styled": "^10.0.17",
-    "@mdx-js/react": "^1.5.1",
-    "theme-ui": "^0.2.49"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mdx-js/react": "^3.1.1",
+    "react": "^19.2.0",
+    "theme-ui": "^0.17.4"
   },
-  "dependencies": {
-    "prop-types": "^15.7.2"
+  
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
   },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^9.2.0"
-  },
-  "xo": false
+  "module": "dist/index.mjs"
 }
